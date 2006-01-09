@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components namespace="directorydao">
+	<include path="directory.dicon"/>
+	<component
+		class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
+	<component name="interceptor"
+		class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/>
+</components>
