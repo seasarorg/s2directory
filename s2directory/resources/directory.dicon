@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components namespace="directory">
+	<component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+		instance="prototype">
+		<property name="initialContextFactory">
+			"com.sun.jndi.ldap.LdapCtxFactory"
+		</property>
+		<property name="url">
+			"ldap://localhost:389"
+		</property>
+		<property name="baseDn">"dc=seasar,dc=org"</property>
+		<property name="user">"cn=Manager"</property>
+		<property name="password">"secret"</property>
+		<!-- オプション
+		<property name="passwordType">"SSHA"</property>
+		<property name="userSuffix">"ou=Users"</property>
+		<property name="userAttributeName">"uid"</property>
+		<property name="groupSuffix">"ou=Groups"</property>
+		<property name="groupAttributeName">"memberUid"</property>
+		-->
+	</component>
+</components>
