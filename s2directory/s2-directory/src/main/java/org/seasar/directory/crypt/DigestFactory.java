@@ -16,6 +16,7 @@
 package org.seasar.directory.crypt;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -31,7 +32,7 @@ public final class DigestFactory {
 	/** 暗号方式を形式を表します。 */
 	private static final Pattern pattern = Pattern.compile("^\\{.+\\}");
 	/** ダイジェストのマップを現します。 */
-	private static Map digests = new HashMap();
+	private static Map digests = Collections.synchronizedMap(new HashMap());
 	/**
 	 * 初期化します。
 	 */
@@ -49,9 +50,7 @@ public final class DigestFactory {
 	 * @param digest
 	 */
 	public static void registerDigest(String algorithm, Digest digest) {
-		synchronized (digests) {
-			digests.put(algorithm, digest);
-		}
+		digests.put(algorithm, digest);
 	}
 
 	/**
@@ -69,12 +68,10 @@ public final class DigestFactory {
 		} else {
 			algorithm = "{" + hash + "}";
 		}
-		synchronized (digests) {
-			Digest digest = (Digest)digests.get(algorithm);
-			if (digest == null)
-				throw new NoSuchAlgorithmException(algorithm
-						+ " algorithm is not suported.");
-			return digest;
-		}
+		Digest digest = (Digest)digests.get(algorithm);
+		if (digest == null)
+			throw new NoSuchAlgorithmException(algorithm
+					+ " algorithm is not suported.");
+		return digest;
 	}
 }
