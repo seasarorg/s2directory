@@ -26,7 +26,7 @@ import javax.naming.directory.Attributes;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class StringType implements ValueType {
+public class StringType extends AbstractValueType {
 	/**
 	 * 指定した属性名の値を属性の集合から取得します。
 	 * 

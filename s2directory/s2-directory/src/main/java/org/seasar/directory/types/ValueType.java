@@ -20,7 +20,7 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 
 /**
- * 値取得インタフェースです。
+ * 値の型インタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -45,4 +45,13 @@ public interface ValueType {
 	 * @throws NamingException
 	 */
 	public Object getValue(Attribute attribute) throws NamingException;
+
+	/**
+	 * フィルタを取得します。
+	 * 
+	 * @param key 検索キー
+	 * @param value 値
+	 * @return
+	 */
+	public String getFilter(Object key, Object value);
 }

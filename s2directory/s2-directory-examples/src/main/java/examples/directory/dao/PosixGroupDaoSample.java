@@ -15,6 +15,7 @@
  */
 package examples.directory.dao;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.seasar.framework.container.S2Container;
@@ -39,6 +40,8 @@ public class PosixGroupDaoSample {
 		getPosixGroup1();
 		getPosixGroup2();
 		getPosixGroupList();
+		getPosixGroupByCn();
+		getPosixGroupByCn2();
 	}
 
 	public static void getPosixGroupNull() {
@@ -91,16 +94,23 @@ public class PosixGroupDaoSample {
 		// Daoクラスを取得します。
 		PosixGroupDao dao = (PosixGroupDao)container
 				.getComponent(PosixGroupDao.class);
-		// グループs2directoryを取得します。
-		PosixGroup group = dao.getPosixGroupByCn("s2directory");
-		// 表示します。
-		System.out.println("DEBUG: " + group);
-		List array = group.getMemberUid();
-		for (Iterator iter = array.iterator(); iter.hasNext();) {
-			iter.next();
-			// System.out.println("memberUid: " + iter.next());
+		List groups = dao.getPosixGroupListByMemberUid("jfut");
+		System.out.println("size: " + groups.size());
+		for (Iterator iter = groups.iterator(); iter.hasNext();) {
+			System.out.println("val: " + iter.next());
 		}
-		List groups = dao.getPosixGroupListByMemberUid("gwatsman");
+		// dao.update(account);
+		// dao.deleteUser(account);
+	}
+
+	public static void getPosixGroupByCn2() {
+		// Daoクラスを取得します。
+		PosixGroupDao dao = (PosixGroupDao)container
+				.getComponent(PosixGroupDao.class);
+		List list = new ArrayList();
+		list.add("user1");
+		list.add("user2");
+		List groups = dao.getPosixGroupListByMemberUid2(list);
 		System.out.println("size: " + groups.size());
 		for (Iterator iter = groups.iterator(); iter.hasNext();) {
 			System.out.println("val: " + iter.next());

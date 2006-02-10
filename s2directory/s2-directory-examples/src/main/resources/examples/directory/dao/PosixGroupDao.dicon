@@ -6,7 +6,4 @@
 	<component class="examples.directory.dao.PosixGroupDao">
 		<aspect>directorydao.interceptor</aspect>
 	</component>
-	<component class="examples.directory.dao.PosixGroupDtoDao">
-		<aspect>directorydao.interceptor</aspect>
-	</component>
 </components>
