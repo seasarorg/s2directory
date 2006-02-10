@@ -40,6 +40,9 @@ public interface PosixGroupDao {
 
 	public List getPosixGroupListByMemberUid(String memberUid);
 
+	public static final String getPosixGroupListByMemberUid2_ARGS = "memberUid";
+	public List getPosixGroupListByMemberUid2(List memberUid);
+
 	public void update(PosixGroup account);
 
 	public List getAllGroup();

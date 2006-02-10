@@ -17,6 +17,8 @@ package org.seasar.directory.context;
 
 import java.util.Set;
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.types.ValueType;
+import org.seasar.directory.types.ValueTypes;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -132,7 +134,9 @@ public class CommandContextImpl implements CommandContext {
 		int size = args.size();
 		if (size > 0) {
 			Object key = args.getKey(0);
-			buffer.append(key).append("=").append(args.get(key));
+			Object value = args.get(key);
+			ValueType type = ValueTypes.getValueType(value);
+			buffer.append(type.getFilter(key, value));
 		}
 		if (size > 1) {
 			String firstFilter = buffer.toString();

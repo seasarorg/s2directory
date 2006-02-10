@@ -18,12 +18,14 @@ package org.seasar.directory.types;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: コメント
+ * 値の型の集合クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -44,10 +46,16 @@ public class ValueTypes {
 	// public static final ValueType BOOLEAN = new BooleanType();
 	public static final ValueType OBJECT = new ObjectType();
 	private static final Class BYTE_ARRAY_CLASS = new byte[0].getClass();
-	private static Map types = new HashMap();
+	/** 値の型の集合を現します。 */
+	private static Map types = Collections.synchronizedMap(new HashMap());
+	/**
+	 * 初期化します。
+	 */
 	static {
 		registerValueType(String.class, STRING);
 		registerValueType(List.class, LIST);
+		// TODO: インタフェースを取得するようにし不要にする
+		registerValueType(ArrayList.class, LIST);
 		// registerValueType(short.class, SHORT);
 		// registerValueType(Short.class, SHORT);
 		// registerValueType(int.class, INTEGER);
@@ -69,12 +77,15 @@ public class ValueTypes {
 		// registerValueType(Boolean.class, BOOLEAN);
 	}
 
-	private ValueTypes() {}
+	/**
+	 * インスタンス化を禁止します。
+	 */
+	private ValueTypes() {
+		super();
+	}
 
 	public static void registerValueType(Class clazz, ValueType valueType) {
-		synchronized (types) {
-			types.put(clazz, valueType);
-		}
+		types.put(clazz, valueType);
 	}
 
 	public static ValueType getValueType(Object obj) {
@@ -88,6 +99,7 @@ public class ValueTypes {
 		if (clazz == null) {
 			return OBJECT;
 		}
+		System.out.println(clazz.getName());
 		ValueType valueType = getValueType0(clazz);
 		if (valueType != null) {
 			return valueType;
@@ -96,9 +108,7 @@ public class ValueTypes {
 	}
 
 	private static ValueType getValueType0(Class clazz) {
-		synchronized (types) {
-			return (ValueType)types.get(clazz);
-		}
+		return (ValueType)types.get(clazz);
 	}
 
 	public static ValueType getValueType(int type) {
