@@ -28,7 +28,7 @@ import javax.naming.directory.Attributes;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class ListType implements ValueType {
+public class ListType extends AbstractValueType {
 	/**
 	 * 指定した属性名の値を属性の集合から取得します。
 	 * 
@@ -64,5 +64,21 @@ public class ListType implements ValueType {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getFilter(Object key, Object value) {
+		List list = (List)value;
+		int size = list.size();
+		StringBuffer buffer = new StringBuffer("(&");
+		for (int i = 0; i < size; i++) {
+			buffer.append("(");
+			buffer.append(key).append("=").append(list.get(i));
+			buffer.append(")");
+		}
+		buffer.append(")");
+		return buffer.toString();
 	}
 }
