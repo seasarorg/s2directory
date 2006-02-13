@@ -99,7 +99,6 @@ public class ValueTypes {
 		if (clazz == null) {
 			return OBJECT;
 		}
-		System.out.println(clazz.getName());
 		ValueType valueType = getValueType0(clazz);
 		if (valueType != null) {
 			return valueType;
