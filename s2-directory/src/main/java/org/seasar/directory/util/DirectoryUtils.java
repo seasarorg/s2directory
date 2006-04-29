@@ -16,8 +16,8 @@
 package org.seasar.directory.util;
 
 import java.security.NoSuchAlgorithmException;
-import org.seasar.directory.crypt.Digest;
-import org.seasar.directory.crypt.DigestFactory;
+import org.seasar.directory.digest.Digest;
+import org.seasar.directory.digest.DigestFactory;
 
 /**
  * ディレクトリに関するユーティリティクラスです。
@@ -35,9 +35,9 @@ public final class DirectoryUtils {
 	public static String getFirstDn(String fullDn) {
 		int index = fullDn.indexOf(",");
 		if (index > 0) {
-			return fullDn.substring(0, index);
+			return fullDn.substring(0, index).trim();
 		}
-		return null;
+		return fullDn;
 	}
 
 	/**
@@ -49,9 +49,19 @@ public final class DirectoryUtils {
 	public static String getBaseDn(String fullDn) {
 		int index = fullDn.indexOf(",");
 		if (index > 0) {
-			return fullDn.substring(index + 1);
+			return fullDn.substring(index + 1).trim();
 		}
-		return null;
+		return fullDn;
+	}
+
+	public static String getAttributeName(String valueSet) {
+		valueSet = getFirstDn(valueSet);
+		return valueSet.substring(0, valueSet.indexOf("=")).trim();
+	}
+
+	public static String getAttributeValue(String valueSet) {
+		valueSet = getFirstDn(valueSet);
+		return valueSet.substring(valueSet.indexOf("=") + 1).trim();
 	}
 
 	/**

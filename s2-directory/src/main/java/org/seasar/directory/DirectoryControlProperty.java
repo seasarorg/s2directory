@@ -66,18 +66,18 @@ public interface DirectoryControlProperty {
 	public void setPassword(String password);
 
 	/**
-	 * パスワードのハッシュ形式を返します。
+	 * パスワードの形式を返します。
 	 * 
-	 * @return パスワードのハッシュ形式
+	 * @return パスワードの形式
 	 */
-	public String getPasswordType();
+	public String getPasswordAlgorithm();
 
 	/**
-	 * パスワードのハッシュ形式を設定します。
+	 * パスワードの形式を設定します。
 	 * 
-	 * @param passwordType パスワードのハッシュ形式
+	 * @param Algorithm パスワードの形式
 	 */
-	public void setPasswordType(String passwordType);
+	public void setPasswordAlgorithm(String Algorithm);
 
 	/**
 	 * ユーザ名を返します。
@@ -158,6 +158,20 @@ public interface DirectoryControlProperty {
 	 * @param groupAttributeName グループを識別するための属性名
 	 */
 	public void setGroupAttributeName(String groupAttributeName);
+
+	/**
+	 * 複数の属性値のための区切り文字を取得します。
+	 * 
+	 * @return multipleValueDelimiter 複数の属性値のための区切り文字
+	 */
+	public String getMultipleValueDelimiter();
+
+	/**
+	 * 複数の属性値のための区切り文字を設定します。
+	 * 
+	 * @param multipleValueDelimiter 複数の属性値のための区切り文字
+	 */
+	public void setMultipleValueDelimiter(String multipleValueDelimiter);
 
 	/**
 	 * フィルタを返します。

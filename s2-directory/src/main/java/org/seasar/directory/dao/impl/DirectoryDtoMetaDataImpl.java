@@ -47,7 +47,7 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	}
 
 	/**
-	 * @see org.seasar.dao.DirectoryDtoMetaData#getBeanClass()
+	 * {@inheritDoc}
 	 */
 	public Class getBeanClass() {
 		return beanClass_;
@@ -58,21 +58,21 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	}
 
 	/**
-	 * @see org.seasar.dao.DirectoryDtoMetaData#getPropertyTypeSize()
+	 * {@inheritDoc}
 	 */
 	public int getPropertyTypeSize() {
 		return propertyTypes_.size();
 	}
 
 	/**
-	 * @see org.seasar.dao.DirectoryDtoMetaData#getPropertyType(int)
+	 * {@inheritDoc}
 	 */
 	public PropertyType getPropertyType(int index) {
 		return (PropertyType)propertyTypes_.get(index);
 	}
 
 	/**
-	 * @see org.seasar.dao.DirectoryDtoMetaData#getPropertyType(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public PropertyType getPropertyType(String propertyName)
 			throws PropertyNotFoundRuntimeException {
@@ -85,7 +85,7 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	}
 
 	/**
-	 * @see org.seasar.dao.DirectoryDtoMetaData#hasPropertyType(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public boolean hasPropertyType(String propertyName) {
 		return propertyTypes_.get(propertyName) != null;

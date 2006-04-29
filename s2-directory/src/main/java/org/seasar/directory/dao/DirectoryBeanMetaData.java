@@ -26,15 +26,12 @@ import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
  * @version $Revision$ $Date$
  */
 public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
-	public String OBJECTCLASS = "OBJECTCLASS";
 	public String RELNO_SUFFIX = "_RELNO";
 	public String RELKEYS_SUFFIX = "_RELKEYS";
 	public String ID_SUFFIX = "_ID";
 	public String NO_PERSISTENT_PROPS = "NO_PERSISTENT_PROPS";
 	public String VERSION_NO_PROPERTY = "VERSION_NO_PROPERTY";
 	public String TIMESTAMP_PROPERTY = "TIMESTAMP_PROPERTY";
-
-	public String getObjectClassName();
 
 	public PropertyType getVersionNoPropertyType()
 			throws PropertyNotFoundRuntimeException;

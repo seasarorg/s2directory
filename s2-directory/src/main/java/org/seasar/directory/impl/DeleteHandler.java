@@ -25,9 +25,10 @@ import org.seasar.framework.log.Logger;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DeleteHandler extends BasicHandler implements ExecuteHandler {
+public class DeleteHandler extends BasicDirectoryHandler implements
+		ExecuteHandler {
 	/** ロガーを表わします。 */
-	private static Logger logger = Logger.getLogger(BasicSelectHandler.class);
+	private static Logger logger = Logger.getLogger(SelectHandler.class);
 	/** 削除する識別譜を表します。 */
 	private String dn;
 
@@ -43,11 +44,10 @@ public class DeleteHandler extends BasicHandler implements ExecuteHandler {
 	}
 
 	/**
-	 * 処理を実行します。
-	 * 
-	 * @return
-	 * @throws NamingRuntimeException
-	 * @see org.seasar.directory.impl.ExecuteHandler#execute()
+	 * {@inheritDoc}
+	 * <p>
+	 * 削除処理を実行します。
+	 * </p>
 	 */
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {

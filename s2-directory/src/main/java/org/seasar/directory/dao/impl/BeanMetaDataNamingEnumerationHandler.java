@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.SearchResult;
+import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 
 /**
@@ -35,19 +36,13 @@ public class BeanMetaDataNamingEnumerationHandler extends
 	 * @param directoryBeanMetaData
 	 */
 	public BeanMetaDataNamingEnumerationHandler(
-			DirectoryBeanMetaData directoryBeanMetaData) {
-		super(directoryBeanMetaData);
+			DirectoryBeanMetaData directoryBeanMetaData,
+			DirectoryControlProperty directoryControlProperty) {
+		super(directoryBeanMetaData, directoryControlProperty);
 	}
 
 	/**
-	 * 検索結果を変換します。
-	 * 
-	 * @param results
-	 * @param baseDn
-	 * @return
-	 * @throws NamingException
-	 * @see org.seasar.directory.NamingEnumerationHandler#handle(javax.naming.NamingEnumeration,
-	 *      java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public Object handle(NamingEnumeration results, String baseDn)
 			throws NamingException {

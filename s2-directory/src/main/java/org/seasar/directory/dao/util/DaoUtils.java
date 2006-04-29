@@ -36,4 +36,19 @@ public final class DaoUtils {
 		}
 		throw new DirectoryDaoNotFoundRuntimeException(clazz);
 	}
+
+	/**
+	 * 指定されたクラスのシンプルクラス名を返します。
+	 * 
+	 * @param clazz クラス
+	 * @return シンプルクラス名
+	 */
+	public static String getSimpleClassName(Class clazz) {
+		String className = clazz.getName();
+		int index = className.lastIndexOf(".");
+		if (index != -1 && className.length() > index) {
+			className = className.substring(index + 1);
+		}
+		return className;
+	}
 }
