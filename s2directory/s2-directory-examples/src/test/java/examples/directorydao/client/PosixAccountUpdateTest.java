@@ -103,8 +103,6 @@ public class PosixAccountUpdateTest extends TestCase {
 		assertEquals("user2 description", account.getDescription());
 		assertEquals("user2", account.getSn());
 		// 初期化します。
-		System.out.println(account);
-		System.out.println(user1);
 		assertEquals(1, posixAccountDtoDao.update(user1));
 		account = posixAccountDtoDao.getUserWithUserMode(property, user1);
 		assertEquals("user1", account.getCn());
