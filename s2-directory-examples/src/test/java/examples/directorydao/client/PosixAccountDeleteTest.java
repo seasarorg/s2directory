@@ -80,8 +80,14 @@ public class PosixAccountDeleteTest extends TestCase {
 		PosixAccountDto account = posixAccountDtoDao.getUserWithUserMode(
 				property, user1);
 		// 削除します。
-		assertEquals(1, posixAccountDtoDao
-				.deleteWithUserMode(property, account));
+		try {
+			// ApacheDSの場合、自分自身を削除できる
+			assertEquals(1, posixAccountDtoDao.deleteWithUserMode(property,
+					account));
+		} catch (DirectoryRuntimeException e) {
+			// OpenLDAPの場合、自分自身を削除できない
+			assertEquals(1, posixAccountDtoDao.delete(account));
+		}
 		try {
 			// 存在しないユーザで取得します。
 			assertEquals(null, posixAccountDtoDao.getUserWithUserMode(property,
