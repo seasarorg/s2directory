@@ -27,10 +27,11 @@ import org.seasar.directory.dao.DirecotryDaoMetaData;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
-import org.seasar.directory.impl.AuthenticateDynamicCommand;
-import org.seasar.directory.impl.DeleteAutoStaticCommand;
-import org.seasar.directory.impl.SelectDynamicCommand;
-import org.seasar.directory.impl.UpdateAutoStaticCommand;
+import org.seasar.directory.impl.AuthenticateAutoCommand;
+import org.seasar.directory.impl.DeleteAutoCommand;
+import org.seasar.directory.impl.InsertAutoCommand;
+import org.seasar.directory.impl.SelectAutoCommand;
+import org.seasar.directory.impl.UpdateAutoCommand;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -124,7 +125,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	 */
 	protected void setupSelectMethodByManual(Method method, String filter) {
 		// コマンドを作成します。
-		SelectDynamicCommand cmd = new SelectDynamicCommand(dataSource,
+		SelectAutoCommand cmd = new SelectAutoCommand(dataSource,
 				createNamingEnumerationHandler(method), null);
 		cmd.setFilter(filter);
 		commands.put(method.getName(), cmd);
@@ -139,8 +140,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		if (isStartsWithMethodName(method.getName(), AUTHENTICATE_NAMES)) {
 			setupAuthenticateMethodByAuto(method);
 		} else if (isStartsWithMethodName(method.getName(), INSERT_NAMES)) {
-			// TODO: 新規作成モードの追加
-			// setupInsertMethodByAuto(method);
+			setupInsertMethodByAuto(method);
 		} else if (isStartsWithMethodName(method.getName(), UPDATE_NAMES)) {
 			setupUpdateMethodByAuto(method);
 		} else if (isStartsWithMethodName(method.getName(), DELETE_NAMES)) {
@@ -175,8 +175,23 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		// 引数の準備をします。
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, annotationReader);
-		AuthenticateDynamicCommand cmd = new AuthenticateDynamicCommand(
-				dataSource, methodArgs);
+		AuthenticateAutoCommand cmd = new AuthenticateAutoCommand(dataSource,
+				methodArgs);
+		commands.put(method.getName(), cmd);
+	}
+
+	/**
+	 * 挿入関数用の処理コマンドを準備します。
+	 * 
+	 * @param method
+	 */
+	protected void setupInsertMethodByAuto(Method method) {
+		// 引数の準備をします。
+		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
+				method, annotationReader);
+		InsertAutoCommand cmd = new InsertAutoCommand(dataSource, methodArgs);
+		// objectClassを設定します。
+		cmd.setObjectClass(annotationReader.getObjectClasses());
 		commands.put(method.getName(), cmd);
 	}
 
@@ -186,11 +201,10 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	 * @param method
 	 */
 	protected void setupUpdateMethodByAuto(Method method) {
-		DirectoryCommand cmd = null;
 		// 引数の準備をします。
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, annotationReader);
-		cmd = new UpdateAutoStaticCommand(dataSource, methodArgs);
+		DirectoryCommand cmd = new UpdateAutoCommand(dataSource, methodArgs);
 		commands.put(method.getName(), cmd);
 	}
 
@@ -200,11 +214,10 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	 * @param method
 	 */
 	protected void setupDeleteMethodByAuto(Method method) {
-		DirectoryCommand cmd = null;
 		// 引数の準備をします。
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, annotationReader);
-		cmd = new DeleteAutoStaticCommand(dataSource, methodArgs);
+		DirectoryCommand cmd = new DeleteAutoCommand(dataSource, methodArgs);
 		commands.put(method.getName(), cmd);
 	}
 
@@ -219,8 +232,8 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 				method, annotationReader);
 		// コマンドを作成します。
 		NamingEnumerationHandler handler = createNamingEnumerationHandler(method);
-		SelectDynamicCommand cmd = new SelectDynamicCommand(dataSource,
-				handler, methodArgs);
+		SelectAutoCommand cmd = new SelectAutoCommand(dataSource, handler,
+				methodArgs);
 		// フィルタの準備をします。
 		String filter = createAutoSelectFilter();
 		String query = annotationReader.getQuery(method.getName());
@@ -239,10 +252,18 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	}
 
 	protected String createAutoSelectFilter() {
-		String objectClass = directoryBeanMetaData.getObjectClassName();
+		String[] objectClass = annotationReader.getObjectClasses();
 		StringBuffer buffer = new StringBuffer();
-		if (objectClass != null) {
-			buffer.append("objectclass=").append(objectClass);
+		// TODO: 複数オブジェクトクラスの取り扱いについて決める
+		if (false) {
+			buffer.append("(&");
+			for (int i = 0; i < objectClass.length; i++) {
+				buffer.append("(objectclass=").append(objectClass[i]).append(
+						")");
+			}
+			buffer.append(")");
+		} else {
+			buffer.append("objectclass=").append(objectClass[0]);
 		}
 		return buffer.toString();
 	}
@@ -262,7 +283,8 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		} else if (isBeanClassAssignable(method.getReturnType())) {
 			// Bean型ハンドラ
 			return new BeanMetaDataNamingEnumerationHandler(
-					directoryBeanMetaData);
+					directoryBeanMetaData, dataSource
+							.getDirectoryControlProperty());
 		} else {
 			return new ObjectNamingEnumerationHandler();
 		}

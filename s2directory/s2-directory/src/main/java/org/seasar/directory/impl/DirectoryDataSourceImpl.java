@@ -53,9 +53,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
-	 * 接続情報を設定します。
-	 * 
-	 * @param directoryControlProperty - 接続情報
+	 * {@inheritDoc}
 	 */
 	public void setDirectoryControlProperty(
 			DirectoryControlProperty directoryControlProperty) {
@@ -63,30 +61,21 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
-	 * 接続情報を返します。
-	 * 
-	 * @return 接続情報
+	 * {@inheritDoc}
 	 */
 	public DirectoryControlProperty getDirectoryControlProperty() {
 		return directoryControlProperty;
 	}
 
 	/**
-	 * 保持している接続情報を使用して作成したコネクションを返します。
-	 * 
-	 * @return コネクション
-	 * @throws NamingException
+	 * {@inheritDoc}
 	 */
 	public DirContext getConnection() throws NamingException {
 		return getConnection(directoryControlProperty);
 	}
 
 	/**
-	 * 指定された接続情報を使用して作成したコネクションを返します。
-	 * 
-	 * @param directoryControlProperty - 接続情報
-	 * @return コネクション
-	 * @throws NamingException
+	 * {@inheritDoc}
 	 */
 	public DirContext getConnection(
 			DirectoryControlProperty directoryControlProperty)
@@ -115,20 +104,14 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
-	 * 保持している接続情報を使用してサーバに接続できるか調べます。
-	 * 
-	 * @return 接続可能ならば true
-	 * @throws NamingException
+	 * {@inheritDoc}
 	 */
 	public boolean authenticate() throws NamingException {
 		return authenticate(directoryControlProperty);
 	}
 
 	/**
-	 * 指定された接続情報を使用してサーバに接続できるか調べます。
-	 * 
-	 * @return 接続可能ならば true
-	 * @throws NamingException
+	 * {@inheritDoc}
 	 */
 	public boolean authenticate(
 			DirectoryControlProperty directoryControlProperty)

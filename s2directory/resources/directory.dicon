@@ -14,12 +14,13 @@
 		<property name="baseDn">"dc=seasar,dc=org"</property>
 		<property name="user">"cn=Manager"</property>
 		<property name="password">"secret"</property>
-		<!-- オプション
+		<!-- Other options and each default value.
 		<property name="passwordType">"SSHA"</property>
 		<property name="userSuffix">"ou=Users"</property>
 		<property name="userAttributeName">"uid"</property>
 		<property name="groupSuffix">"ou=Groups"</property>
 		<property name="groupAttributeName">"memberUid"</property>
+		<property name="multipleValueDelimiter">","</property>
 		-->
 	</component>
 </components>

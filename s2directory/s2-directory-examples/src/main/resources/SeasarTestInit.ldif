@@ -1,0 +1,29 @@
+dn: dc=seasar,dc=org
+dc: seasar
+objectClass: dcObject
+objectClass: organization
+o: seasar
+
+dn: cn=Manager, dc=seasar,dc=org
+displayName: Directory Superuser
+uid: Manager
+userPassword:: c2VjcmV0
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+sn: administrator
+cn: system administrator
+
+dn: ou=Users, dc=seasar,dc=org
+ou: Users
+objectClass: organizationalUnit
+
+dn: ou=Groups, dc=seasar,dc=org
+ou: Groups
+objectClass: organizationalUnit
+
+dn: ou=Computers, dc=seasar,dc=org
+ou: Computers
+objectClass: organizationalUnit
+

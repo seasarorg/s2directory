@@ -16,6 +16,7 @@
 package org.seasar.directory.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -30,12 +31,13 @@ import javax.naming.directory.SearchResult;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.types.ValueType;
 import org.seasar.directory.types.ValueTypes;
-import org.seasar.directory.util.DirectoryDataSourceUtils;
 import org.seasar.directory.util.DirectoryUtils;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveSet;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * 更新を処理するクラスです。
@@ -43,13 +45,12 @@ import org.seasar.framework.util.CaseInsensitiveSet;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class UpdateHandler extends BasicHandler implements ExecuteHandler {
+public class UpdateHandler extends BasicDirectoryHandler implements
+		ExecuteHandler {
 	/** ロガーを表わします。 */
-	private static Logger logger = Logger.getLogger(BasicSelectHandler.class);
+	private static Logger logger = Logger.getLogger(SelectHandler.class);
 	/** 引数をコマンドとみなしたコンテキストを表します。 */
 	private CommandContext cmd;
-	/** 暗号化アルゴリズムを表します。 */
-	private String algorithm;
 
 	/**
 	 * インスタンスを生成します。
@@ -64,7 +65,7 @@ public class UpdateHandler extends BasicHandler implements ExecuteHandler {
 	}
 
 	/**
-	 * エントリを作成します。
+	 * 更新アイテムを作成します。
 	 * 
 	 * @param result
 	 * @param attributeNameSet
@@ -77,47 +78,60 @@ public class UpdateHandler extends BasicHandler implements ExecuteHandler {
 		Set keySet = cmd.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String attributeName = String.valueOf(iter.next());
-			String newValue = String.valueOf(cmd.getArg(attributeName));
+			Object value = cmd.getArg(attributeName);
+			String stringValue = String.valueOf(cmd.getArg(attributeName));
 			if (attributeName.equals("dn"))
 				continue;
-			// 通常属性
 			if (attributeNameSet.contains(attributeName)) {
+				// 既に属性がある場合、現在の属性を取得し、値を更新します。
 				Attribute attribute = result.getAttributes().get(attributeName);
 				String alreadyValue = String.valueOf(ValueTypes.STRING
-						.getValue(result.getAttributes(), attributeName));
-				if (newValue.equals("")) {
-					// 削除
+						.getReadValue(result.getAttributes(), attributeName,
+								directoryControlProperty
+										.getMultipleValueDelimiter()));
+				if (StringUtil.isEmpty(stringValue)) {
+					// 値が空の場合、削除します。
 					itemList.add(new ModificationItem(
 							DirContext.REMOVE_ATTRIBUTE, attribute));
-				} else if (!newValue.equals(alreadyValue)) {
-					// 更新
-					int size = attribute.size();
-					if (size == 1) {
-						// ユーザパスワード更新
-						if (attributeName.equals("userpassword")) {
-							if (!DirectoryUtils.verifyPassword(alreadyValue,
-									newValue)) {
-								attribute.set(0, DirectoryUtils.createPassword(
-										newValue, algorithm));
-							}
+				} else if (!stringValue.equals(alreadyValue)) {
+					// 値があり、現在の値と異なる場合、更新します。
+					if (attributeName.equals("userpassword")) {
+						if (!DirectoryUtils.verifyPassword(alreadyValue,
+								stringValue)) {
+							// ユーザパスワード属性の場合、暗号化します。
+							value = DirectoryUtils.createPassword(stringValue,
+									directoryControlProperty
+											.getPasswordAlgorithm());
 						} else {
-							// 単一値
-							attribute.set(0, newValue);
+							continue;
 						}
-					} else {
-						// TODO: ツリー構造になっている場合への対応
 					}
+					ValueType type = ValueTypes.getValueType(cmd
+							.getArgType(attributeName));
+					if (type == ValueTypes.STRING
+							&& stringValue.contains(directoryControlProperty
+									.getMultipleValueDelimiter())) {
+						// String型で定義されていて、多重属性を持つ場合List型に変換します。
+						value = Arrays.asList(stringValue
+								.split(directoryControlProperty
+										.getMultipleValueDelimiter()));
+						type = ValueTypes.LIST;
+					}
+					attribute = type.getWriteValue(attributeName, value,
+							directoryControlProperty
+									.getMultipleValueDelimiter());
 					itemList.add(new ModificationItem(
 							DirContext.REPLACE_ATTRIBUTE, attribute));
 				}
 			} else {
+				// 新規に属性を追加する場合、新しい属性を追加します。
 				if (attributeName.equals("userpassword"))
-					newValue = DirectoryUtils
-							.createPassword(newValue, algorithm);
-				if (!newValue.equals("")) {
-					// 追加
+					stringValue = DirectoryUtils.createPassword(stringValue,
+							directoryControlProperty.getPasswordAlgorithm());
+				if (!StringUtil.isEmpty(stringValue)) {
+					// 値がある場合、追加します。
 					Attribute attribute = new BasicAttribute(attributeName,
-							newValue);
+							stringValue);
 					itemList.add(new ModificationItem(DirContext.ADD_ATTRIBUTE,
 							attribute));
 				}
@@ -146,6 +160,13 @@ public class UpdateHandler extends BasicHandler implements ExecuteHandler {
 		return columnNames;
 	}
 
+	/**
+	 * 更新アイテムを作成します。
+	 * 
+	 * @param results
+	 * @return
+	 * @throws NamingException
+	 */
 	public ModificationItem[] createModificationItems(NamingEnumeration results)
 			throws NamingException {
 		if (results != null && results.hasMore()) {
@@ -162,35 +183,32 @@ public class UpdateHandler extends BasicHandler implements ExecuteHandler {
 	 * @return 更新した数を返します。
 	 */
 	private Integer update(String dn) {
-		DirContext context = null;
 		try {
 			// 更新対象を検索
 			String firstDn = DirectoryUtils.getFirstDn(dn);
 			String baseDn = DirectoryUtils.getBaseDn(dn);
 			NamingEnumeration results = super.search(firstDn, baseDn);
-			context = getConnection();
 			String fullDn = firstDn + "," + baseDn;
-			return super.update(fullDn, createModificationItems(results));
+			ModificationItem[] items = createModificationItems(results);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Update: " + fullDn);
+				for (int i = 0; i < items.length; i++) {
+					logger.debug("\t" + items[i]);
+				}
+			}
+			return super.update(fullDn, items);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
-		} finally {
-			DirectoryDataSourceUtils.close(context);
 		}
 	}
 
 	/**
-	 * 処理を実行します。
-	 * 
-	 * @return
-	 * @throws NamingRuntimeException
-	 * @see org.seasar.directory.impl.ExecuteHandler#execute()
+	 * {@inheritDoc}
+	 * <p>
+	 * 更新処理を実行します。
+	 * </p>
 	 */
 	public Object execute() throws NamingRuntimeException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Update: " + cmd.getDn());
-		}
-		algorithm = super.getDirectoryDataSource()
-				.getDirectoryControlProperty().getPasswordType();
 		return update(cmd.getDn());
 	}
 }

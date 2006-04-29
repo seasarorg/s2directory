@@ -19,6 +19,7 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
 
 /**
  * String型での値取得クラスです。
@@ -28,43 +29,34 @@ import javax.naming.directory.Attributes;
  */
 public class StringType extends AbstractValueType {
 	/**
-	 * 指定した属性名の値を属性の集合から取得します。
-	 * 
-	 * @param attributes 属性の集合
-	 * @param attributeName 属性名
-	 * @return 属性値
-	 * @throws NamingException
-	 * @see org.seasar.directory.types.ValueType#getValue(javax.naming.directory.Attributes,
-	 *      java.lang.String)
+	 * {@inheritDoc}
 	 */
-	public Object getValue(Attributes attributes, String attributeName)
-			throws NamingException {
+	public Object getReadValue(Attributes attributes, String attributeName,
+			String multipleValueDelimiter) throws NamingException {
 		Attribute attribute = attributes.get(attributeName);
-		return getValue(attribute);
+		return getReadValue(attribute, multipleValueDelimiter);
 	}
 
 	/**
-	 * 指定した属性の値を取得します。
-	 * 
-	 * @param attribute 属性
-	 * @return 属性値
-	 * @throws NamingException
-	 * @see org.seasar.directory.types.ValueType#getValue(javax.naming.directory.Attributes)
+	 * {@inheritDoc}
 	 */
-	public Object getValue(Attribute attribute) throws NamingException {
+	public Object getReadValue(Attribute attribute,
+			String multipleValueDelimiter) throws NamingException {
 		if (attribute != null && attribute.size() > 0) {
 			StringBuffer buffer = new StringBuffer();
 			NamingEnumeration array = attribute.getAll();
 			while (array.hasMore()) {
 				Object value = array.next();
-				if (value instanceof String)
+				if (value instanceof String) {
 					// テキスト型
-					buffer.append(value).append(",");
-				else
+					buffer.append(value).append(multipleValueDelimiter);
+				} else {
 					// バイナリ型
-					buffer.append(new String((byte[])value)).append(",");
+					buffer.append(new String((byte[])value)).append(
+							multipleValueDelimiter);
+				}
 			}
-			int index = buffer.lastIndexOf(",");
+			int index = buffer.lastIndexOf(multipleValueDelimiter);
 			if (index != -1) {
 				buffer.delete(index, buffer.length());
 			}
@@ -72,5 +64,15 @@ public class StringType extends AbstractValueType {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Attribute getWriteValue(String attributeName, Object value,
+			String multipleValueDelimiter) {
+		Attribute attribute = new BasicAttribute(attributeName);
+		attribute.add(value);
+		return attribute;
 	}
 }

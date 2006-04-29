@@ -39,12 +39,7 @@ public class ObjectNamingEnumerationHandler implements NamingEnumerationHandler 
 	}
 
 	/**
-	 * 検索結果を変換します。
-	 * 
-	 * @param results
-	 * @param baseDn
-	 * @return
-	 * @throws NamingException
+	 * {@inheritDoc}
 	 */
 	public Object handle(NamingEnumeration results, String baseDn)
 			throws NamingException {

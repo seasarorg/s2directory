@@ -25,9 +25,9 @@ import org.seasar.framework.exception.NamingRuntimeException;
  */
 public interface ExecuteHandler {
 	/**
-	 * 読み出し処理を実行します。
+	 * 処理を実行します。
 	 * 
-	 * @return
+	 * @return 結果
 	 * @throws NamingRuntimeException
 	 */
 	public Object execute() throws NamingRuntimeException;

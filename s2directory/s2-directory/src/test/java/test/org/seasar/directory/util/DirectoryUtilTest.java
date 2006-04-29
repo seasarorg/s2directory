@@ -25,6 +25,29 @@ import org.seasar.directory.util.DirectoryUtils;
  * @version $Revision$ $Date$
  */
 public class DirectoryUtilTest extends TestCase {
+	public void testGetFirstDn() {
+		assertEquals("uid=user1", DirectoryUtils
+				.getFirstDn("uid=user1, ou=Users, dc=seasar,dc=org"));
+		assertEquals("uid=user1", DirectoryUtils.getFirstDn("uid=user1"));
+	}
+
+	public void testGetBaseDn() {
+		assertEquals("ou=Users, dc=seasar,dc=org", DirectoryUtils
+				.getBaseDn("uid=user1, ou=Users, dc=seasar,dc=org"));
+	}
+
+	public void testGetAttributeName() {
+		assertEquals("uid", DirectoryUtils.getAttributeName("uid=user1"));
+		assertEquals("uid", DirectoryUtils
+				.getAttributeName("uid=user1, ou=Users, dc=seasar,dc=org"));
+	}
+
+	public void testGetAttributeValue() {
+		assertEquals("user1", DirectoryUtils.getAttributeValue("uid=user1"));
+		assertEquals("user1", DirectoryUtils
+				.getAttributeValue("uid=user1, ou=Users, dc=seasar,dc=org"));
+	}
+
 	public void testVerify() {
 		assertEquals(true, DirectoryUtils.verifyPassword(
 				"{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==", "secret"));

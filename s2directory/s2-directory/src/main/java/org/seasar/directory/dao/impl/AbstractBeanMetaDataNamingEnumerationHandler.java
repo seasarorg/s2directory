@@ -22,6 +22,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
+import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.types.PropertyType;
@@ -41,15 +42,20 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		NamingEnumerationHandler {
 	/** メタデータを表わします。 */
 	private DirectoryBeanMetaData directoryBeanMetaData;
+	/** ディレクトリサーバ接続情報を表します。 */
+	private DirectoryControlProperty directoryControlProperty;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param directoryBeanMetaData
+	 * @param multipleValueDelimiter 複数値の区切り文字
 	 */
 	public AbstractBeanMetaDataNamingEnumerationHandler(
-			DirectoryBeanMetaData directoryBeanMetaData) {
+			DirectoryBeanMetaData directoryBeanMetaData,
+			DirectoryControlProperty directoryControlProperty) {
 		this.directoryBeanMetaData = directoryBeanMetaData;
+		this.directoryControlProperty = directoryControlProperty;
 	}
 
 	/**
@@ -83,8 +89,9 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 				// pd.setValue(entry, result.getNameInNamespace());
 			} else if (attributeNameSet.contains(pt.getColumnName())) {
 				ValueType valueType = pt.getValueType();
-				Object value = valueType.getValue(result.getAttributes(), pt
-						.getColumnName());
+				Object value = valueType.getReadValue(result.getAttributes(),
+						pt.getColumnName(), directoryControlProperty
+								.getMultipleValueDelimiter());
 				PropertyDesc pd = pt.getPropertyDesc();
 				pd.setValue(entry, value);
 			} else if (!pt.isPersistent()) {
@@ -95,8 +102,10 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 							.replace(columnName, "_", "");
 					if (columnName2.equalsIgnoreCase(pt.getColumnName())) {
 						ValueType valueType = pt.getValueType();
-						Object value = valueType.getValue(result
-								.getAttributes(), columnName);
+						Object value = valueType.getReadValue(result
+								.getAttributes(), columnName,
+								directoryControlProperty
+										.getMultipleValueDelimiter());
 						PropertyDesc pd = pt.getPropertyDesc();
 						pd.setValue(entry, value);
 						break;

@@ -46,6 +46,13 @@ public interface DirectoryDaoAnnotationReader {
 	public Class getBeanClass();
 
 	/**
+	 * オブジェクトクラスアノテーションからオブジェクトクラスの配列を取得します。
+	 * 
+	 * @return
+	 */
+	public String[] getObjectClasses();
+
+	/**
 	 * 永続化対象にしない属性を取得します。
 	 * 
 	 * @param methodName

@@ -19,16 +19,16 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
 /**
- * サーチ結果を扱うインタフェースです。
+ * 検索結果を扱うインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public interface NamingEnumerationHandler {
 	/**
-	 * 指定されたサーチ結果を処理します。
+	 * 指定された検索結果を処理します。
 	 * 
-	 * @param results - サーチ結果
+	 * @param results 検索結果
 	 * @return
 	 * @throws NamingException
 	 */
