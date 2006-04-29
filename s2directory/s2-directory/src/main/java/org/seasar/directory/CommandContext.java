@@ -76,4 +76,18 @@ public interface CommandContext {
 	 * @return 識別名
 	 */
 	public String getDn();
+
+	/**
+	 * オブジェクトクラスを取得します。
+	 * 
+	 * @return objectClass
+	 */
+	public String[] getObjectClasses();
+
+	/**
+	 * オブジェクトクラスを設定します。
+	 * 
+	 * @param objectClasses
+	 */
+	public void setObjectClasses(String[] objectClasses);
 }

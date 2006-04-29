@@ -18,6 +18,7 @@ package org.seasar.directory.types;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
 
 /**
  * Object型での値取得クラスです。 TODO: 必要かどうか
@@ -27,31 +28,29 @@ import javax.naming.directory.Attributes;
  */
 public class ObjectType extends AbstractValueType {
 	/**
-	 * 指定した属性名の値を属性の集合から取得します。
-	 * 
-	 * @param attributes 属性の集合
-	 * @param attributeName 属性名
-	 * @return 属性値
-	 * @throws NamingException
-	 * @see org.seasar.directory.types.ValueType#getValue(javax.naming.directory.Attributes,
-	 *      java.lang.String)
+	 * {@inheritDoc}
 	 */
-	public Object getValue(Attributes attributes, String attributeName)
-			throws NamingException {
+	public Object getReadValue(Attributes attributes, String attributeName,
+			String multipleValueDelimiter) throws NamingException {
 		Attribute attribute = attributes.get(attributeName);
-		return getValue(attribute);
+		return getReadValue(attribute, multipleValueDelimiter);
 	}
 
 	/**
-	 * 指定した属性の値を取得します。
-	 * 
-	 * @param attribute 属性
-	 * @return 属性値
-	 * @throws NamingException
-	 * @see org.seasar.directory.types.ValueType#getValue(javax.naming.directory.Attribute)
+	 * {@inheritDoc}
 	 */
-	public Object getValue(Attribute attribute) throws NamingException {
-		// TODO Auto-generated method stub
+	public Object getReadValue(Attribute attribute,
+			String multipleValueDelimiter) throws NamingException {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Attribute getWriteValue(String attributeName, Object value,
+			String multipleValueDelimiter) {
+		Attribute attribute = new BasicAttribute(attributeName);
+		attribute.add(value);
+		return attribute;
 	}
 }

@@ -34,8 +34,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String user;
 	/** パスワードを表します。 */
 	private String password;
-	/** パスワードのハッシュ形式を表します。 */
-	private String passwordType = "SSHA";
+	/** パスワードの形式を表します。 */
+	private String passwordAlgorithm = "SSHA";
 	/** 基底となる識別名を表わします。 */
 	private String baseDn;
 	/** ユーザユニットの接尾辞を表します。 */
@@ -46,6 +46,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String groupSuffix = "ou=Groups";
 	/** グループを識別するための属性名を表します。 */
 	private String groupAttributeName = "memberUid";
+	/** 複数値のための区切り文字を表します。 */
+	private String multipleValueDelimiter = ",";
 	/** フィルタを表わします。 */
 	private String filter;
 	/** 検索コントロールを表わします。 */
@@ -72,10 +74,7 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	}
 
 	/**
-	 * クローンを生成します。
-	 * 
-	 * @return クローン
-	 * @see java.lang.Object#clone()
+	 * {@inheritDoc}
 	 */
 	public Object clone() {
 		try {
@@ -86,253 +85,210 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	}
 
 	/**
-	 * コンテキスト生成器を返します。
-	 * 
-	 * @return コンテキスト生成器
+	 * {@inheritDoc}
 	 */
 	public String getInitialContextFactory() {
 		return initialContextFactory;
 	}
 
 	/**
-	 * 指定されたコンテキスト生成器を設定します。
-	 * 
-	 * @param initialContextFactory コンテキスト生成器
+	 * {@inheritDoc}
 	 */
 	public void setInitialContextFactory(String initialContextFactory) {
 		this.initialContextFactory = initialContextFactory;
 	}
 
 	/**
-	 * urlを返します。
-	 * 
-	 * @return url
+	 * {@inheritDoc}
 	 */
 	public String getUrl() {
 		return url;
 	}
 
 	/**
-	 * 指定されたURLを設定します。
-	 * 
-	 * @param url url
+	 * {@inheritDoc}
 	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
 	/**
-	 * パスワードを返します。
-	 * 
-	 * @return パスワード
+	 * {@inheritDoc}
 	 */
 	public String getPassword() {
 		return password;
 	}
 
 	/**
-	 * パスワードを設定します。
-	 * 
-	 * @param password パスワード
+	 * {@inheritDoc}
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * パスワードのハッシュ形式を返します。
-	 * 
-	 * @return パスワードのハッシュ形式
+	 * {@inheritDoc}
 	 */
-	public String getPasswordType() {
-		return passwordType;
+	public String getPasswordAlgorithm() {
+		return passwordAlgorithm;
 	}
 
 	/**
-	 * パスワードのハッシュ形式を設定します。
-	 * 
-	 * @param passwordType パスワードのハッシュ形式
+	 * {@inheritDoc}
 	 */
-	public void setPasswordType(String passwordType) {
-		this.passwordType = passwordType;
+	public void setPasswordAlgorithm(String passwordAlgorithm) {
+		this.passwordAlgorithm = passwordAlgorithm;
 	}
 
 	/**
-	 * ユーザ名を返します。
-	 * 
-	 * @return ユーザ名
+	 * {@inheritDoc}
 	 */
 	public String getUser() {
 		return user;
 	}
 
 	/**
-	 * ユーザ名を設定します。
-	 * 
-	 * @param user ユーザ名
+	 * {@inheritDoc}
 	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
 
 	/**
-	 * ユーザユニットの接尾辞を取得します。
-	 * 
-	 * @return ユーザユニットの接尾辞
+	 * {@inheritDoc}
 	 */
 	public String getUserSuffix() {
 		return userSuffix;
 	}
 
 	/**
-	 * ユーザユニットの接尾辞を設定します。
-	 * 
-	 * @param userSuffix ユーザユニットの接尾辞
+	 * {@inheritDoc}
 	 */
 	public void setUserSuffix(String userSuffix) {
 		this.userSuffix = userSuffix;
 	}
 
 	/**
-	 * ユーザを識別するための属性名を取得します。
-	 * 
-	 * @return ユーザを識別するための属性名
+	 * {@inheritDoc}
 	 */
 	public String getUserAttributeName() {
 		return userAttributeName;
 	}
 
 	/**
-	 * ユーザを識別するための属性名を設定します。
-	 * 
-	 * @param userAttributeName ユーザを識別するための属性名
+	 * {@inheritDoc}
 	 */
 	public void setUserAttributeName(String userAttributeName) {
 		this.userAttributeName = userAttributeName;
 	}
 
 	/**
-	 * グループユニットの接尾辞を取得します。
-	 * 
-	 * @return グループユニットの接尾辞
+	 * {@inheritDoc}
 	 */
 	public String getGroupSuffix() {
 		return groupSuffix;
 	}
 
 	/**
-	 * グループユニットの接尾辞を設定します。
-	 * 
-	 * @param groupSuffix グループユニットの接尾辞
+	 * {@inheritDoc}
 	 */
 	public void setGroupSuffix(String groupSuffix) {
 		this.groupSuffix = groupSuffix;
 	}
 
 	/**
-	 * グループを識別するための属性名を取得します。
-	 * 
-	 * @return グループを識別するための属性名
+	 * {@inheritDoc}
 	 */
 	public String getGroupAttributeName() {
 		return groupAttributeName;
 	}
 
 	/**
-	 * グループを識別するための属性名を設定します。
-	 * 
-	 * @param groupAttributeName グループを識別するための属性名
+	 * {@inheritDoc}
 	 */
 	public void setGroupAttributeName(String groupAttributeName) {
 		this.groupAttributeName = groupAttributeName;
 	}
 
 	/**
-	 * 基底となる識別名を返します。
-	 * 
-	 * @return 基底となる識別名
+	 * {@inheritDoc}
+	 */
+	public String getMultipleValueDelimiter() {
+		return multipleValueDelimiter;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setMultipleValueDelimiter(String multipleValueDelimiter) {
+		this.multipleValueDelimiter = multipleValueDelimiter;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getBaseDn() {
 		return baseDn;
 	}
 
 	/**
-	 * 指定された基底となる識別名を設定します。
-	 * 
-	 * @param baseDn 基底となる識別名
+	 * {@inheritDoc}
 	 */
 	public void setBaseDn(String baseDn) {
 		this.baseDn = baseDn;
 	}
 
 	/**
-	 * フィルタを返します。
-	 * 
-	 * @return フィルタ
+	 * {@inheritDoc}
 	 */
 	public String getFilter() {
 		return filter;
 	}
 
 	/**
-	 * 指定されたフィルタを設定します。
-	 * 
-	 * @param filter フィルタ
+	 * {@inheritDoc}
 	 */
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
 
 	/**
-	 * 検索コントロールを返します。
-	 * 
-	 * @return 検索コントロール
+	 * {@inheritDoc}
 	 */
 	public int getSearchControls() {
 		return searchControls;
 	}
 
 	/**
-	 * 検索コントロールを設定します。
-	 * 
-	 * @param searchControls 検索コントロール
+	 * {@inheritDoc}
 	 */
 	public void setSearchControls(int searchControls) {
 		this.searchControls = searchControls;
 	}
 
 	/**
-	 * 匿名接続を許可するか判断します。
-	 * 
-	 * @return allowAnonymous
+	 * {@inheritDoc}
 	 */
 	public boolean isAllowAnonymous() {
 		return allowAnonymous;
 	}
 
 	/**
-	 * 匿名接続を許可するか設定します。
-	 * 
-	 * @param allowAnonymous 匿名接続を許可するかどうか
+	 * {@inheritDoc}
 	 */
 	public void setAllowAnonymous(boolean allowAnonymous) {
 		this.allowAnonymous = allowAnonymous;
 	}
 
 	/**
-	 * 認証可能な情報を保持しているか調べます。
-	 * 
-	 * @return 認証可能な情報を保持している場合 true
-	 * @see org.seasar.directory.DirectoryControlProperty#hasAuthentication()
+	 * {@inheritDoc}
 	 */
 	public boolean hasAuthentication() {
 		return (user != null) && (password != null);
 	}
 
 	/**
-	 * このオブジェクトの文字列表現を返します。
-	 * 
-	 * @return このオブジェクトの文字列表現
+	 * {@inheritDoc}
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();

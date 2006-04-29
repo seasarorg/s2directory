@@ -22,5 +22,11 @@ package org.seasar.directory.dao;
  * @version $Date::                           $
  */
 public interface DirectoryCommand {
+	/**
+	 * 指定された引数を元に処理を実行します。
+	 * 
+	 * @param args 引数
+	 * @return 結果
+	 */
 	public Object execute(Object[] args);
 }

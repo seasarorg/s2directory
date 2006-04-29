@@ -48,20 +48,14 @@ public class ArgsAnnotationMethodArgsImpl implements AnnotationMethodArgs {
 	}
 
 	/**
-	 * argNamesを取得します。
-	 * 
-	 * @return
-	 * @see org.seasar.directory.dao.AnnotationMethodArgs#getArgNames()
+	 * {@inheritDoc}
 	 */
 	public String[] getArgNames() {
 		return argNames;
 	}
 
 	/**
-	 * argTypesを取得します。
-	 * 
-	 * @return
-	 * @see org.seasar.directory.dao.AnnotationMethodArgs#getArgTypes()
+	 * {@inheritDoc}
 	 */
 	public Class[] getArgTypes() {
 		return argTypes;

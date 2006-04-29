@@ -47,11 +47,7 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	}
 
 	/**
-	 * 指定されたDAOクラスから生成したDirectoryDaoMetaDataのインスタンスを返します。
-	 * 
-	 * @param daoClass 生成元となるDAOクラス
-	 * @return 生成したDirectoryDaoMetaDataのインスタンス
-	 * @see org.seasar.directory.dao.DirectoryDaoMetaDataFactory#getDirectoryDaoMetaData(Class)
+	 * {@inheritDoc}
 	 */
 	public DirecotryDaoMetaData getDirectoryDaoMetaData(Class daoClass) {
 		String key = daoClass.getName();

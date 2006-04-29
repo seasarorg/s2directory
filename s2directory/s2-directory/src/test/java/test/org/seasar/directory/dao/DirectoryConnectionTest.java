@@ -15,8 +15,6 @@
  */
 package test.org.seasar.directory.dao;
 
-import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
@@ -54,54 +52,11 @@ public class DirectoryConnectionTest extends TestCase {
 				.getDirectoryControlProperty();
 		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
 				.getInitialContextFactory());
-		assertEquals("ldap://localhost:30390", property.getUrl());
+		assertEquals("ldap://localhost:389", property.getUrl());
 		assertEquals("cn=Manager", property.getUser());
 		assertEquals("secret", property.getPassword());
 		assertEquals("uid", property.getUserAttributeName());
-	}
-
-	/**
-	 * 接続テストを行います。
-	 */
-	public void testAdminConnection() {
-		try {
-			assertEquals(true, directoryDataSource.authenticate());
-			DirContext ctx = directoryDataSource.getConnection();
-			ctx.close();
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 接続テストを行います。
-	 */
-	public void testUserConnection() {
-		DirectoryControlProperty property = directoryDataSource
-				.getDirectoryControlProperty();
-		try {
-			// 1
-			assertEquals(true, directoryDataSource.authenticate());
-			DirContext ctx = directoryDataSource.getConnection();
-			ctx.close();
-			// 2
-			property.setUser("user1");
-			property.setPassword("user1pass");
-			assertEquals(true, directoryDataSource.authenticate(property));
-			ctx = directoryDataSource.getConnection();
-			// 3
-			property.setUser("uid=user1");
-			property.setPassword("user1pass");
-			assertEquals(true, directoryDataSource.authenticate(property));
-			ctx = directoryDataSource.getConnection();
-			// 4
-			property.setUser("uid=user1,ou=Users");
-			property.setPassword("user1pass");
-			assertEquals(true, directoryDataSource.authenticate(property));
-			ctx = directoryDataSource.getConnection();
-		} catch (NamingException e) {
-			System.out.println(property.getUser());
-			e.printStackTrace();
-		}
+		assertEquals("SHA", property.getPasswordAlgorithm());
+		assertEquals("__", property.getMultipleValueDelimiter());
 	}
 }

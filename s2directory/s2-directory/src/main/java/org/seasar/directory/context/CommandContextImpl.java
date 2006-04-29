@@ -38,6 +38,8 @@ public class CommandContextImpl implements CommandContext {
 	private CaseInsensitiveMap args = new CaseInsensitiveMap();
 	/** 引数の型マップを表わします。 */
 	private CaseInsensitiveMap argTypes = new CaseInsensitiveMap();
+	/** オブジェクトクラスをあらわします。 */
+	private String[] objectClasses;
 
 	/**
 	 * 指定した引数名の値を取得します。
@@ -101,10 +103,8 @@ public class CommandContextImpl implements CommandContext {
 			int size = beanDesc.getPropertyDescSize();
 			for (int i = 0; i < size; i++) {
 				PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-				if (propertyDesc.getValue(dtoArg) != null) {
-					addArg(propertyDesc.getPropertyName(), propertyDesc
-							.getValue(dtoArg), propertyDesc.getPropertyType());
-				}
+				addArg(propertyDesc.getPropertyName(), propertyDesc
+						.getValue(dtoArg), propertyDesc.getPropertyType());
 			}
 		}
 	}
@@ -159,7 +159,29 @@ public class CommandContextImpl implements CommandContext {
 	 * @return 識別名
 	 */
 	public String getDn() {
-		return String.valueOf(this.getArg("dn"));
+		if (args.containsKey("dn")) {
+			return String.valueOf(args.get("dn"));
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * オブジェクトクラスを取得します。
+	 * 
+	 * @return objectClasses
+	 */
+	public String[] getObjectClasses() {
+		return objectClasses;
+	}
+
+	/**
+	 * オブジェクトクラスを設定します。
+	 * 
+	 * @param objectClasses
+	 */
+	public void setObjectClasses(String[] objectClasses) {
+		this.objectClasses = objectClasses;
 	}
 
 	/**
@@ -170,7 +192,7 @@ public class CommandContextImpl implements CommandContext {
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("SEARCH: ");
+		buffer.append("CommandContext: ");
 		buffer.append(args);
 		buffer.append(argTypes);
 		return buffer.toString();

@@ -17,6 +17,7 @@ package org.seasar.directory.dao.impl;
 
 import java.lang.reflect.Field;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
+import org.seasar.directory.dao.util.DaoUtils;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
@@ -31,6 +32,8 @@ public class DirectoryFieldAnnotationReader implements
 		DirectoryDaoAnnotationReader {
 	/** BEANアノテーションの設定名を表します。 */
 	public String BEAN = "BEAN";
+	/** オブジェクトクラスアノテーションの設定名を表します。 */
+	public String OBJECTCLASSES = "OBJECTCLASSES";
 	/** ARGSアノテーションの設定名を表します。 */
 	public String ARGS_SUFFIX = "_ARGS";
 	/** FILTERアノテーションの設定名を表します。 */
@@ -43,6 +46,8 @@ public class DirectoryFieldAnnotationReader implements
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
 	/** メタ情報を表わします。 */
 	protected BeanDesc daoBeanDesc;
+	/** 基底オブジェクトクラスを現します。 */
+	private final static String BASE_OBJECTCLASS = "top";
 
 	/**
 	 * 指定されたメタ情報を持つインスタンスを作成します。
@@ -54,11 +59,7 @@ public class DirectoryFieldAnnotationReader implements
 	}
 
 	/**
-	 * ARGSアノテーションを取得します。
-	 * 
-	 * @param methodName
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getArgNames(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public String[] getArgNames(String methodName) {
 		String argsKey = methodName + ARGS_SUFFIX;
@@ -72,11 +73,7 @@ public class DirectoryFieldAnnotationReader implements
 	}
 
 	/**
-	 * QUERYアノテーションを取得します。
-	 * 
-	 * @param methodName
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getQuery(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public String getQuery(String methodName) {
 		String key = methodName + QUERY_SUFFIX;
@@ -89,10 +86,7 @@ public class DirectoryFieldAnnotationReader implements
 	}
 
 	/**
-	 * メタ情報のクラスを取得します。
-	 * 
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getBeanClass()
+	 * {@inheritDoc}
 	 */
 	public Class getBeanClass() {
 		Field beanField = daoBeanDesc.getField(BEAN);
@@ -100,22 +94,47 @@ public class DirectoryFieldAnnotationReader implements
 	}
 
 	/**
-	 * 永続化対象にしない属性を取得します。
-	 * 
-	 * @param methodName
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getNoPersistentProps(java.lang.String)
+	 * {@inheritDoc}
+	 */
+	public String[] getObjectClasses() {
+		String[] tmpObjectClasses, objectClasses;
+		if (daoBeanDesc.hasField(OBJECTCLASSES)) {
+			Field queryField = daoBeanDesc.getField(OBJECTCLASSES);
+			String objectClassNames = (String)FieldUtil.get(queryField, null);
+			tmpObjectClasses = objectClassNames.split(",");
+		} else {
+			tmpObjectClasses = new String[1];
+			tmpObjectClasses[0] = DaoUtils.getSimpleClassName(this
+					.getBeanClass());
+		}
+		// top オブジェクトクラスを持っていない場合、追加します。
+		boolean hasTopObjectClass = false;
+		for (int i = 0; i < tmpObjectClasses.length; i++) {
+			tmpObjectClasses[i] = tmpObjectClasses[i].trim();
+			if (tmpObjectClasses[i].equals(BASE_OBJECTCLASS)) {
+				hasTopObjectClass = true;
+			}
+		}
+		if (hasTopObjectClass) {
+			objectClasses = tmpObjectClasses;
+		} else {
+			int length = tmpObjectClasses.length;
+			objectClasses = new String[length + 1];
+			System.arraycopy(tmpObjectClasses, 0, objectClasses, 0, length);
+			objectClasses[length] = BASE_OBJECTCLASS;
+		}
+		return objectClasses;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String[] getNoPersistentProps(String methodName) {
 		return getProps(methodName, methodName + NO_PERSISTENT_PROPS_SUFFIX);
 	}
 
 	/**
-	 * この属性だけ永続化する属性を取得します。
-	 * 
-	 * @param methodName
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getPersistentProps(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public String[] getPersistentProps(String methodName) {
 		return getProps(methodName, methodName + PERSISTENT_PROPS_SUFFIX);
@@ -138,11 +157,7 @@ public class DirectoryFieldAnnotationReader implements
 	}
 
 	/**
-	 * FILTERアノテーションを取得します。
-	 * 
-	 * @param methodName
-	 * @return
-	 * @see org.seasar.directory.dao.DirectoryDaoAnnotationReader#getFilter(java.lang.String)
+	 * {@inheritDoc}
 	 */
 	public String getFilter(String methodName) {
 		String key = methodName + FILTER_SUFFIX;

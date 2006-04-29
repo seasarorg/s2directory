@@ -38,7 +38,7 @@ public class BeanListMetaDataNamingEnumerationHandler extends
 	 */
 	public BeanListMetaDataNamingEnumerationHandler(
 			DirectoryBeanMetaData directoryBeanMetaData) {
-		super(directoryBeanMetaData);
+		super(directoryBeanMetaData, null);
 	}
 
 	/**
