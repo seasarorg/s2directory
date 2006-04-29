@@ -123,9 +123,10 @@ public class PosixAccountUpdateTest extends TestCase {
 		}
 		// user1を取得し直します。
 		account = posixAccountDtoDao.getUser(user1);
-		assertEquals(true, account.getUid().equals(user1.getUid()));
+		assertEquals(user1.getUid(), account.getUid());
 		// 初期化します。
-		assertEquals(1, posixAccountDtoDao.update(user1));
+		assertEquals(0, posixAccountDtoDao.update(user1));
+		account = posixAccountDtoDao.getUser(user1);
 	}
 
 	public void testUpdateSchemeViolationWithUserMode() {
@@ -148,6 +149,6 @@ public class PosixAccountUpdateTest extends TestCase {
 		account = posixAccountDtoDao.getUserWithUserMode(property, user1);
 		assertEquals(user1.getUid(), account.getUid());
 		// 初期化します。
-		assertEquals(1, posixAccountDtoDao.update(user1));
+		assertEquals(0, posixAccountDtoDao.update(user1));
 	}
 }

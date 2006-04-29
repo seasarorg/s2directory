@@ -89,7 +89,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 						.getReadValue(result.getAttributes(), attributeName,
 								directoryControlProperty
 										.getMultipleValueDelimiter()));
-				if (StringUtil.isEmpty(stringValue)) {
+				if (value == null || StringUtil.isEmpty(stringValue)) {
 					// 値が空の場合、削除します。
 					itemList.add(new ModificationItem(
 							DirContext.REMOVE_ATTRIBUTE, attribute));
@@ -128,7 +128,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 				if (attributeName.equals("userpassword"))
 					stringValue = DirectoryUtils.createPassword(stringValue,
 							directoryControlProperty.getPasswordAlgorithm());
-				if (!StringUtil.isEmpty(stringValue)) {
+				if (value != null && !StringUtil.isEmpty(stringValue)) {
 					// 値がある場合、追加します。
 					Attribute attribute = new BasicAttribute(attributeName,
 							stringValue);
