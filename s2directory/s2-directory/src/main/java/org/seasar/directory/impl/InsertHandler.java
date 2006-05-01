@@ -50,7 +50,7 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	 * インスタンスを生成します。
 	 * 
 	 * @param directoryDataSource
-	 * @param dn
+	 * @param cmd
 	 */
 	public InsertHandler(DirectoryDataSource directoryDataSource,
 			CommandContext cmd) {
@@ -146,6 +146,10 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Insert: " + cmd.getDn());
+			String[] objectClasses = cmd.getObjectClasses();
+			for (int i = 0; i < objectClasses.length; i++) {
+				logger.debug("\tobjectClass: " + objectClasses[i]);
+			}
 		}
 		return insert(cmd.getDn());
 	}

@@ -18,7 +18,7 @@ package examples.directorydao.entity;
 import java.io.Serializable;
 
 public class PosixGroup implements Serializable {
-	//public static final String OBJECTCLASS = "posixGroup";
+	public static final String OBJECTCLASSES = "posixGroup";
 	private String dn;
 	private String cn;
 	private String gidNumber;

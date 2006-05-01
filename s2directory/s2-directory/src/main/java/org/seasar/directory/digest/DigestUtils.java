@@ -26,23 +26,23 @@ import java.util.Random;
 public final class DigestUtils {
 	/** 乱数器を表します。 */
 	private static final Random RANDOM = new Random();
-	/** saltのデフォルトの長さを表します。 */
+	/** 乱数用の種のデフォルトの長さを表します。 */
 	private static final int SALT_LENGTH = 4;
 
 	/**
-	 * saltを生成します。
+	 * 乱数用の種を生成します。
 	 * 
-	 * @return
+	 * @return 乱数用の種
 	 */
 	public static byte[] getRandomSalt() {
 		return getRandomSalt(SALT_LENGTH);
 	}
 
 	/**
-	 * 指定された長さのsaltを生成します。
+	 * 指定された長さの乱数用の種を生成します。
 	 * 
 	 * @param length
-	 * @return
+	 * @return 乱数用の種
 	 */
 	public static byte[] getRandomSalt(int length) {
 		return randomString(length).getBytes();
@@ -62,8 +62,8 @@ public final class DigestUtils {
 	 * 指定された乱数器を用いて指定された文字数のランダムな文字列を生成します。
 	 * 
 	 * @param count 文字数
-	 * @param random ランダムな文字列
-	 * @return
+	 * @param random 乱数器
+	 * @return ランダムな文字列
 	 */
 	public static String randomString(int count, Random random) {
 		if (count <= 0) {

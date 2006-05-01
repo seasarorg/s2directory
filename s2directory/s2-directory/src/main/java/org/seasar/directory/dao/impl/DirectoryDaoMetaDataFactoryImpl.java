@@ -20,6 +20,7 @@ import java.util.Map;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.DirecotryDaoMetaData;
+import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
 
@@ -32,18 +33,24 @@ import org.seasar.directory.impl.DirectoryDataSourceImpl;
 public class DirectoryDaoMetaDataFactoryImpl implements
 		DirectoryDaoMetaDataFactory {
 	/** メタデータのキャッシュを表わします。 */
-	private Map DirectoryDaoMetaDataCache = new HashMap();
-	/** Directory接続ファクトリを表わします。 */
-	private DirectoryDataSource DirectoryDataSource;
+	private Map directoryDaoMetaDataCache = new HashMap();
+	/** ディレクトリ接続ファクトリを表わします。 */
+	private DirectoryDataSource directoryDataSource;
+	/** ディレクトリアノテーションリーダファクトリを表します。 */
+	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
 
 	/**
-	 * @param dataSource
-	 * @param resultSetFactory
+	 * インスタンスを生成します。
+	 * 
+	 * @param directoryControlProperty ディレクトリサーバ接続情報
+	 * @param directoryAnnotationReaderFactory ディレクトリアノテーションリーダファクトリ
 	 */
 	public DirectoryDaoMetaDataFactoryImpl(
-			DirectoryControlProperty DirectoryControlProperty) {
-		this.DirectoryDataSource = new DirectoryDataSourceImpl(
-				DirectoryControlProperty);
+			DirectoryControlProperty directoryControlProperty,
+			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
+		this.directoryDataSource = new DirectoryDataSourceImpl(
+				directoryControlProperty);
+		this.directoryAnnotationReaderFactory = directoryAnnotationReaderFactory;
 	}
 
 	/**
@@ -51,18 +58,19 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 */
 	public DirecotryDaoMetaData getDirectoryDaoMetaData(Class daoClass) {
 		String key = daoClass.getName();
-		DirecotryDaoMetaData dmd = (DirecotryDaoMetaData)DirectoryDaoMetaDataCache
+		DirecotryDaoMetaData dmd = (DirecotryDaoMetaData)directoryDaoMetaDataCache
 				.get(key);
 		if (dmd != null) {
 			return dmd;
 		}
 		synchronized (this) {
-			dmd = (DirecotryDaoMetaData)DirectoryDaoMetaDataCache.get(key);
+			dmd = (DirecotryDaoMetaData)directoryDaoMetaDataCache.get(key);
 			if (dmd != null) {
 				return dmd;
 			}
-			dmd = new DirectoryDaoMetaDataImpl(daoClass, DirectoryDataSource);
-			DirectoryDaoMetaDataCache.put(key, dmd);
+			dmd = new DirectoryDaoMetaDataImpl(daoClass, directoryDataSource,
+					directoryAnnotationReaderFactory);
+			directoryDaoMetaDataCache.put(key, dmd);
 		}
 		return dmd;
 	}

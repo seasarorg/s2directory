@@ -56,7 +56,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * インスタンスを生成します。
 	 * 
 	 * @param directoryDataSource
-	 * @param dn
+	 * @param cmd
 	 */
 	public UpdateHandler(DirectoryDataSource directoryDataSource,
 			CommandContext cmd) {
@@ -144,7 +144,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * 属性名の集合を作成します。
 	 * 
 	 * @param result
-	 * @return
+	 * @return 属性名の集合
 	 * @throws NamingException
 	 */
 	private Set createAttributesNames(SearchResult result)
@@ -164,7 +164,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * 更新アイテムを作成します。
 	 * 
 	 * @param results
-	 * @return
+	 * @return 修正属性の配列
 	 * @throws NamingException
 	 */
 	public ModificationItem[] createModificationItems(NamingEnumeration results)

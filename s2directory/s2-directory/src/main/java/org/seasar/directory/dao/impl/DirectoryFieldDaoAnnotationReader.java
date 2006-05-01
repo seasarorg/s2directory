@@ -28,7 +28,7 @@ import org.seasar.framework.util.StringUtil;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryFieldAnnotationReader implements
+public class DirectoryFieldDaoAnnotationReader implements
 		DirectoryDaoAnnotationReader {
 	/** BEANアノテーションの設定名を表します。 */
 	public String BEAN = "BEAN";
@@ -54,7 +54,7 @@ public class DirectoryFieldAnnotationReader implements
 	 * 
 	 * @param daoBeanDesc
 	 */
-	public DirectoryFieldAnnotationReader(BeanDesc daoBeanDesc) {
+	public DirectoryFieldDaoAnnotationReader(BeanDesc daoBeanDesc) {
 		this.daoBeanDesc = daoBeanDesc;
 	}
 
@@ -96,16 +96,22 @@ public class DirectoryFieldAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getObjectClasses() {
+	public String[] getObjectClasses(String[] beanObjectClasses) {
 		String[] tmpObjectClasses, objectClasses;
 		if (daoBeanDesc.hasField(OBJECTCLASSES)) {
 			Field queryField = daoBeanDesc.getField(OBJECTCLASSES);
 			String objectClassNames = (String)FieldUtil.get(queryField, null);
 			tmpObjectClasses = objectClassNames.split(",");
 		} else {
-			tmpObjectClasses = new String[1];
-			tmpObjectClasses[0] = DaoUtils.getSimpleClassName(this
-					.getBeanClass());
+			if (beanObjectClasses != null) {
+				// ビーンクラスにOBJECTCLASSESアノテーションがある場合
+				tmpObjectClasses = beanObjectClasses;
+			} else {
+				// ビーンクラスにOBJECTCLASSESアノテーションがない場合
+				tmpObjectClasses = new String[1];
+				tmpObjectClasses[0] = DaoUtils.getSimpleClassName(this
+						.getBeanClass());
+			}
 		}
 		// top オブジェクトクラスを持っていない場合、追加します。
 		boolean hasTopObjectClass = false;
