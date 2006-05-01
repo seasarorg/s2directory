@@ -55,10 +55,10 @@ public final class DigestFactory {
 	}
 
 	/**
-	 * ダイジェストを取得します。
+	 * 指定された形式のダイジェストインスタンスを取得します。
 	 * 
 	 * @param hash
-	 * @return
+	 * @return ダイジェストインスタンス
 	 * @throws NoSuchAlgorithmException
 	 */
 	public static Digest getDigest(String hash) throws NoSuchAlgorithmException {

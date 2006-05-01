@@ -29,8 +29,8 @@ public final class DirectoryUtils {
 	/**
 	 * 指定された識別名からトップの識別名を取得します。
 	 * 
-	 * @param fullDn
-	 * @return
+	 * @param fullDn 識別名
+	 * @return トップの識別名
 	 */
 	public static String getFirstDn(String fullDn) {
 		int index = fullDn.indexOf(",");
@@ -43,8 +43,8 @@ public final class DirectoryUtils {
 	/**
 	 * 指定された識別名から基底の識別名を取得します。
 	 * 
-	 * @param fullDn
-	 * @return
+	 * @param fullDn 識別名
+	 * @return 基底の識別名
 	 */
 	public static String getBaseDn(String fullDn) {
 		int index = fullDn.indexOf(",");
@@ -54,22 +54,35 @@ public final class DirectoryUtils {
 		return fullDn;
 	}
 
+	/**
+	 * 属性名を取得します。
+	 * 
+	 * @param valueSet 属性名と属性値のセット
+	 * @return 属性名
+	 */
 	public static String getAttributeName(String valueSet) {
 		valueSet = getFirstDn(valueSet);
 		return valueSet.substring(0, valueSet.indexOf("=")).trim();
 	}
 
+	/**
+	 * 属性値を取得します。
+	 * 
+	 * @param valueSet 属性名と属性値のセット
+	 * @return 属性値
+	 */
 	public static String getAttributeValue(String valueSet) {
 		valueSet = getFirstDn(valueSet);
 		return valueSet.substring(valueSet.indexOf("=") + 1).trim();
 	}
 
 	/**
-	 * パスワードが等しいか比較します。
+	 * パスワードが正しいか検証します。<br />
+	 * パスワードが正しい場合 <code>true</code> 不正な場合は <code>false</code> を返します。
 	 * 
 	 * @param password
 	 * @param hash
-	 * @return
+	 * @return パスワードが正しい場合 <code>true</code> 不正な場合は <code>false</code>
 	 */
 	public static boolean verifyPassword(String hash, String password) {
 		try {
@@ -81,11 +94,11 @@ public final class DirectoryUtils {
 	}
 
 	/**
-	 * 新しいパスワードを作成します。
+	 * パスワードを作成します。
 	 * 
-	 * @param plain
-	 * @param algorithm
-	 * @return
+	 * @param password 平文パスワード
+	 * @param algorithm アルゴリズム名
+	 * @return パスワード
 	 */
 	public static String createPassword(String password, String algorithm) {
 		try {

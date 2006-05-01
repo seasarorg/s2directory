@@ -19,7 +19,7 @@ import javax.naming.directory.SearchControls;
 import org.seasar.directory.DirectoryControlProperty;
 
 /**
- * Directory接続情報を表わすインタフェースです。
+ * ディレクトリ接続情報を表わすインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $

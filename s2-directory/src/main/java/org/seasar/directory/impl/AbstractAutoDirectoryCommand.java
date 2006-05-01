@@ -151,6 +151,6 @@ public abstract class AbstractAutoDirectoryCommand extends
 	}
 
 	protected void applyObjectClass(CommandContext cmd) {
-		cmd.setObjectClasses(super.getObjectClass());
+		cmd.setObjectClasses(super.getObjectClasses());
 	}
 }

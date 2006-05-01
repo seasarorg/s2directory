@@ -18,8 +18,7 @@ package examples.directorydao.common;
 import java.util.Iterator;
 import java.util.List;
 import org.seasar.framework.container.S2Container;
-import examples.directorydao.entity.PosixGroup;
-import examples.directorydao.entity.PosixGroupWithList;
+import examples.directorydao.dto.PosixGroupDto;
 
 /**
  * PosixGroup生成クラスです。
@@ -27,13 +26,13 @@ import examples.directorydao.entity.PosixGroupWithList;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class PosixGroupFactory extends DirectoryDtoFactory {
+public class PosixGroupDtoFactory extends DirectoryDtoFactory {
 	/**
 	 * 指定されたコンテナを持ったインスタンスを作成します。
 	 * 
 	 * @param container
 	 */
-	public PosixGroupFactory(S2Container container) {
+	public PosixGroupDtoFactory(S2Container container) {
 		super(container);
 	}
 
@@ -44,8 +43,8 @@ public class PosixGroupFactory extends DirectoryDtoFactory {
 	 * @param users ユーザリスト
 	 * @return グループインスタンス
 	 */
-	public PosixGroup getGroup(String name, List users) {
-		PosixGroup group = new PosixGroup();
+	public PosixGroupDto getGroup(String name, List users) {
+		PosixGroupDto group = new PosixGroupDto();
 		group.setDn("cn=" + name + ",ou=Groups," + property.getBaseDn());
 		group.setCn(name);
 		group.setGidNumber("1001");
@@ -57,23 +56,6 @@ public class PosixGroupFactory extends DirectoryDtoFactory {
 			}
 		}
 		group.setMemberUid(buffer.toString());
-		group.setDescription("Group " + name);
-		return group;
-	}
-
-	/**
-	 * オブジェクトを作成します。
-	 * 
-	 * @param name グループ名
-	 * @param users ユーザリスト
-	 * @return グループインスタンス
-	 */
-	public PosixGroupWithList getGroupWithList(String name, List users) {
-		PosixGroupWithList group = new PosixGroupWithList();
-		group.setDn("cn=" + name + ",ou=Groups," + property.getBaseDn());
-		group.setCn(name);
-		group.setGidNumber("1001");
-		group.setMemberUid(users);
 		group.setDescription("Group " + name);
 		return group;
 	}

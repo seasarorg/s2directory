@@ -37,8 +37,8 @@ public class PosixAccountDtoFactory extends DirectoryDtoFactory {
 	/**
 	 * PosixAccountDtoオブジェクトを作成します。
 	 * 
-	 * @param name
-	 * @return
+	 * @param name ユーザ名
+	 * @return ユーザインスタンス
 	 */
 	public PosixAccountDto getUser(String name) {
 		PosixAccountDto account = new PosixAccountDto();

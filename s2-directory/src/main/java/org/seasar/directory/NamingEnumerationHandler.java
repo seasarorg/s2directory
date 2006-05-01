@@ -26,10 +26,11 @@ import javax.naming.NamingException;
  */
 public interface NamingEnumerationHandler {
 	/**
-	 * 指定された検索結果を処理します。
+	 * 指定された検索結果を処理し、結果オブジェクトを返します。
 	 * 
 	 * @param results 検索結果
-	 * @return
+	 * @param baseDn 基底の識別名
+	 * @return 結果オブジェクト
 	 * @throws NamingException
 	 */
 	public Object handle(NamingEnumeration results, String baseDn)

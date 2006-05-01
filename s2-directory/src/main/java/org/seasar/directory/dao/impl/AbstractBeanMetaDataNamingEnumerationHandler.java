@@ -48,8 +48,8 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryBeanMetaData
-	 * @param multipleValueDelimiter 複数値の区切り文字
+	 * @param directoryBeanMetaData ビーンメタデータ
+	 * @param directoryControlProperty ディレクトリサーバ接続情報
 	 */
 	public AbstractBeanMetaDataNamingEnumerationHandler(
 			DirectoryBeanMetaData directoryBeanMetaData,
@@ -62,7 +62,6 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 	 * ビーンメタデータを取得します。
 	 * 
 	 * @return ビーンメタデータ
-	 * @see org.seasar.directory.NamingEnumerationHandler#getDirectoryBeanMetaData()
 	 */
 	public DirectoryBeanMetaData getDirectoryBeanMetaData() {
 		return directoryBeanMetaData;
