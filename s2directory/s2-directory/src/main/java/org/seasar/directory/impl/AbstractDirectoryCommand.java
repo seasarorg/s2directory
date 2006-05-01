@@ -29,13 +29,13 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	private DirectoryDataSource directoryDataSource;
 	/** フィルタを表します。 */
 	private String filter;
-	/** オブジェクトクラスをあらわします。 */
+	/** オブジェクトクラスを表します。 */
 	private String[] objectClasses;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param dataSource - データソース
+	 * @param directoryDataSource データソース
 	 */
 	public AbstractDirectoryCommand(DirectoryDataSource directoryDataSource) {
 		this.directoryDataSource = directoryDataSource;
@@ -73,7 +73,7 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * 
 	 * @return objectClasses
 	 */
-	public String[] getObjectClass() {
+	public String[] getObjectClasses() {
 		return objectClasses;
 	}
 
@@ -82,7 +82,7 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * 
 	 * @param objectClasses
 	 */
-	public void setObjectClass(String[] objectClass) {
-		this.objectClasses = objectClass;
+	public void setObjectClasses(String[] objectClasses) {
+		this.objectClasses = objectClasses;
 	}
 }

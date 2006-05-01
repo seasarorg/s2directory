@@ -30,11 +30,12 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(PosixAccountPasswordUpdateTest.class);
 		suite.addTestSuite(PosixAccountInsertTest.class);
-		suite.addTestSuite(PosixAccountUpdateTest.class);
 		suite.addTestSuite(PosixAccountDeleteTest.class);
-		suite.addTestSuite(PosixGroupWithListInsertTest.class);
 		suite.addTestSuite(PosixGroupInsertTest.class);
+		suite.addTestSuite(PosixGroupWithListInsertTest.class);
+		suite.addTestSuite(PosixAccountUpdateTest.class);
 		suite.addTestSuite(PosixGroupUpdateTest.class);
+		suite.addTestSuite(PosixGroupDtoTest.class);
 		//$JUnit-END$
 		return suite;
 	}

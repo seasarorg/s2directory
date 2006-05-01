@@ -4,6 +4,8 @@
 <components namespace="directorydao">
 	<include path="directory.dicon"/>
 	<component
+		class="org.seasar.directory.dao.impl.DirectoryFieldAnnotationReaderFactory"/>
+	<component
 		class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
 	<component name="interceptor"
 		class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/>

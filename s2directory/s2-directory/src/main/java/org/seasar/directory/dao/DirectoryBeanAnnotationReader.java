@@ -21,23 +21,7 @@ package org.seasar.directory.dao;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface DirectoryDaoAnnotationReader {
-	/**
-	 * QUERYアノテーションを取得します。
-	 * 
-	 * @param methodName 関数名
-	 * @return QUERYアノテーションの値
-	 */
-	public String getQuery(String methodName);
-
-	/**
-	 * ARGSアノテーションを取得します。
-	 * 
-	 * @param methodName 関数名
-	 * @return ARGSアノテーションの値
-	 */
-	public String[] getArgNames(String methodName);
-
+public interface DirectoryBeanAnnotationReader {
 	/**
 	 * メタ情報のクラスを取得します。
 	 * 
@@ -48,10 +32,9 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * オブジェクトクラスアノテーションからオブジェクトクラスの配列を取得します。
 	 * 
-	 * @param beanObjectClasses ビーンクラスのオブジェクトクラス
 	 * @return オブジェクトクラスアノテーションの値の配列
 	 */
-	public String[] getObjectClasses(String[] beanObjectClasses);
+	public String[] getObjectClasses();
 
 	/**
 	 * 永続化対象にしない属性を取得します。
@@ -68,12 +51,4 @@ public interface DirectoryDaoAnnotationReader {
 	 * @return 永続化する属性の配列
 	 */
 	public String[] getPersistentProps(String methodName);
-
-	/**
-	 * FILTERアノテーションを取得します。
-	 * 
-	 * @param methodName 関数名
-	 * @return FILTERアノテーションの値
-	 */
-	public String getFilter(String methodName);
 }

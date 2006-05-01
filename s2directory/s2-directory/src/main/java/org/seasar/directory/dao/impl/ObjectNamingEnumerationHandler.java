@@ -20,7 +20,8 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
-import org.seasar.directory.NamingEnumerationHandler;
+import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 
 /**
  * 検索結果の1つ目の属性値を返すオブジェクト型ハンドラクラスです。
@@ -28,14 +29,18 @@ import org.seasar.directory.NamingEnumerationHandler;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class ObjectNamingEnumerationHandler implements NamingEnumerationHandler {
+public class ObjectNamingEnumerationHandler extends
+		AbstractBeanMetaDataNamingEnumerationHandler {
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param directoryBeanMetaData
+	 * @param directoryControlProperty
 	 */
-	public ObjectNamingEnumerationHandler() {
-		super();
+	public ObjectNamingEnumerationHandler(
+			DirectoryBeanMetaData directoryBeanMetaData,
+			DirectoryControlProperty directoryControlProperty) {
+		super(directoryBeanMetaData, directoryControlProperty);
 	}
 
 	/**

@@ -52,13 +52,14 @@ public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 
 	public void testHandle() {
 		BeanListMetaDataNamingEnumerationHandler handler = new BeanListMetaDataNamingEnumerationHandler(
-				directoryBeanMetaData);
+				directoryBeanMetaData, directoryDataSource
+						.getDirectoryControlProperty());
 		try {
 			DirContext ctx = directoryDataSource.getConnection();
 			SearchControls controls = new SearchControls();
 			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 			NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
-					"objectClass=automount", controls);
+					"objectClass=posixGroup", controls);
 			handler.handle(ne, "dc=seasar,dc=org");
 		} catch (NamingException e) {
 			e.printStackTrace();

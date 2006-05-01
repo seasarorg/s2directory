@@ -185,10 +185,7 @@ public class CommandContextImpl implements CommandContext {
 	}
 
 	/**
-	 * 文字列表現を表わします。
-	 * 
-	 * @return
-	 * @see java.lang.Object#toString()
+	 * {@inheritDoc}
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();

@@ -34,6 +34,7 @@ public class BeanMetaDataNamingEnumerationHandler extends
 	 * インスタンスを作成します。
 	 * 
 	 * @param directoryBeanMetaData
+	 * @param directoryControlProperty
 	 */
 	public BeanMetaDataNamingEnumerationHandler(
 			DirectoryBeanMetaData directoryBeanMetaData,
@@ -43,6 +44,9 @@ public class BeanMetaDataNamingEnumerationHandler extends
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * ビーン型にして返却します。
+	 * </p>
 	 */
 	public Object handle(NamingEnumeration results, String baseDn)
 			throws NamingException {

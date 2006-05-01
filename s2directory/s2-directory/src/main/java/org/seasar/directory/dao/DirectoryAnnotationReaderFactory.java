@@ -13,30 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.digest;
+package org.seasar.directory.dao;
+
+import org.seasar.framework.beans.BeanDesc;
 
 /**
- * ダイジェストインタフェースです。
+ * ディレクトリアノテーションリーダファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface Digest {
+public interface DirectoryAnnotationReaderFactory {
 	/**
-	 * 指定されたパスワードをハッシュ化します。
+	 * Daoクラスのアノテーションリーダを作成します。
 	 * 
-	 * @param password
-	 * @return ハッシュ化された文字列
+	 * @param daoBeanDesc
+	 * @return Daoクラスのアノテーションリーダ
 	 */
-	public String create(String password);
+	public DirectoryDaoAnnotationReader createDaoAnnotationReader(
+			BeanDesc daoBeanDesc);
 
 	/**
-	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。<br />
-	 * パスワードが正しい場合 <code>true</code> 不正な場合 <code>false</code> を返します。
+	 * Beanクラスのアノテーションリーダを作成します。
 	 * 
-	 * @param digest
-	 * @param password
-	 * @return 検証結果
+	 * @param beanClass
+	 * @return eanクラスのアノテーションリーダ
 	 */
-	public boolean verify(String digest, String password);
+	public DirectoryBeanAnnotationReader createBeanAnnotationReader(
+			Class beanClass);
 }
