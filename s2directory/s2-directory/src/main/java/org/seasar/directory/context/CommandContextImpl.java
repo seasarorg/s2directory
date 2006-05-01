@@ -24,6 +24,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveMap;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * 引数をコマンドとみなしたコンテキストを表わします。
@@ -130,23 +131,39 @@ public class CommandContextImpl implements CommandContext {
 	 * @see org.seasar.directory.CommandContext#getFilter()
 	 */
 	public String getFilter() {
-		StringBuffer buffer = new StringBuffer();
+		// 値が null ではない、属性を抽出します。
+		CaseInsensitiveMap fitlerArgs = new CaseInsensitiveMap();
 		int size = args.size();
-		if (size > 0) {
-			Object key = args.getKey(0);
+		for (int i = 0; i < size; i++) {
+			Object key = args.getKey(i);
 			Object value = args.get(key);
+			if (value != null && !StringUtil.isEmpty(String.valueOf(value))) {
+				fitlerArgs.put(key, value);
+			}
+		}
+		// フィルターを作成します。
+		StringBuffer buffer = new StringBuffer();
+		size = fitlerArgs.size();
+		if (size > 0) {
+			// 値が null ではない属性が一つ以上ある場合、最初の条件を作成します。
+			Object key = fitlerArgs.getKey(0);
+			Object value = fitlerArgs.get(key);
 			ValueType type = ValueTypes.getValueType(value);
 			buffer.append(type.getFilter(key, value));
 		}
 		if (size > 1) {
+			// 値が null ではない属性が複数ある場合、先ほどの最初の条件に足してフィルタを作成します。
 			String firstFilter = buffer.toString();
 			buffer = new StringBuffer("(&");
 			buffer.append("(").append(firstFilter).append(")");
 			for (int i = 1; i < size; i++) {
-				Object key = args.getKey(i);
-				buffer.append("(");
-				buffer.append(key).append("=").append(args.get(key));
-				buffer.append(")");
+				Object key = fitlerArgs.getKey(i);
+				Object value = fitlerArgs.get(key);
+				if (value != null) {
+					buffer.append("(");
+					buffer.append(key).append("=").append(value);
+					buffer.append(")");
+				}
 			}
 			buffer.append(")");
 		}
@@ -160,10 +177,13 @@ public class CommandContextImpl implements CommandContext {
 	 */
 	public String getDn() {
 		if (args.containsKey("dn")) {
-			return String.valueOf(args.get("dn"));
-		} else {
-			return null;
+			Object dn = args.get("dn");
+			if (dn != null) {
+				// dn が null ではない場合、値を返します。
+				return String.valueOf(dn);
+			}
 		}
+		return null;
 	}
 
 	/**

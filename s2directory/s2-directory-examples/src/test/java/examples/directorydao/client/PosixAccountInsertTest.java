@@ -63,5 +63,32 @@ public class PosixAccountInsertTest extends TestCase {
 		assertEquals(user1.getCn(), account.getCn());
 		assertEquals(user1.getSn(), account.getSn());
 		assertEquals(user1.getUidNumber(), account.getUidNumber());
+		// 検索1
+		PosixAccountDto search = new PosixAccountDto();
+		search.setUid(user1.getUid());
+		account = posixAccountDtoDao.getUser(search);
+		assertEquals(user1.getDn(), account.getDn());
+		assertEquals(user1.getCn(), account.getCn());
+		assertEquals(user1.getSn(), account.getSn());
+		assertEquals(user1.getUidNumber(), account.getUidNumber());
+		// 検索2
+		search = new PosixAccountDto();
+		search.setUid(user1.getUid());
+		search.setSn(user1.getSn());
+		account = posixAccountDtoDao.getUser(search);
+		assertEquals(user1.getDn(), account.getDn());
+		assertEquals(user1.getCn(), account.getCn());
+		assertEquals(user1.getSn(), account.getSn());
+		assertEquals(user1.getUidNumber(), account.getUidNumber());
+		// 検索3
+		search = new PosixAccountDto();
+		search.setUid(user1.getUid());
+		search.setSn(user1.getSn());
+		search.setGidNumber(user1.getGidNumber());
+		account = posixAccountDtoDao.getUser(search);
+		assertEquals(user1.getDn(), account.getDn());
+		assertEquals(user1.getCn(), account.getCn());
+		assertEquals(user1.getSn(), account.getSn());
+		assertEquals(user1.getUidNumber(), account.getUidNumber());
 	}
 }

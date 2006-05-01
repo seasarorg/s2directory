@@ -129,7 +129,7 @@ public abstract class AbstractAutoDirectoryCommand extends
 	}
 
 	/**
-	 * フィルタを作成します。
+	 * フィルタを設定します。
 	 * 
 	 * @param cmd
 	 */
@@ -150,6 +150,11 @@ public abstract class AbstractAutoDirectoryCommand extends
 		runFilter = filter;
 	}
 
+	/**
+	 * オブジェクトクラスを設定します。
+	 * 
+	 * @param cmd
+	 */
 	protected void applyObjectClass(CommandContext cmd) {
 		cmd.setObjectClasses(super.getObjectClasses());
 	}
