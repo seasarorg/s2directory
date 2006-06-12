@@ -1,0 +1,24 @@
+<project name="s2directory" default="dist" basedir=".">
+	<property name="ver" value="0.2.3-SNAPSHOT"/>
+
+	<target name="dist">
+		<mkdir dir="target"/>
+		<zip zipfile="target/s2-directory-${ver}.zip">
+			<zipfileset prefix="s2directory" dir=".">
+				<exclude name="**/target/**"/>
+				<exclude name="*.log"/>
+				<exclude name="**/.settings/**"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory/lib" dir="s2-directory/target">
+				<include name="s2-directory-${ver}.jar"/>
+				<include name="s2-directory-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory/resources" dir="s2-directory/src/test/resources">
+				<include name="directory.dicon"/>
+				<include name="directorydao.dicon"/>
+				<include name="log4j.properties"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <parent>
+    <groupId>org.seasar.directory</groupId>
+    <artifactId>s2-directory-project</artifactId>
+    <version>0.2.3-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>s2-directory-examples</artifactId>
+  <packaging>jar</packaging>
+  <name>S2Directory Examples</name>
+  <url>http://s2directory.sandbox.seasar.org/</url>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>${basedir}/../s2-directory/src/test/resources</directory>
+        <includes>
+          <include>data/**</include>
+        </includes>
+      </testResource>
+    </testResources>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.seasar.directory</groupId>
+      <artifactId>s2-directory</artifactId>
+      <version>0.2.3-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+</project>
