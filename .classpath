@@ -9,7 +9,6 @@
 	<classpathentry output="s2-directory-examples/target/test-classes" kind="src" path="s2-directory-examples/src/test/java"/>
 	<classpathentry output="s2-directory-examples/target/test-classes" kind="src" path="s2-directory-examples/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/seasar2"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="output" path="s2-directory/target/test-classes"/>
 </classpath>
