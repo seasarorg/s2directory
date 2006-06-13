@@ -1,20 +1,41 @@
-<project name="s2directory" default="dist" basedir=".">
+<project name="s2directory" default="dist" basedir="." xmlns:artifact="urn:maven-artifact-ant">
 
-	<!-- Please use "mvn clean deploy". This file is not used. -->
-	
-	<property name="ver" value="0.2.3-SNAPSHOT"/>
+	<!-- Please run "mvn clean deploy". -->
 
-	<target name="dist">
+	<target name="initTaskDefs">
+		<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
+			<classpath>
+				<pathelement path="${mvn.dependency.classpath}"/>
+			</classpath>
+		</typedef>
+
+		<artifact:pom file="pom.xml" id="maven.project"/>
+
+		<property name="ver" value="${maven.project.version}"/>
+
+		<artifact:dependencies filesetId="dependency.fileset" verbose="true" useScope="compile">
+			<pom refid="maven.project"/>
+		</artifact:dependencies>
+
+		<property name="dependency.commons-codec" value="commons-codec*.jar"/>
+	</target>
+
+	<target name="dist" depends="initTaskDefs">
 		<mkdir dir="target"/>
+		<copy todir="s2-directory/target/lib" flatten="true">
+		  <fileset refid="dependency.fileset"/>
+		</copy>
 		<zip zipfile="target/s2-directory-${ver}.zip">
 			<zipfileset prefix="s2directory" dir=".">
 				<exclude name="**/target/**"/>
 				<exclude name="*.log"/>
-				<exclude name="**/.settings/**"/>
 			</zipfileset>
 			<zipfileset prefix="s2directory/lib" dir="s2-directory/target">
 				<include name="s2-directory-${ver}.jar"/>
 				<include name="s2-directory-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory/lib" dir="s2-directory/target/lib">
+				<include name="${dependency.commons-codec}" />
 			</zipfileset>
 			<zipfileset prefix="s2directory/resources" dir="s2-directory/src/test/resources">
 				<include name="directory.dicon"/>
