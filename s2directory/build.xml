@@ -1,4 +1,7 @@
 <project name="s2directory" default="dist" basedir=".">
+
+	<!-- Please use "mvn clean deploy". This file is not used. -->
+	
 	<property name="ver" value="0.2.3-SNAPSHOT"/>
 
 	<target name="dist">
