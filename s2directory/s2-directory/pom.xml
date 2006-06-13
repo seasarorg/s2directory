@@ -36,7 +36,7 @@
             </goals>
             <configuration>
               <tasks>
-                <ant target="dist" antfile="build-dist.xml">
+                <ant target="dist" dir="../" antfile="build.xml">
                   <property refid="maven.runtime.classpath" name="mvn.dependency.classpath"></property>
                 </ant>
               </tasks>
