@@ -136,7 +136,7 @@
 <!-- This means that it used the localRepository setting.
       <url></url>
 -->
-      <url>scp://maven.seasar.org/home/groups/sandbox/s2directory/maven/maven2</url>
+      <url>scp://maven.seasar.org/home/groups/maven/public_html/maven2</url>
     </repository>
   </distributionManagement>
 </project>
