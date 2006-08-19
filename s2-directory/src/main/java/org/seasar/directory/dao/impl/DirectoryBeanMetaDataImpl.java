@@ -17,6 +17,7 @@ package org.seasar.directory.dao.impl;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.types.PropertyType;
 import org.seasar.extension.jdbc.ColumnNotFoundRuntimeException;
@@ -35,19 +36,37 @@ import org.seasar.framework.util.FieldUtil;
  */
 public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		implements DirectoryBeanMetaData {
+	private String[] objectClasses;
 	private Map propertyTypesByColumnName_ = new CaseInsensitiveMap();
 	private String versionNoPropertyName_ = "versionNo";
+	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
 
-	public DirectoryBeanMetaDataImpl(Class beanClass) {
-		this(beanClass, false);
+	public DirectoryBeanMetaDataImpl() {}
+
+	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
+		return directoryAnnotationReaderFactory;
 	}
 
-	public DirectoryBeanMetaDataImpl(Class beanClass, boolean relation) {
-		super.setBeanClass(beanClass);
-		// relation_ = relation;
-		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(beanClass);
+	public void setDirectoryAnnotationReaderFactory(
+			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
+		this.directoryAnnotationReaderFactory = directoryAnnotationReaderFactory;
+	}
+
+	public void initialize() {
+		directoryBeanAnnotationReader = getDirectoryAnnotationReaderFactory()
+				.createDirectoryBeanAnnotationReader(getBeanClass());
+		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(getBeanClass());
+		setupObjectClasses(beanDesc);
 		setupVersionNoPropertyName(beanDesc);
 		setupProperty(beanDesc);
+		super.initialize();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getObjectClasses() {
+		return objectClasses;
 	}
 
 	/**
@@ -93,6 +112,10 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		}
 		String columnName = alias.substring(0, index);
 		return columnName;
+	}
+
+	protected void setupObjectClasses(BeanDesc beanDesc) {
+		objectClasses = directoryBeanAnnotationReader.getObjectClasses();
 	}
 
 	protected void setupVersionNoPropertyName(BeanDesc beanDesc) {

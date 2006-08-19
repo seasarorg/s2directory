@@ -30,9 +30,9 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchResult;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.types.ValueType;
-import org.seasar.directory.types.ValueTypes;
 import org.seasar.directory.util.DirectoryUtils;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
@@ -74,6 +74,11 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 */
 	protected ModificationItem[] createModificationItems(SearchResult result,
 			Set attributeNameSet) throws NamingException {
+		DirectoryValueTypeFactory directoryValueTypeFactory = cmd
+				.getDirectoryValueTypeFactory();
+		ValueType stringValueType = directoryValueTypeFactory
+				.getStringValueType();
+		ValueType listValueType = directoryValueTypeFactory.getListValueType();
 		List itemList = new ArrayList();
 		Set keySet = cmd.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
@@ -85,7 +90,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			if (attributeNameSet.contains(attributeName)) {
 				// 既に属性がある場合、現在の属性を取得し、値を更新します。
 				Attribute attribute = result.getAttributes().get(attributeName);
-				String alreadyValue = String.valueOf(ValueTypes.STRING
+				String alreadyValue = String.valueOf(stringValueType
 						.getReadValue(result.getAttributes(), attributeName,
 								directoryControlProperty
 										.getMultipleValueDelimiter()));
@@ -106,16 +111,16 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 							continue;
 						}
 					}
-					ValueType type = ValueTypes.getValueType(cmd
-							.getArgType(attributeName));
-					if (type == ValueTypes.STRING
+					ValueType type = directoryValueTypeFactory
+							.getValueTypeByClass(cmd.getArgType(attributeName));
+					if (type == stringValueType
 							&& stringValue.contains(directoryControlProperty
 									.getMultipleValueDelimiter())) {
 						// String型で定義されていて、多重属性を持つ場合List型に変換します。
 						value = Arrays.asList(stringValue
 								.split(directoryControlProperty
 										.getMultipleValueDelimiter()));
-						type = ValueTypes.LIST;
+						type = listValueType;
 					}
 					attribute = type.getWriteValue(attributeName, value,
 							directoryControlProperty

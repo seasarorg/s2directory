@@ -16,6 +16,7 @@
 package org.seasar.directory;
 
 import java.util.Set;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 引数をコマンドとみなしたコンテキストのインタフェースです。
@@ -90,4 +91,19 @@ public interface CommandContext {
 	 * @param objectClasses
 	 */
 	public void setObjectClasses(String[] objectClasses);
+
+	/**
+	 * ディレクトリ用の値の型ファクトリを取得します。
+	 * 
+	 * @return ディレクトリ用の値の型ファクトリ
+	 */
+	public DirectoryValueTypeFactory getDirectoryValueTypeFactory();
+
+	/**
+	 * ディレクトリ用の値の型ファクトリを設定します。
+	 * 
+	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
+	 */
+	public void setDirectoryValueTypeFactory(
+			DirectoryValueTypeFactory directoryValueTypeFactory);
 }

@@ -30,7 +30,7 @@ public interface DirectoryAnnotationReaderFactory {
 	 * @param daoBeanDesc
 	 * @return Daoクラスのアノテーションリーダ
 	 */
-	public DirectoryDaoAnnotationReader createDaoAnnotationReader(
+	public DirectoryDaoAnnotationReader createDirectoryDaoAnnotationReader(
 			BeanDesc daoBeanDesc);
 
 	/**
@@ -39,6 +39,6 @@ public interface DirectoryAnnotationReaderFactory {
 	 * @param beanClass
 	 * @return eanクラスのアノテーションリーダ
 	 */
-	public DirectoryBeanAnnotationReader createBeanAnnotationReader(
+	public DirectoryBeanAnnotationReader createDirectoryBeanAnnotationReader(
 			Class beanClass);
 }
