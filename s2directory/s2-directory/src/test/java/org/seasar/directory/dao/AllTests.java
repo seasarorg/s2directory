@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package test.org.seasar.directory.dao;
+package org.seasar.directory.dao;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
