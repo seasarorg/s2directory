@@ -25,15 +25,18 @@ import org.seasar.framework.beans.MethodNotFoundRuntimeException;
  */
 public interface DirecotryDaoMetaData {
 	/**
-	 * ディレクトリコマンドを持っているか判別します。<br />
-	 * ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合 <code>false</code>
-	 * を返します。
+	 * ビーンクラスを取得します。
 	 * 
-	 * @param methodName 関数名
-	 * @return ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合
-	 *         <code>false</code>
+	 * @return
 	 */
-	public boolean hasDirectoryCommand(String methodName);
+	public Class getBeanClass();
+
+	/**
+	 * ビーンメタデータを取得します。
+	 * 
+	 * @return
+	 */
+	public DirectoryBeanMetaData getDirectoryBeanMetaData();
 
 	/**
 	 * * キャッシュされているディレクトリコマンドを取得します。
@@ -44,4 +47,15 @@ public interface DirecotryDaoMetaData {
 	 */
 	public DirectoryCommand getDirectoryCommand(String methodName)
 			throws MethodNotFoundRuntimeException;
+
+	/**
+	 * ディレクトリコマンドを持っているか判別します。<br />
+	 * ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合 <code>false</code>
+	 * を返します。
+	 * 
+	 * @param methodName 関数名
+	 * @return ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合
+	 *         <code>false</code>
+	 */
+	public boolean hasDirectoryCommand(String methodName);
 }

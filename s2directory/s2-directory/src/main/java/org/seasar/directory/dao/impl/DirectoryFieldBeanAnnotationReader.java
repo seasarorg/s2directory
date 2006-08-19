@@ -18,6 +18,7 @@ package org.seasar.directory.dao.impl;
 import java.lang.reflect.Field;
 import org.seasar.directory.dao.DirectoryBeanAnnotationReader;
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
@@ -38,6 +39,10 @@ public class DirectoryFieldBeanAnnotationReader implements
 	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
 	/** この属性だけ永続化する属性の設定名を表します。 */
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
+	/** 属性名の設定名を表します。 */
+	public String COLUMN_SUFFIX = "_COLUMN";
+	/** 値の型の設定名を表します。 */
+	public String VALUE_TYPE_SUFFIX = "_VALUE_TYPE";
 	/** メタ情報を表わします。 */
 	protected BeanDesc beanDesc;
 
@@ -48,6 +53,19 @@ public class DirectoryFieldBeanAnnotationReader implements
 	 */
 	public DirectoryFieldBeanAnnotationReader(Class beanClass) {
 		this.beanDesc = BeanDescFactory.getBeanDesc(beanClass);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getColumnAnnotation(PropertyDesc pd) {
+		String propertyName = pd.getPropertyName();
+		String columnNameKey = propertyName + COLUMN_SUFFIX;
+		if (beanDesc.hasField(columnNameKey)) {
+			Field field = beanDesc.getField(columnNameKey);
+			return (String)FieldUtil.get(field, null);
+		}
+		return null;
 	}
 
 	/**
@@ -97,6 +115,18 @@ public class DirectoryFieldBeanAnnotationReader implements
 			Field field = beanDesc.getField(fieldName);
 			String s = (String)FieldUtil.get(field, null);
 			return StringUtil.split(s, ", ");
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getValueType(PropertyDesc pd) {
+		String valueTypeKey = pd.getPropertyName() + VALUE_TYPE_SUFFIX;
+		if (beanDesc.hasField(valueTypeKey)) {
+			Field field = beanDesc.getField(valueTypeKey);
+			return (String)FieldUtil.get(field, null);
 		}
 		return null;
 	}

@@ -17,8 +17,8 @@ package org.seasar.directory.context;
 
 import java.util.Set;
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.types.ValueType;
-import org.seasar.directory.types.ValueTypes;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -39,8 +39,20 @@ public class CommandContextImpl implements CommandContext {
 	private CaseInsensitiveMap args = new CaseInsensitiveMap();
 	/** 引数の型マップを表わします。 */
 	private CaseInsensitiveMap argTypes = new CaseInsensitiveMap();
-	/** オブジェクトクラスをあらわします。 */
+	/** オブジェクトクラスを表します。 */
 	private String[] objectClasses;
+	/** ディレクトリ用の値の型ファクトリを表します。 */
+	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+
+	/**
+	 * インスタンスを作成します。
+	 * 
+	 * @param directoryValueTypeFactory
+	 */
+	public CommandContextImpl(
+			DirectoryValueTypeFactory directoryValueTypeFactory) {
+		setDirectoryValueTypeFactory(directoryValueTypeFactory);
+	}
 
 	/**
 	 * 指定した引数名の値を取得します。
@@ -148,7 +160,8 @@ public class CommandContextImpl implements CommandContext {
 			// 値が null ではない属性が一つ以上ある場合、最初の条件を作成します。
 			Object key = fitlerArgs.getKey(0);
 			Object value = fitlerArgs.get(key);
-			ValueType type = ValueTypes.getValueType(value);
+			ValueType type = getDirectoryValueTypeFactory()
+					.getValueTypeByClass(value.getClass());
 			buffer.append(type.getFilter(key, value));
 		}
 		if (size > 1) {
@@ -202,6 +215,21 @@ public class CommandContextImpl implements CommandContext {
 	 */
 	public void setObjectClasses(String[] objectClasses) {
 		this.objectClasses = objectClasses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
+		return directoryValueTypeFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDirectoryValueTypeFactory(
+			DirectoryValueTypeFactory directoryValueTypeFactory) {
+		this.directoryValueTypeFactory = directoryValueTypeFactory;
 	}
 
 	/**

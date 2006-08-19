@@ -18,6 +18,7 @@ package org.seasar.directory.impl;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 動的に削除処理を実行するクラスです。
@@ -32,8 +33,9 @@ public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param dataSource - データソース
 	 */
 	public DeleteAutoCommand(DirectoryDataSource dataSource,
+			DirectoryValueTypeFactory directoryValueTypeFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, methodArgs);
+		super(dataSource, directoryValueTypeFactory, methodArgs);
 	}
 
 	/**

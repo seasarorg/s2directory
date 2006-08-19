@@ -20,8 +20,8 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.context.CommandContextImpl;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
-import org.seasar.directory.types.ValueTypes;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -42,8 +42,9 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * @param dataSource - データソース
 	 */
 	public AbstractAutoDirectoryCommand(DirectoryDataSource dataSource,
+			DirectoryValueTypeFactory directoryValueTypeFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource);
+		super(dataSource, directoryValueTypeFactory);
 		this.methodArgs = methodArgs;
 	}
 
@@ -87,7 +88,8 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * @param args 引数値
 	 */
 	protected CommandContext apply(Object[] args) {
-		CommandContext cmd = new CommandContextImpl();
+		final DirectoryValueTypeFactory valueTypeFactory = getDirectoryValueTypeFactory();
+		CommandContext cmd = new CommandContextImpl(valueTypeFactory);
 		if (args != null && methodArgs != null) {
 			String[] argNames = methodArgs.getArgNames();
 			Class[] argTypes = methodArgs.getArgTypes();
@@ -111,7 +113,9 @@ public abstract class AbstractAutoDirectoryCommand extends
 				if (i < argNames.length) {
 					// Dtoの場合
 					if (argNames[i].equals("#dto")
-							&& ValueTypes.getValueType(args[i]) == ValueTypes.OBJECT) {
+							&& valueTypeFactory.getValueTypeByClass(args[i]
+									.getClass()) == valueTypeFactory
+									.getObjectValueType()) {
 						cmd.addDtoArg(args[i]);
 					} else {
 						cmd.addArg(argNames[i], args[i], argType);
