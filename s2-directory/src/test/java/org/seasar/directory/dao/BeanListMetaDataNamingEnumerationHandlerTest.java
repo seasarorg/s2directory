@@ -13,26 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package test.org.seasar.directory.util;
+package org.seasar.directory.dao;
 
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.SearchControls;
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
+import org.seasar.directory.dao.impl.BeanListMetaDataNamingEnumerationHandler;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
-import org.seasar.directory.util.DirectoryDataSourceUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
 /**
- * データソース用ユーティリティクラスのテストクラスです。
+ * List型ハンドラのテストクラスです。
  * 
  * @author Jun Futagawa
  * @version $Revision$ $Date$
  */
-public class DirectoryDataSourceUtilTest extends TestCase {
+public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl directoryDataSource;
+	private DirectoryBeanMetaData directoryBeanMetaData;
 
 	/**
 	 * テストの初期設定を行います。
@@ -44,26 +50,19 @@ public class DirectoryDataSourceUtilTest extends TestCase {
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
-	public void testGetFullUserDn() {
-		DirectoryControlProperty property = directoryDataSource
-				.getDirectoryControlProperty();
-		// ユーザ名のみの形式のテストを行います。
-		property.setUser("user1 ");
-		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
-		// ユーザ識別子が付与した形式のテストを行います。
-		property.setUser("uid=user1  ");
-		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
-		// ユーザ識別子(uid)が含まれている形式のテストを行います。
-		property.setUser("uiduser1,  ou=Users");
-		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=uiduser1,ou=Users,dc=seasar,dc=org", property
-				.getUser());
-		// ユーザ識別子(uid)が含まれている形式のテストを行います。
-		property.setUser("uid= uiduser1 ,	ou=Users,dc=ju");
-		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=uiduser1,ou=Users,dc=ju,dc=seasar,dc=org", property
-				.getUser());
+	public void testHandle() {
+		BeanListMetaDataNamingEnumerationHandler handler = new BeanListMetaDataNamingEnumerationHandler(
+				directoryBeanMetaData, directoryDataSource
+						.getDirectoryControlProperty());
+		try {
+			DirContext ctx = directoryDataSource.getConnection();
+			SearchControls controls = new SearchControls();
+			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+			NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
+					"objectClass=posixGroup", controls);
+			handler.handle(ne, "dc=seasar,dc=org");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 	}
 }

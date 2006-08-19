@@ -13,56 +13,50 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package test.org.seasar.directory.dao;
+package org.seasar.directory.dao;
 
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.SearchControls;
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.dao.DirectoryBeanMetaData;
-import org.seasar.directory.dao.impl.BeanListMetaDataNamingEnumerationHandler;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
 /**
- * List型ハンドラのテストクラスです。
+ * 接続テストクラスです。
  * 
- * @author Jun Futagawa
- * @version $Revision$ $Date$
+ * @author Jun Futagawa (Integsystem Corporation)
+ * @version $Date::                           $
  */
-public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
+public class DirectoryConnectionTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl directoryDataSource;
-	private DirectoryBeanMetaData directoryBeanMetaData;
 
 	/**
 	 * テストの初期設定を行います。
 	 */
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
+		container.init();
 		DirectoryControlProperty defaultProperty = (DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
-	public void testHandle() {
-		BeanListMetaDataNamingEnumerationHandler handler = new BeanListMetaDataNamingEnumerationHandler(
-				directoryBeanMetaData, directoryDataSource
-						.getDirectoryControlProperty());
-		try {
-			DirContext ctx = directoryDataSource.getConnection();
-			SearchControls controls = new SearchControls();
-			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-			NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
-					"objectClass=posixGroup", controls);
-			handler.handle(ne, "dc=seasar,dc=org");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+	/**
+	 * DirectoryControlPropertyのテストを行います。
+	 */
+	public void testDirectoryControlProperty() {
+		DirectoryControlProperty property = directoryDataSource
+				.getDirectoryControlProperty();
+		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
+				.getInitialContextFactory());
+		assertEquals("ldap://localhost:389", property.getUrl());
+		assertEquals("cn=Manager", property.getUser());
+		assertEquals("secret", property.getPassword());
+		assertEquals("uid", property.getUserAttributeName());
+		assertEquals("SHA", property.getPasswordAlgorithm());
+		assertEquals("__", property.getMultipleValueDelimiter());
 	}
 }

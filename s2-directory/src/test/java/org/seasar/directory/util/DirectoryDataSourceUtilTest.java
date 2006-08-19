@@ -13,22 +13,23 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package test.org.seasar.directory.dao;
+package org.seasar.directory.util;
 
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
+import org.seasar.directory.util.DirectoryDataSourceUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
 /**
- * 接続テストクラスです。
+ * データソース用ユーティリティクラスのテストクラスです。
  * 
- * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
+ * @author Jun Futagawa
+ * @version $Revision$ $Date$
  */
-public class DirectoryConnectionTest extends TestCase {
+public class DirectoryDataSourceUtilTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl directoryDataSource;
@@ -38,25 +39,31 @@ public class DirectoryConnectionTest extends TestCase {
 	 */
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
-		container.init();
 		DirectoryControlProperty defaultProperty = (DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
-	/**
-	 * DirectoryControlPropertyのテストを行います。
-	 */
-	public void testDirectoryControlProperty() {
+	public void testGetFullUserDn() {
 		DirectoryControlProperty property = directoryDataSource
 				.getDirectoryControlProperty();
-		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
-				.getInitialContextFactory());
-		assertEquals("ldap://localhost:389", property.getUrl());
-		assertEquals("cn=Manager", property.getUser());
-		assertEquals("secret", property.getPassword());
-		assertEquals("uid", property.getUserAttributeName());
-		assertEquals("SHA", property.getPasswordAlgorithm());
-		assertEquals("__", property.getMultipleValueDelimiter());
+		// ユーザ名のみの形式のテストを行います。
+		property.setUser("user1 ");
+		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
+		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
+		// ユーザ識別子が付与した形式のテストを行います。
+		property.setUser("uid=user1  ");
+		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
+		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
+		// ユーザ識別子(uid)が含まれている形式のテストを行います。
+		property.setUser("uiduser1,  ou=Users");
+		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
+		assertEquals("uid=uiduser1,ou=Users,dc=seasar,dc=org", property
+				.getUser());
+		// ユーザ識別子(uid)が含まれている形式のテストを行います。
+		property.setUser("uid= uiduser1 ,	ou=Users,dc=ju");
+		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
+		assertEquals("uid=uiduser1,ou=Users,dc=ju,dc=seasar,dc=org", property
+				.getUser());
 	}
 }
