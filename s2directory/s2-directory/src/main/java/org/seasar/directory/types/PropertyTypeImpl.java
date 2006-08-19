@@ -30,10 +30,6 @@ public class PropertyTypeImpl implements PropertyType {
 	private ValueType valueType_;
 	private boolean persistent_ = true;
 
-	public PropertyTypeImpl(PropertyDesc propertyDesc) {
-		this(propertyDesc, ValueTypes.OBJECT, propertyDesc.getPropertyName());
-	}
-
 	public PropertyTypeImpl(PropertyDesc propertyDesc, ValueType valueType) {
 		this(propertyDesc, valueType, propertyDesc.getPropertyName());
 	}

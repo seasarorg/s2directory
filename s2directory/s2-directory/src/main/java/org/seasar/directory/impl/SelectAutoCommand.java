@@ -19,6 +19,7 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 動的に読み出し処理を実行するクラスです。
@@ -36,8 +37,9 @@ public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
 	 */
 	public SelectAutoCommand(DirectoryDataSource dataSource,
 			NamingEnumerationHandler namingEnumerationHandler,
+			DirectoryValueTypeFactory directoryValueTypeFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, methodArgs);
+		super(dataSource, directoryValueTypeFactory, methodArgs);
 		this.namingEnumerationHandler = namingEnumerationHandler;
 	}
 

@@ -18,6 +18,7 @@ package org.seasar.directory.impl;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 動的に更新処理を実行するクラスです。
@@ -32,8 +33,9 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param dataSource - データソース
 	 */
 	public UpdateAutoCommand(DirectoryDataSource dataSource,
+			DirectoryValueTypeFactory directoryValueTypeFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, methodArgs);
+		super(dataSource, directoryValueTypeFactory, methodArgs);
 	}
 
 	/**

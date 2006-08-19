@@ -26,9 +26,9 @@ import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.types.ValueType;
-import org.seasar.directory.types.ValueTypes;
 import org.seasar.directory.util.DirectoryUtils;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
@@ -79,6 +79,11 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			objectClass.add(objectClasses[i]);
 		}
 		// 属性を設定します。
+		DirectoryValueTypeFactory directoryValueTypeFactory = cmd
+				.getDirectoryValueTypeFactory();
+		ValueType stringValueType = directoryValueTypeFactory
+				.getStringValueType();
+		ValueType listValueType = directoryValueTypeFactory.getListValueType();
 		Set keySet = cmd.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String attributeName = String.valueOf(iter.next());
@@ -97,16 +102,16 @@ public class InsertHandler extends BasicDirectoryHandler implements
 				value = DirectoryUtils.createPassword(stringValue,
 						directoryControlProperty.getPasswordAlgorithm());
 			}
-			ValueType type = ValueTypes.getValueType(cmd
+			ValueType type = directoryValueTypeFactory.getValueTypeByClass(cmd
 					.getArgType(attributeName));
-			if (type == ValueTypes.STRING
+			if (type == stringValueType
 					&& stringValue.contains(directoryControlProperty
 							.getMultipleValueDelimiter())) {
 				// String型で定義されていて、多重属性を持つ場合List型に変換します。
 				value = Arrays.asList(stringValue
 						.split(directoryControlProperty
 								.getMultipleValueDelimiter()));
-				type = ValueTypes.LIST;
+				type = listValueType;
 			}
 			entry.put(type.getWriteValue(attributeName, value,
 					directoryControlProperty.getMultipleValueDelimiter()));

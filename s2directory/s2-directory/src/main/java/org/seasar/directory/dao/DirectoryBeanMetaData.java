@@ -33,6 +33,8 @@ public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
 	public String VERSION_NO_PROPERTY = "VERSION_NO_PROPERTY";
 	public String TIMESTAMP_PROPERTY = "TIMESTAMP_PROPERTY";
 
+	public String[] getObjectClasses();
+	
 	public PropertyType getVersionNoPropertyType()
 			throws PropertyNotFoundRuntimeException;
 

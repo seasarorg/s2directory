@@ -21,7 +21,7 @@ import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.framework.beans.BeanDesc;
 
 /**
- * ディレクトリアノテーションリーダファクトリクラスです。
+ * フィールドを使うディレクトリアノテーションリーダのファクトリクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -31,7 +31,7 @@ public class DirectoryFieldAnnotationReaderFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirectoryDaoAnnotationReader createDaoAnnotationReader(
+	public DirectoryDaoAnnotationReader createDirectoryDaoAnnotationReader(
 			BeanDesc daoBeanDesc) {
 		return new DirectoryFieldDaoAnnotationReader(daoBeanDesc);
 	}
@@ -39,7 +39,7 @@ public class DirectoryFieldAnnotationReaderFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirectoryBeanAnnotationReader createBeanAnnotationReader(
+	public DirectoryBeanAnnotationReader createDirectoryBeanAnnotationReader(
 			Class beanClass) {
 		return new DirectoryFieldBeanAnnotationReader(beanClass);
 	}

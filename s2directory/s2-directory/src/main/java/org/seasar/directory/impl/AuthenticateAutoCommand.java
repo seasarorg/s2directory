@@ -18,6 +18,7 @@ package org.seasar.directory.impl;
 import javax.naming.NamingException;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 動的に認証処理を実行するクラスです。
@@ -32,8 +33,9 @@ public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param dataSource - データソース
 	 */
 	public AuthenticateAutoCommand(DirectoryDataSource dataSource,
+			DirectoryValueTypeFactory directoryValueTypeFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, methodArgs);
+		super(dataSource, directoryValueTypeFactory, methodArgs);
 	}
 
 	/**

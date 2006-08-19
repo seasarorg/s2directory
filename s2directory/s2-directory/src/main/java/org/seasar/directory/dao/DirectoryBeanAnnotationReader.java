@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.dao;
 
+import org.seasar.framework.beans.PropertyDesc;
+
 /**
  * アノテーションを読み込むインタフェースです。
  * 
@@ -22,6 +24,14 @@ package org.seasar.directory.dao;
  * @version $Date::                           $
  */
 public interface DirectoryBeanAnnotationReader {
+	/**
+	 * 属性を取得します。
+	 * 
+	 * @param pd 属性定義
+	 * @return 属性
+	 */
+	public String getColumnAnnotation(PropertyDesc pd);
+
 	/**
 	 * メタ情報のクラスを取得します。
 	 * 
@@ -51,4 +61,12 @@ public interface DirectoryBeanAnnotationReader {
 	 * @return 永続化する属性の配列
 	 */
 	public String[] getPersistentProps(String methodName);
+
+	/**
+	 * 値の型を取得します。
+	 * 
+	 * @param pd 属性定義
+	 * @return 値の型
+	 */
+	public String getValueType(PropertyDesc pd);
 }
