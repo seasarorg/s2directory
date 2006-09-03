@@ -31,4 +31,11 @@ public class SSHADigest extends SHADigest {
 	public String create(String password) {
 		return LABEL + super.create(DigestUtils.getRandomSalt(), password);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean verify(String digest, String password) {
+		return super.verify(digest.substring(LABEL.length()), password, 20);
+	}
 }
