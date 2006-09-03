@@ -16,8 +16,9 @@
 		<artifact:dependencies filesetId="dependency.fileset" verbose="true" useScope="compile">
 			<pom refid="maven.project"/>
 		</artifact:dependencies>
-
+<!--
 		<property name="dependency.commons-codec" value="commons-codec*.jar"/>
+-->
 	</target>
 
 	<target name="dist" depends="initTaskDefs">
@@ -34,9 +35,11 @@
 				<include name="s2-directory-${ver}.jar"/>
 				<include name="s2-directory-${ver}-sources.jar"/>
 			</zipfileset>
+<!--
 			<zipfileset prefix="s2directory/lib" dir="s2-directory/target/lib">
 				<include name="${dependency.commons-codec}" />
 			</zipfileset>
+-->
 			<zipfileset prefix="s2directory/resources" dir="s2-directory/src/test/resources">
 				<include name="directory.dicon"/>
 				<include name="directorydao.dicon"/>

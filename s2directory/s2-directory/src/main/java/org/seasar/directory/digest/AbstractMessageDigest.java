@@ -18,7 +18,7 @@ package org.seasar.directory.digest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import org.apache.commons.codec.binary.Base64;
+import org.seasar.framework.util.Base64Util;
 
 /**
  * メッセージダイジェストの抽象クラスです。
@@ -58,8 +58,7 @@ public abstract class AbstractMessageDigest implements Digest {
 			md.update(password.getBytes(ENCODING));
 			md.update(salt);
 			byte[] pwhash = md.digest();
-			return new String(Base64.encodeBase64(DigestUtils.concat(pwhash,
-					salt)), ENCODING);
+			return Base64Util.encode(DigestUtils.concat(pwhash, salt));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new Error(e);
@@ -73,8 +72,7 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * @param password 確認するパスワード
 	 */
 	public boolean verify(String digest, String password, int size) {
-		byte[][] hs = DigestUtils.split(Base64.decodeBase64(digest.getBytes()),
-				size);
+		byte[][] hs = DigestUtils.split(Base64Util.decode(digest), size);
 		byte[] hash = hs[0];
 		byte[] salt = hs[1];
 		md.reset();
