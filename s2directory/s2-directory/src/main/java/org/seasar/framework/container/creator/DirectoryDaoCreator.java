@@ -13,28 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.container.hotdeploy.creator;
+package org.seasar.framework.container.creator;
 
-import org.seasar.framework.container.autoregister.ComponentCustomizer;
+import org.seasar.framework.container.ComponentCustomizer;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.convention.NamingConvention;
 
 /**
- * HotDeploy時にDirecotryDaoのインスタンスを管理するオンデマンドクリエータです。
+ * DirecotryDaoのインスタンスを管理するクリエータです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryDaoOndemandCreator extends SinglePackageOndemandCreator {
+public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param namingConvention ネーミングコンバージョン
+	 * @param namingConvention
 	 */
-	public DirectoryDaoOndemandCreator(NamingConvention namingConvention) {
+	public DirectoryDaoCreator(NamingConvention namingConvention) {
 		super(namingConvention);
-		setMiddlePackageName("directory" + namingConvention.getDaoPackageName());
-		setNameSuffix(namingConvention.getDaoSuffix());
+		setNameSuffix("Directory" + namingConvention.getDaoSuffix());
 		setInstanceDef(InstanceDefFactory.PROTOTYPE);
 	}
 
