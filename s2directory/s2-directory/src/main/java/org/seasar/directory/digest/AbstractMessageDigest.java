@@ -72,6 +72,9 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * @param password 確認するパスワード
 	 */
 	public boolean verify(String digest, String password, int size) {
+		if (digest.length() < 4) {
+			return false;
+		}
 		byte[][] hs = DigestUtils.split(Base64Util.decode(digest), size);
 		byte[] hash = hs[0];
 		byte[] salt = hs[1];
