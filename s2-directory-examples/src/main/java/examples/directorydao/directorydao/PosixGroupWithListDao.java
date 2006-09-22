@@ -42,9 +42,9 @@ public interface PosixGroupWithListDao {
 
 	public List getPosixGroupListByMemberUid(String memberUid);
 
-	public static final String getPosixGroupListByMemberUid2_ARGS = "memberUid";
-	public List getPosixGroupListByMemberUid2(List memberUid);
-
+	public static final String getPosixGroupListByMemberUidList_ARGS = "memberUid";
+	public List getPosixGroupListByMemberUidList(List memberUid);
+	
 	public int insert(PosixGroupWithList group);
 
 	public int update(PosixGroupWithList group);

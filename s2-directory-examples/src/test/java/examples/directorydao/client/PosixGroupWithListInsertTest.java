@@ -82,10 +82,18 @@ public class PosixGroupWithListInsertTest extends TestCase {
 		assertEquals(null, posixAccountDtoDao.getUser(user2));
 	}
 
-	public void testCreate1() {
+	public void testGetPosixGroup() {
+		// グループで検索
 		PosixGroupWithList group = posixGroupWithListDao.getPosixGroup(group1);
 		List list = group.getMemberUid();
 		assertEquals("user1", String.valueOf(list.get(0)));
 		assertEquals("user2", String.valueOf(list.get(1)));
+		// 所属メンバーをList型で検索
+		List search = new ArrayList();
+		search.add("user1");
+		list = posixGroupWithListDao.getPosixGroupListByMemberUidList(search);
+		System.out.println("size: " + list.size());
+		group = (PosixGroupWithList)list.get(0);
+		assertEquals("group1", group.getCn());
 	}
 }
