@@ -18,7 +18,6 @@ package org.seasar.directory.types;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -54,8 +53,6 @@ public class ValueTypes {
 	static {
 		registerValueType(String.class, STRING);
 		registerValueType(List.class, LIST);
-		// TODO: インタフェースを取得するようにし不要にする
-		registerValueType(ArrayList.class, LIST);
 		// registerValueType(short.class, SHORT);
 		// registerValueType(Short.class, SHORT);
 		// registerValueType(int.class, INTEGER);
@@ -96,12 +93,11 @@ public class ValueTypes {
 	}
 
 	public static ValueType getValueType(Class clazz) {
-		if (clazz == null) {
-			return OBJECT;
-		}
-		ValueType valueType = getValueType0(clazz);
-		if (valueType != null) {
-			return valueType;
+		for (Class c = clazz; c != null; c = c.getSuperclass()) {
+			ValueType valueType = getValueType0(c);
+			if (valueType != null) {
+				return valueType;
+			}
 		}
 		return OBJECT;
 	}
