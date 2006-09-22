@@ -93,8 +93,18 @@ public class ValueTypes {
 	}
 
 	public static ValueType getValueType(Class clazz) {
+		// スーパークラスで取得
 		for (Class c = clazz; c != null; c = c.getSuperclass()) {
 			ValueType valueType = getValueType0(c);
+			if (valueType != null) {
+				return valueType;
+			}
+		}
+		// インタフェースで取得
+		Class[] interfaces = clazz.getInterfaces();
+		int length = interfaces.length;
+		for (int i = 0; i < length; i++) {
+			ValueType valueType = getValueType0(interfaces[i]);
 			if (valueType != null) {
 				return valueType;
 			}
