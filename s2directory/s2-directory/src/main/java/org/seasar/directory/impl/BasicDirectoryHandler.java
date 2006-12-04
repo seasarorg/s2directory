@@ -15,6 +15,7 @@
  */
 package org.seasar.directory.impl;
 
+import javax.naming.NameAlreadyBoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
@@ -23,6 +24,7 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchControls;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtils;
 import org.seasar.directory.util.DirectoryUtils;
@@ -133,6 +135,8 @@ public class BasicDirectoryHandler {
 			context = getConnection();
 			context.createSubcontext(dn, attrs);
 			return new Integer(1);
+		} catch (NameAlreadyBoundException e) {
+			throw new DirectoryNameAlreadyBoundRuntimeException(e);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
