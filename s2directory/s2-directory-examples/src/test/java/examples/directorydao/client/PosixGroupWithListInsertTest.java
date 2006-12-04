@@ -92,7 +92,6 @@ public class PosixGroupWithListInsertTest extends TestCase {
 		List search = new ArrayList();
 		search.add("user1");
 		list = posixGroupWithListDao.getPosixGroupListByMemberUidList(search);
-		System.out.println("size: " + list.size());
 		group = (PosixGroupWithList)list.get(0);
 		assertEquals("group1", group.getCn());
 	}
