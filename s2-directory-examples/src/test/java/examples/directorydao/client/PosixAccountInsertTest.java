@@ -16,6 +16,7 @@
 package examples.directorydao.client;
 
 import junit.framework.TestCase;
+import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 import examples.directorydao.common.PosixAccountDtoFactory;
@@ -90,5 +91,15 @@ public class PosixAccountInsertTest extends TestCase {
 		assertEquals(user1.getCn(), account.getCn());
 		assertEquals(user1.getSn(), account.getSn());
 		assertEquals(user1.getUidNumber(), account.getUidNumber());
+	}
+
+	public void testCreateAlreadyBound() {
+		assertEquals(1, posixAccountDtoDao.insert(user1));
+		try {
+			posixAccountDtoDao.insert(user1);
+			assertFalse(true);
+		} catch (DirectoryNameAlreadyBoundRuntimeException e) {
+			assertTrue(true);
+		}
 	}
 }

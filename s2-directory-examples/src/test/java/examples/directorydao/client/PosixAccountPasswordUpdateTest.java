@@ -117,4 +117,22 @@ public class PosixAccountPasswordUpdateTest extends TestCase {
 		property.setPassword(account.getUserPassword());
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
 	}
+
+	public void testSelectAndFaildUpdatePasswordWithUserMode() {
+		DirectoryControlProperty property = (DirectoryControlProperty)container
+				.getComponent(DirectoryControlProperty.class);
+		property.setUser(user1.getUid());
+		// 誤ったパスワードを設定します。
+		property.setPassword("invalid_pass");
+		// user1を取得します。
+		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
+		// パスワードを更新します。
+		account.setUserPassword("newpass");
+		try {
+			posixAccountDtoDao.updateWithUserMode(property, account);
+			assertFalse(true);
+		} catch (DirectoryAuthenticationRuntimeException e) {
+			assertTrue(true);
+		}
+	}
 }
