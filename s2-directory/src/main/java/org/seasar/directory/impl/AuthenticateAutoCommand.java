@@ -15,7 +15,6 @@
  */
 package org.seasar.directory.impl;
 
-import javax.naming.NamingException;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.dao.DirectoryValueTypeFactory;
@@ -45,14 +44,8 @@ public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		// apply(args);
-		DirectoryDataSource dataSource = getDirectoryDataSource(args);
-		try {
-			dataSource.getConnection();
-			return new Boolean(true);
-		} catch (NamingException e) {
-			// throw new NamingRuntimeException(e);
-			return new Boolean(false);
-		}
+		ExecuteHandler handler = new AuthenticateHandler(
+				getDirectoryDataSource(args));
+		return handler.execute();
 	}
 }
