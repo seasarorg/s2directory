@@ -15,22 +15,24 @@
  */
 package org.seasar.directory.exception;
 
-import javax.naming.NamingException;
+import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.framework.exception.SRuntimeException;
 
 /**
- * ディレクトリ例外クラスです。
+ * サーバ接続の例外クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryRuntimeException extends SRuntimeException {
+public final class DirectoryCommunicationRuntimeException extends
+		SRuntimeException {
 	/**
-	 * 指定された NamingException で例外を作成します。
+	 * 指定されたサーバ接続情報で例外を作成します。
 	 * 
-	 * @param cause NamingException
+	 * @param property サーバ接続情報
 	 */
-	public DirectoryRuntimeException(NamingException cause) {
-		super("DIRECTORY0001", new Object[] { cause }, cause);
+	public DirectoryCommunicationRuntimeException(
+			DirectoryControlProperty property) {
+		super("EDIRECTORY0002", new Object[] { property.getUrl() });
 	}
 }
