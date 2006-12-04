@@ -15,10 +15,14 @@
  */
 package org.seasar.directory.util;
 
+import javax.naming.AuthenticationException;
+import javax.naming.CommunicationException;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
+import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 
 /**
@@ -29,8 +33,7 @@ import org.seasar.directory.exception.DirectoryRuntimeException;
  */
 public final class DirectoryDataSourceUtils {
 	/**
-	 * 指定されたデータソースからコネクションを作成します。 
-	 * コネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
+	 * 指定されたデータソースからコネクションを作成します。 コネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
 	 * 
 	 * @param directoryDataSource データソース
 	 * @return コネクション
@@ -40,6 +43,12 @@ public final class DirectoryDataSourceUtils {
 			DirectoryDataSource directoryDataSource) {
 		try {
 			return directoryDataSource.getConnection();
+		} catch (AuthenticationException ae) {
+			throw new DirectoryAuthenticationRuntimeException(
+					directoryDataSource.getDirectoryControlProperty());
+		} catch (CommunicationException ae) {
+			throw new DirectoryCommunicationRuntimeException(
+					directoryDataSource.getDirectoryControlProperty());
 		} catch (NamingException ex) {
 			throw new DirectoryRuntimeException(ex);
 		}

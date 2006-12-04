@@ -17,7 +17,7 @@ package examples.directorydao.client;
 
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 import examples.directorydao.common.PosixAccountDtoFactory;
@@ -103,7 +103,7 @@ public class PosixAccountPasswordUpdateTest extends TestCase {
 			// パスワードが変更されたため更新時に例外が発生します。
 			posixAccountDtoDao.updateWithUserMode(property, account);
 			assertTrue(false);
-		} catch (DirectoryRuntimeException e) {
+		} catch (DirectoryAuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 		property.setUser(account.getUid());
