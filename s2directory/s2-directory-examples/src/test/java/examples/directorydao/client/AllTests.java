@@ -28,6 +28,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for examples.directorydao.client");
 		//$JUnit-BEGIN$
+		suite.addTestSuite(PosixGroupDtoTest.class);
 		suite.addTestSuite(PosixAccountPasswordUpdateTest.class);
 		suite.addTestSuite(PosixAccountInsertTest.class);
 		suite.addTestSuite(PosixAccountDeleteTest.class);
@@ -35,7 +36,7 @@ public class AllTests {
 		suite.addTestSuite(PosixGroupWithListInsertTest.class);
 		suite.addTestSuite(PosixAccountUpdateTest.class);
 		suite.addTestSuite(PosixGroupUpdateTest.class);
-		suite.addTestSuite(PosixGroupDtoTest.class);
+		suite.addTestSuite(PosixAccountConnectionTest.class);
 		//$JUnit-END$
 		return suite;
 	}

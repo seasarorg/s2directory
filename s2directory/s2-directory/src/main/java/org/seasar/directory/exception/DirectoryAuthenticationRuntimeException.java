@@ -16,18 +16,17 @@
 package org.seasar.directory.exception;
 
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.framework.exception.SRuntimeException;
 
 /**
- * サーバ接続認証の例外クラスです。
+ * ネーミングサービスまたはディレクトリサービスにアクセスする際に認証エラーが発生した場合にスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public final class DirectoryAuthenticationRuntimeException extends
-		SRuntimeException {
+		DirectoryRuntimeException {
 	/**
-	 * 指定されたサーバ接続情報で例外を作成します。
+	 * 指定されたサーバ接続情報を使用して新しいインスタンスを構築します。
 	 * 
 	 * @param property サーバ接続情報
 	 */

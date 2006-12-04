@@ -18,7 +18,6 @@ package org.seasar.directory.impl;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
@@ -120,23 +119,17 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * 指定されたエントリを更新します。
+	 * 指定されたエントリに追加します。
 	 * 
-	 * @return 更新した数を返します。
+	 * @return 追加した数を返します。
 	 */
 	private Integer insert(String dn) {
 		try {
-			// 更新対象を検索
+			// 追加対象が既に存在しているか検索
 			String firstDn = DirectoryUtils.getFirstDn(dn);
 			String baseDn = DirectoryUtils.getBaseDn(dn);
-			NamingEnumeration results = super.search(firstDn, baseDn);
-			if (results != null && results.hasMore()) {
-				// TODO: Exception処理追加
-				return new Integer(0);
-			} else {
-				String fullDn = firstDn + "," + baseDn;
-				return super.insert(fullDn, createAttributes(dn));
-			}
+			String fullDn = firstDn + "," + baseDn;
+			return super.insert(fullDn, createAttributes(dn));
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		}

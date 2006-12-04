@@ -46,7 +46,7 @@ public final class DirectoryDataSourceUtils {
 		} catch (AuthenticationException ae) {
 			throw new DirectoryAuthenticationRuntimeException(
 					directoryDataSource.getDirectoryControlProperty());
-		} catch (CommunicationException ae) {
+		} catch (CommunicationException ce) {
 			throw new DirectoryCommunicationRuntimeException(
 					directoryDataSource.getDirectoryControlProperty());
 		} catch (NamingException ex) {

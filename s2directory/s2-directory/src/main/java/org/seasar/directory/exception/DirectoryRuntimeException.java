@@ -19,12 +19,12 @@ import javax.naming.NamingException;
 import org.seasar.framework.exception.SRuntimeException;
 
 /**
- * ディレクトリ例外クラスです。
+ * Context および DirContext インタフェースでの操作によってスローされるすべての例外のスーパークラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryRuntimeException extends SRuntimeException {
+public class DirectoryRuntimeException extends SRuntimeException {
 	/**
 	 * 指定された NamingException で例外を作成します。
 	 * 
@@ -32,5 +32,15 @@ public final class DirectoryRuntimeException extends SRuntimeException {
 	 */
 	public DirectoryRuntimeException(NamingException cause) {
 		super("DIRECTORY0001", new Object[] { cause }, cause);
+	}
+
+	/**
+	 * 指定されたメッセージコードと埋め込みオブジェクトを使用して新しいインスタンスを構築します。
+	 * 
+	 * @param messageCode メッセージコード
+	 * @param args 埋め込みオブジェクト
+	 */
+	public DirectoryRuntimeException(String messageCode, Object[] args) {
+		super(messageCode, args);
 	}
 }
