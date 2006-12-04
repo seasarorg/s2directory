@@ -21,7 +21,7 @@ import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 
 /**
- * 削除を処理するクラスです。
+ * 認証を処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -35,7 +35,6 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 	 * インスタンスを生成します。
 	 * 
 	 * @param directoryDataSource
-	 * @param dn
 	 */
 	public AuthenticateHandler(DirectoryDataSource directoryDataSource) {
 		super(directoryDataSource);
@@ -44,15 +43,15 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * 削除処理を実行します。
+	 * 認証処理を実行します。
 	 * </p>
 	 */
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {
 			DirectoryControlProperty property = super.getDirectoryDataSource()
 					.getDirectoryControlProperty();
-			logger.debug("Authenticate user: " + property.getUser()
-					+ ", password: " + property.getPassword());
+			logger.debug("Authenticate: [user] " + property.getUser()
+					+ " [password] " + property.getPassword());
 		}
 		return super.authenticate();
 	}
