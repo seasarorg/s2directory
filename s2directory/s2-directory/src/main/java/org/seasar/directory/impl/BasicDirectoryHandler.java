@@ -82,6 +82,19 @@ public class BasicDirectoryHandler {
 	}
 
 	/**
+	 * 認証を実行します。
+	 * 
+	 * @return 認証結果を返します。
+	 */
+	public Boolean authenticate() {
+		if (directoryDataSource == null) {
+			throw new EmptyRuntimeException("directoryDataSource");
+		}
+		return new Boolean(DirectoryDataSourceUtils
+				.authenticate(directoryDataSource));
+	}
+
+	/**
 	 * 検索を実行します。
 	 * 
 	 * @return 検索結果を返します。

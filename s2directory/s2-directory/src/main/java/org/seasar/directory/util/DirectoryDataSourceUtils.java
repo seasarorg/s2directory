@@ -22,33 +22,55 @@ import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 
 /**
- * Directoryコネクションを作成クラスです。
+ * ディレクトリコネクションを作成するユーティリティです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public final class DirectoryDataSourceUtils {
 	/**
-	 * 指定されたDirectory接続データソースからDirectoryコネクションを作成します。
-	 * Directoryコネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
+	 * 指定されたデータソースからコネクションを作成します。 
+	 * コネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
 	 * 
-	 * @param DirectoryDataSource Directory接続データソース
-	 * @return Directoryコネクション
-	 * @throws DirectoryRuntimeException Directoryコネクション作成例外
+	 * @param directoryDataSource データソース
+	 * @return コネクション
+	 * @throws DirectoryRuntimeException コネクション作成例外
 	 */
 	public static DirContext getConnection(
-			DirectoryDataSource DirectoryDataSource) {
+			DirectoryDataSource directoryDataSource) {
 		try {
-			return DirectoryDataSource.getConnection();
+			return directoryDataSource.getConnection();
 		} catch (NamingException ex) {
 			throw new DirectoryRuntimeException(ex);
 		}
 	}
 
 	/**
+	 * 指定されたデータソースからコネクションを作成できるか判別します。
+	 * 
+	 * @param directoryDataSource データソース
+	 * @return コネクションを作成できる場合 true, できない場合 false
+	 */
+	public static boolean authenticate(DirectoryDataSource directoryDataSource) {
+		DirContext context = null;
+		try {
+			context = directoryDataSource.getConnection();
+			if (context != null) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NamingException e) {
+			return false;
+		} finally {
+			DirectoryDataSourceUtils.close(context);
+		}
+	}
+
+	/**
 	 * ディレクトリサーバ接続情報をセットアップします。
 	 * 
-	 * @param property - ディレクトリサーバ接続情報
+	 * @param property ディレクトリサーバ接続情報
 	 */
 	public static void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
@@ -78,7 +100,7 @@ public final class DirectoryDataSourceUtils {
 	/**
 	 * 完全なユーザDnを取得します。
 	 * 
-	 * @param property - ディレクトリサーバ接続情報
+	 * @param property ディレクトリサーバ接続情報
 	 * @return 完全なユーザDn
 	 */
 	private static String getFullUserDn(DirectoryControlProperty property) {
