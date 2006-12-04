@@ -17,6 +17,7 @@ package examples.directorydao.client;
 
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
@@ -93,7 +94,7 @@ public class PosixAccountDeleteTest extends TestCase {
 			assertEquals(null, posixAccountDtoDao.getUserWithUserMode(property,
 					account));
 			assertTrue(false);
-		} catch (DirectoryRuntimeException e) {
+		} catch (DirectoryAuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 		try {
@@ -101,7 +102,7 @@ public class PosixAccountDeleteTest extends TestCase {
 			assertEquals(1, posixAccountDtoDao.insertWithUserMode(property,
 					user1));
 			assertTrue(false);
-		} catch (DirectoryRuntimeException e) {
+		} catch (DirectoryAuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 		// 初期化します。
