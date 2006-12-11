@@ -3,9 +3,24 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="directorydao">
 	<include path="directory.dicon"/>
+	<!-- value type -->
+	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>
+	<!-- attribute handlers -->
+	<component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/>
+	<component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler">
+		<property name="attributeNameList">{"dn"}</property>
+	</component>
+	<component class="org.seasar.directory.attribute.UserPasswordAttributeHandler">
+		<property name="attributeNameList">{"userPassword", "alternativeUserPassword"}</property>
+	</component>	
+	<component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl">
+		<property name="ignoreCase">true</property>
+		<property name="defaultAttributeHandler">defaultHandler</property>
+		<property name="attributeHandlers">container.findComponents( @org.seasar.directory.attribute.AttributeHandler@class)</property>
+	</component>
+
 	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>
 	<component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
 	<component name="interceptor"
 		class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryValueTypeFactoryImpl"/>
 </components>

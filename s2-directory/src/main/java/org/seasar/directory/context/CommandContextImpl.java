@@ -17,7 +17,7 @@ package org.seasar.directory.context;
 
 import java.util.Set;
 import org.seasar.directory.CommandContext;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.types.ValueType;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -42,7 +42,7 @@ public class CommandContextImpl implements CommandContext {
 	/** オブジェクトクラスを表します。 */
 	private String[] objectClasses;
 	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
 
 	/**
 	 * インスタンスを作成します。
@@ -50,8 +50,8 @@ public class CommandContextImpl implements CommandContext {
 	 * @param directoryValueTypeFactory
 	 */
 	public CommandContextImpl(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		setDirectoryValueTypeFactory(directoryValueTypeFactory);
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
+		setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
 	}
 
 	/**
@@ -160,8 +160,9 @@ public class CommandContextImpl implements CommandContext {
 			// 値が null ではない属性が一つ以上ある場合、最初の条件を作成します。
 			Object key = fitlerArgs.getKey(0);
 			Object value = fitlerArgs.get(key);
-			ValueType type = getDirectoryValueTypeFactory()
-					.getValueTypeByClass(value.getClass());
+			ValueType type = getDirectoryAttributeHandlerFactory()
+					.getDirectoryValueTypeFactory().getValueTypeByClass(
+							value.getClass());
 			buffer.append(type.getFilter(key, value));
 		}
 		if (size > 1) {
@@ -220,16 +221,16 @@ public class CommandContextImpl implements CommandContext {
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
+		return directoryAttributeHandlerFactory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+	public void setDirectoryAttributeHandlerFactory(
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
+		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 
 	/**
