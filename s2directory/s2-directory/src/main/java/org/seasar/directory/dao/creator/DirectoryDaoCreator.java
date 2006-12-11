@@ -13,14 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.container.creator;
+package org.seasar.directory.dao.creator;
 
 import org.seasar.framework.container.ComponentCustomizer;
+import org.seasar.framework.container.creator.ComponentCreatorImpl;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.convention.NamingConvention;
 
 /**
- * DirecotryDaoのインスタンスを管理するクリエータです。
+ * SMART deployにおいてDirectoryDaoのコンポーネント定義を作成する{@link ComponentCreator}の実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -29,27 +30,29 @@ public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param namingConvention
+	 * @param namingConvention ネーミングコンベンション
 	 */
 	public DirectoryDaoCreator(NamingConvention namingConvention) {
 		super(namingConvention);
 		setNameSuffix("Directory" + namingConvention.getDaoSuffix());
 		setInstanceDef(InstanceDefFactory.PROTOTYPE);
+		setEnableInterface(true);
+		setEnableAbstract(true);
 	}
 
 	/**
-	 * DirectoryDao用カスタマイザを取得します。
+	 * DirectoryDao用コンポーネントカスタマイザを取得します。
 	 * 
-	 * @return カスタマイザ
+	 * @return コンポーネントカスタマイザ
 	 */
 	public ComponentCustomizer getDirectoryDaoCustomizer() {
 		return getCustomizer();
 	}
 
 	/**
-	 * DirectoryDao用スタマイザを設定します。
+	 * DirectoryDao用コンポーネントカスタマイザを設定します。
 	 * 
-	 * @param customizer カスタマイザ
+	 * @param customizer コンポーネントカスタマイザ
 	 */
 	public void setDirectoryDaoCustomizer(ComponentCustomizer customizer) {
 		setCustomizer(customizer);
