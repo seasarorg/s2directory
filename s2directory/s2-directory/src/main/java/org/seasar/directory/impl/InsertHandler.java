@@ -15,7 +15,6 @@
  */
 package org.seasar.directory.impl;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 import javax.naming.NamingException;
@@ -24,10 +23,10 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
+import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.types.ValueType;
 import org.seasar.directory.util.DirectoryUtils;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
@@ -78,42 +77,20 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			objectClass.add(objectClasses[i]);
 		}
 		// 属性を設定します。
-		DirectoryValueTypeFactory directoryValueTypeFactory = cmd
-				.getDirectoryValueTypeFactory();
-		ValueType stringValueType = directoryValueTypeFactory
-				.getStringValueType();
-		ValueType listValueType = directoryValueTypeFactory.getListValueType();
+		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory = cmd
+				.getDirectoryAttributeHandlerFactory();
 		Set keySet = cmd.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String attributeName = String.valueOf(iter.next());
 			Object value = cmd.getArg(attributeName);
-			if (value == null) {
-				// 値が null の場合、無視します。
-				continue;
+			Class valueClass = cmd.getArgType(attributeName);
+			AttributeHandler attributeHandler = directoryAttributeHandlerFactory
+					.getAttributeHandler(attributeName);
+			Attribute addAttribute = attributeHandler.getAddAttribute(
+					directoryControlProperty, attributeName, value, valueClass);
+			if (addAttribute != null) {
+				entry.put(addAttribute);
 			}
-			if (attributeName.equals("dn")) {
-				// dn は BasicAttribute で設定済みなので除外する必要します。
-				continue;
-			}
-			String stringValue = String.valueOf(value);
-			if (attributeName.equals("userpassword")) {
-				// ユーザパスワード属性の場合、暗号化します。
-				value = DirectoryUtils.createPassword(stringValue,
-						directoryControlProperty.getPasswordAlgorithm());
-			}
-			ValueType type = directoryValueTypeFactory.getValueTypeByClass(cmd
-					.getArgType(attributeName));
-			if (type == stringValueType
-					&& stringValue.contains(directoryControlProperty
-							.getMultipleValueDelimiter())) {
-				// String型で定義されていて、多重属性を持つ場合List型に変換します。
-				value = Arrays.asList(stringValue
-						.split(directoryControlProperty
-								.getMultipleValueDelimiter()));
-				type = listValueType;
-			}
-			entry.put(type.getWriteValue(attributeName, value,
-					directoryControlProperty.getMultipleValueDelimiter()));
 		}
 		return entry;
 	}

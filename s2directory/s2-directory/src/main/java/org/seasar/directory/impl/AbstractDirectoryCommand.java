@@ -15,9 +15,9 @@
  */
 package org.seasar.directory.impl;
 
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.DirectoryCommand;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * ディレクトリ用処理コマンドの抽象クラスです。
@@ -29,7 +29,7 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	/** データソースを表わします。 */
 	private DirectoryDataSource directoryDataSource;
 	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
 	/** フィルタを表します。 */
 	private String filter;
 	/** オブジェクトクラスを表します。 */
@@ -41,9 +41,9 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * @param directoryDataSource データソース
 	 */
 	public AbstractDirectoryCommand(DirectoryDataSource directoryDataSource,
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
 		this.directoryDataSource = directoryDataSource;
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 
 	/**
@@ -60,8 +60,8 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * 
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
-	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
+		return directoryAttributeHandlerFactory;
 	}
 
 	/**

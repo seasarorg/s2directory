@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
@@ -28,7 +29,6 @@ import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.impl.AuthenticateAutoCommand;
 import org.seasar.directory.impl.DeleteAutoCommand;
 import org.seasar.directory.impl.InsertAutoCommand;
@@ -57,8 +57,8 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	protected DirectoryDaoAnnotationReader directoryDaoAnnotationReader;
 	/** Daoアノテーションリーダーファクトリを表します。 */
 	protected DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
-	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+	/** TODO: コメント */
+	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
 	/** ビーンクラスを表わします。 */
 	protected Class beanClass;
 	/** ビーンメタデータを表します。 */
@@ -98,7 +98,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		directoryBeanMetaDataImpl
 				.setDirectoryAnnotationReaderFactory(getDirectoryAnnotationReaderFactory());
 		directoryBeanMetaDataImpl
-				.setDirectoryValueTypeFactory(directoryValueTypeFactory);
+				.setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
 		directoryBeanMetaDataImpl.initialize();
 		directoryBeanMetaData = directoryBeanMetaDataImpl;
 		// コマンドを作成します。
@@ -144,7 +144,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		// コマンドを作成します。
 		SelectAutoCommand cmd = new SelectAutoCommand(directoryDataSource,
 				createNamingEnumerationHandler(method),
-				getDirectoryValueTypeFactory(), null);
+				getDirectoryAttributeHandlerFactory(), null);
 		cmd.setFilter(filter);
 		commands.put(method.getName(), cmd);
 	}
@@ -194,7 +194,8 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, directoryDaoAnnotationReader);
 		AuthenticateAutoCommand cmd = new AuthenticateAutoCommand(
-				directoryDataSource, getDirectoryValueTypeFactory(), methodArgs);
+				directoryDataSource, getDirectoryAttributeHandlerFactory(),
+				methodArgs);
 		commands.put(method.getName(), cmd);
 	}
 
@@ -208,7 +209,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, directoryDaoAnnotationReader);
 		InsertAutoCommand cmd = new InsertAutoCommand(directoryDataSource,
-				getDirectoryValueTypeFactory(), methodArgs);
+				getDirectoryAttributeHandlerFactory(), methodArgs);
 		// オブジェクトクラスを設定します。
 		cmd.setObjectClasses(directoryDaoAnnotationReader
 				.getObjectClasses(directoryBeanMetaData.getObjectClasses()));
@@ -225,7 +226,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, directoryDaoAnnotationReader);
 		DirectoryCommand cmd = new UpdateAutoCommand(directoryDataSource,
-				getDirectoryValueTypeFactory(), methodArgs);
+				getDirectoryAttributeHandlerFactory(), methodArgs);
 		commands.put(method.getName(), cmd);
 	}
 
@@ -239,7 +240,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
 				method, directoryDaoAnnotationReader);
 		DirectoryCommand cmd = new DeleteAutoCommand(directoryDataSource,
-				getDirectoryValueTypeFactory(), methodArgs);
+				getDirectoryAttributeHandlerFactory(), methodArgs);
 		commands.put(method.getName(), cmd);
 	}
 
@@ -255,7 +256,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 		// コマンドを作成します。
 		NamingEnumerationHandler handler = createNamingEnumerationHandler(method);
 		SelectAutoCommand cmd = new SelectAutoCommand(directoryDataSource,
-				handler, getDirectoryValueTypeFactory(), methodArgs);
+				handler, getDirectoryAttributeHandlerFactory(), methodArgs);
 		// フィルタの準備をします。
 		String filter = createAutoSelectFilter();
 		String query = directoryDaoAnnotationReader.getQuery(method.getName());
@@ -446,18 +447,18 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	 * 
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
-	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
+		return directoryAttributeHandlerFactory;
 	}
 
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryAttributeHandlerFactory ディレクトリ用の値の型ファクトリ
 	 */
-	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+	public void setDirectoryAttributeHandlerFactory(
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
+		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 
 	/**

@@ -13,9 +13,9 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.dao.impl;
+package org.seasar.directory.impl;
 
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
+import org.seasar.directory.DirectoryValueTypeFactory;
 import org.seasar.directory.types.ValueType;
 import org.seasar.directory.types.ValueTypes;
 import org.seasar.framework.container.S2Container;

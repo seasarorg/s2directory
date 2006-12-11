@@ -15,9 +15,9 @@
  */
 package org.seasar.directory.dao.impl;
 
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.dao.DirectoryBeanAnnotationReader;
 import org.seasar.directory.dao.DirectoryDtoMetaData;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.types.PropertyType;
 import org.seasar.directory.types.PropertyTypeImpl;
 import org.seasar.directory.types.ValueType;
@@ -39,8 +39,8 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	private CaseInsensitiveMap propertyTypes_ = new CaseInsensitiveMap();
 	/** ビーンアノテーションリーダーを表します。 */
 	protected DirectoryBeanAnnotationReader directoryBeanAnnotationReader;
-	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+	/** TODO: コメント */
+	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
 
 	/**
 	 * インスタンスを作成します。
@@ -127,11 +127,13 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 		final String valueTypeName = directoryBeanAnnotationReader
 				.getValueType(propertyDesc);
 		if (valueTypeName != null) {
-			return getDirectoryValueTypeFactory().getValueTypeByName(
-					valueTypeName);
+			return getDirectoryAttributeHandlerFactory()
+					.getDirectoryValueTypeFactory().getValueTypeByName(
+							valueTypeName);
 		} else {
-			return getDirectoryValueTypeFactory().getValueTypeByClass(
-					propertyDesc.getPropertyType());
+			return getDirectoryAttributeHandlerFactory()
+					.getDirectoryValueTypeFactory().getValueTypeByClass(
+							propertyDesc.getPropertyType());
 		}
 	}
 
@@ -149,17 +151,17 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	 * 
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
-	protected DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+	protected DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
+		return directoryAttributeHandlerFactory;
 	}
 
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryAttributeHandlerFactory ディレクトリ用の値の型ファクトリ
 	 */
-	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+	public void setDirectoryAttributeHandlerFactory(
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
+		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 }
