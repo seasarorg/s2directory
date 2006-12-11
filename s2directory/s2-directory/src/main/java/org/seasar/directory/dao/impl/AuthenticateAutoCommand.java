@@ -13,26 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.impl;
+package org.seasar.directory.dao.impl;
 
-import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.impl.AuthenticateHandler;
+import org.seasar.directory.impl.ExecuteHandler;
 
 /**
- * 動的に更新処理を実行するクラスです。
+ * 動的に認証処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
+public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param dataSource - データソース
 	 */
-	public UpdateAutoCommand(DirectoryDataSource dataSource,
+	public AuthenticateAutoCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
 		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
@@ -41,13 +42,12 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * 更新処理を実行します。
+	 * 認証処理を実行します。
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		CommandContext cmd = apply(args);
-		ExecuteHandler handler = new UpdateHandler(
-				getDirectoryDataSource(args), cmd);
+		ExecuteHandler handler = new AuthenticateHandler(
+				getDirectoryDataSource(args));
 		return handler.execute();
 	}
 }
