@@ -16,7 +16,6 @@
 package org.seasar.directory.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -24,20 +23,17 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
-import javax.naming.directory.BasicAttribute;
-import javax.naming.directory.DirContext;
 import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchResult;
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
+import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.types.ValueType;
 import org.seasar.directory.util.DirectoryUtils;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveSet;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * 更新を処理するクラスです。
@@ -74,72 +70,32 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 */
 	protected ModificationItem[] createModificationItems(SearchResult result,
 			Set attributeNameSet) throws NamingException {
-		DirectoryValueTypeFactory directoryValueTypeFactory = cmd
-				.getDirectoryValueTypeFactory();
-		ValueType stringValueType = directoryValueTypeFactory
-				.getStringValueType();
-		ValueType listValueType = directoryValueTypeFactory.getListValueType();
+		// 属性を設定します。
+		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory = cmd
+				.getDirectoryAttributeHandlerFactory();
 		List itemList = new ArrayList();
 		Set keySet = cmd.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String attributeName = String.valueOf(iter.next());
 			Object value = cmd.getArg(attributeName);
-			String stringValue = String.valueOf(cmd.getArg(attributeName));
-			if (attributeName.equals("dn"))
-				continue;
+			Class valueClass = cmd.getArgType(attributeName);
+			AttributeHandler attributeHandler = directoryAttributeHandlerFactory
+					.getAttributeHandler(attributeName);
+			ModificationItem modificationItem;
 			if (attributeNameSet.contains(attributeName)) {
-				// 既に属性がある場合、現在の属性を取得し、値を更新します。
-				Attribute attribute = result.getAttributes().get(attributeName);
-				String alreadyValue = String.valueOf(stringValueType
-						.getReadValue(result.getAttributes(), attributeName,
-								directoryControlProperty
-										.getMultipleValueDelimiter()));
-				if (value == null || StringUtil.isEmpty(stringValue)) {
-					// 値が空の場合、削除します。
-					itemList.add(new ModificationItem(
-							DirContext.REMOVE_ATTRIBUTE, attribute));
-				} else if (!stringValue.equals(alreadyValue)) {
-					// 値があり、現在の値と異なる場合、更新します。
-					if (attributeName.equals("userpassword")) {
-						if (!DirectoryUtils.verifyPassword(alreadyValue,
-								stringValue)) {
-							// ユーザパスワード属性の場合、暗号化します。
-							value = DirectoryUtils.createPassword(stringValue,
-									directoryControlProperty
-											.getPasswordAlgorithm());
-						} else {
-							continue;
-						}
-					}
-					ValueType type = directoryValueTypeFactory
-							.getValueTypeByClass(cmd.getArgType(attributeName));
-					if (type == stringValueType
-							&& stringValue.contains(directoryControlProperty
-									.getMultipleValueDelimiter())) {
-						// String型で定義されていて、多重属性を持つ場合List型に変換します。
-						value = Arrays.asList(stringValue
-								.split(directoryControlProperty
-										.getMultipleValueDelimiter()));
-						type = listValueType;
-					}
-					attribute = type.getWriteValue(attributeName, value,
-							directoryControlProperty
-									.getMultipleValueDelimiter());
-					itemList.add(new ModificationItem(
-							DirContext.REPLACE_ATTRIBUTE, attribute));
-				}
+				// 既に属性がある場合
+				modificationItem = attributeHandler.getModificationItem(
+						directoryControlProperty, result.getAttributes().get(
+								attributeName), attributeName, value,
+						valueClass);
 			} else {
-				// 新規に属性を追加する場合、新しい属性を追加します。
-				if (attributeName.equals("userpassword"))
-					stringValue = DirectoryUtils.createPassword(stringValue,
-							directoryControlProperty.getPasswordAlgorithm());
-				if (value != null && !StringUtil.isEmpty(stringValue)) {
-					// 値がある場合、追加します。
-					Attribute attribute = new BasicAttribute(attributeName,
-							stringValue);
-					itemList.add(new ModificationItem(DirContext.ADD_ATTRIBUTE,
-							attribute));
-				}
+				// 属性がない場合
+				modificationItem = attributeHandler.getModificationItem(
+						directoryControlProperty, null, attributeName, value,
+						valueClass);
+			}
+			if (modificationItem != null) {
+				itemList.add(modificationItem);
 			}
 		}
 		return (ModificationItem[])itemList.toArray(new ModificationItem[0]);

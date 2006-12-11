@@ -16,11 +16,12 @@
 package org.seasar.directory.impl;
 
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryValueTypeFactory;
 import org.seasar.directory.context.CommandContextImpl;
 import org.seasar.directory.dao.AnnotationMethodArgs;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
 import org.seasar.framework.util.StringUtil;
 
@@ -42,9 +43,9 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * @param dataSource - データソース
 	 */
 	public AbstractAutoDirectoryCommand(DirectoryDataSource dataSource,
-			DirectoryValueTypeFactory directoryValueTypeFactory,
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryValueTypeFactory);
+		super(dataSource, directoryAttributeHandlerFactory);
 		this.methodArgs = methodArgs;
 	}
 
@@ -88,8 +89,9 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * @param args 引数値
 	 */
 	protected CommandContext apply(Object[] args) {
-		final DirectoryValueTypeFactory valueTypeFactory = getDirectoryValueTypeFactory();
-		CommandContext cmd = new CommandContextImpl(valueTypeFactory);
+		final DirectoryValueTypeFactory valueTypeFactory = getDirectoryAttributeHandlerFactory()
+				.getDirectoryValueTypeFactory();
+		CommandContext cmd = new CommandContextImpl(getDirectoryAttributeHandlerFactory());
 		if (args != null && methodArgs != null) {
 			String[] argNames = methodArgs.getArgNames();
 			Class[] argTypes = methodArgs.getArgTypes();

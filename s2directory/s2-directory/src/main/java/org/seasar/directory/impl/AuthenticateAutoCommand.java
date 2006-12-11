@@ -15,9 +15,9 @@
  */
 package org.seasar.directory.impl;
 
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 動的に認証処理を実行するクラスです。
@@ -32,9 +32,9 @@ public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param dataSource - データソース
 	 */
 	public AuthenticateAutoCommand(DirectoryDataSource dataSource,
-			DirectoryValueTypeFactory directoryValueTypeFactory,
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryValueTypeFactory, methodArgs);
+		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
 	}
 
 	/**

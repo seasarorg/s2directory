@@ -17,12 +17,12 @@ package org.seasar.directory.dao.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.DirecotryDaoMetaData;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.util.Disposable;
 import org.seasar.framework.util.DisposableUtil;
@@ -41,8 +41,8 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	protected DirectoryDataSource directoryDataSource;
 	/** ディレクトリアノテーションリーダファクトリを表します。 */
 	protected DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
-	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryValueTypeFactory directoryValueTypeFactory;
+	/** ディレクトリ用の値の属性ハンドラファクトリを表します。 */
+	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
 	/** Daoクラスの接尾辞を表します。 */
 	protected String[] daoSuffixes;
 	/** 認証関数用の接頭辞を表わします。 */
@@ -152,7 +152,7 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 		directoryDaoMetaData
 				.setDirectoryAnnotationReaderFactory(directoryAnnotationReaderFactory);
 		directoryDaoMetaData
-				.setDirectoryValueTypeFactory(directoryValueTypeFactory);
+				.setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
 		if (daoSuffixes != null) {
 			directoryDaoMetaData.setDaoSuffixes(daoSuffixes);
 		}
@@ -177,9 +177,9 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 * 
 	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
 	 */
-	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+	public void setDirectoryAttributeHandlerFactory(
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
+		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 
 	/**

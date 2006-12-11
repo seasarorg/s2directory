@@ -16,9 +16,9 @@
 package org.seasar.directory.impl;
 
 import org.seasar.directory.CommandContext;
+import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.AnnotationMethodArgs;
-import org.seasar.directory.dao.DirectoryValueTypeFactory;
 
 /**
  * 新規追加処理を実行するクラスです。
@@ -33,9 +33,9 @@ public class InsertAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param dataSource - データソース
 	 */
 	public InsertAutoCommand(DirectoryDataSource dataSource,
-			DirectoryValueTypeFactory directoryValueTypeFactory,
+			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryValueTypeFactory, methodArgs);
+		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
 	}
 
 	/**
