@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.impl;
+package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
@@ -23,6 +23,7 @@ import org.seasar.directory.DirectoryValueTypeFactory;
 import org.seasar.directory.context.CommandContextImpl;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
+import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.util.StringUtil;
 
 /**

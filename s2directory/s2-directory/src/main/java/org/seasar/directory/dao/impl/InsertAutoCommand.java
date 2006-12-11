@@ -13,47 +13,43 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.impl;
+package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.impl.ExecuteHandler;
+import org.seasar.directory.impl.InsertHandler;
 
 /**
- * 動的に読み出し処理を実行するクラスです。
+ * 新規追加処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
-	private NamingEnumerationHandler namingEnumerationHandler;
-
+public class InsertAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param dataSource - データソース
 	 */
-	public SelectAutoCommand(DirectoryDataSource dataSource,
-			NamingEnumerationHandler namingEnumerationHandler,
+	public InsertAutoCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
 		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
-		this.namingEnumerationHandler = namingEnumerationHandler;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * 読み出し処理を実行します。
+	 * 新規追加処理を実行します。
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
 		CommandContext cmd = apply(args);
-		ExecuteHandler selectHandler = new SelectHandler(
-				getDirectoryDataSource(args), super.getRunFilter(),
-				namingEnumerationHandler, cmd);
-		return selectHandler.execute();
+		ExecuteHandler handler = new InsertHandler(
+				getDirectoryDataSource(args), cmd);
+		return handler.execute();
 	}
 }
