@@ -21,7 +21,7 @@
 		<property name="passwordAlgorithm">"SSHA"</property>
 		<property name="userSuffix">"ou=Users"</property>
 		<property name="userAttributeName">"uid"</property>
-		<property name="groupAttributeName">"ou=Groups"</property>
+		<property name="groupSuffix">"ou=Groups"</property>
 		<property name="groupAttributeName">"memberUid"</property>
 		<property name="multipleValueDelimiter">","</property>
 		-->
