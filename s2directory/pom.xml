@@ -4,7 +4,7 @@
   <artifactId>s2-directory-project</artifactId>
   <packaging>pom</packaging>
   <name>S2Directory Project</name>
-  <version>0.4-SNAPSHOT</version>
+  <version>0.4</version>
   <description></description>
   <url>http://s2directory.sandbox.seasar.org/</url>
   <issueManagement>
