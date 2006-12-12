@@ -26,7 +26,7 @@ import examples.directorydao.directorydao.PosixAccountDtoDao;
 import examples.directorydao.dto.PosixAccountDto;
 
 /**
- * PosixAccountエントリの更新テストクラスです。
+ * PosixAccountエントリの削除テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -72,7 +72,7 @@ public class PosixAccountDeleteTest extends TestCase {
 		assertEquals(1, posixAccountDtoDao.insert(user1));
 	}
 
-	public void testUpdateWithUserMode() {
+	public void testDeleteWithUserMode() {
 		DirectoryControlProperty property = (DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
