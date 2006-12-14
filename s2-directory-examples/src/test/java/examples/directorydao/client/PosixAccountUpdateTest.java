@@ -15,7 +15,6 @@
  */
 package examples.directorydao.client;
 
-import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.framework.container.S2Container;
@@ -30,7 +29,7 @@ import examples.directorydao.dto.PosixAccountDto;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class PosixAccountUpdateTest extends TestCase {
+public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDao posixAccountDtoDao;
@@ -41,10 +40,13 @@ public class PosixAccountUpdateTest extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
-		container = S2ContainerFactory.create(PATH);
-		container.init();
-		posixAccountDtoDao = (PosixAccountDtoDao)container
-				.getComponent(PosixAccountDtoDao.class);
+		super.setUp();
+		if (container == null) {
+			container = S2ContainerFactory.create(PATH);
+			container.init();
+			posixAccountDtoDao = (PosixAccountDtoDao)container
+					.getComponent(PosixAccountDtoDao.class);
+		}
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
 				container);
 		user1 = posixAccountDtoFactory.getUser("user1");
@@ -56,6 +58,7 @@ public class PosixAccountUpdateTest extends TestCase {
 	protected void tearDown() throws Exception {
 		assertEquals(1, posixAccountDtoDao.delete(user1));
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
+		super.tearDown();
 	}
 
 	public void testUpdate() {
