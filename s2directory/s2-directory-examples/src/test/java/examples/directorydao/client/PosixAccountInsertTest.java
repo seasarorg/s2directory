@@ -15,7 +15,6 @@
  */
 package examples.directorydao.client;
 
-import junit.framework.TestCase;
 import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
@@ -29,7 +28,7 @@ import examples.directorydao.dto.PosixAccountDto;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class PosixAccountInsertTest extends TestCase {
+public class PosixAccountInsertTest extends DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDao posixAccountDtoDao;
@@ -40,10 +39,13 @@ public class PosixAccountInsertTest extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
-		container = S2ContainerFactory.create(PATH);
-		container.init();
-		posixAccountDtoDao = (PosixAccountDtoDao)container
-				.getComponent(PosixAccountDtoDao.class);
+		super.setUp();
+		if (container == null) {
+			container = S2ContainerFactory.create(PATH);
+			container.init();
+			posixAccountDtoDao = (PosixAccountDtoDao)container
+					.getComponent(PosixAccountDtoDao.class);
+		}
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
 				container);
 		user1 = posixAccountDtoFactory.getUser("user1");
@@ -54,6 +56,7 @@ public class PosixAccountInsertTest extends TestCase {
 		account.setDn(user1.getDn());
 		assertEquals(1, posixAccountDtoDao.delete(account));
 		assertEquals(null, posixAccountDtoDao.getUser(account));
+		super.tearDown();
 	}
 
 	public void testCreate1() {
