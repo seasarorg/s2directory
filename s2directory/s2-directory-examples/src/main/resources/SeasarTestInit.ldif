@@ -5,13 +5,9 @@ objectClass: organization
 o: seasar
 
 dn: cn=Manager, dc=seasar,dc=org
-displayName: Directory Superuser
-uid: Manager
 userPassword:: c2VjcmV0
 objectClass: top
 objectClass: person
-objectClass: organizationalPerson
-objectClass: inetOrgPerson
 sn: administrator
 cn: system administrator
 
@@ -26,4 +22,3 @@ objectClass: organizationalUnit
 dn: ou=Computers, dc=seasar,dc=org
 ou: Computers
 objectClass: organizationalUnit
-

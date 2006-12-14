@@ -15,7 +15,6 @@
  */
 package examples.directorydao.client;
 
-import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
 import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
@@ -31,7 +30,8 @@ import examples.directorydao.dto.PosixAccountDto;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class PosixAccountConnectionTest extends TestCase {
+public class PosixAccountConnectionTest extends
+		DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDao posixAccountDtoDao;
@@ -42,10 +42,13 @@ public class PosixAccountConnectionTest extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
-		container = S2ContainerFactory.create(PATH);
-		container.init();
-		posixAccountDtoDao = (PosixAccountDtoDao)container
-				.getComponent(PosixAccountDtoDao.class);
+		super.setUp();
+		if (container == null) {
+			container = S2ContainerFactory.create(PATH);
+			container.init();
+			posixAccountDtoDao = (PosixAccountDtoDao)container
+					.getComponent(PosixAccountDtoDao.class);
+		}
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
 				container);
 		user1 = posixAccountDtoFactory.getUser("user1");

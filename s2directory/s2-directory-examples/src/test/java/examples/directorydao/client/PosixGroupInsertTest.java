@@ -17,7 +17,6 @@ package examples.directorydao.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 import examples.directorydao.common.PosixAccountDtoFactory;
@@ -33,7 +32,7 @@ import examples.directorydao.entity.PosixGroup;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class PosixGroupInsertTest extends TestCase {
+public class PosixGroupInsertTest extends DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDao posixAccountDtoDao;
@@ -46,12 +45,15 @@ public class PosixGroupInsertTest extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
-		container = S2ContainerFactory.create(PATH);
-		container.init();
-		posixAccountDtoDao = (PosixAccountDtoDao)container
-				.getComponent(PosixAccountDtoDao.class);
-		posixGroupDao = (PosixGroupDao)container
-				.getComponent(PosixGroupDao.class);
+		super.setUp();
+		if (container == null) {
+			container = S2ContainerFactory.create(PATH);
+			container.init();
+			posixAccountDtoDao = (PosixAccountDtoDao)container
+					.getComponent(PosixAccountDtoDao.class);
+			posixGroupDao = (PosixGroupDao)container
+					.getComponent(PosixGroupDao.class);
+		}
 		// ユーザを追加します。
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
 				container);
@@ -80,6 +82,7 @@ public class PosixGroupInsertTest extends TestCase {
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
 		assertEquals(1, posixAccountDtoDao.delete(user2));
 		assertEquals(null, posixAccountDtoDao.getUser(user2));
+		super.tearDown();
 	}
 
 	public void testInsertCheck() {
