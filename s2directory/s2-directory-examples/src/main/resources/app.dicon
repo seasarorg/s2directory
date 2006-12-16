@@ -2,5 +2,5 @@
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
-	<include path="examples/directorydao/dicon/alldao.dicon"/>
+	<include path="alldao.dicon"/>
 </components>

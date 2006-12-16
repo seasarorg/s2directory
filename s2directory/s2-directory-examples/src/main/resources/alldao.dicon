@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+<components>
+	<include path="directorydao.dicon"/>
+
+	<!-- DirectoryDaoインタセプターチェイン定義 -->
+	<component name="directoryDaoInterceptorChain" class="org.seasar.framework.aop.interceptors.InterceptorChain">
+		<initMethod name="add"><arg>directorydao.interceptor</arg></initMethod>
+	</component>
+
+	<!-- DirectoryDao定義 -->
+	<component class="org.seasar.framework.container.autoregister.FileSystemComponentAutoRegister">
+		<property name="autoNaming">
+			<component class="org.seasar.framework.container.autoregister.DefaultAutoNaming"/>
+		</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.directory.examples.directorydao"</arg>
+			<arg>".*Dao"</arg>
+		</initMethod>
+	</component>
+	<component class="org.seasar.framework.container.autoregister.AspectAutoRegister">
+		<property name="interceptor">directoryDaoInterceptorChain</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.directory.examples.directorydao"</arg>
+			<arg>".*Dao"</arg>
+		</initMethod>
+	</component>
+</components>
