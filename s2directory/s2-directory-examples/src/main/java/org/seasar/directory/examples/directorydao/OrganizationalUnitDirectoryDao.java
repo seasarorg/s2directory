@@ -23,7 +23,7 @@ import org.seasar.directory.examples.entity.OrganizationalUnit;
  * @author Jun Futagawa
  * @version $Date::                           $
  */
-public interface OrganizationalUnitDao {
+public interface OrganizationalUnitDirectoryDao {
 	/** BEANアノテーション */
 	public static final Class BEAN = OrganizationalUnit.class;
 

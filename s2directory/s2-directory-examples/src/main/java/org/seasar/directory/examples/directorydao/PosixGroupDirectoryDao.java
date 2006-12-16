@@ -16,7 +16,7 @@
 package org.seasar.directory.examples.directorydao;
 
 import java.util.List;
-import org.seasar.directory.examples.entity.PosixGroupWithList;
+import org.seasar.directory.examples.entity.PosixGroup;
 
 /**
  * PosixAccountのDaoインタフェースです。
@@ -24,32 +24,30 @@ import org.seasar.directory.examples.entity.PosixGroupWithList;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface PosixGroupWithListDao {
-	public Class BEAN = PosixGroupWithList.class;
-	public String OBJECTCLASSES = "posixGroup";
-	
+public interface PosixGroupDirectoryDao {
+	public Class BEAN = PosixGroup.class;
 	public static final String getPosixGroupList_QUERY = "objectclass=posixGroup";
 
 	public List getPosixGroupList();
 
-	public PosixGroupWithList getPosixGroup(PosixGroupWithList group);
+	public PosixGroup getPosixGroup(PosixGroup group);
 
-	public List getPosixGroupList(PosixGroupWithList group);
+	public List getPosixGroupList(PosixGroup group);
 	public static final String getPosixGroupByCn_ARGS = "cn";
 
-	public PosixGroupWithList getPosixGroupByCn(String cn);
+	public PosixGroup getPosixGroupByCn(String cn);
 	public static final String getPosixGroupListByMemberUid_ARGS = "memberUid";
 
 	public List getPosixGroupListByMemberUid(String memberUid);
 
-	public static final String getPosixGroupListByMemberUidList_ARGS = "memberUid";
-	public List getPosixGroupListByMemberUidList(List memberUid);
-	
-	public int insert(PosixGroupWithList group);
+	public static final String getPosixGroupListByMemberUid2_ARGS = "memberUid";
+	public List getPosixGroupListByMemberUid2(List memberUid);
 
-	public int update(PosixGroupWithList group);
+	public int insert(PosixGroup group);
 
-	public int delete(PosixGroupWithList group);
+	public int update(PosixGroup group);
+
+	public int delete(PosixGroup group);
 
 	public List getAllGroup();
 }

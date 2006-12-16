@@ -17,8 +17,8 @@ package org.seasar.directory.examples.client;
 
 import junit.framework.TestCase;
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.examples.directorydao.OrganizationalUnitDao;
-import org.seasar.directory.examples.directorydao.PersonDao;
+import org.seasar.directory.examples.directorydao.OrganizationalUnitDirectoryDao;
+import org.seasar.directory.examples.directorydao.PersonDirectoryDao;
 import org.seasar.directory.examples.entity.OrganizationalUnit;
 import org.seasar.directory.examples.entity.Person;
 import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
@@ -35,8 +35,8 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 	private static final String PATH = "app.dicon";
 	private static boolean isApacheDS = false;
 	private static S2Container container;
-	private static PersonDao personDao;
-	private static OrganizationalUnitDao organizationalUnitDao;
+	private static PersonDirectoryDao personDao;
+	private static OrganizationalUnitDirectoryDao organizationalUnitDao;
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(DefaultDirectoryInformationTreeTest.class);
@@ -46,9 +46,9 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			personDao = (PersonDao)container.getComponent(PersonDao.class);
-			organizationalUnitDao = (OrganizationalUnitDao)container
-					.getComponent(OrganizationalUnitDao.class);
+			personDao = (PersonDirectoryDao)container.getComponent(PersonDirectoryDao.class);
+			organizationalUnitDao = (OrganizationalUnitDirectoryDao)container
+					.getComponent(OrganizationalUnitDirectoryDao.class);
 		}
 		setupAdministratorEntry();
 		setupDefaultDirectoryInformationTree();
