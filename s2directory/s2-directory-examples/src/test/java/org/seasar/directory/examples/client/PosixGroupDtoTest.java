@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.common.PosixGroupDtoFactory;
-import org.seasar.directory.examples.directorydao.PosixAccountDtoDao;
-import org.seasar.directory.examples.directorydao.PosixGroupDtoDao;
+import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
+import org.seasar.directory.examples.directorydao.PosixGroupDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.examples.dto.PosixGroupDto;
 import org.seasar.framework.container.S2Container;
@@ -35,9 +35,9 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
 public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
-	private static PosixAccountDtoDao posixAccountDtoDao;
+	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
 	private static PosixAccountDto user1, user2;
-	private static PosixGroupDtoDao posixGroupDtoDao;
+	private static PosixGroupDtoDirectoryDao posixGroupDtoDao;
 	private static PosixGroupDto group1, group2;
 
 	public static void main(String[] args) {
@@ -49,10 +49,10 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDao)container
-					.getComponent(PosixAccountDtoDao.class);
-			posixGroupDtoDao = (PosixGroupDtoDao)container
-					.getComponent(PosixGroupDtoDao.class);
+			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+					.getComponent(PosixAccountDtoDirectoryDao.class);
+			posixGroupDtoDao = (PosixGroupDtoDirectoryDao)container
+					.getComponent(PosixGroupDtoDirectoryDao.class);
 		}
 		// ユーザを追加します。
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(

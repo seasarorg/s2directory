@@ -16,14 +16,14 @@
 		</property>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.directory.examples.directorydao"</arg>
-			<arg>".*Dao"</arg>
+			<arg>".*DirectoryDao"</arg>
 		</initMethod>
 	</component>
 	<component class="org.seasar.framework.container.autoregister.AspectAutoRegister">
 		<property name="interceptor">directoryDaoInterceptorChain</property>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.directory.examples.directorydao"</arg>
-			<arg>".*Dao"</arg>
+			<arg>".*DirectoryDao"</arg>
 		</initMethod>
 	</component>
 </components>

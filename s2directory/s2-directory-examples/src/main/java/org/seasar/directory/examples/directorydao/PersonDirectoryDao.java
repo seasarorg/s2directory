@@ -24,7 +24,7 @@ import org.seasar.directory.examples.entity.Person;
  * @author Jun Futagawa
  * @version $Date::                           $
  */
-public interface PersonDao {
+public interface PersonDirectoryDao {
 	/** BEANアノテーション */
 	public static final Class BEAN = Person.class;
 
