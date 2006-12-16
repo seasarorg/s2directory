@@ -17,7 +17,7 @@ package org.seasar.directory.examples.client;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
-import org.seasar.directory.examples.directorydao.PosixAccountDtoDao;
+import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.framework.container.S2Container;
@@ -32,7 +32,7 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
 public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest {
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
-	private static PosixAccountDtoDao posixAccountDtoDao;
+	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
 	private static PosixAccountDto user1;
 
 	public static void main(String[] args) {
@@ -44,8 +44,8 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDao)container
-					.getComponent(PosixAccountDtoDao.class);
+			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
 		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
 				container);

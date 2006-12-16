@@ -25,7 +25,7 @@ import org.seasar.directory.examples.dto.PosixAccountDto;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface PosixAccountDtoDao {
+public interface PosixAccountDtoDirectoryDao {
 	public Class BEAN = PosixAccountDto.class;
 	
 	public String OBJECTCLASSES = "posixAccount, inetOrgPerson";

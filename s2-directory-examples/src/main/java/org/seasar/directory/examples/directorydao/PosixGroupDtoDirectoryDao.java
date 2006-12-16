@@ -24,7 +24,7 @@ import org.seasar.directory.examples.dto.PosixGroupDto;
  * @author Jun Futagawa
  * @version $Date::                           $
  */
-public interface PosixGroupDtoDao {
+public interface PosixGroupDtoDirectoryDao {
 	/** BEANアノテーション */
 	public static final Class BEAN = PosixGroupDto.class;
 	/** OBJECTCLASSESアノテーション */
