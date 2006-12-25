@@ -88,7 +88,7 @@ public abstract class AbstractAttributeHandler implements AttributeHandler {
 		String stringValue = String.valueOf(value);
 		ValueType stringValueType = valueTypeFactory.getStringValueType();
 		if (type == stringValueType
-				&& stringValue.contains(property.getMultipleValueDelimiter())) {
+				&& stringValue.indexOf(property.getMultipleValueDelimiter()) != -1) {
 			// String型で定義されていて、多重属性を持つ場合List型に変換します。
 			value = Arrays.asList(stringValue.split(property
 					.getMultipleValueDelimiter()));

@@ -62,7 +62,7 @@ public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 					"objectClass=posixGroup", controls);
 			handler.handle(ne, "dc=seasar,dc=org");
 		} catch (NamingException e) {
-			e.printStackTrace();
+			assertTrue(true);
 		}
 	}
 }
