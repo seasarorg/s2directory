@@ -1,17 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.directory</groupId>
   <artifactId>s2-directory-project</artifactId>
   <packaging>pom</packaging>
   <name>S2Directory Project</name>
   <version>0.5-SNAPSHOT</version>
-  <description></description>
+  <description>Object / Directory Mapping,Object</description>
   <url>http://s2directory.sandbox.seasar.org/</url>
   <issueManagement>
     <system>JIRA</system>
     <url>https://www.seasar.org/issues/browse/DIRECTORY</url>
   </issueManagement>
-  <inceptionYear>2</inceptionYear>
+  <inceptionYear>2005</inceptionYear>
   <mailingLists>
     <mailingList>
       <name>Seasar-user</name>
@@ -35,6 +40,24 @@
       <archive>http://ml.seasar.org/archives/seasar-user-en/</archive>
     </mailingList>
   </mailingLists>
+  <developers>
+    <developer>
+      <id>jfut</id>
+      <name>Jun Futagawa</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>t-wada</id>
+      <name>Takuto Wada</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -45,7 +68,7 @@
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/sandbox/s2directory/trunk/s2directory/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2directory/trunk/s2directory/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=s2directory</url>
+    <url>http://svn.seasar.org/browse/?root=sandbox.s2directory</url>
   </scm>
   <organization>
     <name>The Seasar Foundation</name>
@@ -104,22 +127,9 @@
       <version>2.4.7</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-j2ee_1.4_spec</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-      <version>1.0</version>
-      <scope>runtime</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.8</version>
+      <version>1.2.14</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -131,7 +141,13 @@
 <!-- This means that it used the localRepository setting.
       <url></url>
 -->
-      <url>scp://maven.seasar.org/home/groups/maven/public_html/maven2</url>
+      <url>scp://maven.seasar.org/home/groups/maven/maven/maven2</url>
     </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>scp://maven.seasar.org/home/groups/maven/maven/maven2-snapshot</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>
