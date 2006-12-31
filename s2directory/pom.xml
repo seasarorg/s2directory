@@ -9,7 +9,7 @@
   <artifactId>s2-directory-project</artifactId>
   <packaging>pom</packaging>
   <name>S2Directory Project</name>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.5</version>
   <description>Object / Directory Mapping,Object</description>
   <url>http://s2directory.sandbox.seasar.org/</url>
   <issueManagement>
