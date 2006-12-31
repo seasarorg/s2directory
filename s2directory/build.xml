@@ -45,7 +45,9 @@
 				<include name="directorydao.dicon"/>
 				<include name="log4j.properties"/>
 			</zipfileset>
+			<zipfileset prefix="s2directory/doc" dir="../s2directory-www">
+				<exclude name="**/downloads/**"/>
+			</zipfileset>
 		</zip>
 	</target>
-
 </project>
