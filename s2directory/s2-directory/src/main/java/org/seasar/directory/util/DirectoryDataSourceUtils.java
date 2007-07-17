@@ -112,9 +112,14 @@ public final class DirectoryDataSourceUtils {
 	 */
 	private static String getFullUserDn(DirectoryControlProperty property) {
 		String user = property.getUser();
+		// ユーザDNにベースDNが含まれている場合、フルDNで指定されていると見なします。
+		int index = user.indexOf(property.getBaseDn());
+		if (index >= 0) {
+			return user;
+		}
 		// トップ識別子を取得します。
 		String userFirstAttribute = user;
-		int index = user.indexOf(",");
+		index = user.indexOf(",");
 		if (index >= 0) {
 			userFirstAttribute = user.substring(0, index);
 		}
