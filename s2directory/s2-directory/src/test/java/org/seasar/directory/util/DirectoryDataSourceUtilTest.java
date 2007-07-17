@@ -50,20 +50,24 @@ public class DirectoryDataSourceUtilTest extends TestCase {
 		// ユーザ名のみの形式のテストを行います。
 		property.setUser("user1 ");
 		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
+		assertEquals("uid=user1 ,ou=Users,dc=seasar,dc=org", property.getUser());
+		// ユーザ名のみの形式のテストを行います。(半角スペースあり)
+		property.setUser("user 1 ");
+		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
+		assertEquals("uid=user 1 ,ou=Users,dc=seasar,dc=org", property.getUser());
 		// ユーザ識別子が付与した形式のテストを行います。
 		property.setUser("uid=user1  ");
 		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1,ou=Users,dc=seasar,dc=org", property.getUser());
+		assertEquals("uid=user1  ,ou=Users,dc=seasar,dc=org", property.getUser());
 		// ユーザ識別子(uid)が含まれている形式のテストを行います。
 		property.setUser("uiduser1,  ou=Users");
 		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=uiduser1,ou=Users,dc=seasar,dc=org", property
+		assertEquals("uid=uiduser1,  ou=Users,dc=seasar,dc=org", property
 				.getUser());
 		// ユーザ識別子(uid)が含まれている形式のテストを行います。
 		property.setUser("uid= uiduser1 ,	ou=Users,dc=ju");
 		DirectoryDataSourceUtils.setupDirectoryControlProperty(property);
-		assertEquals("uid=uiduser1,ou=Users,dc=ju,dc=seasar,dc=org", property
+		assertEquals("uid= uiduser1 ,	ou=Users,dc=ju,dc=seasar,dc=org", property
 				.getUser());
 	}
 }
