@@ -84,8 +84,6 @@ public final class DirectoryDataSourceUtils {
 	public static void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
 		if (property.getUser() != null) {
-			property.setUser(property.getUser().replaceAll("[ \t]", ""));
-			property.setBaseDn(property.getBaseDn().replaceAll("[ \t]", ""));
 			property.setUser(getFullUserDn(property));
 		}
 	}
