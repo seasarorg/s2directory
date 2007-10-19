@@ -24,7 +24,7 @@ import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.dao.AnnotationMethodArgsFactory;
-import org.seasar.directory.dao.DirecotryDaoMetaData;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
@@ -44,7 +44,7 @@ import org.seasar.framework.util.StringUtil;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
+public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/** データソースを表わします。 */
 	protected DirectoryDataSource directoryDataSource;
 	/** Daoクラスを表わします。 */
@@ -417,7 +417,7 @@ public class DirectoryDaoMetaDataImpl implements DirecotryDaoMetaData {
 	 * 
 	 * @param methodName 関数名
 	 * @return 存在する場合は true、存在しない場合は false を返します。
-	 * @see org.seasar.directory.dao.DirecotryDaoMetaData#hasDirectoryCommand(java.lang.String)
+	 * @see org.seasar.directory.dao.DirectoryDaoMetaData#hasDirectoryCommand(java.lang.String)
 	 */
 	public boolean hasDirectoryCommand(String methodName) {
 		return commands.containsKey(methodName);

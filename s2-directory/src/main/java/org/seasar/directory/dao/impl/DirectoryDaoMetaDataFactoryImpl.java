@@ -20,7 +20,7 @@ import java.util.Map;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.dao.DirecotryDaoMetaData;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
@@ -118,23 +118,23 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public synchronized DirecotryDaoMetaData getDirectoryDaoMetaData(
+	public synchronized DirectoryDaoMetaData getDirectoryDaoMetaData(
 			Class daoClass) {
 		if (!initialized) {
 			DisposableUtil.add(this);
 			initialized = true;
 		}
 		String key = daoClass.getName();
-		DirecotryDaoMetaData dmd = (DirecotryDaoMetaData)directoryDaoMetaDataCache
+		DirectoryDaoMetaData dmd = (DirectoryDaoMetaData)directoryDaoMetaDataCache
 				.get(key);
 		if (dmd != null) {
 			return dmd;
 		}
-		dmd = (DirecotryDaoMetaData)directoryDaoMetaDataCache.get(key);
+		dmd = (DirectoryDaoMetaData)directoryDaoMetaDataCache.get(key);
 		if (dmd != null) {
 			return dmd;
 		}
-		DirecotryDaoMetaData dmdi = createDirectoryDaoMetaData(daoClass);
+		DirectoryDaoMetaData dmdi = createDirectoryDaoMetaData(daoClass);
 		directoryDaoMetaDataCache.put(key, dmd);
 		return dmdi;
 	}
@@ -145,7 +145,7 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 * @param daoClass 生成元となるDAOクラス
 	 * @return 生成したDirecotryDaoMetaDataのインスタンス
 	 */
-	protected DirecotryDaoMetaData createDirectoryDaoMetaData(Class daoClass) {
+	protected DirectoryDaoMetaData createDirectoryDaoMetaData(Class daoClass) {
 		DirectoryDaoMetaDataImpl directoryDaoMetaData = new DirectoryDaoMetaDataImpl();
 		directoryDaoMetaData.setDaoClass(daoClass);
 		directoryDaoMetaData.setDirectoryDataSource(directoryDataSource);
