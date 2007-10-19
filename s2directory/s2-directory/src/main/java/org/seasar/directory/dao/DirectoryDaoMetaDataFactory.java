@@ -28,5 +28,5 @@ public interface DirectoryDaoMetaDataFactory {
 	 * @param daoClass 生成元となるDAOクラス
 	 * @return 生成したDirecotryDaoMetaDataのインスタンス
 	 */
-	public DirecotryDaoMetaData getDirectoryDaoMetaData(Class daoClass);
+	public DirectoryDaoMetaData getDirectoryDaoMetaData(Class daoClass);
 }

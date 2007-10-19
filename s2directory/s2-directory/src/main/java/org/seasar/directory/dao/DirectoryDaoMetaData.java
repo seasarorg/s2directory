@@ -23,7 +23,7 @@ import org.seasar.framework.beans.MethodNotFoundRuntimeException;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface DirecotryDaoMetaData {
+public interface DirectoryDaoMetaData {
 	/**
 	 * ビーンクラスを取得します。
 	 * 

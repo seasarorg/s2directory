@@ -17,7 +17,7 @@ package org.seasar.directory.dao.interceptors;
 
 import java.lang.reflect.Method;
 import org.aopalliance.intercept.MethodInvocation;
-import org.seasar.directory.dao.DirecotryDaoMetaData;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
 import org.seasar.directory.dao.util.DaoUtils;
@@ -60,7 +60,7 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 		}
 		Class targetClass = getTargetClass(invocation);
 		Class daoInterface = DaoUtils.getDaoInterface(targetClass);
-		DirecotryDaoMetaData dmd = directoryDaoMetaDataFactory
+		DirectoryDaoMetaData dmd = directoryDaoMetaDataFactory
 				.getDirectoryDaoMetaData(daoInterface);
 		DirectoryCommand cmd = dmd.getDirectoryCommand(method.getName());
 		// コマンドを実行し返却します。
