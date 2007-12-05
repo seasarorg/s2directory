@@ -65,9 +65,10 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	public DirectoryDaoMetaDataFactoryImpl(
 			DirectoryControlProperty directoryControlProperty,
 			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
-		this.directoryDataSource = new DirectoryDataSourceImpl(
-				directoryControlProperty);
-		this.directoryAnnotationReaderFactory = directoryAnnotationReaderFactory;
+		this.directoryDataSource =
+			new DirectoryDataSourceImpl(directoryControlProperty);
+		this.directoryAnnotationReaderFactory =
+			directoryAnnotationReaderFactory;
 	}
 
 	/**
@@ -125,17 +126,13 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 			initialized = true;
 		}
 		String key = daoClass.getName();
-		DirectoryDaoMetaData dmd = (DirectoryDaoMetaData)directoryDaoMetaDataCache
-				.get(key);
-		if (dmd != null) {
-			return dmd;
-		}
-		dmd = (DirectoryDaoMetaData)directoryDaoMetaDataCache.get(key);
+		DirectoryDaoMetaData dmd =
+			(DirectoryDaoMetaData)directoryDaoMetaDataCache.get(key);
 		if (dmd != null) {
 			return dmd;
 		}
 		DirectoryDaoMetaData dmdi = createDirectoryDaoMetaData(daoClass);
-		directoryDaoMetaDataCache.put(key, dmd);
+		directoryDaoMetaDataCache.put(key, dmdi);
 		return dmdi;
 	}
 
@@ -146,7 +143,8 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 * @return 生成したDirecotryDaoMetaDataのインスタンス
 	 */
 	protected DirectoryDaoMetaData createDirectoryDaoMetaData(Class daoClass) {
-		DirectoryDaoMetaDataImpl directoryDaoMetaData = new DirectoryDaoMetaDataImpl();
+		DirectoryDaoMetaDataImpl directoryDaoMetaData =
+			new DirectoryDaoMetaDataImpl();
 		directoryDaoMetaData.setDaoClass(daoClass);
 		directoryDaoMetaData.setDirectoryDataSource(directoryDataSource);
 		directoryDaoMetaData
@@ -179,7 +177,8 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
+		this.directoryAttributeHandlerFactory =
+			directoryAttributeHandlerFactory;
 	}
 
 	/**
