@@ -41,7 +41,8 @@ public abstract class AbstractAutoDirectoryCommand extends
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param dataSource - データソース
+	 * @param dataSource -
+	 *            データソース
 	 */
 	public AbstractAutoDirectoryCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
@@ -63,16 +64,17 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * データソースを取得します。 <br />
 	 * 引数の第一引数が接続情報である場合は、その接続情報を利用したデータソースを返します。
 	 * 
-	 * @param args 引数値
+	 * @param args
+	 *            引数値
 	 * @return データソース
 	 */
 	public DirectoryDataSource getDirectoryDataSource(Object[] args) {
 		if (args != null && methodArgs != null && args.length > 0) {
 			// 第一引数が接続情報である場合は、その接続情報を利用したデータソースを返します。
 			if (args[0] != null
-					&& methodArgs.getArgTypes()[0] == DirectoryControlProperty.class) {
+				&& methodArgs.getArgTypes()[0] == DirectoryControlProperty.class) {
 				return new DirectoryDataSourceImpl(
-						(DirectoryControlProperty)args[0]);
+					(DirectoryControlProperty)args[0]);
 			}
 			// 第一引数以外に接続情報がある場合は、例外を発生させます。
 			for (int i = 1; i < args.length; ++i) {
@@ -87,19 +89,22 @@ public abstract class AbstractAutoDirectoryCommand extends
 	/**
 	 * コマンドコンテキストを作成します。
 	 * 
-	 * @param args 引数値
+	 * @param args
+	 *            引数値
 	 */
 	protected CommandContext apply(Object[] args) {
-		final DirectoryValueTypeFactory valueTypeFactory = getDirectoryAttributeHandlerFactory()
+		final DirectoryValueTypeFactory valueTypeFactory =
+			getDirectoryAttributeHandlerFactory()
 				.getDirectoryValueTypeFactory();
-		CommandContext cmd = new CommandContextImpl(getDirectoryAttributeHandlerFactory());
+		CommandContext cmd =
+			new CommandContextImpl(getDirectoryAttributeHandlerFactory());
 		if (args != null && methodArgs != null) {
 			String[] argNames = methodArgs.getArgNames();
 			Class[] argTypes = methodArgs.getArgTypes();
 			int i = 0;
 			// 第一引数に接続情報がある場合は、インデックスを2つ目にします。
 			if (argNames[i].equals("#property")
-					&& argTypes[0] == DirectoryControlProperty.class) {
+				&& argTypes[0] == DirectoryControlProperty.class) {
 				i = 1;
 			}
 			int length = args.length;
@@ -116,9 +121,9 @@ public abstract class AbstractAutoDirectoryCommand extends
 				if (i < argNames.length) {
 					// Dtoの場合
 					if (argNames[i].equals("#dto")
-							&& valueTypeFactory.getValueTypeByClass(args[i]
-									.getClass()) == valueTypeFactory
-									.getObjectValueType()) {
+						&& valueTypeFactory.getValueTypeByClass(args[i]
+							.getClass()) == valueTypeFactory
+							.getObjectValueType()) {
 						cmd.addDtoArg(args[i]);
 					} else {
 						cmd.addArg(argNames[i], args[i], argType);

@@ -19,18 +19,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchResult;
+
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveSet;
@@ -61,81 +66,13 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * 更新アイテムを作成します。
-	 * 
-	 * @param result
-	 * @param attributeNameSet
-	 * @return
-	 * @throws NamingException
+	 * {@inheritDoc}
+	 * <p>
+	 * 更新処理を実行します。
+	 * </p>
 	 */
-	protected ModificationItem[] createModificationItems(SearchResult result,
-			Set attributeNameSet) throws NamingException {
-		// 属性を設定します。
-		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory = cmd
-				.getDirectoryAttributeHandlerFactory();
-		List itemList = new ArrayList();
-		Set keySet = cmd.getArgKeySet();
-		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
-			String attributeName = String.valueOf(iter.next());
-			Object value = cmd.getArg(attributeName);
-			Class valueClass = cmd.getArgType(attributeName);
-			AttributeHandler attributeHandler = directoryAttributeHandlerFactory
-					.getAttributeHandler(attributeName);
-			ModificationItem modificationItem;
-			if (attributeNameSet.contains(attributeName)) {
-				// 既に属性がある場合
-				modificationItem = attributeHandler.getModificationItem(
-						directoryControlProperty, result.getAttributes().get(
-								attributeName), attributeName, value,
-						valueClass);
-			} else {
-				// 属性がない場合
-				modificationItem = attributeHandler.getModificationItem(
-						directoryControlProperty, null, attributeName, value,
-						valueClass);
-			}
-			if (modificationItem != null) {
-				itemList.add(modificationItem);
-			}
-		}
-		return (ModificationItem[])itemList.toArray(new ModificationItem[0]);
-	}
-
-	/**
-	 * 属性名の集合を作成します。
-	 * 
-	 * @param result
-	 * @return 属性名の集合
-	 * @throws NamingException
-	 */
-	private Set createAttributesNames(SearchResult result)
-			throws NamingException {
-		Set columnNames = new CaseInsensitiveSet();
-		Attributes attributes = result.getAttributes();
-		NamingEnumeration ae = attributes.getAll();
-		while (ae.hasMoreElements()) {
-			Attribute attribute = (Attribute)ae.next();
-			String attributeName = attribute.getID();
-			columnNames.add(attributeName);
-		}
-		return columnNames;
-	}
-
-	/**
-	 * 更新アイテムを作成します。
-	 * 
-	 * @param results
-	 * @return 修正属性の配列
-	 * @throws NamingException
-	 */
-	public ModificationItem[] createModificationItems(NamingEnumeration results)
-			throws NamingException {
-		if (results != null && results.hasMore()) {
-			SearchResult result = (SearchResult)results.next();
-			Set attributeNameSet = createAttributesNames(result);
-			return createModificationItems(result, attributeNameSet);
-		}
-		return null;
+	public Object execute() throws NamingRuntimeException {
+		return update(cmd.getDn());
 	}
 
 	/**
@@ -148,9 +85,10 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			// 更新対象を検索
 			String firstDn = DirectoryUtils.getFirstDn(dn);
 			String baseDn = DirectoryUtils.getBaseDn(dn);
-			NamingEnumeration results = super.search(firstDn, baseDn);
+			NamingEnumeration currentEntrys = super.search(firstDn, baseDn);
 			String fullDn = firstDn + "," + baseDn;
-			ModificationItem[] items = createModificationItems(results);
+			// 更新アイテムを作成
+			ModificationItem[] items = createModificationItems(currentEntrys);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Update: " + fullDn);
 				for (int i = 0; i < items.length; i++) {
@@ -164,12 +102,124 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * 更新処理を実行します。
-	 * </p>
+	 * エントリから更新アイテムを作成します。
+	 * 
+	 * @param results
+	 *            エントリの検索結果
+	 * @return 更新アイテムの配列
+	 * @throws NamingException
 	 */
-	public Object execute() throws NamingRuntimeException {
-		return update(cmd.getDn());
+	public ModificationItem[] createModificationItems(NamingEnumeration results)
+			throws NamingException {
+		if (results != null && results.hasMore()) {
+			SearchResult entry = (SearchResult)results.next();
+			return createModificationItems(entry);
+		}
+		return null;
+	}
+
+	/**
+	 * 更新アイテムを作成します。
+	 * 
+	 * @param result
+	 *            エントリの検索結果
+	 * @param attributeNameSet
+	 * @return 更新アイテムの配列
+	 * @throws NamingException
+	 */
+	protected ModificationItem[] createModificationItems(SearchResult result)
+			throws NamingException {
+		// 更新アイテムのリスト
+		List modificationItemList = new ArrayList();
+		// エントリにある属性名を取得します。
+		Set currentAttributeNameSet = createAttributesNames(result);
+		// 属性を設定します。
+		Set keySet = cmd.getArgKeySet();
+		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
+			String argName = String.valueOf(iter.next());
+			Object argValue = cmd.getArg(argName);
+			Class argClass = cmd.getArgType(argName);
+			if (argName.equals("dto")) {
+				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
+				int size = beanDesc.getPropertyDescSize();
+				for (int i = 0; i < size; i++) {
+					PropertyDesc pd = beanDesc.getPropertyDesc(i);
+					String propName = pd.getPropertyName();
+					Attribute currentAttribute = null;
+					if (currentAttributeNameSet.contains(propName)) {
+						// 既に属性がある場合
+						currentAttribute = result.getAttributes().get(propName);
+					}
+					ModificationItem modificationItem =
+						createModificationItem(
+							currentAttributeNameSet,
+							currentAttribute,
+							propName,
+							pd.getValue(argValue),
+							pd.getPropertyType());
+					if (modificationItem != null) {
+						modificationItemList.add(modificationItem);
+					}
+				}
+			} else {
+				Attribute currentAttribute = null;
+				if (currentAttributeNameSet.contains(argName)) {
+					// 既に属性がある場合
+					currentAttribute = result.getAttributes().get(argName);
+				}
+				ModificationItem modificationItem =
+					createModificationItem(
+						currentAttributeNameSet,
+						currentAttribute,
+						argName,
+						argValue,
+						argClass);
+				if (modificationItem != null) {
+					modificationItemList.add(modificationItem);
+				}
+			}
+		}
+		return (ModificationItem[])modificationItemList
+			.toArray(new ModificationItem[0]);
+	}
+
+	private ModificationItem createModificationItem(
+			Set currentAttributeNameSet, Attribute attribute,
+			String attributeName, Object value, Class valueClass)
+			throws NamingException {
+		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory =
+			cmd.getDirectoryAttributeHandlerFactory();
+		AttributeHandler attributeHandler =
+			directoryAttributeHandlerFactory.getAttributeHandler(attributeName);
+		ModificationItem modificationItem;
+		modificationItem =
+			attributeHandler.getModificationItem(
+				directoryControlProperty,
+				attribute,
+				attributeName,
+				value,
+				valueClass);
+		return modificationItem;
+	}
+
+	/**
+	 * 指定されたエントリに含まれる属性名の集合を作成します。
+	 * 
+	 * @param entry
+	 *            エントリ
+	 * @return 属性名の集合
+	 * @throws NamingException
+	 */
+	private Set createAttributesNames(SearchResult entry)
+			throws NamingException {
+		Set attributeNameSet = new CaseInsensitiveSet();
+		Attributes attributes = entry.getAttributes();
+		NamingEnumeration ae = attributes.getAll();
+		while (ae.hasMoreElements()) {
+			Attribute attribute = (Attribute)ae.next();
+			String attributeName = attribute.getID();
+			attributeNameSet.add(attributeName);
+		}
+		return attributeNameSet;
 	}
 }
