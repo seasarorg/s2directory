@@ -27,9 +27,9 @@ import org.seasar.framework.log.Logger;
  */
 public class DeleteHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
-	/** 削除する識別譜を表します。 */
+	/** 削除する識別子 */
 	private String dn;
 
 	/**

@@ -35,13 +35,13 @@ import org.seasar.framework.util.StringUtil;
 public abstract class AbstractAutoDirectoryCommand extends
 		AbstractDirectoryCommand {
 	private AnnotationMethodArgs methodArgs;
-	/** 実行フィルタを表します。 */
+	/** 実行フィルタ */
 	private String runFilter;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param dataSource -
+	 * @param dataSource
 	 *            データソース
 	 */
 	public AbstractAutoDirectoryCommand(DirectoryDataSource dataSource,
@@ -54,7 +54,7 @@ public abstract class AbstractAutoDirectoryCommand extends
 	/**
 	 * 実行フィルタを取得します。
 	 * 
-	 * @return runFilter - フィルタ
+	 * @return runFilter フィルタ
 	 */
 	public String getRunFilter() {
 		return runFilter;

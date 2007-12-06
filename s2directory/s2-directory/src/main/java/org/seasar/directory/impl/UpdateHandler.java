@@ -32,7 +32,7 @@ import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -48,10 +48,10 @@ import org.seasar.framework.util.CaseInsensitiveSet;
  */
 public class UpdateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
-	/** 引数をコマンドとみなしたコンテキストを表します。 */
-	private CommandContext cmd;
+	/** 引数をコマンドとみなしたコンテキスト */
+	private CommandContext ctx;
 
 	/**
 	 * インスタンスを生成します。
@@ -60,9 +60,9 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * @param cmd
 	 */
 	public UpdateHandler(DirectoryDataSource directoryDataSource,
-			CommandContext cmd) {
+			CommandContext ctx) {
 		super(directoryDataSource);
-		this.cmd = cmd;
+		this.ctx = ctx;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * </p>
 	 */
 	public Object execute() throws NamingRuntimeException {
-		return update(cmd.getDn());
+		return update(ctx.getDn());
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	private Integer update(String dn) {
 		try {
 			// 更新対象を検索
-			String firstDn = DirectoryUtils.getFirstDn(dn);
-			String baseDn = DirectoryUtils.getBaseDn(dn);
+			String firstDn = DirectoryUtil.getFirstDn(dn);
+			String baseDn = DirectoryUtil.getBaseDn(dn);
 			NamingEnumeration currentEntrys = super.search(firstDn, baseDn);
 			String fullDn = firstDn + "," + baseDn;
 			// 更新アイテムを作成
@@ -134,11 +134,11 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		// エントリにある属性名を取得します。
 		Set currentAttributeNameSet = createAttributesNames(result);
 		// 属性を設定します。
-		Set keySet = cmd.getArgKeySet();
+		Set keySet = ctx.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String argName = String.valueOf(iter.next());
-			Object argValue = cmd.getArg(argName);
-			Class argClass = cmd.getArgType(argName);
+			Object argValue = ctx.getArg(argName);
+			Class argClass = ctx.getArgType(argName);
 			if (argName.equals("dto")) {
 				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
 				int size = beanDesc.getPropertyDescSize();
@@ -188,7 +188,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			String attributeName, Object value, Class valueClass)
 			throws NamingException {
 		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory =
-			cmd.getDirectoryAttributeHandlerFactory();
+			ctx.getDirectoryAttributeHandlerFactory();
 		AttributeHandler attributeHandler =
 			directoryAttributeHandlerFactory.getAttributeHandler(attributeName);
 		ModificationItem modificationItem;

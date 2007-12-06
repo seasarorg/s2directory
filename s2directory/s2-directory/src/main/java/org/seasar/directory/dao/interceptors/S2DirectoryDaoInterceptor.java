@@ -16,11 +16,11 @@
 package org.seasar.directory.dao.interceptors;
 
 import java.lang.reflect.Method;
+
 import org.aopalliance.intercept.MethodInvocation;
-import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
-import org.seasar.directory.dao.util.DaoUtils;
 import org.seasar.framework.aop.interceptors.AbstractInterceptor;
 import org.seasar.framework.util.MethodUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -33,14 +33,18 @@ import org.seasar.framework.util.NumberConversionUtil;
  * @version $Date::                           $
  */
 public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
-	/** メタデータ生成器を表します。 */
+
+	private static final long serialVersionUID = 1L;
+
+	/** メタデータファクトリ */
 	private DirectoryDaoMetaDataFactory directoryDaoMetaDataFactory;
 
 	/**
 	 * diconファイルに指定された生成器でインスタンスを生成します。 <br />
 	 * Seasar本体により自動的に生成されたインスタンスがセットされます。
 	 * 
-	 * @param directoryDaoMetaDataFactory - メタデータ生成器
+	 * @param directoryDaoMetaDataFactory
+	 *            メタデータファクトリ
 	 */
 	public S2DirectoryDaoInterceptor(
 			DirectoryDaoMetaDataFactory directoryDaoMetaDataFactory) {
@@ -50,7 +54,8 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 	/**
 	 * 指定された関数に対応する処理を行い結果を返します。
 	 * 
-	 * @param invocation - 実行された関数
+	 * @param invocation
+	 *            実行された関数
 	 * @see org.aopalliance.intercept.MethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)
 	 */
 	public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -59,9 +64,8 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 			return invocation.proceed();
 		}
 		Class targetClass = getTargetClass(invocation);
-		Class daoInterface = DaoUtils.getDaoInterface(targetClass);
-		DirectoryDaoMetaData dmd = directoryDaoMetaDataFactory
-				.getDirectoryDaoMetaData(daoInterface);
+		DirectoryDaoMetaData dmd =
+			directoryDaoMetaDataFactory.getDirectoryDaoMetaData(targetClass);
 		DirectoryCommand cmd = dmd.getDirectoryCommand(method.getName());
 		// コマンドを実行し返却します。
 		Object ret = cmd.execute(invocation.getArguments());

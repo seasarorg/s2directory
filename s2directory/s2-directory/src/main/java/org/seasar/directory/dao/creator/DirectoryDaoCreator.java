@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param namingConvention ネーミングコンベンション
+	 * @param namingConvention
+	 *            ネーミングコンベンション
 	 */
 	public DirectoryDaoCreator(NamingConvention namingConvention) {
 		super(namingConvention);
@@ -52,7 +53,8 @@ public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	/**
 	 * DirectoryDao用コンポーネントカスタマイザを設定します。
 	 * 
-	 * @param customizer コンポーネントカスタマイザ
+	 * @param customizer
+	 *            コンポーネントカスタマイザ
 	 */
 	public void setDirectoryDaoCustomizer(ComponentCustomizer customizer) {
 		setCustomizer(customizer);

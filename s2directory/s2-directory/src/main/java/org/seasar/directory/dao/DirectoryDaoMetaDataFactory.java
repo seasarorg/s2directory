@@ -16,7 +16,7 @@
 package org.seasar.directory.dao;
 
 /**
- * DirectoryDaoMetaDataを生成するインタフェースです。
+ * ディレクトリメタデータを生成するためのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -25,7 +25,8 @@ public interface DirectoryDaoMetaDataFactory {
 	/**
 	 * 指定されたDAOクラスから生成したDirecotryDaoMetaDataのインスタンスを返します。
 	 * 
-	 * @param daoClass 生成元となるDAOクラス
+	 * @param daoClass
+	 *            生成元となるDAOクラス
 	 * @return 生成したDirecotryDaoMetaDataのインスタンス
 	 */
 	public DirectoryDaoMetaData getDirectoryDaoMetaData(Class daoClass);

@@ -27,7 +27,8 @@ public interface DirectoryBeanAnnotationReader {
 	/**
 	 * 属性を取得します。
 	 * 
-	 * @param pd 属性定義
+	 * @param pd
+	 *            属性定義
 	 * @return 属性
 	 */
 	public String getColumnAnnotation(PropertyDesc pd);
@@ -49,7 +50,8 @@ public interface DirectoryBeanAnnotationReader {
 	/**
 	 * 永続化対象にしない属性を取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 永続対象にしない属性の配列
 	 */
 	public String[] getNoPersistentProps(String methodName);
@@ -57,7 +59,8 @@ public interface DirectoryBeanAnnotationReader {
 	/**
 	 * この属性だけ永続化する属性を取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 永続化する属性の配列
 	 */
 	public String[] getPersistentProps(String methodName);
@@ -65,7 +68,8 @@ public interface DirectoryBeanAnnotationReader {
 	/**
 	 * 値の型を取得します。
 	 * 
-	 * @param pd 属性定義
+	 * @param pd
+	 *            属性定義
 	 * @return 値の型
 	 */
 	public String getValueType(PropertyDesc pd);

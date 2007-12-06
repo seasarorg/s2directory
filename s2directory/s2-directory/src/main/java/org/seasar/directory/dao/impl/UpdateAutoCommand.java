@@ -30,9 +30,12 @@ import org.seasar.directory.impl.UpdateHandler;
  */
 public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
-	 * インスタンスを作成します。
-	 * 
-	 * @param dataSource - データソース
+	 * @param dataSource
+	 *            データソース
+	 * @param directoryAttributeHandlerFactory
+	 *            属性ハンドラファクトリ
+	 * @param methodArgs
+	 *            関数の引数
 	 */
 	public UpdateAutoCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
@@ -48,8 +51,8 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	 */
 	public Object execute(Object[] args) {
 		CommandContext cmd = apply(args);
-		ExecuteHandler handler = new UpdateHandler(
-				getDirectoryDataSource(args), cmd);
+		ExecuteHandler handler =
+			new UpdateHandler(getDirectoryDataSource(args), cmd);
 		return handler.execute();
 	}
 }

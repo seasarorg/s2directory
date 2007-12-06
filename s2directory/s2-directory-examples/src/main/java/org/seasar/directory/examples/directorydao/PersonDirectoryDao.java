@@ -31,7 +31,8 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したPersonを追加します。
 	 * 
-	 * @param person Person
+	 * @param person
+	 *            Person
 	 * @return 追加したエントリ数
 	 */
 	public int insertPerson(Person person);
@@ -39,8 +40,10 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したディレクトリ接続情報を使用して、指定したPersonを追加します。
 	 * 
-	 * @param property ディレクトリ接続情報
-	 * @param person Person
+	 * @param property
+	 *            ディレクトリ接続情報
+	 * @param person
+	 *            Person
 	 * @return 追加したエントリ数
 	 */
 	public int insertPersonWithUserMode(DirectoryControlProperty property,
@@ -49,7 +52,8 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したPersonを更新します。
 	 * 
-	 * @param person Person
+	 * @param person
+	 *            Person
 	 * @return 更新したエントリ数
 	 */
 	public int updatePerson(Person person);
@@ -57,7 +61,8 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したPersonを削除します。
 	 * 
-	 * @param person Person
+	 * @param person
+	 *            Person
 	 * @return 削除したエントリ数
 	 */
 	public int deletePerson(Person person);
@@ -65,7 +70,8 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したPersonを検索します。
 	 * 
-	 * @param person Person
+	 * @param person
+	 *            Person
 	 * @return
 	 */
 	public Person getPerson(Person person);
@@ -73,8 +79,10 @@ public interface PersonDirectoryDao {
 	/**
 	 * 指定したディレクトリ接続情報を使用して、指定したPersonを検索します。
 	 * 
-	 * @param property ディレクトリ接続情報
-	 * @param person Person
+	 * @param property
+	 *            ディレクトリ接続情報
+	 * @param person
+	 *            Person
 	 * @return
 	 */
 	public Person getPersonWithUserMode(DirectoryControlProperty property,

@@ -49,14 +49,16 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
-			posixGroupDtoDao = (PosixGroupDtoDirectoryDao)container
+			posixGroupDtoDao =
+				(PosixGroupDtoDirectoryDao)container
 					.getComponent(PosixGroupDtoDirectoryDao.class);
 		}
 		// ユーザを追加します。
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 		user2 = posixAccountDtoFactory.getUser("user2");
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
@@ -64,8 +66,8 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		assertEquals(null, posixAccountDtoDao.getUser(user2));
 		assertEquals(1, posixAccountDtoDao.insert(user2));
 		// グループを追加します。
-		PosixGroupDtoFactory posixGroupDtoFactory = new PosixGroupDtoFactory(
-				container);
+		PosixGroupDtoFactory posixGroupDtoFactory =
+			new PosixGroupDtoFactory(container);
 		// グループ1を追加します。
 		List memberUid = new ArrayList();
 		memberUid.add(user1.getUid());

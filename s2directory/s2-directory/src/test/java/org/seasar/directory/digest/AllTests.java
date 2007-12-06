@@ -26,11 +26,11 @@ import junit.framework.TestSuite;
  */
 public class AllTests {
 	public static Test suite() {
-		TestSuite suite = new TestSuite(
-				"Test for test.org.seasar.directory.digest");
-		//$JUnit-BEGIN$
+		TestSuite suite =
+			new TestSuite("Test for test.org.seasar.directory.digest");
+		// $JUnit-BEGIN$
 		suite.addTestSuite(DigestFactoryTest.class);
-		//$JUnit-END$
+		// $JUnit-END$
 		return suite;
 	}
 }

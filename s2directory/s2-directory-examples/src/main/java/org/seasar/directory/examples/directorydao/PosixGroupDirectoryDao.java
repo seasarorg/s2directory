@@ -26,21 +26,25 @@ import org.seasar.directory.examples.entity.PosixGroup;
  */
 public interface PosixGroupDirectoryDao {
 	public Class BEAN = PosixGroup.class;
-	public static final String getPosixGroupList_QUERY = "objectclass=posixGroup";
+	public static final String getPosixGroupList_QUERY =
+		"objectclass=posixGroup";
 
 	public List getPosixGroupList();
 
 	public PosixGroup getPosixGroup(PosixGroup group);
 
 	public List getPosixGroupList(PosixGroup group);
+
 	public static final String getPosixGroupByCn_ARGS = "cn";
 
 	public PosixGroup getPosixGroupByCn(String cn);
+
 	public static final String getPosixGroupListByMemberUid_ARGS = "memberUid";
 
 	public List getPosixGroupListByMemberUid(String memberUid);
 
 	public static final String getPosixGroupListByMemberUid2_ARGS = "memberUid";
+
 	public List getPosixGroupListByMemberUid2(List memberUid);
 
 	public int insert(PosixGroup group);

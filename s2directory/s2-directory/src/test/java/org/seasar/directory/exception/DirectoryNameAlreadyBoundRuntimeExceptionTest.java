@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,9 +44,9 @@ public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
 		Locale.setDefault(Locale.JAPANESE);
 		NameAlreadyBoundException exception = new NameAlreadyBoundException();
 		exception.setRemainingName(new CompositeName(
-				"uid=user1,ou=Users,dc=seasar,dc=org"));
-		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException = new DirectoryNameAlreadyBoundRuntimeException(
-				exception);
+			"uid=user1,ou=Users,dc=seasar,dc=org"));
+		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
+			new DirectoryNameAlreadyBoundRuntimeException(exception);
 		// ## Act ##
 		String message = directoryNameAlreadyBoundRuntimeException.getMessage();
 		// ## Assert ##
@@ -58,9 +58,9 @@ public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
 		Locale.setDefault(Locale.ENGLISH);
 		NameAlreadyBoundException exception = new NameAlreadyBoundException();
 		exception.setRemainingName(new CompositeName(
-				"uid=user1,ou=Users,dc=seasar,dc=org"));
-		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException = new DirectoryNameAlreadyBoundRuntimeException(
-				exception);
+			"uid=user1,ou=Users,dc=seasar,dc=org"));
+		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
+			new DirectoryNameAlreadyBoundRuntimeException(exception);
 		// ## Act ##
 		String message = directoryNameAlreadyBoundRuntimeException.getMessage();
 		// ## Assert ##

@@ -55,7 +55,7 @@ public class AnnotationMethodArgsFactory {
 		}
 		if (argNames.length > 0) {
 			return new ArgsAnnotationMethodArgsImpl(argNames, method
-					.getParameterTypes());
+				.getParameterTypes());
 		} else {
 			return null;
 		}

@@ -41,7 +41,8 @@ public interface DirectoryDaoMetaData {
 	/**
 	 * * キャッシュされているディレクトリコマンドを取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 存在する場合はディレクトリコマンド 、存在しない場合は例外を発生させます。
 	 * @throws MethodNotFoundRuntimeException
 	 */
@@ -53,7 +54,8 @@ public interface DirectoryDaoMetaData {
 	 * ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合 <code>false</code>
 	 * を返します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合
 	 *         <code>false</code>
 	 */

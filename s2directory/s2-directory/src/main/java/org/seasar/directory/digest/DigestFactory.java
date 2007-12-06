@@ -29,9 +29,9 @@ import java.util.regex.Pattern;
  * @version $Date::                           $
  */
 public final class DigestFactory {
-	/** 暗号方式を形式を表します。 */
+	/** 暗号方式を形式 */
 	private static final Pattern pattern = Pattern.compile("^\\{.+\\}");
-	/** ダイジェストのマップを現します。 */
+	/** ダイジェストのマップ */
 	private static Map digests = Collections.synchronizedMap(new HashMap());
 	/**
 	 * 初期化します。
@@ -70,7 +70,7 @@ public final class DigestFactory {
 			digest = (Digest)digests.get(algorithm);
 			if (digest == null)
 				throw new NoSuchAlgorithmException(algorithm
-						+ " algorithm is not suported.");
+					+ " algorithm is not suported.");
 		} else {
 			algorithm = "{" + hash + "}";
 			digest = (Digest)digests.get(algorithm);

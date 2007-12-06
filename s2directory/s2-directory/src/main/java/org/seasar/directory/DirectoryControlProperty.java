@@ -37,7 +37,8 @@ public interface DirectoryControlProperty {
 	public String getInitialContextFactory();
 
 	/**
-	 * @param contextFactory - 指定されたコンテキスト生成器を設定します。
+	 * @param contextFactory
+	 *            指定されたコンテキスト生成器を設定します。
 	 */
 	public void setInitialContextFactory(String contextFactory);
 
@@ -49,7 +50,8 @@ public interface DirectoryControlProperty {
 	public String getUrl();
 
 	/**
-	 * @param url - 指定されたurlを設定します。
+	 * @param url
+	 *            指定されたurlを設定します。
 	 */
 	public void setUrl(String url);
 
@@ -61,7 +63,8 @@ public interface DirectoryControlProperty {
 	public String getPassword();
 
 	/**
-	 * @param password パスワードを設定します。
+	 * @param password
+	 *            パスワードを設定します。
 	 */
 	public void setPassword(String password);
 
@@ -75,7 +78,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * パスワードの形式を設定します。
 	 * 
-	 * @param Algorithm パスワードの形式
+	 * @param Algorithm
+	 *            パスワードの形式
 	 */
 	public void setPasswordAlgorithm(String Algorithm);
 
@@ -87,7 +91,8 @@ public interface DirectoryControlProperty {
 	public String getUser();
 
 	/**
-	 * @param user ユーザ名を設定します。
+	 * @param user
+	 *            ユーザ名を設定します。
 	 */
 	public void setUser(String user);
 
@@ -99,7 +104,8 @@ public interface DirectoryControlProperty {
 	public String getBaseDn();
 
 	/**
-	 * @param baseDn 指定された基底となる識別名を設定します。
+	 * @param baseDn
+	 *            指定された基底となる識別名を設定します。
 	 */
 	public void setBaseDn(String baseDn);
 
@@ -113,7 +119,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * ユーザユニットの接尾辞を設定します。
 	 * 
-	 * @param userSuffix ユーザユニットの接尾辞
+	 * @param userSuffix
+	 *            ユーザユニットの接尾辞
 	 */
 	public void setUserSuffix(String userSuffix);
 
@@ -127,7 +134,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * ユーザを識別するための属性名を設定します。
 	 * 
-	 * @param userAttributeName ユーザを識別するための属性名
+	 * @param userAttributeName
+	 *            ユーザを識別するための属性名
 	 */
 	public void setUserAttributeName(String userAttributeName);
 
@@ -141,7 +149,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * グループユニットの接尾辞を設定します。
 	 * 
-	 * @param groupSuffix グループユニットの接尾辞
+	 * @param groupSuffix
+	 *            グループユニットの接尾辞
 	 */
 	public void setGroupSuffix(String groupSuffix);
 
@@ -155,7 +164,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * グループを識別するための属性名を設定します。
 	 * 
-	 * @param groupAttributeName グループを識別するための属性名
+	 * @param groupAttributeName
+	 *            グループを識別するための属性名
 	 */
 	public void setGroupAttributeName(String groupAttributeName);
 
@@ -169,7 +179,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * 複数の属性値のための区切り文字を設定します。
 	 * 
-	 * @param multipleValueDelimiter 複数の属性値のための区切り文字
+	 * @param multipleValueDelimiter
+	 *            複数の属性値のための区切り文字
 	 */
 	public void setMultipleValueDelimiter(String multipleValueDelimiter);
 
@@ -181,7 +192,8 @@ public interface DirectoryControlProperty {
 	public String getFilter();
 
 	/**
-	 * @param filter 指定されたフィルタを設定します。
+	 * @param filter
+	 *            指定されたフィルタを設定します。
 	 */
 	public void setFilter(String filter);
 
@@ -193,7 +205,8 @@ public interface DirectoryControlProperty {
 	public int getSearchControls();
 
 	/**
-	 * @param searchControls 検索コントロールを設定します。
+	 * @param searchControls
+	 *            検索コントロールを設定します。
 	 */
 	public void setSearchControls(int searchControls);
 
@@ -207,7 +220,8 @@ public interface DirectoryControlProperty {
 	/**
 	 * 匿名接続を許可するか設定します。
 	 * 
-	 * @param allowAnonymous 匿名接続を許可するかどうか
+	 * @param allowAnonymous
+	 *            匿名接続を許可するかどうか
 	 */
 	public void setAllowAnonymous(boolean allowAnonymous);
 

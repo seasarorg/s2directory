@@ -33,17 +33,17 @@ import org.seasar.framework.util.StringUtil;
  * @version $Date::                           $
  */
 public class CommandContextImpl implements CommandContext {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(CommandContextImpl.class);
-	/** 引数の値マップを表わします。 */
+	/** 引数の値マップ */
 	private CaseInsensitiveMap args = new CaseInsensitiveMap();
-	/** 引数の型マップを表わします。 */
+	/** 引数の型マップ */
 	private CaseInsensitiveMap argTypes = new CaseInsensitiveMap();
-	/** オブジェクトクラスを表します。 */
+	/** オブジェクトクラス */
 	private String[] objectClasses;
-	/** ディレクトリ用の値の型ファクトリを表します。 */
-	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
-	/** 識別名を表します。 */
+	/** ディレクトリ用の値の型ファクトリ */
+	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+	/** 識別名 */
 	private String dn;
 
 	/**
@@ -211,27 +211,21 @@ public class CommandContextImpl implements CommandContext {
 	}
 
 	/**
-	 * 識別名を取得します。
-	 * 
-	 * @return 識別名
+	 * {@inheritDoc}
 	 */
 	public String getDn() {
 		return dn;
 	}
 
 	/**
-	 * オブジェクトクラスを取得します。
-	 * 
-	 * @return objectClasses
+	 * {@inheritDoc}
 	 */
 	public String[] getObjectClasses() {
 		return objectClasses;
 	}
 
 	/**
-	 * オブジェクトクラスを設定します。
-	 * 
-	 * @param objectClasses
+	 * {@inheritDoc}
 	 */
 	public void setObjectClasses(String[] objectClasses) {
 		this.objectClasses = objectClasses;
@@ -241,7 +235,7 @@ public class CommandContextImpl implements CommandContext {
 	 * {@inheritDoc}
 	 */
 	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
-		return directoryAttributeHandlerFactory;
+		return attributeHandlerFactory;
 	}
 
 	/**
@@ -249,8 +243,7 @@ public class CommandContextImpl implements CommandContext {
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory =
-			directoryAttributeHandlerFactory;
+		this.attributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 
 	/**

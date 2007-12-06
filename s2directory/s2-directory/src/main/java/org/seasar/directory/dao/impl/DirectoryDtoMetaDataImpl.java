@@ -34,18 +34,20 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * @version $Date::                           $
  */
 public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
-	/** ビーンクラスを表わします。 */
+	/** ビーンクラス */
 	private Class beanClass;
-	private CaseInsensitiveMap propertyTypes_ = new CaseInsensitiveMap();
-	/** ビーンアノテーションリーダーを表します。 */
-	protected DirectoryBeanAnnotationReader directoryBeanAnnotationReader;
-	/** TODO: コメント */
-	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
+	/** プロパティクラスの集合 */
+	private CaseInsensitiveMap propertyTypes = new CaseInsensitiveMap();
+	/** ビーンアノテーションリーダー */
+	protected DirectoryBeanAnnotationReader beanAnnotationReader;
+	/** ディレクトリ属性ハンドラファクトリ */
+	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
 
 	/**
 	 * インスタンスを作成します。
 	 */
-	protected DirectoryDtoMetaDataImpl() {}
+	protected DirectoryDtoMetaDataImpl() {
+	}
 
 	public void initialize() {
 		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(getBeanClass());
@@ -67,14 +69,14 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	 * {@inheritDoc}
 	 */
 	public int getPropertyTypeSize() {
-		return propertyTypes_.size();
+		return propertyTypes.size();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public PropertyType getPropertyType(int index) {
-		return (PropertyType)propertyTypes_.get(index);
+		return (PropertyType)propertyTypes.get(index);
 	}
 
 	/**
@@ -82,8 +84,8 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	 */
 	public PropertyType getPropertyType(String propertyName)
 			throws PropertyNotFoundRuntimeException {
-		PropertyType propertyType = (PropertyType)propertyTypes_
-				.get(propertyName);
+		PropertyType propertyType =
+			(PropertyType)propertyTypes.get(propertyName);
 		if (propertyType == null) {
 			throw new PropertyNotFoundRuntimeException(beanClass, propertyName);
 		}
@@ -94,7 +96,7 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	 * {@inheritDoc}
 	 */
 	public boolean hasPropertyType(String propertyName) {
-		return propertyTypes_.get(propertyName) != null;
+		return propertyTypes.get(propertyName) != null;
 	}
 
 	private void setupPropertyType(BeanDesc beanDesc) {
@@ -109,14 +111,14 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 			PropertyDesc propertyDesc) {
 		final String columnName = getColumnName(propertyDesc);
 		final ValueType valueType = getValueType(propertyDesc);
-		PropertyType pt = new PropertyTypeImpl(propertyDesc, valueType,
-				columnName);
+		PropertyType pt =
+			new PropertyTypeImpl(propertyDesc, valueType, columnName);
 		return pt;
 	}
 
 	private String getColumnName(PropertyDesc propertyDesc) {
-		String columnName = directoryBeanAnnotationReader
-				.getColumnAnnotation(propertyDesc);
+		String columnName =
+			beanAnnotationReader.getColumnAnnotation(propertyDesc);
 		if (columnName != null) {
 			return columnName;
 		}
@@ -124,26 +126,26 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	}
 
 	protected ValueType getValueType(PropertyDesc propertyDesc) {
-		final String valueTypeName = directoryBeanAnnotationReader
-				.getValueType(propertyDesc);
+		final String valueTypeName =
+			beanAnnotationReader.getValueType(propertyDesc);
 		if (valueTypeName != null) {
 			return getDirectoryAttributeHandlerFactory()
-					.getDirectoryValueTypeFactory().getValueTypeByName(
-							valueTypeName);
+				.getDirectoryValueTypeFactory()
+				.getValueTypeByName(valueTypeName);
 		} else {
 			return getDirectoryAttributeHandlerFactory()
-					.getDirectoryValueTypeFactory().getValueTypeByClass(
-							propertyDesc.getPropertyType());
+				.getDirectoryValueTypeFactory()
+				.getValueTypeByClass(propertyDesc.getPropertyType());
 		}
 	}
 
 	protected void addPropertyType(PropertyType propertyType) {
-		propertyTypes_.put(propertyType.getPropertyName(), propertyType);
+		propertyTypes.put(propertyType.getPropertyName(), propertyType);
 	}
 
 	public void setDirectoryBeanAnnotationReader(
 			DirectoryBeanAnnotationReader directoryBeanAnnotationReader) {
-		this.directoryBeanAnnotationReader = directoryBeanAnnotationReader;
+		this.beanAnnotationReader = directoryBeanAnnotationReader;
 	}
 
 	/**
@@ -152,16 +154,17 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
 	protected DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
-		return directoryAttributeHandlerFactory;
+		return attributeHandlerFactory;
 	}
 
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryAttributeHandlerFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryAttributeHandlerFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
+		this.attributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
 }

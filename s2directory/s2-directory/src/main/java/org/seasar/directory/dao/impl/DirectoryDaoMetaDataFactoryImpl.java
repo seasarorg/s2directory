@@ -15,105 +15,69 @@
  */
 package org.seasar.directory.dao.impl;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.DirectoryDaoNamingConvention;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
+import org.seasar.directory.dao.DirectoryCommand;
+import org.seasar.directory.dao.DirectoryCommandFactory;
+import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
-import org.seasar.framework.util.Disposable;
-import org.seasar.framework.util.DisposableUtil;
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.util.MethodUtil;
 
 /**
- * DirectoryDaoMetaDataを生成します。
+ * ディレクトリメタデータを生成する実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public class DirectoryDaoMetaDataFactoryImpl implements
-		DirectoryDaoMetaDataFactory, Disposable {
-	/** メタデータのキャッシュを表わします。 */
+		DirectoryDaoMetaDataFactory {
+	/** ディレクトリDaoメタデータのキャッシュ */
 	protected Map directoryDaoMetaDataCache = new HashMap();
-	/** ディレクトリ接続ファクトリを表わします。 */
-	protected DirectoryDataSource directoryDataSource;
-	/** ディレクトリアノテーションリーダファクトリを表します。 */
-	protected DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
-	/** ディレクトリ用の値の属性ハンドラファクトリを表します。 */
-	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
-	/** Daoクラスの接尾辞を表します。 */
-	protected String[] daoSuffixes;
-	/** 認証関数用の接頭辞を表わします。 */
-	protected String[] authenticatePrefixes;
-	/** 新規挿入操作関数用の接頭辞を表わします。 */
-	protected String[] insertPrefixes;
-	/** 更新操作関数用の接頭辞を表わします。 */
-	protected String[] updatePrefixes;
-	/** 削除操作関数用の接頭辞を表わします。 */
-	protected String[] deletePrefixes;
-	/** 初期化フラグを表します。 */
-	protected boolean initialized;
+	/** ディレクトリ接続ファクトリ */
+	protected DirectoryDataSource dataSource;
+	/** ディレクトリアノテーションリーダファクトリ */
+	protected DirectoryAnnotationReaderFactory readerFactory;
+	/** ディレクトリコマンドファクトリ */
+	protected DirectoryCommandFactory directoryCommandFactory;
+	/** ディレクトリ属性ハンドラファクトリ */
+	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+	/** ディレクトリ命名規則 */
+	protected DirectoryDaoNamingConvention configuration;
+	/** ビーンクラスのキャッシュ */
+	protected Map beanMetaDataCache = new HashMap();
 
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryControlProperty ディレクトリサーバ接続情報
-	 * @param directoryAnnotationReaderFactory ディレクトリアノテーションリーダファクトリ
+	 * @param property
+	 *            ディレクトリサーバ接続情報
+	 * @param readerFactory
+	 *            ディレクトリアノテーションリーダファクトリ
+	 * @param attributeHandlerFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public DirectoryDaoMetaDataFactoryImpl(
-			DirectoryControlProperty directoryControlProperty,
-			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
-		this.directoryDataSource =
-			new DirectoryDataSourceImpl(directoryControlProperty);
-		this.directoryAnnotationReaderFactory =
-			directoryAnnotationReaderFactory;
-	}
-
-	/**
-	 * Daoクラスの接尾辞を設定します。
-	 * 
-	 * @param daoSuffixes Daoクラスの接尾辞
-	 */
-	public void setDaoSuffixes(String[] daoSuffixes) {
-		this.daoSuffixes = daoSuffixes;
-	}
-
-	/**
-	 * 認証関数用の接頭辞を設定します。
-	 * 
-	 * @param authenticatePrefixes 認証関数用の接頭辞
-	 */
-	public void setAuthenticatePrefixes(String[] authenticatePrefixes) {
-		this.authenticatePrefixes = authenticatePrefixes;
-	}
-
-	/**
-	 * 新規挿入操作関数用の接頭辞を設定します。
-	 * 
-	 * @param insertPrefixes 新規挿入操作関数用の接頭辞
-	 */
-	public void setInsertPrefixes(String[] insertPrefixes) {
-		this.insertPrefixes = insertPrefixes;
-	}
-
-	/**
-	 * 削除操作関数用の接頭辞を設定します。
-	 * 
-	 * @param updatePrefixes 削除操作関数用の接頭辞
-	 */
-	public void setUpdatePrefixes(String[] updatePrefixes) {
-		this.updatePrefixes = updatePrefixes;
-	}
-
-	/**
-	 * 更新操作関数用の接頭辞を設定します。
-	 * 
-	 * @param deletePrefixes 更新操作関数用の接頭辞
-	 */
-	public void setDeletePrefixes(String[] deletePrefixes) {
-		this.deletePrefixes = deletePrefixes;
+			DirectoryCommandFactory directoryCommandFactory,
+			DirectoryControlProperty property,
+			DirectoryAnnotationReaderFactory readerFactory,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory,
+			DirectoryDaoNamingConvention configuration) {
+		this.directoryCommandFactory = directoryCommandFactory;
+		this.dataSource = new DirectoryDataSourceImpl(property);
+		this.readerFactory = readerFactory;
+		this.attributeHandlerFactory = attributeHandlerFactory;
+		this.configuration = configuration;
 	}
 
 	/**
@@ -121,71 +85,64 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 */
 	public synchronized DirectoryDaoMetaData getDirectoryDaoMetaData(
 			Class daoClass) {
-		if (!initialized) {
-			DisposableUtil.add(this);
-			initialized = true;
-		}
 		String key = daoClass.getName();
 		DirectoryDaoMetaData dmd =
 			(DirectoryDaoMetaData)directoryDaoMetaDataCache.get(key);
 		if (dmd != null) {
 			return dmd;
 		}
-		DirectoryDaoMetaData dmdi = createDirectoryDaoMetaData(daoClass);
+		DirectoryDaoMetaDataImpl dmdi =
+			new DirectoryDaoMetaDataImpl(
+				daoClass,
+				dataSource,
+				readerFactory,
+				configuration.getDirectoryDaoSuffixes(),
+				attributeHandlerFactory);
+		setupDirectoryCommand(dmdi);
 		directoryDaoMetaDataCache.put(key, dmdi);
 		return dmdi;
 	}
 
-	/**
-	 * 指定されたDAOクラスから生成したDirecotryDaoMetaDataのインスタンスを作成します。
-	 * 
-	 * @param daoClass 生成元となるDAOクラス
-	 * @return 生成したDirecotryDaoMetaDataのインスタンス
-	 */
-	protected DirectoryDaoMetaData createDirectoryDaoMetaData(Class daoClass) {
-		DirectoryDaoMetaDataImpl directoryDaoMetaData =
-			new DirectoryDaoMetaDataImpl();
-		directoryDaoMetaData.setDaoClass(daoClass);
-		directoryDaoMetaData.setDirectoryDataSource(directoryDataSource);
-		directoryDaoMetaData
-				.setDirectoryAnnotationReaderFactory(directoryAnnotationReaderFactory);
-		directoryDaoMetaData
-				.setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
-		if (daoSuffixes != null) {
-			directoryDaoMetaData.setDaoSuffixes(daoSuffixes);
+	protected void setupDirectoryCommand(
+			DirectoryDaoMetaDataImpl daoMetaDataImpl) {
+		BeanDesc idbd = daoMetaDataImpl.getDirectoryDaoBeanDesc();
+		String[] names = idbd.getMethodNames();
+		for (int i = 0; i < names.length; ++i) {
+			Method[] methods = idbd.getMethods(names[i]);
+			if (methods.length == 1 && MethodUtil.isAbstract(methods[0])) {
+				setupMethod(daoMetaDataImpl, methods[0]);
+			}
 		}
-		if (authenticatePrefixes != null) {
-			directoryDaoMetaData.setAuthenticatePrefixes(authenticatePrefixes);
-		}
-		if (insertPrefixes != null) {
-			directoryDaoMetaData.setInsertPrefixes(insertPrefixes);
-		}
-		if (updatePrefixes != null) {
-			directoryDaoMetaData.setUpdatePrefixes(updatePrefixes);
-		}
-		if (deletePrefixes != null) {
-			directoryDaoMetaData.setDeletePrefixes(deletePrefixes);
-		}
-		directoryDaoMetaData.initialize();
-		return directoryDaoMetaData;
 	}
 
-	/**
-	 * ディレクトリ用の値の型ファクトリを設定します。
-	 * 
-	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
-	 */
-	public void setDirectoryAttributeHandlerFactory(
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory =
-			directoryAttributeHandlerFactory;
+	protected void setupMethod(DirectoryDaoMetaDataImpl daoMetaDataImpl,
+			Method method) {
+		DirectoryDaoAnnotationReader daoAnnotationReader =
+			daoMetaDataImpl.getDirectoryDaoAnnotationReader();
+		DirectoryBeanMetaData beanMetaData =
+			getDirectoryBeanMetaData(daoAnnotationReader.getBeanClass());
+		DirectoryCommand command =
+			directoryCommandFactory.createDirectoryCommand(
+				daoAnnotationReader,
+				beanMetaData,
+				method);
+		daoMetaDataImpl.setDirectoryCommand(method.getName(), command);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized void dispose() {
-		directoryDaoMetaDataCache.clear();
-		initialized = false;
+	public DirectoryBeanMetaData getDirectoryBeanMetaData(Class beanClass) {
+		DirectoryBeanMetaData beanMetaData =
+			(DirectoryBeanMetaData)beanMetaDataCache.get(beanClass);
+		if (beanMetaData == null) {
+			DirectoryBeanMetaDataImpl beanMetaDataImpl =
+				new DirectoryBeanMetaDataImpl();
+			beanMetaDataImpl.setBeanClass(beanClass);
+			beanMetaDataImpl.setDirectoryAnnotationReaderFactory(readerFactory);
+			beanMetaDataImpl
+				.setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
+			beanMetaDataImpl.initialize();
+			beanMetaData = beanMetaDataImpl;
+			beanMetaDataCache.put(beanClass, beanMetaData);
+		}
+		return beanMetaData;
 	}
 }

@@ -15,19 +15,38 @@
  */
 package org.seasar.directory.dao;
 
+import java.lang.reflect.Method;
+
+import org.seasar.directory.NamingEnumerationHandler;
+
 /**
- * ディレクトリ用処理コマンドインタフェースです。
+ * ディレクトリコマンドファクトリのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public interface DirectoryCommand {
+public interface DirectoryCommandFactory {
 	/**
-	 * 指定された引数を元に処理を実行します。
+	 * 処理結果を扱うハンドラを作成します。
 	 * 
-	 * @param args
-	 *            引数
-	 * @return 結果
+	 * @param beanMetaData
+	 * @param method
+	 * @param returnType
+	 * @return
 	 */
-	public Object execute(Object[] args);
+	public NamingEnumerationHandler createNamingEnumerationHandler(
+			DirectoryBeanMetaData beanMetaData, Method method, Class returnType);
+
+	/**
+	 * TODO:
+	 * 
+	 * @param annotationReader
+	 * @param beanMetaData
+	 * @param method
+	 * @return
+	 */
+	public abstract DirectoryCommand createDirectoryCommand(
+			DirectoryDaoAnnotationReader annotationReader,
+			DirectoryBeanMetaData beanMetaData, Method method);
+
 }

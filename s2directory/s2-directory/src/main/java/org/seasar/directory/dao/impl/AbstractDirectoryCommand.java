@@ -26,24 +26,26 @@ import org.seasar.directory.dao.DirectoryCommand;
  * @version $Date::                           $
  */
 public abstract class AbstractDirectoryCommand implements DirectoryCommand {
-	/** データソースを表わします。 */
+	/** データソース */
 	private DirectoryDataSource directoryDataSource;
-	/** ディレクトリ用の値の型ファクトリを表します。 */
+	/** ディレクトリ用の値の型ファクトリ */
 	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
-	/** フィルタを表します。 */
+	/** フィルタ */
 	private String filter;
-	/** オブジェクトクラスを表します。 */
+	/** オブジェクトクラス */
 	private String[] objectClasses;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryDataSource データソース
+	 * @param directoryDataSource
+	 *            データソース
 	 */
 	public AbstractDirectoryCommand(DirectoryDataSource directoryDataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
 		this.directoryDataSource = directoryDataSource;
-		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
+		this.directoryAttributeHandlerFactory =
+			directoryAttributeHandlerFactory;
 	}
 
 	/**

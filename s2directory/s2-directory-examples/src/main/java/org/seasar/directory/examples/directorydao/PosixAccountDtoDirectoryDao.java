@@ -27,41 +27,52 @@ import org.seasar.directory.examples.dto.PosixAccountDto;
  */
 public interface PosixAccountDtoDirectoryDao {
 	public Class BEAN = PosixAccountDto.class;
-	
+
 	public String OBJECTCLASSES = "posixAccount, inetOrgPerson";
 
 	public boolean authenticate();
 
 	public String authenticateByUser_ARGS = "user";
+
 	public boolean authenticateByUserMode(DirectoryControlProperty user);
 
 	public static final String getUserByUid_ARGS = "uid";
+
 	public PosixAccountDto getUserByUid(String uid);
 
 	public static final String getUserByUidWithUser_ARGS = "user, uid";
-	public PosixAccountDto getUserByUidWithUserMode(DirectoryControlProperty user, String uid);
+
+	public PosixAccountDto getUserByUidWithUserMode(
+			DirectoryControlProperty user, String uid);
 
 	public static final String getUserByUidAndUidNumber_ARGS = "uid, uidNumber";
+
 	public PosixAccountDto getUserByUidAndUidNumber(String uid, int uidNumber);
 
-	public static final String getUserByFilter_QUERY = "uid=user2,ou=Users,dc=seasar,dc=org";
+	public static final String getUserByFilter_QUERY =
+		"uid=user2,ou=Users,dc=seasar,dc=org";
+
 	public List getUserByFilter();
 
 	public PosixAccountDto getUser(PosixAccountDto account);
 
-	public PosixAccountDto getUserWithUserMode(DirectoryControlProperty user, PosixAccountDto account);
+	public PosixAccountDto getUserWithUserMode(DirectoryControlProperty user,
+			PosixAccountDto account);
 
 	public int insert(PosixAccountDto account);
 
-	public int insertWithUserMode(DirectoryControlProperty user, PosixAccountDto account);
+	public int insertWithUserMode(DirectoryControlProperty user,
+			PosixAccountDto account);
 
 	public int update(PosixAccountDto account);
 
-	public int updateWithUserMode(DirectoryControlProperty user, PosixAccountDto account);
+	public int updateWithUserMode(DirectoryControlProperty user,
+			PosixAccountDto account);
 
 	public List getAllUser();
 
 	public int delete(PosixAccountDto account);
 
-	public int deleteWithUserMode(DirectoryControlProperty user, PosixAccountDto account);
+	public int deleteWithUserMode(DirectoryControlProperty user,
+			PosixAccountDto account);
 }

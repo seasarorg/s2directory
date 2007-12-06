@@ -39,8 +39,10 @@ public class PosixGroupDtoFactory extends DirectoryDtoFactory {
 	/**
 	 * オブジェクトを作成します。
 	 * 
-	 * @param name グループ名
-	 * @param users ユーザリスト
+	 * @param name
+	 *            グループ名
+	 * @param users
+	 *            ユーザリスト
 	 * @return グループインスタンス
 	 */
 	public PosixGroupDto getGroup(String name, List users) {

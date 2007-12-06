@@ -25,7 +25,7 @@ import org.seasar.framework.container.S2Container;
  * @version $Date::                           $
  */
 public class DirectoryDtoFactory {
-	/** ディレクトトリ接続情報を表します。 */
+	/** ディレクトトリ接続情報 */
 	protected DirectoryControlProperty property;
 
 	/**
@@ -34,7 +34,8 @@ public class DirectoryDtoFactory {
 	 * @param container
 	 */
 	public DirectoryDtoFactory(S2Container container) {
-		property = (DirectoryControlProperty)container
+		property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 	}
 }

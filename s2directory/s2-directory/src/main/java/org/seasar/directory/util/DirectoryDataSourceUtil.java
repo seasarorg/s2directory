@@ -31,13 +31,15 @@ import org.seasar.directory.exception.DirectoryRuntimeException;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryDataSourceUtils {
+public final class DirectoryDataSourceUtil {
 	/**
 	 * 指定されたデータソースからコネクションを作成します。 コネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
 	 * 
-	 * @param directoryDataSource データソース
+	 * @param directoryDataSource
+	 *            データソース
 	 * @return コネクション
-	 * @throws DirectoryRuntimeException コネクション作成例外
+	 * @throws DirectoryRuntimeException
+	 *             コネクション作成例外
 	 */
 	public static DirContext getConnection(
 			DirectoryDataSource directoryDataSource) {
@@ -45,10 +47,10 @@ public final class DirectoryDataSourceUtils {
 			return directoryDataSource.getConnection();
 		} catch (AuthenticationException ae) {
 			throw new DirectoryAuthenticationRuntimeException(
-					directoryDataSource.getDirectoryControlProperty());
+				directoryDataSource.getDirectoryControlProperty());
 		} catch (CommunicationException ce) {
 			throw new DirectoryCommunicationRuntimeException(
-					directoryDataSource.getDirectoryControlProperty());
+				directoryDataSource.getDirectoryControlProperty());
 		} catch (NamingException ex) {
 			throw new DirectoryRuntimeException(ex);
 		}
@@ -57,7 +59,8 @@ public final class DirectoryDataSourceUtils {
 	/**
 	 * 指定されたデータソースからコネクションを作成できるか判別します。
 	 * 
-	 * @param directoryDataSource データソース
+	 * @param directoryDataSource
+	 *            データソース
 	 * @return コネクションを作成できる場合 true, できない場合 false
 	 */
 	public static boolean authenticate(DirectoryDataSource directoryDataSource) {
@@ -72,14 +75,15 @@ public final class DirectoryDataSourceUtils {
 		} catch (NamingException e) {
 			return false;
 		} finally {
-			DirectoryDataSourceUtils.close(context);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 
 	/**
 	 * ディレクトリサーバ接続情報をセットアップします。
 	 * 
-	 * @param property ディレクトリサーバ接続情報
+	 * @param property
+	 *            ディレクトリサーバ接続情報
 	 */
 	public static void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
@@ -91,7 +95,8 @@ public final class DirectoryDataSourceUtils {
 	/**
 	 * ディレクトリコネクションを閉じます。
 	 * 
-	 * @param context ディレクトリコネクション
+	 * @param context
+	 *            ディレクトリコネクション
 	 */
 	public static void close(DirContext context) {
 		if (context == null) {
@@ -107,7 +112,8 @@ public final class DirectoryDataSourceUtils {
 	/**
 	 * 完全なユーザDnを取得します。
 	 * 
-	 * @param property ディレクトリサーバ接続情報
+	 * @param property
+	 *            ディレクトリサーバ接続情報
 	 * @return 完全なユーザDn
 	 */
 	private static String getFullUserDn(DirectoryControlProperty property) {

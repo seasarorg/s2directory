@@ -32,9 +32,12 @@ public interface ValueType {
 	 * 複数の属性値を扱います。属性のツリー構造は無視します。
 	 * </p>
 	 * 
-	 * @param attributes 属性の集合
-	 * @param attributeName 属性名
-	 * @param multipleValueDelimiter 複数の属性値のための区切り文字
+	 * @param attributes
+	 *            属性の集合
+	 * @param attributeName
+	 *            属性名
+	 * @param multipleValueDelimiter
+	 *            複数の属性値のための区切り文字
 	 * @return 属性値
 	 * @throws NamingException
 	 */
@@ -47,8 +50,10 @@ public interface ValueType {
 	 * 複数の属性値を扱います。属性のツリー構造は無視します。
 	 * </p>
 	 * 
-	 * @param attribute 属性
-	 * @param multipleValueDelimiter 複数の属性値のための区切り文字
+	 * @param attribute
+	 *            属性
+	 * @param multipleValueDelimiter
+	 *            複数の属性値のための区切り文字
 	 * @return 属性値
 	 * @throws NamingException
 	 */
@@ -58,8 +63,10 @@ public interface ValueType {
 	/**
 	 * フィルタを取得します。
 	 * 
-	 * @param key 検索キー
-	 * @param value 値
+	 * @param key
+	 *            検索キー
+	 * @param value
+	 *            値
 	 * @return フィルタ
 	 */
 	public String getFilter(Object key, Object value);
@@ -67,9 +74,12 @@ public interface ValueType {
 	/**
 	 * 書き込み用の値を取得します。
 	 * 
-	 * @param attributeName 属性名
-	 * @param value 値
-	 * @param multipleValueDelimiter 複数値の区切り文字
+	 * @param attributeName
+	 *            属性名
+	 * @param value
+	 *            値
+	 * @param multipleValueDelimiter
+	 *            複数値の区切り文字
 	 * @return 書き込み用属性地
 	 */
 	public Attribute getWriteValue(String attributeName, Object value,

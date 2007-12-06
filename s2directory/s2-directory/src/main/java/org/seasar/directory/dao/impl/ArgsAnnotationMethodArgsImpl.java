@@ -24,9 +24,9 @@ import org.seasar.directory.dao.AnnotationMethodArgs;
  * @version $Date::                           $
  */
 public class ArgsAnnotationMethodArgsImpl implements AnnotationMethodArgs {
-	/** 引数を表わします。 */
+	/** 引数 */
 	private String[] argNames = new String[0];
-	/** 引数の型を表わします。 */
+	/** 引数の型 */
 	private Class[] argTypes = new Class[0];
 
 	/**

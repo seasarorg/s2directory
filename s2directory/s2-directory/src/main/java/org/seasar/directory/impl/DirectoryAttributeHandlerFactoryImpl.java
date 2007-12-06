@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,13 +32,13 @@ import org.seasar.directory.attribute.AttributeHandler;
  */
 public class DirectoryAttributeHandlerFactoryImpl implements
 		DirectoryAttributeHandlerFactory {
-	/** ディレクトリ用の値の型ファクトリを表します。 */
+	/** ディレクトリ用の値の型ファクトリ */
 	private DirectoryValueTypeFactory directoryValueTypeFactory;
-	/** 属性名の大文字と小文字を区別するか判別します。 */
+	/** 属性名の大文字と小文字を区別するかどうか */
 	private boolean ignoreCase = true;
-	/** 標準で使用する属性ハンドラを表します。 */
+	/** 標準で使用する属性ハンドラ */
 	private AttributeHandler defaultAttributeHandler;
-	/** 属性ハンドラの集合を表します。 */
+	/** 属性ハンドラの集合 */
 	private static Map handlers = Collections.synchronizedMap(new HashMap());
 
 	/**
@@ -59,7 +59,8 @@ public class DirectoryAttributeHandlerFactoryImpl implements
 	/**
 	 * 属性名の大文字と小文字を区別するかを設定します。
 	 * 
-	 * @param ignoreCase 属性名の大文字と小文字を区別する場合は true そうでない場合は false
+	 * @param ignoreCase
+	 *            属性名の大文字と小文字を区別する場合は true そうでない場合は false
 	 */
 	public void setIgnoreCase(boolean ignoreCase) {
 		this.ignoreCase = ignoreCase;
@@ -86,7 +87,8 @@ public class DirectoryAttributeHandlerFactoryImpl implements
 	/**
 	 * 標準で使用する属性ハンドラを設定します。
 	 * 
-	 * @param defaultAttributeHandler 標準で使用する属性ハンドラ
+	 * @param defaultAttributeHandler
+	 *            標準で使用する属性ハンドラ
 	 */
 	public void setDefaultAttributeHandler(
 			AttributeHandler defaultAttributeHandler) {
@@ -118,7 +120,8 @@ public class DirectoryAttributeHandlerFactoryImpl implements
 	/**
 	 * 指定された属性ハンドラを追加します。
 	 * 
-	 * @param attributeHandler 属性ハンドラ
+	 * @param attributeHandler
+	 *            属性ハンドラ
 	 */
 	protected void addAttributeHandler(AttributeHandler attributeHandler) {
 		List attributeNameList = attributeHandler.getAttributeNameList();

@@ -25,10 +25,14 @@ import javax.naming.NameAlreadyBoundException;
  */
 public final class DirectoryNameAlreadyBoundRuntimeException extends
 		DirectoryRuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 指定された例外を使用して新しいインスタンスを構築します。
 	 * 
-	 * @param cause NamingException この例外に関する詳細情報
+	 * @param cause
+	 *            NamingException この例外に関する詳細情報
 	 */
 	public DirectoryNameAlreadyBoundRuntimeException(
 			NameAlreadyBoundException cause) {

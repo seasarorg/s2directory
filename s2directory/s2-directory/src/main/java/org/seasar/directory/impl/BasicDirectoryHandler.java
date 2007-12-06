@@ -26,8 +26,8 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.util.DirectoryDataSourceUtils;
-import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.exception.EmptyRuntimeException;
 
 /**
@@ -37,9 +37,9 @@ import org.seasar.framework.exception.EmptyRuntimeException;
  * @version $Date::                           $
  */
 public class BasicDirectoryHandler {
-	/** データソースを表します。 */
+	/** データソース */
 	private DirectoryDataSource directoryDataSource;
-	/** ディレクトリサーバ接続情報を表します。 */
+	/** ディレクトリサーバ接続情報 */
 	protected DirectoryControlProperty directoryControlProperty;
 
 	/**
@@ -49,8 +49,8 @@ public class BasicDirectoryHandler {
 	 */
 	public BasicDirectoryHandler(DirectoryDataSource directoryDataSource) {
 		this.directoryDataSource = directoryDataSource;
-		this.directoryControlProperty = directoryDataSource
-				.getDirectoryControlProperty();
+		this.directoryControlProperty =
+			directoryDataSource.getDirectoryControlProperty();
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class BasicDirectoryHandler {
 		if (directoryDataSource == null) {
 			throw new EmptyRuntimeException("directoryDataSource");
 		}
-		return DirectoryDataSourceUtils.getConnection(directoryDataSource);
+		return DirectoryDataSourceUtil.getConnection(directoryDataSource);
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class BasicDirectoryHandler {
 		if (directoryDataSource == null) {
 			throw new EmptyRuntimeException("directoryDataSource");
 		}
-		return new Boolean(DirectoryDataSourceUtils
-				.authenticate(directoryDataSource));
+		return new Boolean(DirectoryDataSourceUtil
+			.authenticate(directoryDataSource));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class BasicDirectoryHandler {
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
-			DirectoryDataSourceUtils.close(context);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class BasicDirectoryHandler {
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
-			DirectoryDataSourceUtils.close(context);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 
@@ -160,7 +160,7 @@ public class BasicDirectoryHandler {
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
-			DirectoryDataSourceUtils.close(context);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 
@@ -172,8 +172,8 @@ public class BasicDirectoryHandler {
 	public Integer delete(String dn) {
 		DirContext context = null;
 		try {
-			String firstDn = DirectoryUtils.getFirstDn(dn);
-			String baseDn = DirectoryUtils.getBaseDn(dn);
+			String firstDn = DirectoryUtil.getFirstDn(dn);
+			String baseDn = DirectoryUtil.getBaseDn(dn);
 			NamingEnumeration results = search(firstDn, baseDn);
 			context = getConnection();
 			context.destroySubcontext(dn);
@@ -181,14 +181,15 @@ public class BasicDirectoryHandler {
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
-			DirectoryDataSourceUtils.close(context);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 
 	/**
 	 * 検索結果の数を返します。
 	 * 
-	 * @param results 検索結果
+	 * @param results
+	 *            検索結果
 	 * @return 検索結果の数
 	 * @throws NamingException
 	 */

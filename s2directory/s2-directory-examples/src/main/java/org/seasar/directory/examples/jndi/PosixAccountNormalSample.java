@@ -54,16 +54,20 @@ public class PosixAccountNormalSample {
 	public static void getPosixUser() {
 		List posixAccounts = new ArrayList();
 		Hashtable env = new Hashtable(11);
-		env.put(Context.INITIAL_CONTEXT_FACTORY,
-				"com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(
+			Context.INITIAL_CONTEXT_FACTORY,
+			"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, "ldap://localhost:30390/");
 		try {
 			DirContext ctx = new InitialDirContext(env);
 			try {
 				SearchControls controls = new SearchControls();
 				controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-				NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
-						"objectClass=posixAccount", controls);
+				NamingEnumeration ne =
+					ctx.search(
+						"dc=seasar,dc=org",
+						"objectClass=posixAccount",
+						controls);
 				if (ne != null) {
 					while (ne.hasMore()) {
 						SearchResult result = (SearchResult)ne.next();
@@ -80,26 +84,24 @@ public class PosixAccountNormalSample {
 								account.setUid(String.valueOf(attr.get()));
 							} else if (attrName.equals("uidNumber")) {
 								account
-										.setUidNumber(String
-												.valueOf(attr.get()));
+									.setUidNumber(String.valueOf(attr.get()));
 							} else if (attrName.equals("gidNumber")) {
 								account
-										.setGidNumber(String
-												.valueOf(attr.get()));
+									.setGidNumber(String.valueOf(attr.get()));
 							} else if (attrName.equals("homeDicretory")) {
 								account.setHomeDirectory(String.valueOf(attr
-										.get()));
+									.get()));
 							} else if (attrName.equals("userPassword")) {
 								account.setUserPassword(String.valueOf(attr
-										.get()));
+									.get()));
 							} else if (attrName.equals("loginShell")) {
 								account.setLoginShell(String
-										.valueOf(attr.get()));
+									.valueOf(attr.get()));
 							} else if (attrName.equals("gecos")) {
 								account.setGecos(String.valueOf(attr.get()));
 							} else if (attrName.equals("description")) {
 								account.setDescription(String.valueOf(attr
-										.get()));
+									.get()));
 							}
 						}
 						posixAccounts.add(account);

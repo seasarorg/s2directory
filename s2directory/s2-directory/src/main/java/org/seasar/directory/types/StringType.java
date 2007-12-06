@@ -53,7 +53,7 @@ public class StringType extends AbstractValueType {
 				} else {
 					// バイナリ型
 					buffer.append(new String((byte[])value)).append(
-							multipleValueDelimiter);
+						multipleValueDelimiter);
 				}
 			}
 			int index = buffer.lastIndexOf(multipleValueDelimiter);

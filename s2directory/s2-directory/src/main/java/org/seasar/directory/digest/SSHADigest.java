@@ -22,7 +22,7 @@ package org.seasar.directory.digest;
  * @version $Date::                           $
  */
 public class SSHADigest extends SHADigest {
-	/** 暗号形式を表します。 */
+	/** 暗号形式 */
 	public static final String LABEL = "{SSHA}";
 
 	/**

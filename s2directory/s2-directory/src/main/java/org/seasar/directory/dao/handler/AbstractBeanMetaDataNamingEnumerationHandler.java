@@ -40,16 +40,18 @@ import org.seasar.framework.util.StringUtil;
  */
 public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		NamingEnumerationHandler {
-	/** メタデータを表わします。 */
+	/** メタデータ */
 	private DirectoryBeanMetaData directoryBeanMetaData;
-	/** ディレクトリサーバ接続情報を表します。 */
+	/** ディレクトリサーバ接続情報 */
 	private DirectoryControlProperty directoryControlProperty;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryBeanMetaData ビーンメタデータ
-	 * @param directoryControlProperty ディレクトリサーバ接続情報
+	 * @param directoryBeanMetaData
+	 *            ビーンメタデータ
+	 * @param directoryControlProperty
+	 *            ディレクトリサーバ接続情報
 	 */
 	public AbstractBeanMetaDataNamingEnumerationHandler(
 			DirectoryBeanMetaData directoryBeanMetaData,
@@ -77,8 +79,8 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 	 */
 	protected Object createEntry(SearchResult result, Set attributeNameSet)
 			throws NamingException {
-		Object entry = ClassUtil.newInstance(directoryBeanMetaData
-				.getBeanClass());
+		Object entry =
+			ClassUtil.newInstance(directoryBeanMetaData.getBeanClass());
 		for (int i = 0; i < directoryBeanMetaData.getPropertyTypeSize(); ++i) {
 			PropertyType pt = directoryBeanMetaData.getPropertyType(i);
 			if (pt.getColumnName().equals("dn")) {
@@ -88,23 +90,26 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 				// pd.setValue(entry, result.getNameInNamespace());
 			} else if (attributeNameSet.contains(pt.getColumnName())) {
 				ValueType valueType = pt.getValueType();
-				Object value = valueType.getReadValue(result.getAttributes(),
-						pt.getColumnName(), directoryControlProperty
-								.getMultipleValueDelimiter());
+				Object value =
+					valueType.getReadValue(result.getAttributes(), pt
+						.getColumnName(), directoryControlProperty
+						.getMultipleValueDelimiter());
 				PropertyDesc pd = pt.getPropertyDesc();
 				pd.setValue(entry, value);
 			} else if (!pt.isPersistent()) {
 				for (Iterator iter = attributeNameSet.iterator(); iter
-						.hasNext();) {
+					.hasNext();) {
 					String columnName = (String)iter.next();
-					String columnName2 = StringUtil
-							.replace(columnName, "_", "");
+					String columnName2 =
+						StringUtil.replace(columnName, "_", "");
 					if (columnName2.equalsIgnoreCase(pt.getColumnName())) {
 						ValueType valueType = pt.getValueType();
-						Object value = valueType.getReadValue(result
-								.getAttributes(), columnName,
+						Object value =
+							valueType.getReadValue(
+								result.getAttributes(),
+								columnName,
 								directoryControlProperty
-										.getMultipleValueDelimiter());
+									.getMultipleValueDelimiter());
 						PropertyDesc pd = pt.getPropertyDesc();
 						pd.setValue(entry, value);
 						break;

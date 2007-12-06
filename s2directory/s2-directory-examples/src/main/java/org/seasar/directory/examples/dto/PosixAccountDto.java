@@ -24,6 +24,9 @@ import org.seasar.directory.examples.entity.PosixAccount;
  * @version $Revision$ $Date$
  */
 public class PosixAccountDto extends PosixAccount {
+
+	private static final long serialVersionUID = 1L;
+
 	/** snを表わします。 */
 	private String sn;
 

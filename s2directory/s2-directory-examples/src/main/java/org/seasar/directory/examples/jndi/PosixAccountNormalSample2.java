@@ -41,8 +41,9 @@ public class PosixAccountNormalSample2 {
 	public static void main(String[] args) {
 		List posixAccounts = new ArrayList();
 		Hashtable env = new Hashtable(11);
-		env.put(Context.INITIAL_CONTEXT_FACTORY,
-				"com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(
+			Context.INITIAL_CONTEXT_FACTORY,
+			"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, "ldap://localhost:30389/");
 		env.put(Context.SECURITY_PRINCIPAL, "cn=Manager,dc=seasar,dc=org");
 		env.put(Context.SECURITY_CREDENTIALS, "secret");
@@ -51,8 +52,8 @@ public class PosixAccountNormalSample2 {
 			try {
 				SearchControls controls = new SearchControls();
 				controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-				NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
-						"uid=user4", controls);
+				NamingEnumeration ne =
+					ctx.search("dc=seasar,dc=org", "uid=user4", controls);
 				if (ne != null) {
 					while (ne.hasMore()) {
 						SearchResult result = (SearchResult)ne.next();
@@ -71,26 +72,24 @@ public class PosixAccountNormalSample2 {
 								account.setUid(String.valueOf(attr.get()));
 							} else if (attrName.equals("uidNumber")) {
 								account
-										.setUidNumber(String
-												.valueOf(attr.get()));
+									.setUidNumber(String.valueOf(attr.get()));
 							} else if (attrName.equals("gidNumber")) {
 								account
-										.setGidNumber(String
-												.valueOf(attr.get()));
+									.setGidNumber(String.valueOf(attr.get()));
 							} else if (attrName.equals("homeDicretory")) {
 								account.setHomeDirectory(String.valueOf(attr
-										.get()));
+									.get()));
 							} else if (attrName.equals("userPassword")) {
 								account.setUserPassword(String.valueOf(attr
-										.get()));
+									.get()));
 							} else if (attrName.equals("loginShell")) {
 								account.setLoginShell(String
-										.valueOf(attr.get()));
+									.valueOf(attr.get()));
 							} else if (attrName.equals("gecos")) {
 								account.setGecos(String.valueOf(attr.get()));
 							} else if (attrName.equals("description")) {
 								account.setDescription(String.valueOf(attr
-										.get()));
+									.get()));
 							}
 						}
 						posixAccounts.add(account);
@@ -117,8 +116,10 @@ public class PosixAccountNormalSample2 {
 				Attributes attrs = new BasicAttributes();
 				attrs.put("loginShell", "/bin/sh");
 				attrs.put("gecos", "Rename User");
-				ctx.modifyAttributes(account.getDn(),
-						DirContext.REPLACE_ATTRIBUTE, attrs);
+				ctx.modifyAttributes(
+					account.getDn(),
+					DirContext.REPLACE_ATTRIBUTE,
+					attrs);
 				ctx.close();
 			} catch (NamingException e) {
 				e.printStackTrace();

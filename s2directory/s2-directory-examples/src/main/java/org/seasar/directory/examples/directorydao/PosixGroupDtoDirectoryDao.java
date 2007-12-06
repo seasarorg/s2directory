@@ -27,13 +27,14 @@ import org.seasar.directory.examples.dto.PosixGroupDto;
 public interface PosixGroupDtoDirectoryDao {
 	/** BEANアノテーション */
 	public static final Class BEAN = PosixGroupDto.class;
-	/** OBJECTCLASSESアノテーション */
-	//public static final String OBJECTCLASSES = "posixGroup";
 
+	/** OBJECTCLASSESアノテーション */
+	// public static final String OBJECTCLASSES = "posixGroup";
 	/**
 	 * 指定したPosixグループを追加します。
 	 * 
-	 * @param posixGroupDto Posixグループ
+	 * @param posixGroupDto
+	 *            Posixグループ
 	 * @return 追加したエントリ数
 	 */
 	public int insertPosixGroup(PosixGroupDto posixGroupDto);
@@ -41,7 +42,8 @@ public interface PosixGroupDtoDirectoryDao {
 	/**
 	 * 指定したPosixグループを更新します。
 	 * 
-	 * @param posixGroupDto Posixグループ
+	 * @param posixGroupDto
+	 *            Posixグループ
 	 * @return 更新したエントリ数
 	 */
 	public int updatePosixGroup(PosixGroupDto posixGroupDto);
@@ -49,7 +51,8 @@ public interface PosixGroupDtoDirectoryDao {
 	/**
 	 * 指定したPosixグループを削除します。
 	 * 
-	 * @param posixGroupDto Posixグループ
+	 * @param posixGroupDto
+	 *            Posixグループ
 	 * @return 削除したエントリ数
 	 */
 	public int deletePosixGroup(PosixGroupDto posixGroupDto);
@@ -57,12 +60,15 @@ public interface PosixGroupDtoDirectoryDao {
 	/**
 	 * 指定したPosixグループを検索します。
 	 * 
-	 * @param posixGroupDto Posixグループ
+	 * @param posixGroupDto
+	 *            Posixグループ
 	 * @return グループ
 	 */
 	public PosixGroupDto getPosixGroup(PosixGroupDto posixGroupDto);
+
 	/** QUERYアノテーション getPosixGroupList */
-	public static final String getPosixGroupList_QUERY = "objectclass=posixGroup";
+	public static final String getPosixGroupList_QUERY =
+		"objectclass=posixGroup";
 
 	/**
 	 * すべてのPosixグループのリストを取得します。
@@ -70,13 +76,15 @@ public interface PosixGroupDtoDirectoryDao {
 	 * @return グループリスト
 	 */
 	public List getPosixGroupList();
+
 	/** ARGSアノテーション getPosixGroupListByMemberUid */
 	public static final String getPosixGroupListByMemberUid_ARGS = "memberUid";
 
 	/**
 	 * 指定したグループ名のPosixグループのリストを取得します。
 	 * 
-	 * @param memberUid メンバー名
+	 * @param memberUid
+	 *            メンバー名
 	 * @return グループリスト
 	 */
 	public List getPosixGroupListByMemberUid(List memberUid);

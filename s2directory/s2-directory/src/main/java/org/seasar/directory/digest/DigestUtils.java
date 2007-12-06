@@ -24,9 +24,9 @@ import java.util.Random;
  * @version $Date::                           $
  */
 public final class DigestUtils {
-	/** 乱数器を表します。 */
+	/** 乱数器 */
 	private static final Random RANDOM = new Random();
-	/** 乱数用の種のデフォルトの長さを表します。 */
+	/** 乱数用の種のデフォルトの長さ */
 	private static final int SALT_LENGTH = 4;
 
 	/**
@@ -51,7 +51,8 @@ public final class DigestUtils {
 	/**
 	 * 指定された文字数のランダムな文字列を生成します。
 	 * 
-	 * @param count 文字数
+	 * @param count
+	 *            文字数
 	 * @return ランダムな文字列
 	 */
 	public static String randomString(int count) {
@@ -61,8 +62,10 @@ public final class DigestUtils {
 	/**
 	 * 指定された乱数器を用いて指定された文字数のランダムな文字列を生成します。
 	 * 
-	 * @param count 文字数
-	 * @param random 乱数器
+	 * @param count
+	 *            文字数
+	 * @param random
+	 *            乱数器
 	 * @return ランダムな文字列
 	 */
 	public static String randomString(int count, Random random) {
@@ -83,8 +86,10 @@ public final class DigestUtils {
 	/**
 	 * 指定された配列を合成します。
 	 * 
-	 * @param left 配列1
-	 * @param right 配列2
+	 * @param left
+	 *            配列1
+	 * @param right
+	 *            配列2
 	 * @return byte[] 合成した配列
 	 */
 	public static byte[] concat(byte[] left, byte[] right) {
@@ -97,8 +102,10 @@ public final class DigestUtils {
 	/**
 	 * 指定された配列を指定された位置で2つの配列に分離します。
 	 * 
-	 * @param src 分離する配列
-	 * @param index 分離する位置
+	 * @param src
+	 *            分離する配列
+	 * @param index
+	 *            分離する位置
 	 * @return byte[][] 分離した配列
 	 */
 	public static byte[][] split(byte[] src, int index) {

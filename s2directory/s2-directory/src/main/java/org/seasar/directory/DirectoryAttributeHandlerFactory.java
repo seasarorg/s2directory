@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,8 @@ public interface DirectoryAttributeHandlerFactory {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryValueTypeFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryValueTypeFactory(
 			DirectoryValueTypeFactory directoryValueTypeFactory);
@@ -42,15 +43,18 @@ public interface DirectoryAttributeHandlerFactory {
 	/**
 	 * 属性ハンドラの集合を取得します。
 	 * 
-	 * @param attributeHandlers 属性ハンドラの集合
+	 * @param attributeHandlers
+	 *            属性ハンドラの集合
 	 */
 	public void setAttributeHandlers(Object[] attributeHandlers);
 
 	/**
 	 * 属性ハンドラを追加します。
 	 * 
-	 * @param attributeName 属性名
-	 * @param attributeHandler 属性ハンドラ
+	 * @param attributeName
+	 *            属性名
+	 * @param attributeHandler
+	 *            属性ハンドラ
 	 */
 	public void addAttributeHandler(String attributeName,
 			AttributeHandler attributeHandler);
@@ -58,7 +62,8 @@ public interface DirectoryAttributeHandlerFactory {
 	/**
 	 * 指定した属性名に対応する属性ハンドラを取得します。
 	 * 
-	 * @param attributeName 属性名
+	 * @param attributeName
+	 *            属性名
 	 * @return 属性ハンドラ
 	 */
 	public AttributeHandler getAttributeHandler(String attributeName);

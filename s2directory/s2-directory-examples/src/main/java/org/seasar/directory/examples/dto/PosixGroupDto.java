@@ -24,11 +24,14 @@ import org.seasar.directory.examples.entity.PosixGroup;
  * @version $Revision$ $Date$
  */
 public class PosixGroupDto extends PosixGroup {
-	/** 非永続化属性を表します。 */
+
+	private static final long serialVersionUID = 1L;
+
+	/** 非永続化属性 */
 	public static final String NO_PERSISTENT_PROPS = "field1, field2";
-	/** field1を表します。 */
+	/** field1 */
 	private String field1;
-	/** field2を表します。 */
+	/** field2 */
 	private String field2;
 
 	/**

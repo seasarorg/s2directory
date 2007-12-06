@@ -18,6 +18,7 @@ package org.seasar.directory.examples.entity;
 import java.io.Serializable;
 
 public class PosixAccount implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String dn;
 	private String cn;
 	private String uid;
@@ -33,7 +34,8 @@ public class PosixAccount implements Serializable {
 		super();
 	}
 
-	public PosixAccount(String cn, String uid, String uidNumber, String gidNumber, String homeDirectory) {
+	public PosixAccount(String cn, String uid, String uidNumber,
+			String gidNumber, String homeDirectory) {
 		super();
 		this.cn = cn;
 		this.uid = uid;
