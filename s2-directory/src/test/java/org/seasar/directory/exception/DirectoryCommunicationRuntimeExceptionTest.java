@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,8 +45,8 @@ public class DirectoryCommunicationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_ja() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPANESE);
-		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException = new DirectoryCommunicationRuntimeException(
-				property);
+		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException =
+			new DirectoryCommunicationRuntimeException(property);
 		// ## Act ##
 		String message = directoryCommunicationRuntimeException.getMessage();
 		// ## Assert ##
@@ -56,8 +56,8 @@ public class DirectoryCommunicationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_en() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.ENGLISH);
-		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException = new DirectoryCommunicationRuntimeException(
-				property);
+		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException =
+			new DirectoryCommunicationRuntimeException(property);
 		// ## Act ##
 		String message = directoryCommunicationRuntimeException.getMessage();
 		// ## Assert ##

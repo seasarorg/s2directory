@@ -28,7 +28,8 @@ public interface DirectoryDataSource {
 	/**
 	 * 接続情報を設定します。
 	 * 
-	 * @param directoryControlProperty - 接続情報
+	 * @param directoryControlProperty
+	 *            接続情報
 	 */
 	public void setDirectoryControlProperty(
 			DirectoryControlProperty directoryControlProperty);
@@ -51,7 +52,8 @@ public interface DirectoryDataSource {
 	/**
 	 * 指定された接続情報を使用して作成したコネクションを返します。
 	 * 
-	 * @param DirectoryControlProperty - 接続情報
+	 * @param DirectoryControlProperty
+	 *            接続情報
 	 * @return コネクション
 	 * @throws NamingException
 	 */

@@ -39,7 +39,8 @@ public class DirectoryConnectionTest extends TestCase {
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
 		container.init();
-		DirectoryControlProperty defaultProperty = (DirectoryControlProperty)container
+		DirectoryControlProperty defaultProperty =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
@@ -48,10 +49,10 @@ public class DirectoryConnectionTest extends TestCase {
 	 * DirectoryControlPropertyのテストを行います。
 	 */
 	public void testDirectoryControlProperty() {
-		DirectoryControlProperty property = directoryDataSource
-				.getDirectoryControlProperty();
+		DirectoryControlProperty property =
+			directoryDataSource.getDirectoryControlProperty();
 		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
-				.getInitialContextFactory());
+			.getInitialContextFactory());
 		assertEquals("ldap://localhost:389", property.getUrl());
 		assertEquals("cn=Manager", property.getUser());
 		assertEquals("secret", property.getPassword());

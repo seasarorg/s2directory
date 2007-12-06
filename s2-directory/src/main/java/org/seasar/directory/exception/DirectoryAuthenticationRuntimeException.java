@@ -25,14 +25,18 @@ import org.seasar.directory.DirectoryControlProperty;
  */
 public final class DirectoryAuthenticationRuntimeException extends
 		DirectoryRuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 指定されたサーバ接続情報を使用して新しいインスタンスを構築します。
 	 * 
-	 * @param property サーバ接続情報
+	 * @param property
+	 *            サーバ接続情報
 	 */
 	public DirectoryAuthenticationRuntimeException(
 			DirectoryControlProperty property) {
 		super("EDIRECTORY0003", new Object[] { property.getUrl(),
-				property.getUser(), property.getPassword() });
+			property.getUser(), property.getPassword() });
 	}
 }

@@ -23,7 +23,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.util.DirectoryDataSourceUtils;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 
 /**
  * サーバに接続するためのリソースを提供するデータソースクラスです。
@@ -32,7 +32,7 @@ import org.seasar.directory.util.DirectoryDataSourceUtils;
  * @version $Date::                           $
  */
 public class DirectoryDataSourceImpl implements DirectoryDataSource {
-	/** 接続情報を表わします。 */
+	/** 接続情報 */
 	private DirectoryControlProperty directoryControlProperty;
 
 	/**
@@ -45,7 +45,8 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	/**
 	 * 指定された接続情報を保持したデータソースのインスタンスを作成します。
 	 * 
-	 * @param directoryControlProperty - 接続情報
+	 * @param directoryControlProperty
+	 *            接続情報
 	 */
 	public DirectoryDataSourceImpl(
 			DirectoryControlProperty directoryControlProperty) {
@@ -80,8 +81,8 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	public DirContext getConnection(
 			DirectoryControlProperty directoryControlProperty)
 			throws NamingException {
-		DirectoryDataSourceUtils
-				.setupDirectoryControlProperty(directoryControlProperty);
+		DirectoryDataSourceUtil
+			.setupDirectoryControlProperty(directoryControlProperty);
 		if (directoryControlProperty.isAllowAnonymous()) {
 			// 匿名接続を許可する場合、認証情報の null を 空 に置き換えます。
 			if (directoryControlProperty.getUser() == null)
@@ -95,11 +96,11 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		String url = directoryControlProperty.getUrl();
 		Properties env = new Properties();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, directoryControlProperty
-				.getInitialContextFactory());
+			.getInitialContextFactory());
 		env.put(Context.PROVIDER_URL, url);
 		env.put(Context.SECURITY_PRINCIPAL, directoryControlProperty.getUser());
 		env.put(Context.SECURITY_CREDENTIALS, directoryControlProperty
-				.getPassword());
+			.getPassword());
 		return new InitialDirContext(env);
 	}
 

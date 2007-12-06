@@ -19,7 +19,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PosixGroupWithList implements Serializable {
-	//public static final String OBJECTCLASS = "posixGroup";
+	private static final long serialVersionUID = 1L;
+	// public static final String OBJECTCLASS = "posixGroup";
 	private String dn;
 	private String cn;
 	private String gidNumber;

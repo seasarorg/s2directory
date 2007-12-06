@@ -24,6 +24,9 @@ import org.seasar.framework.exception.SRuntimeException;
  * @version $Revision$ $Date$
  */
 public class IllegalArgsPositionRuntimeException extends SRuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	public IllegalArgsPositionRuntimeException() {
 		super("ESSR0066", new Object[] {});
 	}

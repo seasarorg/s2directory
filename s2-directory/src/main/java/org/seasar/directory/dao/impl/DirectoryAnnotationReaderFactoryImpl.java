@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,9 +31,11 @@ import org.seasar.framework.util.ClassUtil;
 public class DirectoryAnnotationReaderFactoryImpl implements
 		DirectoryAnnotationReaderFactory {
 	// TODO: 未実装 TIGER_ANNOTATION_READER_FACTORY
-	private static final String TIGER_ANNOTATION_READER_FACTORY = "org.seasar.directory.dao.annotation.tiger.impl.AnnotationReaderFactoryImpl";
+	private static final String TIGER_ANNOTATION_READER_FACTORY =
+		"org.seasar.directory.dao.annotation.tiger.impl.AnnotationReaderFactoryImpl";
 	// TODO: 未実装 BACKPORT175_ANNOTATION_READER_FACTORY
-	private static final String BACKPORT175_ANNOTATION_READER_FACTORY = "org.seasar.directory.dao.annotation.backport175.impl.AnnotationReaderFactoryImpl";
+	private static final String BACKPORT175_ANNOTATION_READER_FACTORY =
+		"org.seasar.directory.dao.annotation.backport175.impl.AnnotationReaderFactoryImpl";
 	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
 
 	public DirectoryAnnotationReaderFactoryImpl() {
@@ -42,23 +44,24 @@ public class DirectoryAnnotationReaderFactoryImpl implements
 			clazz = ClassUtil.forName(TIGER_ANNOTATION_READER_FACTORY);
 		} catch (ClassNotFoundRuntimeException ignore1) {
 			try {
-				clazz = ClassUtil
-						.forName(BACKPORT175_ANNOTATION_READER_FACTORY);
-			} catch (ClassNotFoundRuntimeException ignore2) {}
+				clazz =
+					ClassUtil.forName(BACKPORT175_ANNOTATION_READER_FACTORY);
+			} catch (ClassNotFoundRuntimeException ignore2) {
+			}
 		}
-		directoryAnnotationReaderFactory = (DirectoryAnnotationReaderFactory)ClassUtil
-				.newInstance(clazz);
+		directoryAnnotationReaderFactory =
+			(DirectoryAnnotationReaderFactory)ClassUtil.newInstance(clazz);
 	}
 
 	public DirectoryBeanAnnotationReader createDirectoryBeanAnnotationReader(
 			Class beanClass) {
 		return directoryAnnotationReaderFactory
-				.createDirectoryBeanAnnotationReader(beanClass);
+			.createDirectoryBeanAnnotationReader(beanClass);
 	}
 
 	public DirectoryDaoAnnotationReader createDirectoryDaoAnnotationReader(
 			BeanDesc daoBeanDesc) {
 		return directoryAnnotationReaderFactory
-				.createDirectoryDaoAnnotationReader(daoBeanDesc);
+			.createDirectoryDaoAnnotationReader(daoBeanDesc);
 	}
 }

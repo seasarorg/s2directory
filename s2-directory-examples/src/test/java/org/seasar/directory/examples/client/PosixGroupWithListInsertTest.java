@@ -50,14 +50,16 @@ public class PosixGroupWithListInsertTest extends
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
-			posixGroupWithListDao = (PosixGroupWithListDirectoryDao)container
+			posixGroupWithListDao =
+				(PosixGroupWithListDirectoryDao)container
 					.getComponent(PosixGroupWithListDirectoryDao.class);
 		}
 		// ユーザを追加します。
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 		user2 = posixAccountDtoFactory.getUser("user2");
 		assertEquals(null, posixAccountDtoDao.getUser(user1));

@@ -26,12 +26,12 @@ import junit.framework.TestSuite;
  */
 public class AllTests {
 	public static Test suite() {
-		TestSuite suite = new TestSuite(
-				"Test for test.org.seasar.directory.util");
-		//$JUnit-BEGIN$
+		TestSuite suite =
+			new TestSuite("Test for test.org.seasar.directory.util");
+		// $JUnit-BEGIN$
 		suite.addTestSuite(DirectoryUtilTest.class);
 		suite.addTestSuite(DirectoryDataSourceUtilTest.class);
-		//$JUnit-END$
+		// $JUnit-END$
 		return suite;
 	}
 }

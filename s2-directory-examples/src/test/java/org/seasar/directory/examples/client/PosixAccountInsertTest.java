@@ -43,11 +43,12 @@ public class PosixAccountInsertTest extends DefaultDirectoryInformationTreeTest 
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public interface DirectoryValueTypeFactory {
 	/**
 	 * コンポーネント名から値の型を取得します。
 	 * 
-	 * @param name コンポーネント名
+	 * @param name
+	 *            コンポーネント名
 	 * @return 値の型
 	 */
 	public ValueType getValueTypeByName(String name);
@@ -35,7 +36,8 @@ public interface DirectoryValueTypeFactory {
 	/**
 	 * クラスインスタンスから値の型を取得します。
 	 * 
-	 * @param clazz クラスインスタンス
+	 * @param clazz
+	 *            クラスインスタンス
 	 * @return 値の型
 	 */
 	public ValueType getValueTypeByClass(Class clazz);

@@ -16,7 +16,7 @@
 package org.seasar.directory.util;
 
 import junit.framework.TestCase;
-import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.directory.util.DirectoryUtil;
 
 /**
  * データソース用ユーティリティクラスのテストクラスです。
@@ -26,40 +26,42 @@ import org.seasar.directory.util.DirectoryUtils;
  */
 public class DirectoryUtilTest extends TestCase {
 	public void testGetFirstDn() {
-		assertEquals("uid=user1", DirectoryUtils
-				.getFirstDn("uid=user1, ou=Users, dc=seasar,dc=org"));
-		assertEquals("uid=user1", DirectoryUtils.getFirstDn("uid=user1"));
+		assertEquals("uid=user1", DirectoryUtil
+			.getFirstDn("uid=user1, ou=Users, dc=seasar,dc=org"));
+		assertEquals("uid=user1", DirectoryUtil.getFirstDn("uid=user1"));
 	}
 
 	public void testGetBaseDn() {
-		assertEquals("ou=Users, dc=seasar,dc=org", DirectoryUtils
-				.getBaseDn("uid=user1, ou=Users, dc=seasar,dc=org"));
+		assertEquals("ou=Users, dc=seasar,dc=org", DirectoryUtil
+			.getBaseDn("uid=user1, ou=Users, dc=seasar,dc=org"));
 	}
 
 	public void testGetAttributeName() {
-		assertEquals("uid", DirectoryUtils.getAttributeName("uid=user1"));
-		assertEquals("uid", DirectoryUtils
-				.getAttributeName("uid=user1, ou=Users, dc=seasar,dc=org"));
+		assertEquals("uid", DirectoryUtil.getAttributeName("uid=user1"));
+		assertEquals("uid", DirectoryUtil
+			.getAttributeName("uid=user1, ou=Users, dc=seasar,dc=org"));
 	}
 
 	public void testGetAttributeValue() {
-		assertEquals("user1", DirectoryUtils.getAttributeValue("uid=user1"));
-		assertEquals("user1", DirectoryUtils
-				.getAttributeValue("uid=user1, ou=Users, dc=seasar,dc=org"));
+		assertEquals("user1", DirectoryUtil.getAttributeValue("uid=user1"));
+		assertEquals("user1", DirectoryUtil
+			.getAttributeValue("uid=user1, ou=Users, dc=seasar,dc=org"));
 	}
 
 	public void testVerify() {
-		assertEquals(true, DirectoryUtils.verifyPassword(
-				"{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==", "secret"));
-		assertEquals(true, DirectoryUtils.verifyPassword(
-				"{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=", "secret"));
-		assertEquals(false, DirectoryUtils.verifyPassword("{SHA}x", "secret"));
+		assertEquals(true, DirectoryUtil.verifyPassword(
+			"{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==",
+			"secret"));
+		assertEquals(true, DirectoryUtil.verifyPassword(
+			"{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=",
+			"secret"));
+		assertEquals(false, DirectoryUtil.verifyPassword("{SHA}x", "secret"));
 	}
 
 	public void testGetPassword() {
-		assertEquals("{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==", DirectoryUtils
-				.createPassword("secret", "MD5"));
-		assertEquals("{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=", DirectoryUtils
-				.createPassword("secret", "SHA"));
+		assertEquals("{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==", DirectoryUtil
+			.createPassword("secret", "MD5"));
+		assertEquals("{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=", DirectoryUtil
+			.createPassword("secret", "SHA"));
 	}
 }

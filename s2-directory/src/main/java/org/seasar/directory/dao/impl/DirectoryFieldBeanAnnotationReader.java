@@ -31,25 +31,26 @@ import org.seasar.framework.util.StringUtil;
  */
 public class DirectoryFieldBeanAnnotationReader implements
 		DirectoryBeanAnnotationReader {
-	/** BEANアノテーションの設定名を表します。 */
+	/** BEANアノテーションの設定名 */
 	public String BEAN = "BEAN";
-	/** オブジェクトクラスアノテーションの設定名を表します。 */
+	/** オブジェクトクラスアノテーションの設定名 */
 	public String OBJECTCLASSES = "OBJECTCLASSES";
-	/** 永続化対象にしない属性の設定名を表します。 */
+	/** 永続化対象にしない属性の設定名 */
 	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
-	/** この属性だけ永続化する属性の設定名を表します。 */
+	/** この属性だけ永続化する属性の設定名 */
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
-	/** 属性名の設定名を表します。 */
+	/** 属性名の設定名 */
 	public String COLUMN_SUFFIX = "_COLUMN";
-	/** 値の型の設定名を表します。 */
+	/** 値の型の設定名 */
 	public String VALUE_TYPE_SUFFIX = "_VALUE_TYPE";
-	/** メタ情報を表わします。 */
+	/** メタ情報 */
 	protected BeanDesc beanDesc;
 
 	/**
 	 * 指定されたメタ情報を持つインスタンスを作成します。
 	 * 
-	 * @param beanClass ビーンクラス
+	 * @param beanClass
+	 *            ビーンクラス
 	 */
 	public DirectoryFieldBeanAnnotationReader(Class beanClass) {
 		this.beanDesc = BeanDescFactory.getBeanDesc(beanClass);

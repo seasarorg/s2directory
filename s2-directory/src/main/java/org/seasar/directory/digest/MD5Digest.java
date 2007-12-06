@@ -22,7 +22,7 @@ package org.seasar.directory.digest;
  * @version $Date::                           $
  */
 public class MD5Digest extends AbstractMessageDigest {
-	/** 暗号形式を表します。 */
+	/** 暗号形式 */
 	public static final String LABEL = "{MD5}";
 
 	/**

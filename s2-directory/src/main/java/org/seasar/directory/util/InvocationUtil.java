@@ -25,7 +25,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class InvocationUtils {
+public final class InvocationUtil {
 	public static String toDetailString(Invocation invocation) throws Throwable {
 		Method method = ((MethodInvocation)invocation).getMethod();
 		StringBuffer buff = new StringBuffer();

@@ -46,16 +46,18 @@ public class PosixAccountConnectionTest extends
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 	}
 
 	public void testInvalidHost() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUrl("ldap://localhost:12345");
 		try {
@@ -67,7 +69,8 @@ public class PosixAccountConnectionTest extends
 	}
 
 	public void testInvalidConnectionUser() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser("cn=dummyuser,dc=seasar,dc=org");
 		try {

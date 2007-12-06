@@ -26,33 +26,33 @@ import org.seasar.directory.DirectoryControlProperty;
  */
 public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
-	/** 接続に使用するコンテキスト生成器を表わします。 */
+	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
-	/** URLを表わします。 */
+	/** URL */
 	private String url;
-	/** ユーザ名を表します。 */
+	/** ユーザ名 */
 	private String user;
-	/** パスワードを表します。 */
+	/** パスワード */
 	private String password;
-	/** パスワードの形式を表します。 */
+	/** パスワード形式 */
 	private String passwordAlgorithm = "SSHA";
-	/** 基底となる識別名を表わします。 */
+	/** 基底となる識別名 */
 	private String baseDn;
-	/** ユーザユニットの接尾辞を表します。 */
+	/** ユーザユニットの接尾辞 */
 	private String userSuffix = "ou=Users";
-	/** ユーザを識別するための属性名を表します。 */
+	/** ユーザを識別するための属性名 */
 	private String userAttributeName = "uid";
-	/** グループユニットの接尾辞を表します。 */
+	/** グループユニットの接尾辞 */
 	private String groupSuffix = "ou=Groups";
-	/** グループを識別するための属性名を表します。 */
+	/** グループを識別するための属性名 */
 	private String groupAttributeName = "memberUid";
-	/** 複数値のための区切り文字を表します。 */
+	/** 複数値のための区切り文字 */
 	private String multipleValueDelimiter = ",";
-	/** フィルタを表わします。 */
+	/** フィルタ */
 	private String filter;
-	/** 検索コントロールを表わします。 */
+	/** 検索コントロール */
 	private int searchControls = SearchControls.SUBTREE_SCOPE;
-	/** 匿名接続を許可するかを表わします。 */
+	/** 匿名接続を許可するかどうか */
 	private boolean allowAnonymous = false;
 
 	/**
@@ -65,8 +65,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * 指定されたユーザ情報を保持したDirectory接続情報のインスタンスを作成します。
 	 * 
-	 * @param user ユーザ名
-	 * @param password パスワード
+	 * @param user
+	 *            ユーザ名
+	 * @param password
+	 *            パスワード
 	 */
 	public DirectoryControlPropertyImpl(String user, String password) {
 		this.user = user;
@@ -293,7 +295,7 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
-				", ");
+			", ");
 		buffer.append("url: ").append(url).append(", ");
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");

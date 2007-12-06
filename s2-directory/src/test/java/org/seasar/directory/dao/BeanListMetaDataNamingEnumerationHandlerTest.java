@@ -45,21 +45,26 @@ public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 	 */
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
-		DirectoryControlProperty defaultProperty = (DirectoryControlProperty)container
+		DirectoryControlProperty defaultProperty =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
 	public void testHandle() {
-		BeanListMetaDataNamingEnumerationHandler handler = new BeanListMetaDataNamingEnumerationHandler(
-				directoryBeanMetaData, directoryDataSource
-						.getDirectoryControlProperty());
+		BeanListMetaDataNamingEnumerationHandler handler =
+			new BeanListMetaDataNamingEnumerationHandler(
+				directoryBeanMetaData,
+				directoryDataSource.getDirectoryControlProperty());
 		try {
 			DirContext ctx = directoryDataSource.getConnection();
 			SearchControls controls = new SearchControls();
 			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-			NamingEnumeration ne = ctx.search("dc=seasar,dc=org",
-					"objectClass=posixGroup", controls);
+			NamingEnumeration ne =
+				ctx.search(
+					"dc=seasar,dc=org",
+					"objectClass=posixGroup",
+					controls);
 			handler.handle(ne, "dc=seasar,dc=org");
 		} catch (NamingException e) {
 			assertTrue(true);

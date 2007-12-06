@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
-import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.StringUtil;
@@ -33,14 +33,14 @@ import org.seasar.framework.util.StringUtil;
  */
 public class SelectHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
-	/** 検索結果のハンドラクラスを表わします。 */
+	/** 検索結果のハンドラクラス */
 	private NamingEnumerationHandler handler;
-	/** 検索フィルタを表します。 */
+	/** 検索フィルタ */
 	private String filter;
-	/** 引数をコマンドとみなしたコンテキストを表します。 */
-	private CommandContext cmd;
+	/** 引数をコマンドとみなしたコンテキスト */
+	private CommandContext ctx;
 
 	/**
 	 * インスタンスを生成します。
@@ -50,11 +50,11 @@ public class SelectHandler extends BasicDirectoryHandler implements
 	 * @param handler
 	 */
 	public SelectHandler(DirectoryDataSource directoryDataSource,
-			String filter, NamingEnumerationHandler handler, CommandContext cmd) {
+			String filter, NamingEnumerationHandler handler, CommandContext ctx) {
 		super(directoryDataSource);
 		this.filter = filter;
 		this.handler = handler;
-		this.cmd = cmd;
+		this.ctx = ctx;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 	 */
 	public Object execute() throws NamingRuntimeException {
 		try {
-			if (StringUtil.isEmpty(cmd.getDn())) {
+			if (StringUtil.isEmpty(ctx.getDn())) {
 				// dn が無い場合、構築したフィルタで検索します。
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + filter);
@@ -75,12 +75,12 @@ public class SelectHandler extends BasicDirectoryHandler implements
 					.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
-				String dn = cmd.getDn();
+				String dn = ctx.getDn();
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + dn);
 				}
-				String firstDn = DirectoryUtils.getFirstDn(dn);
-				String baseDn = DirectoryUtils.getBaseDn(dn);
+				String firstDn = DirectoryUtil.getFirstDn(dn);
+				String baseDn = DirectoryUtil.getBaseDn(dn);
 
 				NamingEnumeration results = super.search(firstDn, baseDn);
 				return handler.handle(results, baseDn);

@@ -31,7 +31,12 @@ public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param dataSource - データソース
+	 * @param dataSource
+	 *            データソース
+	 * @param directoryAttributeHandlerFactory
+	 *            属性ハンドラファクトリ
+	 * @param methodArgs
+	 *            関数の引数
 	 */
 	public AuthenticateAutoCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
@@ -46,8 +51,8 @@ public class AuthenticateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		ExecuteHandler handler = new AuthenticateHandler(
-				getDirectoryDataSource(args));
+		ExecuteHandler handler =
+			new AuthenticateHandler(getDirectoryDataSource(args));
 		return handler.execute();
 	}
 }

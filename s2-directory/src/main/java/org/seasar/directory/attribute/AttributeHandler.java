@@ -39,7 +39,8 @@ public interface AttributeHandler {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryValueTypeFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryValueTypeFactory(
 			DirectoryValueTypeFactory directoryValueTypeFactory);
@@ -47,7 +48,8 @@ public interface AttributeHandler {
 	/**
 	 * 属性ハンドラが扱う属性名のリストを設定します。
 	 * 
-	 * @param attributeNameList 属性ハンドラが扱う属性名のリスト
+	 * @param attributeNameList
+	 *            属性ハンドラが扱う属性名のリスト
 	 */
 	public void setAttributeNameList(List attributeNameList);
 
@@ -61,10 +63,14 @@ public interface AttributeHandler {
 	/**
 	 * 指定された属性名に従った適当な属性を取得します。
 	 * 
-	 * @param property ディレクトリサーバ接続情報
-	 * @param attributeName 属性名
-	 * @param value 値
-	 * @param valueClass 値の型
+	 * @param property
+	 *            ディレクトリサーバ接続情報
+	 * @param attributeName
+	 *            属性名
+	 * @param value
+	 *            値
+	 * @param valueClass
+	 *            値の型
 	 * @return 属性
 	 */
 	public Attribute getAddAttribute(DirectoryControlProperty property,
@@ -73,11 +79,16 @@ public interface AttributeHandler {
 	/**
 	 * 指定された属性名に従った適当な更新アイテムを取得します。
 	 * 
-	 * @param property ディレクトリサーバ接続情報
-	 * @param currentAttribute 現在の属性
-	 * @param attributeName 属性名
-	 * @param newValue 新しい値
-	 * @param newValueClass 新しい型の型
+	 * @param property
+	 *            ディレクトリサーバ接続情報
+	 * @param currentAttribute
+	 *            現在の属性
+	 * @param attributeName
+	 *            属性名
+	 * @param newValue
+	 *            新しい値
+	 * @param newValueClass
+	 *            新しい型の型
 	 * @return 更新アイテム
 	 * @throws NamingException
 	 */

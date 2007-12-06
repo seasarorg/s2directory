@@ -25,10 +25,14 @@ import org.seasar.framework.exception.SRuntimeException;
  * @version $Date::                           $
  */
 public class DirectoryRuntimeException extends SRuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 指定された NamingException で例外を作成します。
 	 * 
-	 * @param cause NamingException
+	 * @param cause
+	 *            NamingException
 	 */
 	public DirectoryRuntimeException(NamingException cause) {
 		super("DIRECTORY0001", new Object[] { cause }, cause);
@@ -37,8 +41,10 @@ public class DirectoryRuntimeException extends SRuntimeException {
 	/**
 	 * 指定されたメッセージコードと埋め込みオブジェクトを使用して新しいインスタンスを構築します。
 	 * 
-	 * @param messageCode メッセージコード
-	 * @param args 埋め込みオブジェクト
+	 * @param messageCode
+	 *            メッセージコード
+	 * @param args
+	 *            埋め込みオブジェクト
 	 */
 	public DirectoryRuntimeException(String messageCode, Object[] args) {
 		super(messageCode, args);

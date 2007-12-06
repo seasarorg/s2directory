@@ -34,7 +34,7 @@ public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
 	public String TIMESTAMP_PROPERTY = "TIMESTAMP_PROPERTY";
 
 	public String[] getObjectClasses();
-	
+
 	public PropertyType getVersionNoPropertyType()
 			throws PropertyNotFoundRuntimeException;
 
@@ -44,4 +44,13 @@ public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
 			throws ColumnNotFoundRuntimeException;
 
 	public boolean hasPropertyTypeByColumnName(String columnName);
+
+	/**
+	 * 割り当て可能なクラスがあるかどうか判定します。
+	 * 
+	 * @param clazz
+	 *            クラス
+	 * @return 割り当て可能なクラスがある場合 true
+	 */
+	public boolean isBeanClassAssignable(Class clazz);
 }

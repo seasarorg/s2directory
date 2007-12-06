@@ -16,8 +16,9 @@
 package org.seasar.directory.dao.impl;
 
 import java.lang.reflect.Field;
+
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
-import org.seasar.directory.dao.util.DaoUtils;
+import org.seasar.directory.dao.util.DaoUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
@@ -30,23 +31,23 @@ import org.seasar.framework.util.StringUtil;
  */
 public class DirectoryFieldDaoAnnotationReader implements
 		DirectoryDaoAnnotationReader {
-	/** BEANアノテーションの設定名を表します。 */
+	/** BEANアノテーションの設定名 */
 	public String BEAN = "BEAN";
-	/** オブジェクトクラスアノテーションの設定名を表します。 */
+	/** オブジェクトクラスアノテーション */
 	public String OBJECTCLASSES = "OBJECTCLASSES";
-	/** ARGSアノテーションの設定名を表します。 */
+	/** ARGSアノテーションの設定名 */
 	public String ARGS_SUFFIX = "_ARGS";
-	/** FILTERアノテーションの設定名を表します。 */
+	/** FILTERアノテーションの設定名 */
 	public String FILTER_SUFFIX = "_FILTER";
-	/** QUERYアノテーションの設定名を表します。 */
+	/** QUERYアノテーションの設定名 */
 	public String QUERY_SUFFIX = "_QUERY";
-	/** 永続化対象にしない属性の設定名を表します。 */
+	/** 永続化対象にしない属性の設定名 */
 	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
-	/** この属性だけ永続化する属性の設定名を表します。 */
+	/** この属性だけ永続化する属性の設定名 */
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
-	/** メタ情報を表わします。 */
+	/** Daoクラスのメタ情報 */
 	protected BeanDesc daoBeanDesc;
-	/** 基底オブジェクトクラスを現します。 */
+	/** 基底オブジェクトクラス */
 	private final static String BASE_OBJECTCLASS = "top";
 
 	/**
@@ -109,8 +110,8 @@ public class DirectoryFieldDaoAnnotationReader implements
 			} else {
 				// ビーンクラスにOBJECTCLASSESアノテーションがない場合
 				tmpObjectClasses = new String[1];
-				tmpObjectClasses[0] = DaoUtils.getSimpleClassName(this
-						.getBeanClass());
+				tmpObjectClasses[0] =
+					DaoUtil.getSimpleClassName(this.getBeanClass());
 			}
 		}
 		// top オブジェクトクラスを持っていない場合、追加します。

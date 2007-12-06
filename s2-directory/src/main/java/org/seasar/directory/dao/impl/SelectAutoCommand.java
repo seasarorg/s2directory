@@ -30,12 +30,18 @@ import org.seasar.directory.impl.SelectHandler;
  * @version $Date::                           $
  */
 public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
+	/** 検索結果ハンドラ */
 	private NamingEnumerationHandler namingEnumerationHandler;
 
 	/**
-	 * インスタンスを作成します。
-	 * 
-	 * @param dataSource - データソース
+	 * @param dataSource
+	 *            データソース
+	 * @param namingEnumerationHandler
+	 *            検索結果ハンドラ
+	 * @param directoryAttributeHandlerFactory
+	 *            属性ハンドラファクトリ
+	 * @param methodArgs
+	 *            関数の引数
 	 */
 	public SelectAutoCommand(DirectoryDataSource dataSource,
 			NamingEnumerationHandler namingEnumerationHandler,
@@ -53,9 +59,9 @@ public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
 	 */
 	public Object execute(Object[] args) {
 		CommandContext cmd = apply(args);
-		ExecuteHandler selectHandler = new SelectHandler(
-				getDirectoryDataSource(args), super.getRunFilter(),
-				namingEnumerationHandler, cmd);
+		ExecuteHandler selectHandler =
+			new SelectHandler(getDirectoryDataSource(args), super
+				.getRunFilter(), namingEnumerationHandler, cmd);
 		return selectHandler.execute();
 	}
 }

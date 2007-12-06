@@ -30,7 +30,8 @@ public interface OrganizationalUnitDirectoryDao {
 	/**
 	 * 指定したOrganizationalUnitを追加します。
 	 * 
-	 * @param organizationalUnit OrganizationalUnit
+	 * @param organizationalUnit
+	 *            OrganizationalUnit
 	 * @return 追加したエントリ数
 	 */
 	public int insertOrganizationalUnit(OrganizationalUnit organizationalUnit);
@@ -38,7 +39,8 @@ public interface OrganizationalUnitDirectoryDao {
 	/**
 	 * 指定したOrganizationalUnitを更新します。
 	 * 
-	 * @param organizationalUnit OrganizationalUnit
+	 * @param organizationalUnit
+	 *            OrganizationalUnit
 	 * @return 更新したエントリ数
 	 */
 	public int updateOrganizationalUnit(OrganizationalUnit organizationalUnit);
@@ -46,7 +48,8 @@ public interface OrganizationalUnitDirectoryDao {
 	/**
 	 * 指定したOrganizationalUnitを削除します。
 	 * 
-	 * @param organizationalUnit OrganizationalUnit
+	 * @param organizationalUnit
+	 *            OrganizationalUnit
 	 * @return 削除したエントリ数
 	 */
 	public int deleteOrganizationalUnit(OrganizationalUnit organizationalUnit);
@@ -54,7 +57,8 @@ public interface OrganizationalUnitDirectoryDao {
 	/**
 	 * 指定したOrganizationalUnitを検索します。
 	 * 
-	 * @param organizationalUnit OrganizationalUnit
+	 * @param organizationalUnit
+	 *            OrganizationalUnit
 	 * @return
 	 */
 	public OrganizationalUnit getOrganizationalUnit(

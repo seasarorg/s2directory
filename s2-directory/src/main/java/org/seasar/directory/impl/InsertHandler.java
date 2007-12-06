@@ -27,7 +27,7 @@ import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -42,21 +42,21 @@ import org.seasar.framework.log.Logger;
  */
 public class InsertHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
-	/** 引数をコマンドとみなしたコンテキストを表します。 */
-	private CommandContext cmd;
+	/** 引数をコマンドとみなしたコンテキスト */
+	private CommandContext ctx;
 
 	/**
 	 * インスタンスを生成します。
 	 * 
 	 * @param directoryDataSource
-	 * @param cmd
+	 * @param ctx
 	 */
 	public InsertHandler(DirectoryDataSource directoryDataSource,
-			CommandContext cmd) {
+			CommandContext ctx) {
 		super(directoryDataSource);
-		this.cmd = cmd;
+		this.ctx = ctx;
 	}
 
 	/**
@@ -67,13 +67,13 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	 */
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Insert: " + cmd.getDn());
-			String[] objectClasses = cmd.getObjectClasses();
+			logger.debug("Insert: " + ctx.getDn());
+			String[] objectClasses = ctx.getObjectClasses();
 			for (int i = 0; i < objectClasses.length; i++) {
 				logger.debug("\tobjectClass: " + objectClasses[i]);
 			}
 		}
-		return insert(cmd.getDn());
+		return insert(ctx.getDn());
 	}
 
 	/**
@@ -84,8 +84,8 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	private Integer insert(String dn) {
 		try {
 			// 追加対象が既に存在しているか検索
-			String firstDn = DirectoryUtils.getFirstDn(dn);
-			String baseDn = DirectoryUtils.getBaseDn(dn);
+			String firstDn = DirectoryUtil.getFirstDn(dn);
+			String baseDn = DirectoryUtil.getBaseDn(dn);
 			String fullDn = firstDn + "," + baseDn;
 			return super.insert(fullDn, createAttributes(dn));
 		} catch (NamingException e) {
@@ -102,23 +102,23 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	 * @throws NamingException
 	 */
 	protected Attributes createAttributes(String dn) throws NamingException {
-		String firstDn = DirectoryUtils.getFirstDn(dn);
-		String dnName = DirectoryUtils.getAttributeName(firstDn);
-		String dnValue = DirectoryUtils.getAttributeValue(firstDn);
+		String firstDn = DirectoryUtil.getFirstDn(dn);
+		String dnName = DirectoryUtil.getAttributeName(firstDn);
+		String dnValue = DirectoryUtil.getAttributeValue(firstDn);
 		Attributes entry = new BasicAttributes(dnName, dnValue);
 		// オブジェクトクラスを設定します。
 		Attribute objectClass = new BasicAttribute("objectClass");
 		entry.put(objectClass);
-		String[] objectClasses = cmd.getObjectClasses();
+		String[] objectClasses = ctx.getObjectClasses();
 		for (int i = 0; i < objectClasses.length; i++) {
 			objectClass.add(objectClasses[i]);
 		}
 		// 属性を設定します。
-		Set keySet = cmd.getArgKeySet();
+		Set keySet = ctx.getArgKeySet();
 		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
 			String argName = String.valueOf(iter.next());
-			Object argValue = cmd.getArg(argName);
-			Class argClass = cmd.getArgType(argName);
+			Object argValue = ctx.getArg(argName);
+			Class argClass = ctx.getArgType(argName);
 			if (argName.equals("dto")) {
 				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
 				int size = beanDesc.getPropertyDescSize();
@@ -148,7 +148,7 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			Class valueClass) {
 		// 属性を設定します。
 		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory =
-			cmd.getDirectoryAttributeHandlerFactory();
+			ctx.getDirectoryAttributeHandlerFactory();
 		AttributeHandler attributeHandler =
 			directoryAttributeHandlerFactory.getAttributeHandler(attributeName);
 		Attribute addAttribute =

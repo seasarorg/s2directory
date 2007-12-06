@@ -25,11 +25,12 @@ import org.seasar.directory.digest.DigestFactory;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryUtils {
+public final class DirectoryUtil {
 	/**
 	 * 指定された識別名からトップの識別名を取得します。
 	 * 
-	 * @param fullDn 識別名
+	 * @param fullDn
+	 *            識別名
 	 * @return トップの識別名
 	 */
 	public static String getFirstDn(String fullDn) {
@@ -43,7 +44,8 @@ public final class DirectoryUtils {
 	/**
 	 * 指定された識別名から基底の識別名を取得します。
 	 * 
-	 * @param fullDn 識別名
+	 * @param fullDn
+	 *            識別名
 	 * @return 基底の識別名
 	 */
 	public static String getBaseDn(String fullDn) {
@@ -57,7 +59,8 @@ public final class DirectoryUtils {
 	/**
 	 * 属性名を取得します。
 	 * 
-	 * @param valueSet 属性名と属性値のセット
+	 * @param valueSet
+	 *            属性名と属性値のセット
 	 * @return 属性名
 	 */
 	public static String getAttributeName(String valueSet) {
@@ -68,7 +71,8 @@ public final class DirectoryUtils {
 	/**
 	 * 属性値を取得します。
 	 * 
-	 * @param valueSet 属性名と属性値のセット
+	 * @param valueSet
+	 *            属性名と属性値のセット
 	 * @return 属性値
 	 */
 	public static String getAttributeValue(String valueSet) {
@@ -96,8 +100,10 @@ public final class DirectoryUtils {
 	/**
 	 * パスワードを作成します。
 	 * 
-	 * @param password 平文パスワード
-	 * @param algorithm アルゴリズム名
+	 * @param password
+	 *            平文パスワード
+	 * @param algorithm
+	 *            アルゴリズム名
 	 * @return パスワード
 	 */
 	public static String createPassword(String password, String algorithm) {

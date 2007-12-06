@@ -44,11 +44,12 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 		user1.setDescription(null);
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
@@ -85,13 +86,14 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 	}
 
 	public void testUpdateWithUserMode() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。
-		PosixAccountDto account = posixAccountDtoDao.getUserWithUserMode(
-				property, user1);
+		PosixAccountDto account =
+			posixAccountDtoDao.getUserWithUserMode(property, user1);
 		assertEquals(user1.getCn(), account.getCn());
 		assertEquals(null, account.getDescription());
 		// 属性を更新します。
@@ -99,7 +101,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		account.setDescription("user2 description");
 		account.setSn("user2");
 		assertEquals(1, posixAccountDtoDao
-				.updateWithUserMode(property, account));
+			.updateWithUserMode(property, account));
 		// user1を取得し直します。
 		account = posixAccountDtoDao.getUserWithUserMode(property, user1);
 		assertEquals("user2", account.getCn());
@@ -133,13 +135,14 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 	}
 
 	public void testUpdateSchemeViolationWithUserMode() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。
-		PosixAccountDto account = posixAccountDtoDao.getUserWithUserMode(
-				property, user1);
+		PosixAccountDto account =
+			posixAccountDtoDao.getUserWithUserMode(property, user1);
 		// 属性を更新します。
 		account.setUid("user2");
 		try {

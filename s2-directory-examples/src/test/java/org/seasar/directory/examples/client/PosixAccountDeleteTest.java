@@ -45,11 +45,12 @@ public class PosixAccountDeleteTest extends DefaultDirectoryInformationTreeTest 
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
 		assertEquals(1, posixAccountDtoDao.insert(user1));
@@ -76,34 +77,38 @@ public class PosixAccountDeleteTest extends DefaultDirectoryInformationTreeTest 
 	}
 
 	public void testDeleteWithUserMode() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。
-		PosixAccountDto account = posixAccountDtoDao.getUserWithUserMode(
-				property, user1);
+		PosixAccountDto account =
+			posixAccountDtoDao.getUserWithUserMode(property, user1);
 		// 削除します。
 		try {
 			// ApacheDSの場合、自分自身を削除できる
-			assertEquals(1, posixAccountDtoDao.deleteWithUserMode(property,
-					account));
+			assertEquals(1, posixAccountDtoDao.deleteWithUserMode(
+				property,
+				account));
 		} catch (DirectoryRuntimeException e) {
 			// OpenLDAPの場合、自分自身を削除できない
 			assertEquals(1, posixAccountDtoDao.delete(account));
 		}
 		try {
 			// 存在しないユーザで取得します。
-			assertEquals(null, posixAccountDtoDao.getUserWithUserMode(property,
-					account));
+			assertEquals(null, posixAccountDtoDao.getUserWithUserMode(
+				property,
+				account));
 			assertTrue(false);
 		} catch (DirectoryAuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 		try {
 			// 存在しないユーザで初期化します。
-			assertEquals(1, posixAccountDtoDao.insertWithUserMode(property,
-					user1));
+			assertEquals(1, posixAccountDtoDao.insertWithUserMode(
+				property,
+				user1));
 			assertTrue(false);
 		} catch (DirectoryAuthenticationRuntimeException e) {
 			assertTrue(true);

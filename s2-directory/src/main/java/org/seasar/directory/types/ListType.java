@@ -42,8 +42,8 @@ public class ListType extends AbstractValueType {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Object getReadValue(Attribute attribute, String multipleValueDelimiter)
-			throws NamingException {
+	public Object getReadValue(Attribute attribute,
+			String multipleValueDelimiter) throws NamingException {
 		List value = new ArrayList();
 		if (attribute != null && attribute.size() > 0) {
 			NamingEnumeration array = attribute.getAll();

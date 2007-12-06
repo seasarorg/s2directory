@@ -45,21 +45,27 @@ public class DefaultAttributeTypeTest extends TestCase {
 	 */
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
-		directoryAttributeTypeFactory = (DirectoryAttributeHandlerFactory)container
+		directoryAttributeTypeFactory =
+			(DirectoryAttributeHandlerFactory)container
 				.getComponent(DirectoryAttributeHandlerFactory.class);
-		property = (DirectoryControlProperty)container
+		property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 	}
 
 	public void testGetAddAttribute() {
 		String inputValue = new String("user1");
-		AttributeHandler attributeType = directoryAttributeTypeFactory
-				.getAttributeHandler("uid");
+		AttributeHandler attributeType =
+			directoryAttributeTypeFactory.getAttributeHandler("uid");
 		// Single String value
-		Attribute attribute = attributeType.getAddAttribute(property, "uid",
-				inputValue, String.class);
+		Attribute attribute =
+			attributeType.getAddAttribute(
+				property,
+				"uid",
+				inputValue,
+				String.class);
 		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-				.getClass());
+			.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get());
@@ -67,12 +73,16 @@ public class DefaultAttributeTypeTest extends TestCase {
 			assertFalse(true);
 		}
 		// Multiple String values
-		inputValue = new String("user1" + property.getMultipleValueDelimiter()
-				+ "user2");
-		attribute = attributeType.getAddAttribute(property, "uid", inputValue,
+		inputValue =
+			new String("user1" + property.getMultipleValueDelimiter() + "user2");
+		attribute =
+			attributeType.getAddAttribute(
+				property,
+				"uid",
+				inputValue,
 				String.class);
 		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-				.getClass());
+			.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get(0));
@@ -84,10 +94,14 @@ public class DefaultAttributeTypeTest extends TestCase {
 		List inputList = new ArrayList();
 		inputList.add("user1");
 		inputList.add("user2");
-		attribute = attributeType.getAddAttribute(property, "uid", inputList,
+		attribute =
+			attributeType.getAddAttribute(
+				property,
+				"uid",
+				inputList,
 				List.class);
 		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-				.getClass());
+			.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get(0));
@@ -96,8 +110,8 @@ public class DefaultAttributeTypeTest extends TestCase {
 			assertFalse(true);
 		}
 		// null value
-		attribute = attributeType.getAddAttribute(property, "uid", null,
-				String.class);
+		attribute =
+			attributeType.getAddAttribute(property, "uid", null, String.class);
 		assertNull(attribute);
 	}
 
@@ -105,28 +119,53 @@ public class DefaultAttributeTypeTest extends TestCase {
 		BasicAttribute currentAttribute = new BasicAttribute("uid");
 		currentAttribute.add("user1");
 		String inputValue = new String("user1");
-		AttributeHandler attributeType = directoryAttributeTypeFactory
-				.getAttributeHandler("uid");
+		AttributeHandler attributeType =
+			directoryAttributeTypeFactory.getAttributeHandler("uid");
 		// same
-		ModificationItem item = attributeType.getModificationItem(property,
-				currentAttribute, "uid", inputValue, String.class);
+		ModificationItem item =
+			attributeType.getModificationItem(
+				property,
+				currentAttribute,
+				"uid",
+				inputValue,
+				String.class);
 		assertNull(item);
 		// update
-		item = attributeType.getModificationItem(property, currentAttribute,
-				"uid", "user2", String.class);
+		item =
+			attributeType.getModificationItem(
+				property,
+				currentAttribute,
+				"uid",
+				"user2",
+				String.class);
 		assertEquals(DirContext.REPLACE_ATTRIBUTE, item.getModificationOp());
 		assertEquals("user2", item.getAttribute().get());
 		// delete 1
-		item = attributeType.getModificationItem(property, currentAttribute,
-				"uid", null, String.class);
+		item =
+			attributeType.getModificationItem(
+				property,
+				currentAttribute,
+				"uid",
+				null,
+				String.class);
 		assertEquals(DirContext.REMOVE_ATTRIBUTE, item.getModificationOp());
 		// delete 2
-		item = attributeType.getModificationItem(property, currentAttribute,
-				"uid", "", String.class);
+		item =
+			attributeType.getModificationItem(
+				property,
+				currentAttribute,
+				"uid",
+				"",
+				String.class);
 		assertEquals(DirContext.REMOVE_ATTRIBUTE, item.getModificationOp());
 		// add
-		item = attributeType.getModificationItem(property, null, "uid",
-				"user1", String.class);
+		item =
+			attributeType.getModificationItem(
+				property,
+				null,
+				"uid",
+				"user1",
+				String.class);
 		assertEquals(DirContext.ADD_ATTRIBUTE, item.getModificationOp());
 		assertEquals("user1", item.getAttribute().get());
 	}

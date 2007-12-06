@@ -28,8 +28,10 @@ public interface NamingEnumerationHandler {
 	/**
 	 * 指定された検索結果を処理し、結果オブジェクトを返します。
 	 * 
-	 * @param results 検索結果
-	 * @param baseDn 基底の識別名
+	 * @param results
+	 *            検索結果
+	 * @param baseDn
+	 *            基底の識別名
 	 * @return 結果オブジェクト
 	 * @throws NamingException
 	 */

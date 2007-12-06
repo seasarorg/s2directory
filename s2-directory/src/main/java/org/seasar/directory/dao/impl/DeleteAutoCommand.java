@@ -32,7 +32,12 @@ public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param dataSource - データソース
+	 * @param dataSource
+	 *            データソース
+	 * @param directoryAttributeHandlerFactory
+	 *            属性ハンドラファクトリ
+	 * @param methodArgs
+	 *            関数の引数
 	 */
 	public DeleteAutoCommand(DirectoryDataSource dataSource,
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
@@ -48,8 +53,8 @@ public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
 	 */
 	public Object execute(Object[] args) {
 		CommandContext cmd = apply(args);
-		ExecuteHandler handler = new DeleteHandler(
-				getDirectoryDataSource(args), cmd.getDn());
+		ExecuteHandler handler =
+			new DeleteHandler(getDirectoryDataSource(args), cmd.getDn());
 		return handler.execute();
 	}
 }

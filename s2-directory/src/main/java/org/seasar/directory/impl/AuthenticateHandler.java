@@ -28,7 +28,7 @@ import org.seasar.framework.log.Logger;
  */
 public class AuthenticateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
-	/** ロガーを表わします。 */
+	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
 
 	/**
@@ -48,10 +48,10 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 	 */
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {
-			DirectoryControlProperty property = super.getDirectoryDataSource()
-					.getDirectoryControlProperty();
+			DirectoryControlProperty property =
+				super.getDirectoryDataSource().getDirectoryControlProperty();
 			logger.debug("Authenticate: [user] " + property.getUser()
-					+ " [password] " + property.getPassword());
+				+ " [password] " + property.getPassword());
 		}
 		return super.authenticate();
 	}

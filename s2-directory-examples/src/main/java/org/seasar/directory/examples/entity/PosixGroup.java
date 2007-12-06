@@ -18,6 +18,7 @@ package org.seasar.directory.examples.entity;
 import java.io.Serializable;
 
 public class PosixGroup implements Serializable {
+	private static final long serialVersionUID = 1L;
 	public static final String OBJECTCLASSES = "posixGroup";
 	private String dn;
 	private String cn;

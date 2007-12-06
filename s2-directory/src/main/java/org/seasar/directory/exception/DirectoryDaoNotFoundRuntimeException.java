@@ -24,7 +24,10 @@ import org.seasar.framework.exception.SRuntimeException;
  * @version $Date::                           $
  */
 public class DirectoryDaoNotFoundRuntimeException extends SRuntimeException {
-	/** ターゲットクラスを表します。 */
+
+	private static final long serialVersionUID = 1L;
+
+	/** ターゲットクラス */
 	private Class targetClass;
 
 	/**

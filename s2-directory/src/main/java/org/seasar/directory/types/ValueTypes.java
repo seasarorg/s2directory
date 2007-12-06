@@ -118,39 +118,39 @@ public class ValueTypes {
 
 	public static ValueType getValueType(int type) {
 		switch (type) {
-			case Types.TINYINT:
-			case Types.SMALLINT:
-				return getValueType(Short.class);
-			case Types.INTEGER:
-				return getValueType(Integer.class);
-			case Types.BIGINT:
-				return getValueType(Long.class);
-			case Types.REAL:
-			case Types.FLOAT:
-				return getValueType(Float.class);
-			case Types.DOUBLE:
-				return getValueType(Double.class);
-			case Types.DECIMAL:
-			case Types.NUMERIC:
-				return getValueType(BigDecimal.class);
-			case Types.DATE:
-				return getValueType(Timestamp.class);
-			case Types.TIME:
-				return getValueType(java.sql.Time.class);
-			case Types.TIMESTAMP:
-				return getValueType(Timestamp.class);
-			case Types.BINARY:
-			case Types.VARBINARY:
-			case Types.LONGVARBINARY:
-				return getValueType(BYTE_ARRAY_CLASS);
-			case Types.CHAR:
-			case Types.LONGVARCHAR:
-			case Types.VARCHAR:
-				return getValueType(String.class);
-			case Types.BOOLEAN:
-				return getValueType(Boolean.class);
-			default:
-				return OBJECT;
+		case Types.TINYINT:
+		case Types.SMALLINT:
+			return getValueType(Short.class);
+		case Types.INTEGER:
+			return getValueType(Integer.class);
+		case Types.BIGINT:
+			return getValueType(Long.class);
+		case Types.REAL:
+		case Types.FLOAT:
+			return getValueType(Float.class);
+		case Types.DOUBLE:
+			return getValueType(Double.class);
+		case Types.DECIMAL:
+		case Types.NUMERIC:
+			return getValueType(BigDecimal.class);
+		case Types.DATE:
+			return getValueType(Timestamp.class);
+		case Types.TIME:
+			return getValueType(java.sql.Time.class);
+		case Types.TIMESTAMP:
+			return getValueType(Timestamp.class);
+		case Types.BINARY:
+		case Types.VARBINARY:
+		case Types.LONGVARBINARY:
+			return getValueType(BYTE_ARRAY_CLASS);
+		case Types.CHAR:
+		case Types.LONGVARCHAR:
+		case Types.VARCHAR:
+			return getValueType(String.class);
+		case Types.BOOLEAN:
+			return getValueType(Boolean.class);
+		default:
+			return OBJECT;
 		}
 	}
 }

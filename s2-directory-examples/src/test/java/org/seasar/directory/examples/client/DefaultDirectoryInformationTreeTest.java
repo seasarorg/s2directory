@@ -47,7 +47,8 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
 			personDao = (PersonDirectoryDao)container.getComponent(PersonDirectoryDao.class);
-			organizationalUnitDao = (OrganizationalUnitDirectoryDao)container
+			organizationalUnitDao =
+				(OrganizationalUnitDirectoryDao)container
 					.getComponent(OrganizationalUnitDirectoryDao.class);
 		}
 		setupAdministratorEntry();

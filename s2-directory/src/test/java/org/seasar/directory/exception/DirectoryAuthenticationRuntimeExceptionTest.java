@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2005-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,8 +47,8 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_ja() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPANESE);
-		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException = new DirectoryAuthenticationRuntimeException(
-				property);
+		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException =
+			new DirectoryAuthenticationRuntimeException(property);
 		// ## Act ##
 		String message = directoryAuthenticationRuntimeException.getMessage();
 		// ## Assert ##
@@ -60,8 +60,8 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_en() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.ENGLISH);
-		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException = new DirectoryAuthenticationRuntimeException(
-				property);
+		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException =
+			new DirectoryAuthenticationRuntimeException(property);
 		// ## Act ##
 		String message = directoryAuthenticationRuntimeException.getMessage();
 		// ## Assert ##

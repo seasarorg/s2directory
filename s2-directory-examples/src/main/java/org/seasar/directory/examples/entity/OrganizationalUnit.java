@@ -18,6 +18,7 @@ package org.seasar.directory.examples.entity;
 import java.io.Serializable;
 
 public class OrganizationalUnit implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String dn;
 	private String ou;
 	private String userPassword;
@@ -245,21 +246,33 @@ public class OrganizationalUnit implements Serializable {
 		buffer.append("userPassword=").append(userPassword).append(", ");
 		buffer.append("searchGuide=").append(searchGuide).append(", ");
 		buffer.append("seeAlso=").append(seeAlso).append(", ");
-		buffer.append("businessCategory=").append(businessCategory).append(", ");
+		buffer
+			.append("businessCategory=")
+			.append(businessCategory)
+			.append(", ");
 		buffer.append("x121Address=").append(x121Address).append(", ");
-		buffer.append("registeredAddress=").append(registeredAddress).append(", ");
-		buffer.append("destinationIndicator=").append(destinationIndicator).append(", ");
-		buffer.append("preferredDeliveryMethod=").append(preferredDeliveryMethod).append(", ");
+		buffer.append("registeredAddress=").append(registeredAddress).append(
+			", ");
+		buffer
+			.append("destinationIndicator=")
+			.append(destinationIndicator)
+			.append(", ");
+		buffer.append("preferredDeliveryMethod=").append(
+			preferredDeliveryMethod).append(", ");
 		buffer.append("telexNumber=").append(telexNumber).append(", ");
-		buffer.append("teletexTerminalIdentifier=").append(teletexTerminalIdentifier).append(", ");
+		buffer.append("teletexTerminalIdentifier=").append(
+			teletexTerminalIdentifier).append(", ");
 		buffer.append("telephoneNumber=").append(telephoneNumber).append(", ");
-		buffer.append("internationaliSDNNumber=").append(internationaliSDNNumber).append(", ");
-		buffer.append("facsimileTelephoneNumber=").append(facsimileTelephoneNumber).append(", ");
+		buffer.append("internationaliSDNNumber=").append(
+			internationaliSDNNumber).append(", ");
+		buffer.append("facsimileTelephoneNumber=").append(
+			facsimileTelephoneNumber).append(", ");
 		buffer.append("street=").append(street).append(", ");
 		buffer.append("postOfficeBox=").append(postOfficeBox).append(", ");
 		buffer.append("postalCode=").append(postalCode).append(", ");
 		buffer.append("postalAddress=").append(postalAddress).append(", ");
-		buffer.append("physicalDeliveryOfficeName=").append(physicalDeliveryOfficeName).append(", ");
+		buffer.append("physicalDeliveryOfficeName=").append(
+			physicalDeliveryOfficeName).append(", ");
 		buffer.append("st=").append(st).append(", ");
 		buffer.append("l=").append(l).append(", ");
 		buffer.append("description=").append(description);

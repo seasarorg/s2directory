@@ -41,7 +41,8 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 	private String versionNoPropertyName_ = "versionNo";
 	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
 
-	public DirectoryBeanMetaDataImpl() {}
+	public DirectoryBeanMetaDataImpl() {
+	}
 
 	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
 		return directoryAnnotationReaderFactory;
@@ -49,11 +50,13 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 
 	public void setDirectoryAnnotationReaderFactory(
 			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
-		this.directoryAnnotationReaderFactory = directoryAnnotationReaderFactory;
+		this.directoryAnnotationReaderFactory =
+			directoryAnnotationReaderFactory;
 	}
 
 	public void initialize() {
-		directoryBeanAnnotationReader = getDirectoryAnnotationReaderFactory()
+		beanAnnotationReader =
+			getDirectoryAnnotationReaderFactory()
 				.createDirectoryBeanAnnotationReader(getBeanClass());
 		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(getBeanClass());
 		setupObjectClasses(beanDesc);
@@ -82,11 +85,12 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 	 */
 	public PropertyType getPropertyTypeByColumnName(String columnName)
 			throws ColumnNotFoundRuntimeException {
-		PropertyType propertyType = (PropertyType)propertyTypesByColumnName_
-				.get(columnName);
+		PropertyType propertyType =
+			(PropertyType)propertyTypesByColumnName_.get(columnName);
 		if (propertyType == null) {
-			throw new ColumnNotFoundRuntimeException(super.getBeanClass()
-					.getName(), columnName);
+			throw new ColumnNotFoundRuntimeException(super
+				.getBeanClass()
+				.getName(), columnName);
 		}
 		return propertyType;
 	}
@@ -107,15 +111,16 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		}
 		int index = alias.lastIndexOf('_');
 		if (index < 0) {
-			throw new ColumnNotFoundRuntimeException(super.getBeanClass()
-					.getName(), alias);
+			throw new ColumnNotFoundRuntimeException(super
+				.getBeanClass()
+				.getName(), alias);
 		}
 		String columnName = alias.substring(0, index);
 		return columnName;
 	}
 
 	protected void setupObjectClasses(BeanDesc beanDesc) {
-		objectClasses = directoryBeanAnnotationReader.getObjectClasses();
+		objectClasses = beanAnnotationReader.getObjectClasses();
 	}
 
 	protected void setupVersionNoPropertyName(BeanDesc beanDesc) {
@@ -130,10 +135,16 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 			PropertyDesc pd = beanDesc.getPropertyDesc(i);
 			PropertyType pt = null;
 			String relnoKey = pd.getPropertyName() + RELNO_SUFFIX;
-			if (beanDesc.hasField(relnoKey)) {} else {
+			if (beanDesc.hasField(relnoKey)) {
+			} else {
 				pt = createPropertyType(beanDesc, pd);
 				addPropertyType(pt);
 			}
 		}
+	}
+
+	public boolean isBeanClassAssignable(Class clazz) {
+		return getBeanClass().isAssignableFrom(clazz)
+			|| clazz.isAssignableFrom(getBeanClass());
 	}
 }

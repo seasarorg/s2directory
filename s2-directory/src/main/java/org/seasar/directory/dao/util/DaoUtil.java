@@ -15,32 +15,18 @@
  */
 package org.seasar.directory.dao.util;
 
-import org.seasar.directory.exception.DirectoryDaoNotFoundRuntimeException;
-
 /**
  * Daoに関するユーティリティクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DaoUtils {
-	/**
-	 * 指定されたクラスのインタフェースのクラスインスタンスを返します。
-	 * 
-	 * @param clazz クラス
-	 * @return インタフェースのクラスインスタンス
-	 */
-	public static Class getDaoInterface(Class clazz) {
-		if (clazz.isInterface()) {
-			return clazz;
-		}
-		throw new DirectoryDaoNotFoundRuntimeException(clazz);
-	}
-
+public final class DaoUtil {
 	/**
 	 * 指定されたクラスのシンプルクラス名を返します。
 	 * 
-	 * @param clazz クラス
+	 * @param clazz
+	 *            クラス
 	 * @return シンプルクラス名
 	 */
 	public static String getSimpleClassName(Class clazz) {

@@ -25,7 +25,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * QUERYアノテーションを取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return QUERYアノテーションの値
 	 */
 	public String getQuery(String methodName);
@@ -33,7 +34,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * ARGSアノテーションを取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return ARGSアノテーションの値
 	 */
 	public String[] getArgNames(String methodName);
@@ -48,7 +50,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * オブジェクトクラスアノテーションからオブジェクトクラスの配列を取得します。
 	 * 
-	 * @param beanObjectClasses ビーンクラスのオブジェクトクラス
+	 * @param beanObjectClasses
+	 *            ビーンクラスのオブジェクトクラス
 	 * @return オブジェクトクラスアノテーションの値の配列
 	 */
 	public String[] getObjectClasses(String[] beanObjectClasses);
@@ -56,7 +59,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * 永続化対象にしない属性を取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 永続対象にしない属性の配列
 	 */
 	public String[] getNoPersistentProps(String methodName);
@@ -64,7 +68,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * この属性だけ永続化する属性を取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 永続化する属性の配列
 	 */
 	public String[] getPersistentProps(String methodName);
@@ -72,7 +77,8 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * FILTERアノテーションを取得します。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return FILTERアノテーションの値
 	 */
 	public String getFilter(String methodName);

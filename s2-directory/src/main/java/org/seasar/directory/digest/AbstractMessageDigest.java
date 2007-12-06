@@ -27,30 +27,33 @@ import org.seasar.framework.util.Base64Util;
  * @version $Date::                           $
  */
 public abstract class AbstractMessageDigest implements Digest {
-	/** メッセージダイジェストアルゴリズムを表します。 */
+	/** メッセージダイジェストアルゴリズム */
 	private MessageDigest md;
-	/** エンコーディングを表します。 */
+	/** エンコーディング */
 	private final static String ENCODING = "UTF-8";
 
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param algorithm
+	 *            暗号アルゴリズム
 	 */
 	public AbstractMessageDigest(String algorithm) {
 		try {
 			md = MessageDigest.getInstance(algorithm);
 		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalArgumentException(algorithm
-					+ " algorithm is not suported.");
+				+ " algorithm is not suported.");
 		}
 	}
 
 	/**
 	 * 指定された乱数を用いてパスワードをハッシュ化します。
 	 * 
-	 * @param salt 乱数
-	 * @param password ハッシュ化するパスワード
+	 * @param salt
+	 *            乱数
+	 * @param password
+	 *            ハッシュ化するパスワード
 	 */
 	public String create(byte[] salt, String password) {
 		md.reset();
@@ -68,8 +71,10 @@ public abstract class AbstractMessageDigest implements Digest {
 	/**
 	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。
 	 * 
-	 * @param digest ハッシュ化されたパスワード
-	 * @param password 確認するパスワード
+	 * @param digest
+	 *            ハッシュ化されたパスワード
+	 * @param password
+	 *            確認するパスワード
 	 */
 	public boolean verify(String digest, String password, int size) {
 		if (digest.length() < 4) {

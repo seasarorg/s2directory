@@ -15,28 +15,20 @@
  */
 package org.seasar.directory.dao.impl;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.NamingEnumerationHandler;
-import org.seasar.directory.dao.AnnotationMethodArgs;
-import org.seasar.directory.dao.AnnotationMethodArgsFactory;
-import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
-import org.seasar.directory.dao.handler.BeanListMetaDataNamingEnumerationHandler;
-import org.seasar.directory.dao.handler.BeanMetaDataNamingEnumerationHandler;
-import org.seasar.directory.dao.handler.ObjectNamingEnumerationHandler;
+import org.seasar.directory.dao.DirectoryDaoMetaData;
+import org.seasar.directory.exception.DirectoryDaoNotFoundRuntimeException;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.MethodUtil;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * DirectoryDao用のメタ情報を表わすクラスです。
@@ -45,324 +37,90 @@ import org.seasar.framework.util.StringUtil;
  * @version $Date::                           $
  */
 public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
-	/** データソースを表わします。 */
+	/** データソース */
 	protected DirectoryDataSource directoryDataSource;
-	/** Daoクラスを表わします。 */
+	/** Daoクラス */
 	protected Class daoClass;
-	/** Daoクラスの定義を表わします。 */
+	protected Class daoInterface;
+	/** Daoクラスの定義 */
 	protected BeanDesc daoBeanDesc;
-	/** Daoアノテーションリーダーを表します。 */
-	protected DirectoryDaoAnnotationReader directoryDaoAnnotationReader;
-	/** Daoアノテーションリーダーファクトリを表します。 */
-	protected DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
-	/** TODO: コメント */
+	/** Daoアノテーションリーダー */
+	protected DirectoryDaoAnnotationReader daoAnnotationReader;
+	/** Daoアノテーションリーダーファクトリ */
+	protected DirectoryAnnotationReaderFactory annotationReaderFactory;
+	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
-	/** ビーンクラスを表わします。 */
+	/** ビーンクラス */
 	protected Class beanClass;
-	/** ビーンメタデータを表します。 */
+	/** ビーンメタデータ */
 	protected DirectoryBeanMetaData directoryBeanMetaData;
-	/** コマンドのキャッシュを表わします。 */
-	protected Map commands = new HashMap();
-	/** Daoクラスの接尾辞を表します。 */
+	/** コマンドのキャッシュ */
+	protected Map directoryCmmands = new HashMap();
+	/** Daoクラスの接尾辞 */
 	protected String[] daoSuffixes = new String[] { "Dao" };
-	/** 認証関数用の接頭辞を表わします。 */
-	protected String[] authenticatePrefixes = new String[] { "auth" };
-	/** 新規挿入操作関数用の接頭辞を表わします。 */
-	protected String[] insertPrefixes = new String[] { "insert", "create",
-			"add" };
-	/** 更新操作関数用の接頭辞を表わします。 */
-	protected String[] updatePrefixes = new String[] { "update", "modify",
-			"store" };
-	/** 削除操作関数用の接頭辞を表わします。 */
-	protected String[] deletePrefixes = new String[] { "delete", "remove" };
 
 	/**
 	 * インスタンスを作成します。
 	 */
-	public DirectoryDaoMetaDataImpl() {}
+	public DirectoryDaoMetaDataImpl() {
+	}
+
+	public DirectoryDaoMetaDataImpl(Class daoClass,
+			DirectoryDataSource dataSource,
+			DirectoryAnnotationReaderFactory readerFactory,
+			String[] daoSuffixes,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		setDaoClass(daoClass);
+		setDirectoryDataSource(dataSource);
+		setDirectoryAnnotationReaderFactory(readerFactory);
+		setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
+		if (daoSuffixes != null) {
+			setDaoSuffixes(daoSuffixes);
+		}
+		initialize();
+	}
 
 	/**
 	 * 初期化します。
 	 */
 	public void initialize() {
 		Class daoClass = getDaoClass();
-		// beanClassを作成します。
-		daoBeanDesc = BeanDescFactory.getBeanDesc(daoClass);
-		directoryDaoAnnotationReader = getDirectoryAnnotationReaderFactory()
+		this.daoInterface = getDaoInterface(daoClass);
+		this.daoBeanDesc = BeanDescFactory.getBeanDesc(daoClass);
+		this.daoAnnotationReader =
+			getDirectoryAnnotationReaderFactory()
 				.createDirectoryDaoAnnotationReader(daoBeanDesc);
-		setBeanClass(directoryDaoAnnotationReader.getBeanClass());
-		DirectoryBeanMetaDataImpl directoryBeanMetaDataImpl = new DirectoryBeanMetaDataImpl();
-		directoryBeanMetaDataImpl.setBeanClass(getBeanClass());
-		directoryBeanMetaDataImpl
-				.setDirectoryAnnotationReaderFactory(getDirectoryAnnotationReaderFactory());
-		directoryBeanMetaDataImpl
-				.setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
-		directoryBeanMetaDataImpl.initialize();
-		directoryBeanMetaData = directoryBeanMetaDataImpl;
-		// コマンドを作成します。
-		setupDirectoryCommand();
 	}
 
-	private void setupDirectoryCommand() {
-		String[] names = daoBeanDesc.getMethodNames();
-		for (int i = 0; i < names.length; ++i) {
-			Method[] methods = daoBeanDesc.getMethods(names[i]);
-			if (methods.length == 1 && MethodUtil.isAbstract(methods[0])) {
-				setupMethod(methods[0]);
-			}
+	public Class getDaoInterface(Class clazz) {
+		if (clazz.isInterface()) {
+			return clazz;
 		}
-	}
-
-	private void setupMethod(Method method) {
-		String filter = directoryDaoAnnotationReader
-				.getFilter(method.getName());
-		if (filter != null) {
-			// FILTERアノテーションが定義されていた場合
-			setupMethodByManual(method, filter);
-		} else {
-			setupMethodByAuto(method);
-		}
-	}
-
-	private void setupMethodByManual(Method method, String filter) {
-		if (isSelect(method)) {
-			setupSelectMethodByManual(method, filter);
-		} else {
-			// setupUpdateMethodByManual(method, sql);
-		}
-	}
-
-	/**
-	 * FILTERアノテーションで定義されたフィルタで検索します。
-	 * 
-	 * @param method
-	 * @param filter
-	 */
-	protected void setupSelectMethodByManual(Method method, String filter) {
-		// コマンドを作成します。
-		SelectAutoCommand cmd = new SelectAutoCommand(directoryDataSource,
-				createNamingEnumerationHandler(method),
-				getDirectoryAttributeHandlerFactory(), null);
-		cmd.setFilter(filter);
-		commands.put(method.getName(), cmd);
-	}
-
-	/**
-	 * 関数名より動作を自動決定し、実行します。
-	 * 
-	 * @param method
-	 */
-	private void setupMethodByAuto(Method method) {
-		if (isStartsWithMethodName(method.getName(), authenticatePrefixes)) {
-			setupAuthenticateMethodByAuto(method);
-		} else if (isStartsWithMethodName(method.getName(), insertPrefixes)) {
-			setupInsertMethodByAuto(method);
-		} else if (isStartsWithMethodName(method.getName(), updatePrefixes)) {
-			setupUpdateMethodByAuto(method);
-		} else if (isStartsWithMethodName(method.getName(), deletePrefixes)) {
-			setupDeleteMethodByAuto(method);
-		} else {
-			setupSelectMethodByAuto(method);
-		}
-	}
-
-	/**
-	 * 関数名に指定した接頭辞が含まれているか調べます。
-	 * 
-	 * @param methodName 関数名
-	 * @param prefix 接頭辞
-	 * @return 含まれている場合は true 含まれていない場合は falase を返します。
-	 */
-	private boolean isStartsWithMethodName(String methodName, String[] prefix) {
-		for (int i = 0; i < prefix.length; ++i) {
-			if (methodName.startsWith(prefix[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 認証関数用の処理コマンドを準備します。
-	 * 
-	 * @param method
-	 */
-	private void setupAuthenticateMethodByAuto(Method method) {
-		// 引数の準備をします。
-		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
-				method, directoryDaoAnnotationReader);
-		AuthenticateAutoCommand cmd = new AuthenticateAutoCommand(
-				directoryDataSource, getDirectoryAttributeHandlerFactory(),
-				methodArgs);
-		commands.put(method.getName(), cmd);
-	}
-
-	/**
-	 * 挿入関数用の処理コマンドを準備します。
-	 * 
-	 * @param method
-	 */
-	protected void setupInsertMethodByAuto(Method method) {
-		// 引数の準備をします。
-		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
-				method, directoryDaoAnnotationReader);
-		InsertAutoCommand cmd = new InsertAutoCommand(directoryDataSource,
-				getDirectoryAttributeHandlerFactory(), methodArgs);
-		// オブジェクトクラスを設定します。
-		cmd.setObjectClasses(directoryDaoAnnotationReader
-				.getObjectClasses(directoryBeanMetaData.getObjectClasses()));
-		commands.put(method.getName(), cmd);
-	}
-
-	/**
-	 * 更新関数用の処理コマンドを準備します。
-	 * 
-	 * @param method
-	 */
-	protected void setupUpdateMethodByAuto(Method method) {
-		// 引数の準備をします。
-		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
-				method, directoryDaoAnnotationReader);
-		DirectoryCommand cmd = new UpdateAutoCommand(directoryDataSource,
-				getDirectoryAttributeHandlerFactory(), methodArgs);
-		commands.put(method.getName(), cmd);
-	}
-
-	/**
-	 * 削除関数用の処理コマンドを準備します。
-	 * 
-	 * @param method
-	 */
-	protected void setupDeleteMethodByAuto(Method method) {
-		// 引数の準備をします。
-		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
-				method, directoryDaoAnnotationReader);
-		DirectoryCommand cmd = new DeleteAutoCommand(directoryDataSource,
-				getDirectoryAttributeHandlerFactory(), methodArgs);
-		commands.put(method.getName(), cmd);
-	}
-
-	/**
-	 * 読み出し関数用の処理コマンドを準備します。
-	 * 
-	 * @param method
-	 */
-	private void setupSelectMethodByAuto(Method method) {
-		// 引数の準備をします。
-		AnnotationMethodArgs methodArgs = AnnotationMethodArgsFactory.create(
-				method, directoryDaoAnnotationReader);
-		// コマンドを作成します。
-		NamingEnumerationHandler handler = createNamingEnumerationHandler(method);
-		SelectAutoCommand cmd = new SelectAutoCommand(directoryDataSource,
-				handler, getDirectoryAttributeHandlerFactory(), methodArgs);
-		// フィルタの準備をします。
-		String filter = createAutoSelectFilter();
-		String query = directoryDaoAnnotationReader.getQuery(method.getName());
-		if (query != null) {
-			if (StringUtil.isEmpty(filter)) {
-				filter = query;
-			} else {
-				if (!(query.startsWith("(") && query.endsWith(")"))) {
-					query = "(" + query + ")";
+		for (Class target = clazz; target != AbstractDirectoryDao.class; target =
+			target.getSuperclass()) {
+			Class[] interfaces = target.getInterfaces();
+			for (int i = 0; i < interfaces.length; ++i) {
+				Class intf = interfaces[i];
+				for (int j = 0; j < daoSuffixes.length; j++) {
+					if (intf.getName().endsWith(daoSuffixes[j])) {
+						return intf;
+					}
 				}
-				filter = "(&(" + filter + ")" + query + ")";
 			}
 		}
-		cmd.setFilter(filter);
-		commands.put(method.getName(), cmd);
+		throw new DirectoryDaoNotFoundRuntimeException(clazz);
 	}
 
-	protected String createAutoSelectFilter() {
-		// オブジェクトクラスを設定します。
-		String[] objectClasses = directoryDaoAnnotationReader
-				.getObjectClasses(directoryBeanMetaData.getObjectClasses());
-		StringBuffer buffer = new StringBuffer();
-		if (false) {
-			buffer.append("(&");
-			for (int i = 0; i < objectClasses.length; i++) {
-				buffer.append("(objectclass=").append(objectClasses[i]).append(
-						")");
-			}
-			buffer.append(")");
-		} else {
-			buffer.append("objectclass=").append(objectClasses[0]);
-		}
-		return buffer.toString();
+	public BeanDesc getDirectoryDaoBeanDesc() {
+		return daoBeanDesc;
 	}
 
-	/**
-	 * 処理結果を扱うハンドラを作成します。
-	 * 
-	 * @param method メソッド
-	 * @return 処理ハンドラ
-	 */
-	private NamingEnumerationHandler createNamingEnumerationHandler(
-			Method method) {
-		if (List.class.isAssignableFrom(method.getReturnType())) {
-			// List型ハンドラ
-			return new BeanListMetaDataNamingEnumerationHandler(
-					directoryBeanMetaData, directoryDataSource
-							.getDirectoryControlProperty());
-		} else if (isBeanClassAssignable(method.getReturnType())) {
-			// Bean型ハンドラ
-			return new BeanMetaDataNamingEnumerationHandler(
-					directoryBeanMetaData, directoryDataSource
-							.getDirectoryControlProperty());
-		} else {
-			return new ObjectNamingEnumerationHandler(directoryBeanMetaData,
-					directoryDataSource.getDirectoryControlProperty());
-		}
+	public DirectoryDaoAnnotationReader getDirectoryDaoAnnotationReader() {
+		return daoAnnotationReader;
 	}
 
-	/**
-	 * 割り当て可能なクラスがあるかどうか判定します。
-	 * 
-	 * @param clazz クラス
-	 * @return 割り当て可能なクラスがある場合 true
-	 */
-	protected boolean isBeanClassAssignable(Class clazz) {
-		return beanClass.isAssignableFrom(clazz)
-				|| clazz.isAssignableFrom(beanClass);
-	}
-
-	protected boolean isSelect(Method method) {
-		if (isInsert(method.getName())) {
-			return false;
-		}
-		if (isUpdate(method.getName())) {
-			return false;
-		}
-		if (isDelete(method.getName())) {
-			return false;
-		}
-		return true;
-	}
-
-	protected boolean isInsert(String methodName) {
-		for (int i = 0; i < insertPrefixes.length; ++i) {
-			if (methodName.startsWith(insertPrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	protected boolean isUpdate(String methodName) {
-		for (int i = 0; i < updatePrefixes.length; ++i) {
-			if (methodName.startsWith(updatePrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	protected boolean isDelete(String methodName) {
-		for (int i = 0; i < deletePrefixes.length; ++i) {
-			if (methodName.startsWith(deletePrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
+	public void setDirectoryCommand(String methodName, DirectoryCommand cmd) {
+		directoryCmmands.put(methodName, cmd);
 	}
 
 	/**
@@ -375,7 +133,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/**
 	 * ビーンクラスを設定します。
 	 * 
-	 * @param beanClass ビーンクラス
+	 * @param beanClass
+	 *            ビーンクラス
 	 */
 	protected void setBeanClass(Class beanClass) {
 		this.beanClass = beanClass;
@@ -393,7 +152,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/**
 	 * ビーンメタデータを設定します。
 	 * 
-	 * @param directoryBeanMetaData ビーンメタデータ
+	 * @param directoryBeanMetaData
+	 *            ビーンメタデータ
 	 */
 	public void setDirectoryBeanMetaData(
 			DirectoryBeanMetaData directoryBeanMetaData) {
@@ -405,7 +165,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	 */
 	public DirectoryCommand getDirectoryCommand(String methodName)
 			throws MethodNotFoundRuntimeException {
-		DirectoryCommand cmd = (DirectoryCommand)commands.get(methodName);
+		DirectoryCommand cmd =
+			(DirectoryCommand)directoryCmmands.get(methodName);
 		if (cmd == null) {
 			throw new MethodNotFoundRuntimeException(daoClass, methodName, null);
 		}
@@ -415,29 +176,31 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/**
 	 * 指定された関数名に対応するディレクトリコマンドが存在するか調べます。
 	 * 
-	 * @param methodName 関数名
+	 * @param methodName
+	 *            関数名
 	 * @return 存在する場合は true、存在しない場合は false を返します。
 	 * @see org.seasar.directory.dao.DirectoryDaoMetaData#hasDirectoryCommand(java.lang.String)
 	 */
 	public boolean hasDirectoryCommand(String methodName) {
-		return commands.containsKey(methodName);
+		return directoryCmmands.containsKey(methodName);
 	}
 
 	/**
 	 * アノテーションリーダーファクトリを取得します。
 	 */
 	public DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
-		return directoryAnnotationReaderFactory;
+		return annotationReaderFactory;
 	}
 
 	/**
 	 * アノテーションリーダーファクトリを設定します。
 	 * 
-	 * @param directoryAnnotationReaderFactory アノテーションリーダーファクトリ
+	 * @param directoryAnnotationReaderFactory
+	 *            アノテーションリーダーファクトリ
 	 */
 	public void setDirectoryAnnotationReaderFactory(
 			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
-		this.directoryAnnotationReaderFactory = directoryAnnotationReaderFactory;
+		this.annotationReaderFactory = directoryAnnotationReaderFactory;
 	}
 
 	/**
@@ -452,11 +215,13 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryAttributeHandlerFactory ディレクトリ用の値の型ファクトリ
+	 * @param directoryAttributeHandlerFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
+		this.directoryAttributeHandlerFactory =
+			directoryAttributeHandlerFactory;
 	}
 
 	/**
@@ -469,45 +234,10 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	}
 
 	/**
-	 * 認証関数用の接頭辞を設定します。
-	 * 
-	 * @param authenticatePrefixes 認証関数用の接頭辞
-	 */
-	public void setAuthenticatePrefixes(String[] authenticatePrefixes) {
-		this.authenticatePrefixes = authenticatePrefixes;
-	}
-
-	/**
-	 * 新規挿入操作関数用の接頭辞を設定します。
-	 * 
-	 * @param insertPrefixes 新規挿入操作関数用の接頭辞
-	 */
-	public void setInsertPrefixes(String[] insertPrefixes) {
-		this.insertPrefixes = insertPrefixes;
-	}
-
-	/**
-	 * 更新操作関数用の接頭辞を設定します。
-	 * 
-	 * @param updatePrefixes 更新操作関数用の接頭辞
-	 */
-	public void setUpdatePrefixes(String[] updatePrefixes) {
-		this.updatePrefixes = updatePrefixes;
-	}
-
-	/**
-	 * 削除操作関数用の接頭辞を設定します。
-	 * 
-	 * @param deletePrefixes 削除操作関数用の接頭辞
-	 */
-	public void setDeletePrefixes(String[] deletePrefixes) {
-		this.deletePrefixes = deletePrefixes;
-	}
-
-	/**
 	 * データソースを設定します。
 	 * 
-	 * @param directoryDataSource データソース
+	 * @param directoryDataSource
+	 *            データソース
 	 */
 	public void setDirectoryDataSource(DirectoryDataSource directoryDataSource) {
 		this.directoryDataSource = directoryDataSource;
@@ -525,7 +255,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/**
 	 * Daoクラスを設定します。
 	 * 
-	 * @param daoClass Daoクラス
+	 * @param daoClass
+	 *            Daoクラス
 	 */
 	public void setDaoClass(Class daoClass) {
 		this.daoClass = daoClass;

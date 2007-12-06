@@ -45,11 +45,12 @@ public class PosixAccountPasswordUpdateTest extends
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			posixAccountDtoDao = (PosixAccountDtoDirectoryDao)container
+			posixAccountDtoDao =
+				(PosixAccountDtoDirectoryDao)container
 					.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
-		PosixAccountDtoFactory posixAccountDtoFactory = new PosixAccountDtoFactory(
-				container);
+		PosixAccountDtoFactory posixAccountDtoFactory =
+			new PosixAccountDtoFactory(container);
 		user1 = posixAccountDtoFactory.getUser("user1");
 		assertEquals(null, posixAccountDtoDao.getUser(user1));
 		assertEquals(1, posixAccountDtoDao.insert(user1));
@@ -63,7 +64,8 @@ public class PosixAccountPasswordUpdateTest extends
 
 	public void testAuthenticateByUser() {
 		// ユーザによる接続情報を設定します。
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
@@ -74,7 +76,8 @@ public class PosixAccountPasswordUpdateTest extends
 
 	public void testSelectAndUpdatePassword() {
 		// ユーザによる接続情報を設定します。
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
@@ -93,7 +96,8 @@ public class PosixAccountPasswordUpdateTest extends
 	}
 
 	public void testSelectAndUpdatePasswordWithUserMode() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
@@ -102,7 +106,7 @@ public class PosixAccountPasswordUpdateTest extends
 		// パスワードを更新します。
 		account.setUserPassword("newpass");
 		assertEquals(1, posixAccountDtoDao
-				.updateWithUserMode(property, account));
+			.updateWithUserMode(property, account));
 		try {
 			// パスワードが変更されたため更新時に例外が発生します。
 			posixAccountDtoDao.updateWithUserMode(property, account);
@@ -116,14 +120,15 @@ public class PosixAccountPasswordUpdateTest extends
 		// パスワードを更新します。
 		account.setUserPassword(user1.getUserPassword());
 		assertEquals(1, posixAccountDtoDao
-				.updateWithUserMode(property, account));
+			.updateWithUserMode(property, account));
 		property.setUser(account.getUid());
 		property.setPassword(account.getUserPassword());
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
 	}
 
 	public void testSelectAndFaildUpdatePasswordWithUserMode() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		// 誤ったパスワードを設定します。
