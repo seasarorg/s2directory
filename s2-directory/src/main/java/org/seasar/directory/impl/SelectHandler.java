@@ -72,7 +72,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				}
 				NamingEnumeration results = search(filter);
 				return handler.handle(results, directoryControlProperty
-						.getBaseDn());
+					.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
 				String dn = cmd.getDn();
@@ -81,6 +81,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				}
 				String firstDn = DirectoryUtils.getFirstDn(dn);
 				String baseDn = DirectoryUtils.getBaseDn(dn);
+
 				NamingEnumeration results = super.search(firstDn, baseDn);
 				return handler.handle(results, baseDn);
 			}

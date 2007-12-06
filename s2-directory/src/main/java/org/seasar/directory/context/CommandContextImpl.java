@@ -43,6 +43,8 @@ public class CommandContextImpl implements CommandContext {
 	private String[] objectClasses;
 	/** ディレクトリ用の値の型ファクトリを表します。 */
 	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
+	/** 識別名を表します。 */
+	private String dn;
 
 	/**
 	 * インスタンスを作成します。
@@ -57,7 +59,8 @@ public class CommandContextImpl implements CommandContext {
 	/**
 	 * 指定した引数名の値を取得します。
 	 * 
-	 * @param name 引数名
+	 * @param name
+	 *            引数名
 	 * @return 引数の値
 	 * @see org.seasar.directory.CommandContext#getArg(java.lang.String)
 	 */
@@ -87,7 +90,8 @@ public class CommandContextImpl implements CommandContext {
 	/**
 	 * 指定した引数名の型を取得します。
 	 * 
-	 * @param name 引数名
+	 * @param name
+	 *            引数名
 	 * @return 引数の型
 	 * @see org.seasar.directory.CommandContext#getArgType(java.lang.String)
 	 */
@@ -107,17 +111,19 @@ public class CommandContextImpl implements CommandContext {
 	/**
 	 * Dtoの引数コンテキストを追加します。
 	 * 
-	 * @param dtoArg Dtoの引数
+	 * @param dtoArg
+	 *            Dtoの引数
 	 * @see org.seasar.directory.CommandContext#addDtoArg(java.lang.Object)
 	 */
 	public void addDtoArg(Object dtoArg) {
+		addArg("dto", dtoArg, dtoArg.getClass());
+		// DTOの持つdnを取得し、設定します。
 		if (dtoArg != null) {
 			BeanDesc beanDesc = BeanDescFactory.getBeanDesc(dtoArg.getClass());
-			int size = beanDesc.getPropertyDescSize();
-			for (int i = 0; i < size; i++) {
-				PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-				addArg(propertyDesc.getPropertyName(), propertyDesc
-						.getValue(dtoArg), propertyDesc.getPropertyType());
+			PropertyDesc pd = beanDesc.getPropertyDesc("dn");
+			Object value = pd.getValue(dtoArg);
+			if (value != null) {
+				dn = String.valueOf(pd.getValue(dtoArg));
 			}
 		}
 	}
@@ -125,9 +131,12 @@ public class CommandContextImpl implements CommandContext {
 	/**
 	 * 引数コンテキストを追加します。
 	 * 
-	 * @param name 引数名
-	 * @param arg 引数の値
-	 * @param argType 引数の型
+	 * @param name
+	 *            引数名
+	 * @param arg
+	 *            引数の値
+	 * @param argType
+	 *            引数の型
 	 * @see org.seasar.directory.CommandContext#addArg(java.lang.String,
 	 *      java.lang.Object, java.lang.Class)
 	 */
@@ -147,10 +156,26 @@ public class CommandContextImpl implements CommandContext {
 		CaseInsensitiveMap fitlerArgs = new CaseInsensitiveMap();
 		int size = args.size();
 		for (int i = 0; i < size; i++) {
-			Object key = args.getKey(i);
-			Object value = args.get(key);
-			if (value != null && !StringUtil.isEmpty(String.valueOf(value))) {
-				fitlerArgs.put(key, value);
+			String argName = String.valueOf(args.getKey(i));
+			Object argValue = args.get(argName);
+			Class argClass = getArgType(argName);
+			if (argName.equals("dto")) {
+				BeanDesc bd = BeanDescFactory.getBeanDesc(argClass);
+				int propSize = bd.getPropertyDescSize();
+				for (int j = 0; j < propSize; j++) {
+					PropertyDesc pd = bd.getPropertyDesc(i);
+					String propName = pd.getPropertyName();
+					Object propValue = pd.getValue(argValue);
+					if (propValue != null
+						&& !StringUtil.isEmpty(String.valueOf(propValue))) {
+						fitlerArgs.put(propName, propValue);
+					}
+				}
+			} else {
+				if (argValue != null
+					&& !StringUtil.isEmpty(String.valueOf(argValue))) {
+					fitlerArgs.put(argName, argValue);
+				}
 			}
 		}
 		// フィルターを作成します。
@@ -160,9 +185,10 @@ public class CommandContextImpl implements CommandContext {
 			// 値が null ではない属性が一つ以上ある場合、最初の条件を作成します。
 			Object key = fitlerArgs.getKey(0);
 			Object value = fitlerArgs.get(key);
-			ValueType type = getDirectoryAttributeHandlerFactory()
-					.getDirectoryValueTypeFactory().getValueTypeByClass(
-							value.getClass());
+			ValueType type =
+				getDirectoryAttributeHandlerFactory()
+					.getDirectoryValueTypeFactory()
+					.getValueTypeByClass(value.getClass());
 			buffer.append(type.getFilter(key, value));
 		}
 		if (size > 1) {
@@ -190,14 +216,7 @@ public class CommandContextImpl implements CommandContext {
 	 * @return 識別名
 	 */
 	public String getDn() {
-		if (args.containsKey("dn")) {
-			Object dn = args.get("dn");
-			if (dn != null) {
-				// dn が null ではない場合、値を返します。
-				return String.valueOf(dn);
-			}
-		}
-		return null;
+		return dn;
 	}
 
 	/**
@@ -230,7 +249,8 @@ public class CommandContextImpl implements CommandContext {
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory = directoryAttributeHandlerFactory;
+		this.directoryAttributeHandlerFactory =
+			directoryAttributeHandlerFactory;
 	}
 
 	/**

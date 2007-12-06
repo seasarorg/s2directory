@@ -28,6 +28,9 @@ import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryUtils;
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 
@@ -57,42 +60,20 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * エントリを作成します。
-	 * 
-	 * @param result
-	 * @param attributeNameSet
-	 * @return
-	 * @throws NamingException
+	 * {@inheritDoc}
+	 * <p>
+	 * 新規追加処理を実行します。
+	 * </p>
 	 */
-	protected Attributes createAttributes(String dn) throws NamingException {
-		String firstDn = DirectoryUtils.getFirstDn(dn);
-		String dnName = DirectoryUtils.getAttributeName(firstDn);
-		String dnValue = DirectoryUtils.getAttributeValue(firstDn);
-		Attributes entry = new BasicAttributes(dnName, dnValue);
-		// オブジェクトクラスを設定します。
-		Attribute objectClass = new BasicAttribute("objectClass");
-		entry.put(objectClass);
-		String[] objectClasses = cmd.getObjectClasses();
-		for (int i = 0; i < objectClasses.length; i++) {
-			objectClass.add(objectClasses[i]);
-		}
-		// 属性を設定します。
-		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory = cmd
-				.getDirectoryAttributeHandlerFactory();
-		Set keySet = cmd.getArgKeySet();
-		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
-			String attributeName = String.valueOf(iter.next());
-			Object value = cmd.getArg(attributeName);
-			Class valueClass = cmd.getArgType(attributeName);
-			AttributeHandler attributeHandler = directoryAttributeHandlerFactory
-					.getAttributeHandler(attributeName);
-			Attribute addAttribute = attributeHandler.getAddAttribute(
-					directoryControlProperty, attributeName, value, valueClass);
-			if (addAttribute != null) {
-				entry.put(addAttribute);
+	public Object execute() throws NamingRuntimeException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Insert: " + cmd.getDn());
+			String[] objectClasses = cmd.getObjectClasses();
+			for (int i = 0; i < objectClasses.length; i++) {
+				logger.debug("\tobjectClass: " + objectClasses[i]);
 			}
 		}
-		return entry;
+		return insert(cmd.getDn());
 	}
 
 	/**
@@ -113,19 +94,69 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * 新規追加処理を実行します。
-	 * </p>
+	 * エントリを作成します。
+	 * 
+	 * @param result
+	 * @param attributeNameSet
+	 * @return
+	 * @throws NamingException
 	 */
-	public Object execute() throws NamingRuntimeException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Insert: " + cmd.getDn());
-			String[] objectClasses = cmd.getObjectClasses();
-			for (int i = 0; i < objectClasses.length; i++) {
-				logger.debug("\tobjectClass: " + objectClasses[i]);
-			}
+	protected Attributes createAttributes(String dn) throws NamingException {
+		String firstDn = DirectoryUtils.getFirstDn(dn);
+		String dnName = DirectoryUtils.getAttributeName(firstDn);
+		String dnValue = DirectoryUtils.getAttributeValue(firstDn);
+		Attributes entry = new BasicAttributes(dnName, dnValue);
+		// オブジェクトクラスを設定します。
+		Attribute objectClass = new BasicAttribute("objectClass");
+		entry.put(objectClass);
+		String[] objectClasses = cmd.getObjectClasses();
+		for (int i = 0; i < objectClasses.length; i++) {
+			objectClass.add(objectClasses[i]);
 		}
-		return insert(cmd.getDn());
+		// 属性を設定します。
+		Set keySet = cmd.getArgKeySet();
+		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
+			String argName = String.valueOf(iter.next());
+			Object argValue = cmd.getArg(argName);
+			Class argClass = cmd.getArgType(argName);
+			if (argName.equals("dto")) {
+				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
+				int size = beanDesc.getPropertyDescSize();
+				for (int i = 0; i < size; i++) {
+					PropertyDesc pd = beanDesc.getPropertyDesc(i);
+					String propName = pd.getPropertyName();
+					Attribute addAttribute =
+						createAttribute(propName, pd.getValue(argValue), pd
+							.getPropertyType());
+					if (addAttribute != null) {
+						entry.put(addAttribute);
+					}
+				}
+			} else {
+				Attribute addAttribute =
+					createAttribute(argName, argValue, argClass);
+				if (addAttribute != null) {
+					entry.put(addAttribute);
+				}
+			}
+
+		}
+		return entry;
+	}
+
+	private Attribute createAttribute(String attributeName, Object value,
+			Class valueClass) {
+		// 属性を設定します。
+		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory =
+			cmd.getDirectoryAttributeHandlerFactory();
+		AttributeHandler attributeHandler =
+			directoryAttributeHandlerFactory.getAttributeHandler(attributeName);
+		Attribute addAttribute =
+			attributeHandler.getAddAttribute(
+				directoryControlProperty,
+				attributeName,
+				value,
+				valueClass);
+		return addAttribute;
 	}
 }
