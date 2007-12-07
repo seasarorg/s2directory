@@ -143,12 +143,12 @@ public abstract class AbstractAutoDirectoryCommand extends
 	/**
 	 * フィルタを設定します。
 	 * 
-	 * @param cmd
+	 * @param ctx
 	 */
-	protected void applyFilter(CommandContext cmd) {
+	protected void applyFilter(CommandContext ctx) {
 		// フィルタを作成します。
 		String filter = super.getFilter();
-		String ctxFilter = cmd.getFilter();
+		String ctxFilter = ctx.getFilter();
 		if (StringUtil.isEmpty(filter)) {
 			filter = ctxFilter;
 		} else {
