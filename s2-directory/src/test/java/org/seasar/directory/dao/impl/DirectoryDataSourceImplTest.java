@@ -53,7 +53,6 @@ public class DirectoryDataSourceImplTest extends TestCase {
 				.getComponent(DirectoryControlPropertyImpl.class);
 		DirectoryDataSourceImpl directoryDataSource =
 			new DirectoryDataSourceImpl(property);
-		System.out.println("property:" + property);
 		try {
 			directoryDataSource.getConnection(property);
 			assertTrue(true);
@@ -64,11 +63,13 @@ public class DirectoryDataSourceImplTest extends TestCase {
 				directoryDataSource.getConnection(property);
 				assertTrue(true);
 			} catch (NamingException e1) {
+				e1.printStackTrace();
 				assertTrue(false);
 			}
 		}
 	}
 
+	/** TODO: ApacheDSのSSL環境を用意して動作確認 */
 //	public void testGetSSLConnection() {
 //		DirectoryControlProperty property =
 //			(DirectoryControlProperty)container
@@ -80,14 +81,41 @@ public class DirectoryDataSourceImplTest extends TestCase {
 //			directoryDataSource.getConnection(property);
 //			assertTrue(true);
 //		} catch (NamingException e) {
-//			// for ApacheDS
+//			e.printStackTrace();
 //			property = getSuperUserPropertyOfApachDS();
-//			try {
-//				directoryDataSource.getConnection(property);
-//				assertTrue(true);
-//			} catch (NamingException e1) {
-//				assertTrue(false);
-//			}
+//			assertTrue(false);
+//		}
+//	}
+//
+//	public void testGetTLSConnection() {
+//		DirectoryControlProperty property =
+//			(DirectoryControlProperty)container
+//				.getComponent(DirectoryControlPropertyImpl.class);
+//		property.setUrl("ldap://localhost:389");
+//		property.setEnableTLS(true);
+//		DirectoryDataSourceImpl directoryDataSource =
+//			new DirectoryDataSourceImpl(property);
+//		try {
+//			directoryDataSource.getConnection(property);
+//			assertTrue(true);
+//		} catch (NamingException e) {
+//			assertTrue(false);
+//		}
+//	}
+//
+//	public void testGetSSLTLSConnection() {
+//		DirectoryControlProperty property =
+//			(DirectoryControlProperty)container
+//				.getComponent(DirectoryControlPropertyImpl.class);
+//		property.setUrl("ldaps://localhost:389");
+//		property.setEnableTLS(true);
+//		DirectoryDataSourceImpl directoryDataSource =
+//			new DirectoryDataSourceImpl(property);
+//		try {
+//			directoryDataSource.getConnection(property);
+//			assertTrue(false);
+//		} catch (NamingException e) {
+//			assertTrue(true);
 //		}
 //	}
 

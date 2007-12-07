@@ -15,13 +15,18 @@
  */
 package org.seasar.directory.impl;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.StartTlsRequest;
+import javax.naming.ldap.StartTlsResponse;
+import javax.net.ssl.SSLSocketFactory;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
@@ -85,6 +90,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 				property.setPassword("");
 		} else if (!property.hasAuthentication()) {
 			// 匿名接続が許可されていないのに、認証情報が null の場合
+			// TODO: エラーハンドル
 			throw new NamingException("匿名接続は許可されていません。");
 		}
 		String url = property.getUrl();
@@ -94,11 +100,33 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		env.put(Context.PROVIDER_URL, url);
 		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
 		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
-		if (property.isUseSsl()) {
+		if (property.isEnableSSL() && property.isEnableTLS()) {
+			// TODO: エラーハンドル
+			throw new NamingException("SSL接続とTLS接続の併用はできません。");
+		}
+		if (property.isEnableSSL()) {
+			// SSL接続を行う
+			// TLS利用時にこの設定をすると最初からSSLで暗号化通信してしまうため、
+			// この設定を行ってはいけない
 			env.put(SSL_SOCKET_FACTORY, property.getSslSocketFactory());
 			env.put(Context.SECURITY_PROTOCOL, "ssl");
 		}
-		return new InitialDirContext(env);
+		if (property.isEnableTLS()) {
+			// TLS接続を行う
+			LdapContext context = new InitialLdapContext(env, null);
+			StartTlsResponse tls =
+				(StartTlsResponse)((LdapContext)context)
+					.extendedOperation(new StartTlsRequest());
+			try {
+				tls.setHostnameVerifier(new PermissiveHostnameVerifier());
+				tls.negotiate((SSLSocketFactory)PermissiveSSLSocketFactory
+					.getDefault());
+			} catch (IOException e) {
+				// TODO: エラーハンドル
+				e.printStackTrace();
+			}
+		}
+		return new InitialLdapContext(env, null);
 	}
 
 	/**

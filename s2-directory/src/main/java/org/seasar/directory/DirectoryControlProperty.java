@@ -243,14 +243,33 @@ public interface DirectoryControlProperty {
 	public void setAllowAnonymous(boolean allowAnonymous);
 
 	/**
-	 * @return
+	 * SSL接続が有効かどうか判断します。
+	 * 
+	 * @return SSL接続が有効化どうか
 	 */
-	public boolean isUseSsl();
+	public boolean isEnableSSL();
 
 	/**
-	 * @param useSsl
+	 * SSL接続が有効かどうか設定します。
+	 * 
+	 * @param enableSSL
 	 */
-	public void setUseSsl(boolean useSsl);
+	public void setEnableSSL(boolean enableSSL);
+
+	/**
+	 * TLS接続が有効かどうか判断します。
+	 * 
+	 * @return TLS接続が有効かどうか
+	 */
+	public boolean isEnableTLS();
+
+	/**
+	 * TLS接続が有効かどうか設定します。
+	 * 
+	 * @param enableTls
+	 *            TLS接続を有効かどう
+	 */
+	public void setEnableTLS(boolean enableTls);
 
 	/**
 	 * 認証可能な情報を保持しているか調べます。

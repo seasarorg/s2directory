@@ -4,13 +4,6 @@
 <components namespace="directorydao">
 	<include path="directory.dicon"/>
 
-	<!-- factory -->
-	<component class="org.seasar.directory.dao.impl.DirectoryCommandFactoryImpl"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
-	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>
-
 	<!-- attribute handlers -->
 	<component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/>
 	<component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler">
@@ -24,6 +17,13 @@
 		<property name="defaultAttributeHandler">defaultHandler</property>
 		<property name="attributeHandlers">container.findComponents( @org.seasar.directory.attribute.AttributeHandler@class)</property>
 	</component>
+
+	<!-- factory -->
+	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryCommandFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
 
 	<!-- interceptor -->
 	<component name="interceptor"
