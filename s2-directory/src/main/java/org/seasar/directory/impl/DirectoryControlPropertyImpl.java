@@ -28,6 +28,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
+	/** 接続に使用するSSLソケットファクトリ */
+	private String sslSocketFactory = "javax.net.ssl.SSLSocketFactory";
 	/** URL */
 	private String url;
 	/** ユーザ名 */
@@ -54,6 +56,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private int searchControls = SearchControls.SUBTREE_SCOPE;
 	/** 匿名接続を許可するかどうか */
 	private boolean allowAnonymous = false;
+	/** SSLを用いて接続するかどうか */
+	private boolean useSsl = false;
 
 	/**
 	 * Directory接続情報のインスタンスを作成します。
@@ -103,6 +107,20 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getSslSocketFactory() {
+		return sslSocketFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setSslSocketFactory(String sslSocketFactory) {
+		this.sslSocketFactory = sslSocketFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getUrl() {
 		return url;
 	}
@@ -111,6 +129,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 * {@inheritDoc}
 	 */
 	public void setUrl(String url) {
+		if (url.startsWith("ldaps://")) {
+			setUseSsl(true);
+		}
 		this.url = url;
 	}
 
@@ -285,6 +306,22 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
+	public boolean isUseSsl() {
+		return useSsl;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setUseSsl(boolean useSsl) {
+		if (!this.useSsl) {
+			this.useSsl = useSsl;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean hasAuthentication() {
 		return (user != null) && (password != null);
 	}
@@ -296,13 +333,17 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
 			", ");
+		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(
+			", ");
 		buffer.append("url: ").append(url).append(", ");
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");
 		buffer.append("dn: ").append(baseDn).append(", ");
 		buffer.append("filter: ").append(filter).append(", ");
 		buffer.append("searchControls: ").append(searchControls).append(", ");
-		buffer.append("allowAnonymous: ").append(allowAnonymous);
+		buffer.append("allowAnonymous: ").append(allowAnonymous).append(", ");
+		buffer.append("useSsl: ").append(useSsl);
 		return buffer.toString();
 	}
+
 }

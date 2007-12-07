@@ -28,11 +28,10 @@ public interface DirectoryDataSource {
 	/**
 	 * 接続情報を設定します。
 	 * 
-	 * @param directoryControlProperty
+	 * @param property
 	 *            接続情報
 	 */
-	public void setDirectoryControlProperty(
-			DirectoryControlProperty directoryControlProperty);
+	public void setDirectoryControlProperty(DirectoryControlProperty property);
 
 	/**
 	 * 接続情報を返します。
@@ -52,13 +51,12 @@ public interface DirectoryDataSource {
 	/**
 	 * 指定された接続情報を使用して作成したコネクションを返します。
 	 * 
-	 * @param DirectoryControlProperty
+	 * @param property
 	 *            接続情報
 	 * @return コネクション
 	 * @throws NamingException
 	 */
-	public DirContext getConnection(
-			DirectoryControlProperty DirectoryControlProperty)
+	public DirContext getConnection(DirectoryControlProperty property)
 			throws NamingException;
 
 	/**
@@ -75,7 +73,6 @@ public interface DirectoryDataSource {
 	 * @return 接続可能ならば true
 	 * @throws NamingException
 	 */
-	public boolean authenticate(
-			DirectoryControlProperty DirectoryControlProperty)
+	public boolean authenticate(DirectoryControlProperty property)
 			throws NamingException;
 }

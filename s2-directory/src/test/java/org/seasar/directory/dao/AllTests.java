@@ -30,7 +30,7 @@ public class AllTests {
 			new TestSuite("Test for test.org.seasar.directory.dao");
 		// $JUnit-BEGIN$
 		suite.addTestSuite(BeanListMetaDataNamingEnumerationHandlerTest.class);
-		suite.addTestSuite(DirectoryConnectionTest.class);
+		suite.addTestSuite(DirectoryControlPropertyTest.class);
 		// $JUnit-END$
 		return suite;
 	}

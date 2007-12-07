@@ -28,7 +28,7 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryConnectionTest extends TestCase {
+public class DirectoryControlPropertyTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl directoryDataSource;
@@ -53,11 +53,23 @@ public class DirectoryConnectionTest extends TestCase {
 			directoryDataSource.getDirectoryControlProperty();
 		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
 			.getInitialContextFactory());
+		assertEquals(
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory",
+			property.getSslSocketFactory());
 		assertEquals("ldap://localhost:389", property.getUrl());
 		assertEquals("cn=Manager", property.getUser());
 		assertEquals("secret", property.getPassword());
 		assertEquals("uid", property.getUserAttributeName());
 		assertEquals("SHA", property.getPasswordAlgorithm());
 		assertEquals("__", property.getMultipleValueDelimiter());
+		assertEquals(false, property.isUseSsl());
+	}
+
+	public void testLdaps() {
+		DirectoryControlProperty property =
+			directoryDataSource.getDirectoryControlProperty();
+		property.setUrl("ldaps://localhost:389");
+		assertEquals(true, property.isUseSsl());
+
 	}
 }
