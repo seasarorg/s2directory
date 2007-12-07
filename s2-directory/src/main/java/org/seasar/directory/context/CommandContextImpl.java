@@ -163,7 +163,7 @@ public class CommandContextImpl implements CommandContext {
 				BeanDesc bd = BeanDescFactory.getBeanDesc(argClass);
 				int propSize = bd.getPropertyDescSize();
 				for (int j = 0; j < propSize; j++) {
-					PropertyDesc pd = bd.getPropertyDesc(i);
+					PropertyDesc pd = bd.getPropertyDesc(j);
 					String propName = pd.getPropertyName();
 					Object propValue = pd.getValue(argValue);
 					if (propValue != null
