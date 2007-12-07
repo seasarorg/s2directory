@@ -16,11 +16,13 @@
 package org.seasar.directory.impl;
 
 import java.util.Properties;
+
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
@@ -33,74 +35,69 @@ import org.seasar.directory.util.DirectoryDataSourceUtil;
  */
 public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	/** 接続情報 */
-	private DirectoryControlProperty directoryControlProperty;
-
-	/**
-	 * インスタンスを作成します。
-	 */
-	public DirectoryDataSourceImpl() {
-		super();
-	}
+	private DirectoryControlProperty property;
+	/** SSLソケットファクトリのための設定名 */
+	private final static String SSL_SOCKET_FACTORY =
+		"java.naming.ldap.factory.socket";
 
 	/**
 	 * 指定された接続情報を保持したデータソースのインスタンスを作成します。
 	 * 
-	 * @param directoryControlProperty
+	 * @param property
 	 *            接続情報
 	 */
-	public DirectoryDataSourceImpl(
-			DirectoryControlProperty directoryControlProperty) {
-		this.directoryControlProperty = directoryControlProperty;
+	public DirectoryDataSourceImpl(DirectoryControlProperty property) {
+		this.property = property;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setDirectoryControlProperty(
-			DirectoryControlProperty directoryControlProperty) {
-		this.directoryControlProperty = directoryControlProperty;
+	public void setDirectoryControlProperty(DirectoryControlProperty property) {
+		this.property = property;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public DirectoryControlProperty getDirectoryControlProperty() {
-		return directoryControlProperty;
+		return property;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public DirContext getConnection() throws NamingException {
-		return getConnection(directoryControlProperty);
+		return getConnection(property);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirContext getConnection(
-			DirectoryControlProperty directoryControlProperty)
+	public DirContext getConnection(DirectoryControlProperty property)
 			throws NamingException {
-		DirectoryDataSourceUtil
-			.setupDirectoryControlProperty(directoryControlProperty);
-		if (directoryControlProperty.isAllowAnonymous()) {
-			// 匿名接続を許可する場合、認証情報の null を 空 に置き換えます。
-			if (directoryControlProperty.getUser() == null)
-				directoryControlProperty.setUser("");
-			if (directoryControlProperty.getPassword() == null)
-				directoryControlProperty.setPassword("");
-		} else if (!directoryControlProperty.hasAuthentication()) {
+		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
+		if (property.isAllowAnonymous()) {
+			// 匿名接続を許可する場合、認証情報の null を空に置き換えます。
+			if (property.getUser() == null)
+				property.setUser("");
+			if (property.getPassword() == null)
+				property.setPassword("");
+		} else if (!property.hasAuthentication()) {
 			// 匿名接続が許可されていないのに、認証情報が null の場合
 			throw new NamingException("匿名接続は許可されていません。");
 		}
-		String url = directoryControlProperty.getUrl();
+		String url = property.getUrl();
 		Properties env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY, directoryControlProperty
+		env.put(Context.INITIAL_CONTEXT_FACTORY, property
 			.getInitialContextFactory());
 		env.put(Context.PROVIDER_URL, url);
-		env.put(Context.SECURITY_PRINCIPAL, directoryControlProperty.getUser());
-		env.put(Context.SECURITY_CREDENTIALS, directoryControlProperty
-			.getPassword());
+		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
+		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
+		if (property.isUseSsl()) {
+			env.put(SSL_SOCKET_FACTORY, property.getSslSocketFactory());
+			env.put(Context.SECURITY_PROTOCOL, "ssl");
+		}
 		return new InitialDirContext(env);
 	}
 
@@ -108,7 +105,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 * {@inheritDoc}
 	 */
 	public boolean authenticate() throws NamingException {
-		return authenticate(directoryControlProperty);
+		return authenticate(property);
 	}
 
 	/**

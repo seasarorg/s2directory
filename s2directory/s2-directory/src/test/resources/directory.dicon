@@ -4,10 +4,24 @@
 <components namespace="directory">
 	<component name="directoryControlProperty"
 		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
-		instance="prototype">
+			instance="prototype">
+
 		<property name="initialContextFactory">
 			"com.sun.jndi.ldap.LdapCtxFactory"
 		</property>
+		<!--
+			PermissiveSSLSocketFactory is not strictly secure.
+			But, it can connect to the server having the SSL certificate signed by own CA.
+		--> 
+		<property name="sslSocketFactory">
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
+		</property>
+		<!-- Other options and each default value.
+		<property name="sslSocketFactory">
+			"javax.net.ssl.SSLSocketFactory"
+		</property>
+		-->
+
 		<property name="url">
 			"ldap://localhost:389"
 		</property>
@@ -16,6 +30,7 @@
 		<property name="password">"secret"</property>
 		<property name="passwordAlgorithm">"SHA"</property>
 		<property name="multipleValueDelimiter">"__"</property>
+		<property name="useSsl">false</property>
 
 		<!-- Other options and each default value.
 		<property name="passwordAlgorithm">"SSHA"</property>

@@ -30,17 +30,34 @@ public interface DirectoryControlProperty {
 	public Object clone();
 
 	/**
-	 * コンテキスト生成器を返します。
+	 * 接続に使用するコンテキストファクトリを取得します。
 	 * 
-	 * @return コンテキスト生成器
+	 * @return コンテキストファクトリ
 	 */
 	public String getInitialContextFactory();
 
 	/**
+	 * 接続に使用するコンテキストファクトリを設定します。
+	 * 
 	 * @param contextFactory
-	 *            指定されたコンテキスト生成器を設定します。
+	 *            接続に使用するコンテキストファクトリ
 	 */
 	public void setInitialContextFactory(String contextFactory);
+
+	/**
+	 * 接続に使用するSSLソケットファクトリを取得します。
+	 * 
+	 * @return SSLソケットファクトリ
+	 */
+	public String getSslSocketFactory();
+
+	/**
+	 * 接続に使用するSSLソケットファクトリを設定します。
+	 * 
+	 * @param sslSocketFactory
+	 *            SSLソケットファクトリ
+	 */
+	public void setSslSocketFactory(String sslSocketFactory);
 
 	/**
 	 * urlを返します。
@@ -224,6 +241,16 @@ public interface DirectoryControlProperty {
 	 *            匿名接続を許可するかどうか
 	 */
 	public void setAllowAnonymous(boolean allowAnonymous);
+
+	/**
+	 * @return
+	 */
+	public boolean isUseSsl();
+
+	/**
+	 * @param useSsl
+	 */
+	public void setUseSsl(boolean useSsl);
 
 	/**
 	 * 認証可能な情報を保持しているか調べます。
