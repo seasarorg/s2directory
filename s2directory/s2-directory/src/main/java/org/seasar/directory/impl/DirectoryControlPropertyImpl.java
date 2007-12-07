@@ -56,8 +56,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private int searchControls = SearchControls.SUBTREE_SCOPE;
 	/** 匿名接続を許可するかどうか */
 	private boolean allowAnonymous = false;
-	/** SSLを用いて接続するかどうか */
-	private boolean useSsl = false;
+	/** SSL接続するかどうか */
+	private boolean enableSSL = false;
+	/** TLS接続するかどうか */
+	private boolean enableTLS = false;
 
 	/**
 	 * Directory接続情報のインスタンスを作成します。
@@ -130,7 +132,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 */
 	public void setUrl(String url) {
 		if (url.startsWith("ldaps://")) {
-			setUseSsl(true);
+			setEnableSSL(true);
+		} else {
+			setEnableSSL(false);
 		}
 		this.url = url;
 	}
@@ -306,17 +310,29 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isUseSsl() {
-		return useSsl;
+	public boolean isEnableSSL() {
+		return enableSSL;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setUseSsl(boolean useSsl) {
-		if (!this.useSsl) {
-			this.useSsl = useSsl;
-		}
+	public void setEnableSSL(boolean useSSL) {
+		this.enableSSL = useSSL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isEnableTLS() {
+		return enableTLS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setEnableTLS(boolean enableTLS) {
+		this.enableTLS = enableTLS;
 	}
 
 	/**
@@ -342,8 +358,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("filter: ").append(filter).append(", ");
 		buffer.append("searchControls: ").append(searchControls).append(", ");
 		buffer.append("allowAnonymous: ").append(allowAnonymous).append(", ");
-		buffer.append("useSsl: ").append(useSsl);
+		buffer.append("enableSSL").append(enableSSL).append(", ");
+		buffer.append("enableTLS: ").append(enableTLS);
 		return buffer.toString();
 	}
-
 }

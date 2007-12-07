@@ -22,26 +22,32 @@ import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.TrustManager;
 
 /**
+ * すべてのホスト名が有効なものであると見なします。
+ * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date:: 2006-04-30 02:34:00 +0900#$
  */
 public class PermissiveSSLSocketFactory extends SSLSocketFactory {
+	/** 自分自身のインスタンス */
 	private SSLSocketFactory factory;
 
+	/**
+	 * インスタンスを作成します。
+	 */
 	public PermissiveSSLSocketFactory() {
 		try {
-			SSLContext sslContext = SSLContext.getInstance("SSL");
+			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(
 				null,
-				new X509TrustManager[] { new PermissiveTrustManager() },
+				new TrustManager[] { new PermissiveTrustManager() },
 				null);
 			factory = (SSLSocketFactory)sslContext.getSocketFactory();
-
 		} catch (NoSuchAlgorithmException exc) {
 			throw new IllegalStateException("Unable to get SSL context: "
 				+ exc.getMessage());
@@ -49,6 +55,13 @@ public class PermissiveSSLSocketFactory extends SSLSocketFactory {
 			throw new IllegalStateException("Unable to initialize ctx "
 				+ "with BogusTrustManager: " + exc.getMessage());
 		}
+	}
+
+	/**
+	 * デフォルトのSSLソケットファクトリを返します。
+	 */
+	public static SocketFactory getDefault() {
+		return new PermissiveSSLSocketFactory();
 	}
 
 	/**
