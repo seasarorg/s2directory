@@ -57,7 +57,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * インスタンスを生成します。
 	 * 
 	 * @param dataSource
-	 * @param cmd
+	 * @param ctx
 	 */
 	public UpdateHandler(DirectoryDataSource dataSource, CommandContext ctx) {
 		super(dataSource);
@@ -77,6 +77,8 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	/**
 	 * 指定されたエントリを更新します。
 	 * 
+	 * @param dn
+	 *            更新対象のDN
 	 * @return 更新した数を返します。
 	 */
 	private Integer update(String dn) {
@@ -101,10 +103,10 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * エントリから更新アイテムを作成します。
+	 * 検索結果から更新アイテムを作成します。
 	 * 
 	 * @param results
-	 *            エントリの検索結果
+	 *            現在のエントリの検索結果
 	 * @return 更新アイテムの配列
 	 * @throws NamingException
 	 */
@@ -118,11 +120,10 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	}
 
 	/**
-	 * 更新アイテムを作成します。
+	 * エントリから更新アイテムを作成します。
 	 * 
 	 * @param result
-	 *            エントリの検索結果
-	 * @param attributeNameSet
+	 *            現在のエントリの検索結果
 	 * @return 更新アイテムの配列
 	 * @throws NamingException
 	 */
@@ -138,7 +139,9 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			String argName = String.valueOf(iter.next());
 			Object argValue = ctx.getArg(argName);
 			Class argClass = ctx.getArgType(argName);
-			if (argName.equals("dto")) {
+			if (argName.equals("#dto")) {
+				// 引数がDTOの場合、DTOに定義されたフィールドを
+				// 対象エントリの変更属性とみなします。
 				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
 				int size = beanDesc.getPropertyDescSize();
 				for (int i = 0; i < size; i++) {
@@ -146,29 +149,26 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 					String propName = pd.getPropertyName();
 					Attribute currentAttribute = null;
 					if (currentAttributeNameSet.contains(propName)) {
-						// 既に属性がある場合
+						// 既に属性がある場合、値を変更するために現在の属性を取得します。
 						currentAttribute = result.getAttributes().get(propName);
 					}
 					ModificationItem modificationItem =
-						createModificationItem(
-							currentAttributeNameSet,
-							currentAttribute,
-							propName,
-							pd.getValue(argValue),
-							pd.getPropertyType());
+						createModificationItem(currentAttribute, propName, pd
+							.getValue(argValue), pd.getPropertyType());
 					if (modificationItem != null) {
 						modificationItemList.add(modificationItem);
 					}
 				}
 			} else {
+				// 引数がDTOではない場合、
+				// 引数を作成エントリの属性とみなします。
 				Attribute currentAttribute = null;
 				if (currentAttributeNameSet.contains(argName)) {
-					// 既に属性がある場合
+					// 既に属性がある場合、値を変更するために現在の属性を取得します。
 					currentAttribute = result.getAttributes().get(argName);
 				}
 				ModificationItem modificationItem =
 					createModificationItem(
-						currentAttributeNameSet,
 						currentAttribute,
 						argName,
 						argValue,
@@ -182,8 +182,21 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			.toArray(new ModificationItem[0]);
 	}
 
-	private ModificationItem createModificationItem(
-			Set currentAttributeNameSet, Attribute attribute,
+	/**
+	 * 更新アイテムを作成します。
+	 * 
+	 * @param currentAttribute
+	 *            現在の属性
+	 * @param attributeName
+	 *            属性名
+	 * @param value
+	 *            新しい値
+	 * @param valueClass
+	 *            新しい値の型
+	 * @return 更新アイテム
+	 * @throws NamingException
+	 */
+	private ModificationItem createModificationItem(Attribute currentAttribute,
 			String attributeName, Object value, Class valueClass)
 			throws NamingException {
 		DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory =
@@ -194,7 +207,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		modificationItem =
 			attributeHandler.getModificationItem(
 				property,
-				attribute,
+				currentAttribute,
 				attributeName,
 				value,
 				valueClass);
