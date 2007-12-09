@@ -17,7 +17,7 @@ package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.impl.ExecuteHandler;
@@ -38,16 +38,16 @@ public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
 	 *            データソース
 	 * @param namingEnumerationHandler
 	 *            検索結果ハンドラ
-	 * @param directoryAttributeHandlerFactory
+	 * @param attributeHandlerFactory
 	 *            属性ハンドラファクトリ
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public SelectAutoCommand(DirectoryDataSource dataSource,
-			NamingEnumerationHandler namingEnumerationHandler,
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
-			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
+	public SelectAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory,
+			AnnotationMethodArgs methodArgs,
+			NamingEnumerationHandler namingEnumerationHandler) {
+		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
 		this.namingEnumerationHandler = namingEnumerationHandler;
 	}
 
@@ -58,10 +58,10 @@ public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		CommandContext cmd = apply(args);
+		CommandContext ctx = apply(args);
 		ExecuteHandler selectHandler =
 			new SelectHandler(getDirectoryDataSource(args), super
-				.getRunFilter(), namingEnumerationHandler, cmd);
+				.getRunFilter(), namingEnumerationHandler, ctx);
 		return selectHandler.execute();
 	}
 }

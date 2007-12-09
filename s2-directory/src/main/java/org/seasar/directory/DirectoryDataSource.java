@@ -25,13 +25,9 @@ import javax.naming.directory.DirContext;
  * @version $Date::                           $
  */
 public interface DirectoryDataSource {
-	/**
-	 * 接続情報を設定します。
-	 * 
-	 * @param property
-	 *            接続情報
-	 */
-	public void setDirectoryControlProperty(DirectoryControlProperty property);
+	/** SSLソケットファクトリのための設定名 */
+	public final static String SSL_SOCKET_FACTORY_KEY =
+		"java.naming.ldap.factory.socket";
 
 	/**
 	 * 接続情報を返します。
@@ -57,22 +53,5 @@ public interface DirectoryDataSource {
 	 * @throws NamingException
 	 */
 	public DirContext getConnection(DirectoryControlProperty property)
-			throws NamingException;
-
-	/**
-	 * 保持している接続情報を使用してサーバに接続できるか調べます。
-	 * 
-	 * @return 接続可能ならば true
-	 * @throws NamingException
-	 */
-	public boolean authenticate() throws NamingException;
-
-	/**
-	 * 指定された接続情報を使用してサーバに接続できるか調べます。
-	 * 
-	 * @return 接続可能ならば true
-	 * @throws NamingException
-	 */
-	public boolean authenticate(DirectoryControlProperty property)
 			throws NamingException;
 }

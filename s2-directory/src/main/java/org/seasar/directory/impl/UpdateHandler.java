@@ -194,7 +194,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		ModificationItem modificationItem;
 		modificationItem =
 			attributeHandler.getModificationItem(
-				directoryControlProperty,
+				property,
 				attribute,
 				attributeName,
 				value,

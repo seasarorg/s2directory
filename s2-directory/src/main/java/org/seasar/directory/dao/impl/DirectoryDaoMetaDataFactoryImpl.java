@@ -20,9 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDaoNamingConvention;
-import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.DirectoryCommand;
@@ -30,7 +28,6 @@ import org.seasar.directory.dao.DirectoryCommandFactory;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
-import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.util.MethodUtil;
 
@@ -44,8 +41,6 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 		DirectoryDaoMetaDataFactory {
 	/** ディレクトリDaoメタデータのキャッシュ */
 	protected Map directoryDaoMetaDataCache = new HashMap();
-	/** ディレクトリ接続ファクトリ */
-	protected DirectoryDataSource dataSource;
 	/** ディレクトリアノテーションリーダファクトリ */
 	protected DirectoryAnnotationReaderFactory readerFactory;
 	/** ディレクトリコマンドファクトリ */
@@ -69,12 +64,10 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 */
 	public DirectoryDaoMetaDataFactoryImpl(
 			DirectoryCommandFactory directoryCommandFactory,
-			DirectoryControlProperty property,
 			DirectoryAnnotationReaderFactory readerFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			DirectoryDaoNamingConvention configuration) {
 		this.directoryCommandFactory = directoryCommandFactory;
-		this.dataSource = new DirectoryDataSourceImpl(property);
 		this.readerFactory = readerFactory;
 		this.attributeHandlerFactory = attributeHandlerFactory;
 		this.configuration = configuration;
@@ -92,12 +85,8 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 			return dmd;
 		}
 		DirectoryDaoMetaDataImpl dmdi =
-			new DirectoryDaoMetaDataImpl(
-				daoClass,
-				dataSource,
-				readerFactory,
-				configuration.getDirectoryDaoSuffixes(),
-				attributeHandlerFactory);
+			new DirectoryDaoMetaDataImpl(daoClass, readerFactory, configuration
+				.getDirectoryDaoSuffixes(), attributeHandlerFactory);
 		setupDirectoryCommand(dmdi);
 		directoryDaoMetaDataCache.put(key, dmdi);
 		return dmdi;

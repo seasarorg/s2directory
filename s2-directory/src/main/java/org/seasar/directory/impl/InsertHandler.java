@@ -153,7 +153,7 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			directoryAttributeHandlerFactory.getAttributeHandler(attributeName);
 		Attribute addAttribute =
 			attributeHandler.getAddAttribute(
-				directoryControlProperty,
+				property,
 				attributeName,
 				value,
 				valueClass);

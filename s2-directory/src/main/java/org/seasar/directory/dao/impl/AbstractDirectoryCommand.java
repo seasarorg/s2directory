@@ -16,7 +16,7 @@
 package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.DirectoryCommand;
 
 /**
@@ -27,9 +27,9 @@ import org.seasar.directory.dao.DirectoryCommand;
  */
 public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	/** データソース */
-	private DirectoryDataSource directoryDataSource;
+	protected DirectoryDataSourceFactory dataSourceFactory;
 	/** ディレクトリ用の値の型ファクトリ */
-	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
+	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
 	/** フィルタ */
 	private String filter;
 	/** オブジェクトクラス */
@@ -38,23 +38,16 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSourceFactory
 	 *            データソース
+	 * @param attributeHandlerFactory
+	 *            ディレクトリ用の値の型ファクトリ
 	 */
-	public AbstractDirectoryCommand(DirectoryDataSource directoryDataSource,
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryDataSource = directoryDataSource;
-		this.directoryAttributeHandlerFactory =
-			directoryAttributeHandlerFactory;
-	}
-
-	/**
-	 * データソースを取得します。
-	 * 
-	 * @return データソース
-	 */
-	public DirectoryDataSource getDirectoryDataSource() {
-		return directoryDataSource;
+	public AbstractDirectoryCommand(
+			DirectoryDataSourceFactory dataSourceFactory,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		this.dataSourceFactory = dataSourceFactory;
+		this.attributeHandlerFactory = attributeHandlerFactory;
 	}
 
 	/**
@@ -63,7 +56,7 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
 	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
-		return directoryAttributeHandlerFactory;
+		return attributeHandlerFactory;
 	}
 
 	/**

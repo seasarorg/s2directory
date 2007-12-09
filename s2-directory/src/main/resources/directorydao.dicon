@@ -20,6 +20,7 @@
 
 	<!-- factory -->
 	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>
+	<component class="org.seasar.directory.impl.DirectoryDataSourceFactoryImpl"/>
 	<component class="org.seasar.directory.dao.impl.DirectoryCommandFactoryImpl"/>
 	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
 	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>

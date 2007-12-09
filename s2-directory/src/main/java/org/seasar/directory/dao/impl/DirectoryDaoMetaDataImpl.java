@@ -66,12 +66,10 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	}
 
 	public DirectoryDaoMetaDataImpl(Class daoClass,
-			DirectoryDataSource dataSource,
 			DirectoryAnnotationReaderFactory readerFactory,
 			String[] daoSuffixes,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
 		setDaoClass(daoClass);
-		setDirectoryDataSource(dataSource);
 		setDirectoryAnnotationReaderFactory(readerFactory);
 		setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
 		if (daoSuffixes != null) {
@@ -231,16 +229,6 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	 */
 	public void setDaoSuffixes(String[] daoSuffixes) {
 		this.daoSuffixes = daoSuffixes;
-	}
-
-	/**
-	 * データソースを設定します。
-	 * 
-	 * @param directoryDataSource
-	 *            データソース
-	 */
-	public void setDirectoryDataSource(DirectoryDataSource directoryDataSource) {
-		this.directoryDataSource = directoryDataSource;
 	}
 
 	/**

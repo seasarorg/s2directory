@@ -18,19 +18,22 @@ package org.seasar.directory.impl;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.StartTlsRequest;
 import javax.naming.ldap.StartTlsResponse;
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
+import org.seasar.framework.util.ClassUtil;
 
 /**
  * サーバに接続するためのリソースを提供するデータソースクラスです。
@@ -40,10 +43,7 @@ import org.seasar.directory.util.DirectoryDataSourceUtil;
  */
 public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	/** 接続情報 */
-	private DirectoryControlProperty property;
-	/** SSLソケットファクトリのための設定名 */
-	private final static String SSL_SOCKET_FACTORY =
-		"java.naming.ldap.factory.socket";
+	private DirectoryControlProperty defaultProperty;
 
 	/**
 	 * 指定された接続情報を保持したデータソースのインスタンスを作成します。
@@ -52,102 +52,144 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 *            接続情報
 	 */
 	public DirectoryDataSourceImpl(DirectoryControlProperty property) {
-		this.property = property;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setDirectoryControlProperty(DirectoryControlProperty property) {
-		this.property = property;
+		this.defaultProperty = property;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public DirectoryControlProperty getDirectoryControlProperty() {
-		return property;
+		return defaultProperty;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public DirContext getConnection() throws NamingException {
-		return getConnection(property);
+		return getConnection(defaultProperty);
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @throws NamingException
 	 */
 	public DirContext getConnection(DirectoryControlProperty property)
 			throws NamingException {
-		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
+		// 接続設定準備
+		setupDirectoryControlProperty(property);
+		Properties env = new Properties();
+		env.put(Context.INITIAL_CONTEXT_FACTORY, property
+			.getInitialContextFactory());
+		env.put(Context.PROVIDER_URL, property.getUrl());
+		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
+		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
+
+		// 接続処理
+		if (property.isEnableSSL()) {
+			// SSL接続
+			return getSSLConnection(env, property);
+		}
+		if (property.isEnableTLS()) {
+			// TLS接続
+			return getTLSConnection(env, property);
+		}
+		// 通常接続
+		return getConnection(env);
+	}
+
+	/**
+	 * 指定された接続情報を使用して作成したコネクションを返します。
+	 * 
+	 * @param env
+	 *            接続情報
+	 * @return コネクション
+	 * @throws NamingException
+	 */
+	protected DirContext getConnection(Properties env) throws NamingException {
+		return new InitialDirContext(env);
+	}
+
+	/**
+	 * @param env
+	 *            接続情報
+	 * @param property
+	 *            接続情報
+	 * @return TLSコネクション
+	 * @throws NamingException
+	 */
+	protected DirContext getTLSConnection(Properties env,
+			DirectoryControlProperty property) throws NamingException {
+		SSLSocketFactory sslSocketFactory = null;
+		HostnameVerifier hostnameVerifier = null;
+		String sslSocketFactoryClassName = property.getSslSocketFactory();
+		if (property.getSslSocketFactory().equals(
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory")) {
+			sslSocketFactory = new PermissiveSSLSocketFactory();
+			hostnameVerifier = new PermissiveHostnameVerifier();
+		} else {
+			sslSocketFactory =
+				(SSLSocketFactory)ClassUtil
+					.newInstance(sslSocketFactoryClassName);
+		}
+		// TLS接続を行う
+		LdapContext context = new InitialLdapContext(env, null);
+		StartTlsResponse tls =
+			(StartTlsResponse)((LdapContext)context)
+				.extendedOperation(new StartTlsRequest());
+		try {
+			if (hostnameVerifier != null) {
+				tls.setHostnameVerifier(hostnameVerifier);
+			}
+			tls.negotiate(sslSocketFactory);
+		} catch (IOException e) {
+			// TODO: 専用の例外ハンドラ作成
+			throw new DirectoryRuntimeException("このサーバはTLS接続をサポートしていません。");
+		}
+		return context;
+	}
+
+	/**
+	 * @param env
+	 *            接続情報
+	 * @param property
+	 *            接続情報
+	 * @return SSLコネクション
+	 * @throws NamingException
+	 */
+	protected DirContext getSSLConnection(Properties env,
+			DirectoryControlProperty property) throws NamingException {
+		// SSL接続を行う
+		// TLS利用時にこの設定をすると最初からSSLで暗号化通信してしまうため通信に失敗します。
+		env.put(SSL_SOCKET_FACTORY_KEY, property.getSslSocketFactory());
+		env.put(Context.SECURITY_PROTOCOL, "ssl");
+		return getConnection(env);
+	}
+
+	/**
+	 * ディレクトリサーバ接続情報をセットアップします。
+	 * 
+	 * @param property
+	 *            接続情報
+	 */
+	protected void setupDirectoryControlProperty(
+			DirectoryControlProperty property) {
 		if (property.isAllowAnonymous()) {
 			// 匿名接続を許可する場合、認証情報の null を空に置き換えます。
 			if (property.getUser() == null)
 				property.setUser("");
 			if (property.getPassword() == null)
 				property.setPassword("");
-		} else if (!property.hasAuthentication()) {
+		}
+		if (!property.isAllowAnonymous() && !property.hasAuthentication()) {
+			// TODO: 専用の例外ハンドラ作成
 			// 匿名接続が許可されていないのに、認証情報が null の場合
-			// TODO: エラーハンドル
-			throw new NamingException("匿名接続は許可されていません。");
+			throw new DirectoryRuntimeException("匿名接続は許可されていません。");
 		}
-		String url = property.getUrl();
-		Properties env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY, property
-			.getInitialContextFactory());
-		env.put(Context.PROVIDER_URL, url);
-		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
-		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
 		if (property.isEnableSSL() && property.isEnableTLS()) {
-			// TODO: エラーハンドル
-			throw new NamingException("SSL接続とTLS接続の併用はできません。");
+			// TODO: 専用の例外ハンドラ作成
+			throw new DirectoryRuntimeException("SSL接続とTLS接続の併用はできません。");
 		}
-		if (property.isEnableSSL()) {
-			// SSL接続を行う
-			// TLS利用時にこの設定をすると最初からSSLで暗号化通信してしまうため、
-			// この設定を行ってはいけない
-			env.put(SSL_SOCKET_FACTORY, property.getSslSocketFactory());
-			env.put(Context.SECURITY_PROTOCOL, "ssl");
-		}
-		if (property.isEnableTLS()) {
-			// TLS接続を行う
-			LdapContext context = new InitialLdapContext(env, null);
-			StartTlsResponse tls =
-				(StartTlsResponse)((LdapContext)context)
-					.extendedOperation(new StartTlsRequest());
-			try {
-				tls.setHostnameVerifier(new PermissiveHostnameVerifier());
-				tls.negotiate((SSLSocketFactory)PermissiveSSLSocketFactory
-					.getDefault());
-			} catch (IOException e) {
-				// TODO: エラーハンドル
-				e.printStackTrace();
-			}
-		}
-		return new InitialLdapContext(env, null);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean authenticate() throws NamingException {
-		return authenticate(property);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean authenticate(
-			DirectoryControlProperty directoryControlProperty)
-			throws NamingException {
-		try {
-			getConnection(directoryControlProperty);
-			return true;
-		} catch (AuthenticationException ae) {
-			ae.printStackTrace();
-			return false;
-		}
+		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
 	}
 }

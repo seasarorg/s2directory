@@ -53,6 +53,6 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 			logger.debug("Authenticate: [user] " + property.getUser()
 				+ " [password] " + property.getPassword());
 		}
-		return super.authenticate();
+		return new Boolean(super.authenticate());
 	}
 }
