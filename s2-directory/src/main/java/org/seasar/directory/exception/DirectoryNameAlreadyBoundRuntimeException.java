@@ -36,6 +36,6 @@ public final class DirectoryNameAlreadyBoundRuntimeException extends
 	 */
 	public DirectoryNameAlreadyBoundRuntimeException(
 			NameAlreadyBoundException cause) {
-		super("EDIRECTORY0004", new Object[] { cause.getRemainingName() });
+		super("EDIR0004", new Object[] { cause.getRemainingName() });
 	}
 }

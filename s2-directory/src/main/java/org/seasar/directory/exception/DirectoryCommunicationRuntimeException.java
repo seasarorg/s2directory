@@ -36,6 +36,6 @@ public final class DirectoryCommunicationRuntimeException extends
 	 */
 	public DirectoryCommunicationRuntimeException(
 			DirectoryControlProperty property) {
-		super("EDIRECTORY0002", new Object[] { property.getUrl() });
+		super("EDIR0002", new Object[] { property.getUrl() });
 	}
 }
