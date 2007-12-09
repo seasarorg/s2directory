@@ -53,6 +53,8 @@ public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
 	 */
 	public Object execute(Object[] args) {
 		CommandContext ctx = apply(args);
+		// TODO: ここでコマンドコンテキストを渡しちゃうのは良くない
+		// 将来的には BindVariables のようなものを使うようなものに直す
 		ExecuteHandler handler =
 			new InsertHandler(getDirectoryDataSource(args), ctx);
 		return handler.execute();

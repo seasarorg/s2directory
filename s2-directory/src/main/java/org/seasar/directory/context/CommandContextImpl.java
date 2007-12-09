@@ -116,7 +116,7 @@ public class CommandContextImpl implements CommandContext {
 	 * @see org.seasar.directory.CommandContext#addDtoArg(java.lang.Object)
 	 */
 	public void addDtoArg(Object dtoArg) {
-		addArg("dto", dtoArg, dtoArg.getClass());
+		addArg("#dto", dtoArg, dtoArg.getClass());
 		// DTOの持つdnを取得し、設定します。
 		if (dtoArg != null) {
 			BeanDesc beanDesc = BeanDescFactory.getBeanDesc(dtoArg.getClass());
@@ -159,7 +159,7 @@ public class CommandContextImpl implements CommandContext {
 			String argName = String.valueOf(args.getKey(i));
 			Object argValue = args.get(argName);
 			Class argClass = getArgType(argName);
-			if (argName.equals("dto")) {
+			if (argName.equals("#dto")) {
 				BeanDesc bd = BeanDescFactory.getBeanDesc(argClass);
 				int propSize = bd.getPropertyDescSize();
 				for (int j = 0; j < propSize; j++) {

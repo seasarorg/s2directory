@@ -118,7 +118,9 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			String argName = String.valueOf(iter.next());
 			Object argValue = ctx.getArg(argName);
 			Class argClass = ctx.getArgType(argName);
-			if (argName.equals("dto")) {
+			if (argName.equals("#dto")) {
+				// 引数がDTOの場合、DTOに定義されたフィールドを
+				// 作成するエントリの属性とみなします。
 				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
 				int size = beanDesc.getPropertyDescSize();
 				for (int i = 0; i < size; i++) {
@@ -132,6 +134,8 @@ public class InsertHandler extends BasicDirectoryHandler implements
 					}
 				}
 			} else {
+				// 引数がDTOではない場合、
+				// 引数を作成エントリの属性とみなします。
 				Attribute addAttribute =
 					createAttribute(argName, argValue, argClass);
 				if (addAttribute != null) {

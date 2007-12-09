@@ -35,8 +35,6 @@ import org.seasar.framework.util.StringUtil;
 public abstract class AbstractDynamicDirectoryCommand extends
 		AbstractDirectoryCommand {
 	private AnnotationMethodArgs methodArgs;
-	/** 実行フィルタ */
-	private String runFilter;
 
 	/**
 	 * * インスタンスを作成します。
@@ -57,12 +55,55 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	}
 
 	/**
-	 * 実行フィルタを取得します。
+	 * コマンドコンテキストを作成します。
 	 * 
-	 * @return runFilter フィルタ
+	 * @param args
+	 *            引数値
 	 */
-	public String getRunFilter() {
-		return runFilter;
+	protected CommandContext apply(Object[] args) {
+		final DirectoryValueTypeFactory valueTypeFactory =
+			getDirectoryAttributeHandlerFactory()
+				.getDirectoryValueTypeFactory();
+		CommandContext ctx =
+			new CommandContextImpl(getDirectoryAttributeHandlerFactory());
+		if (args != null && methodArgs != null) {
+			String[] argNames = methodArgs.getArgNames();
+			Class[] argTypes = methodArgs.getArgTypes();
+			int i = 0;
+			// 第一引数に接続情報がある場合は、インデックスを2つ目にします。
+			if (argNames[i].equals("#property")
+				&& argTypes[0] == DirectoryControlProperty.class) {
+				i = 1;
+			}
+			int length = args.length;
+			for (; i < length; ++i) {
+				Class argType = null;
+				// 引数の型を取得します。
+				if (args[i] != null) {
+					if (i < argTypes.length) {
+						argType = argTypes[i];
+					} else if (args[i] != null) {
+						argType = args[i].getClass();
+					}
+				}
+				if (i < argNames.length) {
+					// Dtoの場合
+					if (argNames[i].equals("#dto")
+						&& valueTypeFactory.getValueTypeByClass(args[i]
+							.getClass()) == valueTypeFactory
+							.getObjectValueType()) {
+						ctx.addDtoArg(args[i]);
+					} else {
+						ctx.addArg(argNames[i], args[i], argType);
+					}
+				} else {
+					ctx.addArg("$" + (i + 1), args[i], argType);
+				}
+			}
+		}
+		// オブジェクトクラスを設定します。
+		applyObjectClass(ctx);
+		return ctx;
 	}
 
 	/**
@@ -92,65 +133,20 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	}
 
 	/**
-	 * コマンドコンテキストを作成します。
-	 * 
-	 * @param args
-	 *            引数値
-	 */
-	protected CommandContext apply(Object[] args) {
-		final DirectoryValueTypeFactory valueTypeFactory =
-			getDirectoryAttributeHandlerFactory()
-				.getDirectoryValueTypeFactory();
-		CommandContext cmd =
-			new CommandContextImpl(getDirectoryAttributeHandlerFactory());
-		if (args != null && methodArgs != null) {
-			String[] argNames = methodArgs.getArgNames();
-			Class[] argTypes = methodArgs.getArgTypes();
-			int i = 0;
-			// 第一引数に接続情報がある場合は、インデックスを2つ目にします。
-			if (argNames[i].equals("#property")
-				&& argTypes[0] == DirectoryControlProperty.class) {
-				i = 1;
-			}
-			int length = args.length;
-			for (; i < length; ++i) {
-				Class argType = null;
-				// 引数の型を取得します。
-				if (args[i] != null) {
-					if (i < argTypes.length) {
-						argType = argTypes[i];
-					} else if (args[i] != null) {
-						argType = args[i].getClass();
-					}
-				}
-				if (i < argNames.length) {
-					// Dtoの場合
-					if (argNames[i].equals("#dto")
-						&& valueTypeFactory.getValueTypeByClass(args[i]
-							.getClass()) == valueTypeFactory
-							.getObjectValueType()) {
-						cmd.addDtoArg(args[i]);
-					} else {
-						cmd.addArg(argNames[i], args[i], argType);
-					}
-				} else {
-					cmd.addArg("$" + (i + 1), args[i], argType);
-				}
-			}
-		}
-		// フィルタを作成します。
-		applyFilter(cmd);
-		// オブジェクトクラスを設定します。
-		applyObjectClass(cmd);
-		return cmd;
-	}
-
-	/**
-	 * フィルタを設定します。
+	 * オブジェクトクラスを設定します。
 	 * 
 	 * @param ctx
 	 */
-	protected void applyFilter(CommandContext ctx) {
+	protected void applyObjectClass(CommandContext ctx) {
+		ctx.setObjectClasses(super.getObjectClasses());
+	}
+
+	/**
+	 * 実行フィルタを取得します。
+	 * 
+	 * @return runFilter フィルタ
+	 */
+	public String getRunFilter(CommandContext ctx) {
 		// フィルタを作成します。
 		String filter = super.getFilter();
 		String ctxFilter = ctx.getFilter();
@@ -164,15 +160,6 @@ public abstract class AbstractDynamicDirectoryCommand extends
 		// フィルタが空の場合はダミーフィルタを設定します。
 		if (filter.length() == 0)
 			filter = "null=null";
-		runFilter = filter;
-	}
-
-	/**
-	 * オブジェクトクラスを設定します。
-	 * 
-	 * @param cmd
-	 */
-	protected void applyObjectClass(CommandContext cmd) {
-		cmd.setObjectClasses(super.getObjectClasses());
+		return filter;
 	}
 }
