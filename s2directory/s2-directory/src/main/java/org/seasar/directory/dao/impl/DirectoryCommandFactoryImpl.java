@@ -19,9 +19,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDaoNamingConvention;
-import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.dao.AnnotationMethodArgsFactory;
@@ -32,7 +31,6 @@ import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.directory.dao.handler.BeanListMetaDataNamingEnumerationHandler;
 import org.seasar.directory.dao.handler.BeanMetaDataNamingEnumerationHandler;
 import org.seasar.directory.dao.handler.ObjectNamingEnumerationHandler;
-import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -44,7 +42,7 @@ import org.seasar.framework.util.StringUtil;
 public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 
 	/** データソース */
-	protected DirectoryDataSource dataSource;
+	protected DirectoryDataSourceFactory dataSourceFactory;
 
 	/** ディレクトリ用の値の属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
@@ -52,10 +50,11 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 	/** ディレクトリ用の命名規約 */
 	protected DirectoryDaoNamingConvention configuration;
 
-	public DirectoryCommandFactoryImpl(DirectoryControlProperty property,
+	public DirectoryCommandFactoryImpl(
+			DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			DirectoryDaoNamingConvention configuration) {
-		this.dataSource = new DirectoryDataSourceImpl(property);
+		this.dataSourceFactory = dataSourceFactory;
 		this.attributeHandlerFactory = attributeHandlerFactory;
 		this.configuration = configuration;
 	}
@@ -92,11 +91,15 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 	protected DirectoryCommand setupSelectMethodByManual(
 			DirectoryBeanMetaData beanMetaData, Method method, String filter) {
 		// コマンドを作成します。
+		NamingEnumerationHandler handler =
+			createNamingEnumerationHandler(beanMetaData, method, method
+				.getReturnType());
 		SelectAutoCommand cmd =
-			new SelectAutoCommand(dataSource, createNamingEnumerationHandler(
-				beanMetaData,
-				method,
-				method.getReturnType()), attributeHandlerFactory, null);
+			new SelectAutoCommand(
+				dataSourceFactory,
+				attributeHandlerFactory,
+				null,
+				handler);
 		cmd.setFilter(filter);
 		return cmd;
 	}
@@ -150,7 +153,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		AuthenticateAutoCommand cmd =
 			new AuthenticateAutoCommand(
-				dataSource,
+				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
 		return cmd;
@@ -169,7 +172,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		InsertAutoCommand cmd =
 			new InsertAutoCommand(
-				dataSource,
+				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
 		// オブジェクトクラスを設定します。
@@ -191,7 +194,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		DirectoryCommand cmd =
 			new UpdateAutoCommand(
-				dataSource,
+				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
 		return cmd;
@@ -210,7 +213,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		DirectoryCommand cmd =
 			new DeleteAutoCommand(
-				dataSource,
+				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
 		return cmd;
@@ -233,10 +236,10 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 				.getReturnType());
 		SelectAutoCommand cmd =
 			new SelectAutoCommand(
-				dataSource,
-				handler,
+				dataSourceFactory,
 				attributeHandlerFactory,
-				methodArgs);
+				methodArgs,
+				handler);
 		// フィルタの準備をします。
 		String filter = createAutoSelectFilter(annotationReader, beanMetaData);
 		String query = annotationReader.getQuery(method.getName());
@@ -287,15 +290,16 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 			// List型ハンドラ
 			return new BeanListMetaDataNamingEnumerationHandler(
 				beanMetaData,
-				dataSource.getDirectoryControlProperty());
+				dataSourceFactory.getDefaultDirectoryControlProperty());
 		} else if (beanMetaData.isBeanClassAssignable(returnType)) {
 			// Bean型ハンドラ
 			return new BeanMetaDataNamingEnumerationHandler(
 				beanMetaData,
-				dataSource.getDirectoryControlProperty());
+				dataSourceFactory.getDefaultDirectoryControlProperty());
 		} else {
-			return new ObjectNamingEnumerationHandler(beanMetaData, dataSource
-				.getDirectoryControlProperty());
+			return new ObjectNamingEnumerationHandler(
+				beanMetaData,
+				dataSourceFactory.getDefaultDirectoryControlProperty());
 		}
 	}
 }

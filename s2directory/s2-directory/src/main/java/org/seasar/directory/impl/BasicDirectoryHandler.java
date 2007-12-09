@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.impl;
 
+import javax.naming.AuthenticationException;
+import javax.naming.CommunicationException;
 import javax.naming.NameAlreadyBoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -22,8 +24,11 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchControls;
+
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
+import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
 import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
@@ -38,19 +43,18 @@ import org.seasar.framework.exception.EmptyRuntimeException;
  */
 public class BasicDirectoryHandler {
 	/** データソース */
-	private DirectoryDataSource directoryDataSource;
+	private DirectoryDataSource dataSource;
 	/** ディレクトリサーバ接続情報 */
-	protected DirectoryControlProperty directoryControlProperty;
+	protected DirectoryControlProperty property;
 
 	/**
 	 * 指定したデータソースを持ったインスタンスを作成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 */
-	public BasicDirectoryHandler(DirectoryDataSource directoryDataSource) {
-		this.directoryDataSource = directoryDataSource;
-		this.directoryControlProperty =
-			directoryDataSource.getDirectoryControlProperty();
+	public BasicDirectoryHandler(DirectoryDataSource dataSource) {
+		this.dataSource = dataSource;
+		this.property = dataSource.getDirectoryControlProperty();
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class BasicDirectoryHandler {
 	 * @return directoryDataSource
 	 */
 	public DirectoryDataSource getDirectoryDataSource() {
-		return directoryDataSource;
+		return dataSource;
 	}
 
 	/**
@@ -68,7 +72,7 @@ public class BasicDirectoryHandler {
 	 * @param directoryDataSource
 	 */
 	public void setDirectoryDataSource(DirectoryDataSource directoryDataSource) {
-		this.directoryDataSource = directoryDataSource;
+		this.dataSource = directoryDataSource;
 	}
 
 	/**
@@ -77,10 +81,20 @@ public class BasicDirectoryHandler {
 	 * @return ディレクトリコネクション
 	 */
 	protected DirContext getConnection() {
-		if (directoryDataSource == null) {
+		if (dataSource == null) {
 			throw new EmptyRuntimeException("directoryDataSource");
 		}
-		return DirectoryDataSourceUtil.getConnection(directoryDataSource);
+		try {
+			return dataSource.getConnection();
+		} catch (AuthenticationException ae) {
+			throw new DirectoryAuthenticationRuntimeException(dataSource
+				.getDirectoryControlProperty());
+		} catch (CommunicationException ce) {
+			throw new DirectoryCommunicationRuntimeException(dataSource
+				.getDirectoryControlProperty());
+		} catch (NamingException ex) {
+			throw new DirectoryRuntimeException(ex);
+		}
 	}
 
 	/**
@@ -88,12 +102,23 @@ public class BasicDirectoryHandler {
 	 * 
 	 * @return 認証結果を返します。
 	 */
-	public Boolean authenticate() {
-		if (directoryDataSource == null) {
+	public boolean authenticate() {
+		if (dataSource == null) {
 			throw new EmptyRuntimeException("directoryDataSource");
 		}
-		return new Boolean(DirectoryDataSourceUtil
-			.authenticate(directoryDataSource));
+		DirContext context = null;
+		try {
+			context = dataSource.getConnection();
+			if (context != null) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NamingException e) {
+			return false;
+		} finally {
+			DirectoryDataSourceUtil.close(context);
+		}
 	}
 
 	/**
@@ -102,7 +127,7 @@ public class BasicDirectoryHandler {
 	 * @return 検索結果を返します。
 	 */
 	public NamingEnumeration search(String filter) {
-		return search(filter, directoryControlProperty.getBaseDn());
+		return search(filter, property.getBaseDn());
 	}
 
 	/**
@@ -112,7 +137,7 @@ public class BasicDirectoryHandler {
 	 */
 	public NamingEnumeration search(String filter, String baseDn) {
 		SearchControls controls = new SearchControls();
-		controls.setSearchScope(directoryControlProperty.getSearchControls());
+		controls.setSearchScope(property.getSearchControls());
 		DirContext context = null;
 		try {
 			context = getConnection();

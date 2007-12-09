@@ -17,7 +17,7 @@ package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.impl.ExecuteHandler;
 import org.seasar.directory.impl.UpdateHandler;
@@ -30,17 +30,17 @@ import org.seasar.directory.impl.UpdateHandler;
  */
 public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
-	 * @param dataSource
+	 * @param dataSourceFactory
 	 *            データソース
-	 * @param directoryAttributeHandlerFactory
+	 * @param attributeHandlerFactory
 	 *            属性ハンドラファクトリ
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public UpdateAutoCommand(DirectoryDataSource dataSource,
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
+	public UpdateAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryAttributeHandlerFactory, methodArgs);
+		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
 	}
 
 	/**
@@ -50,9 +50,9 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		CommandContext cmd = apply(args);
+		CommandContext ctx = apply(args);
 		ExecuteHandler handler =
-			new UpdateHandler(getDirectoryDataSource(args), cmd);
+			new UpdateHandler(getDirectoryDataSource(args), ctx);
 		return handler.execute();
 	}
 }

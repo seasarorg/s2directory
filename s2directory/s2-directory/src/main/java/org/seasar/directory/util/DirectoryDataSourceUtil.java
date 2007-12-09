@@ -15,14 +15,10 @@
  */
 package org.seasar.directory.util;
 
-import javax.naming.AuthenticationException;
-import javax.naming.CommunicationException;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
+
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
-import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 
 /**
@@ -32,52 +28,6 @@ import org.seasar.directory.exception.DirectoryRuntimeException;
  * @version $Date::                           $
  */
 public final class DirectoryDataSourceUtil {
-	/**
-	 * 指定されたデータソースからコネクションを作成します。 コネクション作成時に例外が発生した場合、LDAPランタイム例外が発生します。
-	 * 
-	 * @param directoryDataSource
-	 *            データソース
-	 * @return コネクション
-	 * @throws DirectoryRuntimeException
-	 *             コネクション作成例外
-	 */
-	public static DirContext getConnection(
-			DirectoryDataSource directoryDataSource) {
-		try {
-			return directoryDataSource.getConnection();
-		} catch (AuthenticationException ae) {
-			throw new DirectoryAuthenticationRuntimeException(
-				directoryDataSource.getDirectoryControlProperty());
-		} catch (CommunicationException ce) {
-			throw new DirectoryCommunicationRuntimeException(
-				directoryDataSource.getDirectoryControlProperty());
-		} catch (NamingException ex) {
-			throw new DirectoryRuntimeException(ex);
-		}
-	}
-
-	/**
-	 * 指定されたデータソースからコネクションを作成できるか判別します。
-	 * 
-	 * @param directoryDataSource
-	 *            データソース
-	 * @return コネクションを作成できる場合 true, できない場合 false
-	 */
-	public static boolean authenticate(DirectoryDataSource directoryDataSource) {
-		DirContext context = null;
-		try {
-			context = directoryDataSource.getConnection();
-			if (context != null) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (NamingException e) {
-			return false;
-		} finally {
-			DirectoryDataSourceUtil.close(context);
-		}
-	}
 
 	/**
 	 * ディレクトリサーバ接続情報をセットアップします。
@@ -89,23 +39,6 @@ public final class DirectoryDataSourceUtil {
 			DirectoryControlProperty property) {
 		if (property.getUser() != null) {
 			property.setUser(getFullUserDn(property));
-		}
-	}
-
-	/**
-	 * ディレクトリコネクションを閉じます。
-	 * 
-	 * @param context
-	 *            ディレクトリコネクション
-	 */
-	public static void close(DirContext context) {
-		if (context == null) {
-			return;
-		}
-		try {
-			context.close();
-		} catch (NamingException e) {
-			throw new DirectoryRuntimeException(e);
 		}
 	}
 
@@ -154,5 +87,22 @@ public final class DirectoryDataSourceUtil {
 			user = user + "," + baseDn;
 		}
 		return user;
+	}
+
+	/**
+	 * ディレクトリコネクションを閉じます。
+	 * 
+	 * @param context
+	 *            ディレクトリコネクション
+	 */
+	public static void close(DirContext context) {
+		if (context == null) {
+			return;
+		}
+		try {
+			context.close();
+		} catch (NamingException e) {
+			throw new DirectoryRuntimeException(e);
+		}
 	}
 }

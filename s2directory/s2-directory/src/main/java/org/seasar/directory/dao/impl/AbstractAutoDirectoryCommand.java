@@ -19,11 +19,11 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.DirectoryValueTypeFactory;
 import org.seasar.directory.context.CommandContextImpl;
 import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
-import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -44,10 +44,11 @@ public abstract class AbstractAutoDirectoryCommand extends
 	 * @param dataSource
 	 *            データソース
 	 */
-	public AbstractAutoDirectoryCommand(DirectoryDataSource dataSource,
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory,
+	public AbstractAutoDirectoryCommand(
+			DirectoryDataSourceFactory dataSourceFactory,
+			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSource, directoryAttributeHandlerFactory);
+		super(dataSourceFactory, attributeHandlerFactory);
 		this.methodArgs = methodArgs;
 	}
 
@@ -73,8 +74,8 @@ public abstract class AbstractAutoDirectoryCommand extends
 			// 第一引数が接続情報である場合は、その接続情報を利用したデータソースを返します。
 			if (args[0] != null
 				&& methodArgs.getArgTypes()[0] == DirectoryControlProperty.class) {
-				return new DirectoryDataSourceImpl(
-					(DirectoryControlProperty)args[0]);
+				return dataSourceFactory
+					.getDirectoryDataSource((DirectoryControlProperty)args[0]);
 			}
 			// 第一引数以外に接続情報がある場合は、例外を発生させます。
 			for (int i = 1; i < args.length; ++i) {
@@ -83,7 +84,7 @@ public abstract class AbstractAutoDirectoryCommand extends
 				}
 			}
 		}
-		return getDirectoryDataSource();
+		return dataSourceFactory.getDirectoryDataSource();
 	}
 
 	/**

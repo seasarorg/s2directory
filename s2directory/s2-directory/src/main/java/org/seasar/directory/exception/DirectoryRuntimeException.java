@@ -39,6 +39,15 @@ public class DirectoryRuntimeException extends SRuntimeException {
 	}
 
 	/**
+	 * 指定された NamingException で例外を作成します。
+	 * 
+	 * @param message
+	 */
+	public DirectoryRuntimeException(String message) {
+		super("DIRECTORY0001", new Object[] { message });
+	}
+
+	/**
 	 * 指定されたメッセージコードと埋め込みオブジェクトを使用して新しいインスタンスを構築します。
 	 * 
 	 * @param messageCode

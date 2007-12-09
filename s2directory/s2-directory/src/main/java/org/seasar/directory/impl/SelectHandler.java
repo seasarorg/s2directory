@@ -71,7 +71,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 					logger.debug("Filter: " + filter);
 				}
 				NamingEnumeration results = search(filter);
-				return handler.handle(results, directoryControlProperty
+				return handler.handle(results, property
 					.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
