@@ -36,7 +36,7 @@ public class DirectoryDaoNotFoundRuntimeException extends SRuntimeException {
 	 * @param targetClass
 	 */
 	public DirectoryDaoNotFoundRuntimeException(Class targetClass) {
-		super("EDIRECTORY0008", new Object[] { targetClass.getName() });
+		super("EDIR0008", new Object[] { targetClass.getName() });
 		this.targetClass = targetClass;
 	}
 

@@ -36,7 +36,7 @@ public final class DirectoryAuthenticationRuntimeException extends
 	 */
 	public DirectoryAuthenticationRuntimeException(
 			DirectoryControlProperty property) {
-		super("EDIRECTORY0003", new Object[] { property.getUrl(),
+		super("EDIR0003", new Object[] { property.getUrl(),
 			property.getUser(), property.getPassword() });
 	}
 }
