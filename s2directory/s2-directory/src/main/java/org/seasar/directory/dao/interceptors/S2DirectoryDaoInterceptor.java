@@ -37,18 +37,18 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 	private static final long serialVersionUID = 1L;
 
 	/** メタデータファクトリ */
-	private DirectoryDaoMetaDataFactory directoryDaoMetaDataFactory;
+	private DirectoryDaoMetaDataFactory daoMetaDataFactory;
 
 	/**
 	 * diconファイルに指定された生成器でインスタンスを生成します。 <br />
 	 * Seasar本体により自動的に生成されたインスタンスがセットされます。
 	 * 
-	 * @param directoryDaoMetaDataFactory
+	 * @param daoMetaDataFactory
 	 *            メタデータファクトリ
 	 */
 	public S2DirectoryDaoInterceptor(
-			DirectoryDaoMetaDataFactory directoryDaoMetaDataFactory) {
-		this.directoryDaoMetaDataFactory = directoryDaoMetaDataFactory;
+			DirectoryDaoMetaDataFactory daoMetaDataFactory) {
+		this.daoMetaDataFactory = daoMetaDataFactory;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 		}
 		Class targetClass = getTargetClass(invocation);
 		DirectoryDaoMetaData dmd =
-			directoryDaoMetaDataFactory.getDirectoryDaoMetaData(targetClass);
+			daoMetaDataFactory.getDirectoryDaoMetaData(targetClass);
 		DirectoryCommand cmd = dmd.getDirectoryCommand(method.getName());
 		// コマンドを実行し返却します。
 		Object ret = cmd.execute(invocation.getArguments());

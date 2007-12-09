@@ -20,28 +20,42 @@ import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.DirectoryDataSourceFactory;
 
 /**
- * 属性ハンドラファクトリクラスです。
+ * ディレクトリデータソースを作成する標準的な実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public class DirectoryDataSourceFactoryImpl implements
 		DirectoryDataSourceFactory {
-
+	/** インスタンス作成時の接続情報 */
 	private DirectoryControlProperty defaultProperty;
 
+	/**
+	 * インスタンスを作成します。
+	 * 
+	 * @param property
+	 */
 	public DirectoryDataSourceFactoryImpl(DirectoryControlProperty property) {
 		this.defaultProperty = property;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public DirectoryControlProperty getDefaultDirectoryControlProperty() {
 		return defaultProperty;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public DirectoryDataSource getDirectoryDataSource() {
 		return getDirectoryDataSource(defaultProperty);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public DirectoryDataSource getDirectoryDataSource(
 			DirectoryControlProperty property) {
 		DirectoryDataSource dataSource = new DirectoryDataSourceImpl(property);

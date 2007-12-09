@@ -34,11 +34,11 @@ public interface DirectoryAttributeHandlerFactory {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory
+	 * @param valueTypeFactory
 	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory);
+			DirectoryValueTypeFactory valueTypeFactory);
 
 	/**
 	 * 属性ハンドラの集合を取得します。

@@ -35,11 +35,14 @@ public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
 
 	public String[] getObjectClasses();
 
+	/** TODO: 未使用 */
 	public PropertyType getVersionNoPropertyType()
 			throws PropertyNotFoundRuntimeException;
 
+	/** TODO: 未使用 */
 	public String convertFullColumnName(String alias);
 
+	/** TODO: 未使用 */
 	public PropertyType getPropertyTypeByColumnName(String columnName)
 			throws ColumnNotFoundRuntimeException;
 

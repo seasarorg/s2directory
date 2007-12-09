@@ -41,7 +41,7 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	 * @param dataSourceFactory
 	 *            データソース
 	 * @param attributeHandlerFactory
-	 *            ディレクトリ用の値の型ファクトリ
+	 *            属性ハンドラファクトリ
 	 */
 	public AbstractDirectoryCommand(
 			DirectoryDataSourceFactory dataSourceFactory,

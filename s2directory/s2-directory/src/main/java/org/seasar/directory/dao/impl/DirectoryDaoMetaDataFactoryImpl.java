@@ -44,7 +44,7 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	/** ディレクトリアノテーションリーダファクトリ */
 	protected DirectoryAnnotationReaderFactory readerFactory;
 	/** ディレクトリコマンドファクトリ */
-	protected DirectoryCommandFactory directoryCommandFactory;
+	protected DirectoryCommandFactory commandFactory;
 	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
 	/** ディレクトリ命名規則 */
@@ -63,11 +63,11 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public DirectoryDaoMetaDataFactoryImpl(
-			DirectoryCommandFactory directoryCommandFactory,
+			DirectoryCommandFactory commandFactory,
 			DirectoryAnnotationReaderFactory readerFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			DirectoryDaoNamingConvention configuration) {
-		this.directoryCommandFactory = directoryCommandFactory;
+		this.commandFactory = commandFactory;
 		this.readerFactory = readerFactory;
 		this.attributeHandlerFactory = attributeHandlerFactory;
 		this.configuration = configuration;
@@ -111,7 +111,7 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 		DirectoryBeanMetaData beanMetaData =
 			getDirectoryBeanMetaData(daoAnnotationReader.getBeanClass());
 		DirectoryCommand command =
-			directoryCommandFactory.createDirectoryCommand(
+			commandFactory.createDirectoryCommand(
 				daoAnnotationReader,
 				beanMetaData,
 				method);

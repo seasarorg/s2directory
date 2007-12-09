@@ -34,10 +34,10 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 */
-	public AuthenticateHandler(DirectoryDataSource directoryDataSource) {
-		super(directoryDataSource);
+	public AuthenticateHandler(DirectoryDataSource dataSource) {
+		super(dataSource);
 	}
 
 	/**

@@ -69,10 +69,10 @@ public class BasicDirectoryHandler {
 	/**
 	 * directoryDataSourceを設定します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 */
-	public void setDirectoryDataSource(DirectoryDataSource directoryDataSource) {
-		this.dataSource = directoryDataSource;
+	public void setDirectoryDataSource(DirectoryDataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
 	/**

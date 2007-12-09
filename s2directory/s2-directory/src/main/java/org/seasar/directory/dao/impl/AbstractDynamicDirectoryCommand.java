@@ -32,19 +32,23 @@ import org.seasar.framework.util.StringUtil;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public abstract class AbstractAutoDirectoryCommand extends
+public abstract class AbstractDynamicDirectoryCommand extends
 		AbstractDirectoryCommand {
 	private AnnotationMethodArgs methodArgs;
 	/** 実行フィルタ */
 	private String runFilter;
 
 	/**
-	 * インスタンスを作成します。
+	 * * インスタンスを作成します。
 	 * 
-	 * @param dataSource
-	 *            データソース
+	 * @param dataSourceFactory
+	 *            データソースファクトリ
+	 * @param attributeHandlerFactory
+	 *            属性ハンドラファクトリ
+	 * @param methodArgs
+	 *            引数
 	 */
-	public AbstractAutoDirectoryCommand(
+	public AbstractDynamicDirectoryCommand(
 			DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {

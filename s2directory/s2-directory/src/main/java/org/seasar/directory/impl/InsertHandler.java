@@ -50,12 +50,11 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 * @param ctx
 	 */
-	public InsertHandler(DirectoryDataSource directoryDataSource,
-			CommandContext ctx) {
-		super(directoryDataSource);
+	public InsertHandler(DirectoryDataSource dataSource, CommandContext ctx) {
+		super(dataSource);
 		this.ctx = ctx;
 	}
 

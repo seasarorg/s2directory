@@ -35,11 +35,11 @@ public class DeleteHandler extends BasicDirectoryHandler implements
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 * @param dn
 	 */
-	public DeleteHandler(DirectoryDataSource directoryDataSource, String dn) {
-		super(directoryDataSource);
+	public DeleteHandler(DirectoryDataSource dataSource, String dn) {
+		super(dataSource);
 		this.dn = dn;
 	}
 

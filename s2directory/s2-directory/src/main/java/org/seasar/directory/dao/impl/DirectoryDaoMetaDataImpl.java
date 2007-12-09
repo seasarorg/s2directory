@@ -49,7 +49,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	/** Daoアノテーションリーダーファクトリ */
 	protected DirectoryAnnotationReaderFactory annotationReaderFactory;
 	/** ディレクトリ属性ハンドラファクトリ */
-	protected DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory;
+	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
 	/** ビーンクラス */
 	protected Class beanClass;
 	/** ビーンメタデータ */
@@ -207,7 +207,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	 * @return ディレクトリ用の値の型ファクトリ
 	 */
 	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
-		return directoryAttributeHandlerFactory;
+		return attributeHandlerFactory;
 	}
 
 	/**
@@ -217,9 +217,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryAttributeHandlerFactory(
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.directoryAttributeHandlerFactory =
-			directoryAttributeHandlerFactory;
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		this.attributeHandlerFactory = attributeHandlerFactory;
 	}
 
 	/**

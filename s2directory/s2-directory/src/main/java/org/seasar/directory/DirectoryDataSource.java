@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 
 /**
- * このDirectoryDataSourceオブジェクトが表す物理LDAPソースへの接続に対するファクトリインタフェースです。
+ * このディレクトリデータソースが表す物理LDAPソースへの接続に対するファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $

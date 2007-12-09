@@ -33,7 +33,7 @@ import org.seasar.directory.attribute.AttributeHandler;
 public class DirectoryAttributeHandlerFactoryImpl implements
 		DirectoryAttributeHandlerFactory {
 	/** ディレクトリ用の値の型ファクトリ */
-	private DirectoryValueTypeFactory directoryValueTypeFactory;
+	private DirectoryValueTypeFactory valueTypeFactory;
 	/** 属性名の大文字と小文字を区別するかどうか */
 	private boolean ignoreCase = true;
 	/** 標準で使用する属性ハンドラ */
@@ -45,15 +45,15 @@ public class DirectoryAttributeHandlerFactoryImpl implements
 	 * {@inheritDoc}
 	 */
 	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+			DirectoryValueTypeFactory valueTypeFactory) {
+		this.valueTypeFactory = valueTypeFactory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+		return valueTypeFactory;
 	}
 
 	/**

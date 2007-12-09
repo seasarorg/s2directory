@@ -41,23 +41,23 @@ import org.seasar.framework.util.StringUtil;
 public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		NamingEnumerationHandler {
 	/** メタデータ */
-	private DirectoryBeanMetaData directoryBeanMetaData;
+	private DirectoryBeanMetaData beanMetaData;
 	/** ディレクトリサーバ接続情報 */
-	private DirectoryControlProperty directoryControlProperty;
+	private DirectoryControlProperty property;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryBeanMetaData
+	 * @param beanMetaData
 	 *            ビーンメタデータ
-	 * @param directoryControlProperty
+	 * @param property
 	 *            ディレクトリサーバ接続情報
 	 */
 	public AbstractBeanMetaDataNamingEnumerationHandler(
-			DirectoryBeanMetaData directoryBeanMetaData,
-			DirectoryControlProperty directoryControlProperty) {
-		this.directoryBeanMetaData = directoryBeanMetaData;
-		this.directoryControlProperty = directoryControlProperty;
+			DirectoryBeanMetaData beanMetaData,
+			DirectoryControlProperty property) {
+		this.beanMetaData = beanMetaData;
+		this.property = property;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 	 * @return ビーンメタデータ
 	 */
 	public DirectoryBeanMetaData getDirectoryBeanMetaData() {
-		return directoryBeanMetaData;
+		return beanMetaData;
 	}
 
 	/**
@@ -79,10 +79,9 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 	 */
 	protected Object createEntry(SearchResult result, Set attributeNameSet)
 			throws NamingException {
-		Object entry =
-			ClassUtil.newInstance(directoryBeanMetaData.getBeanClass());
-		for (int i = 0; i < directoryBeanMetaData.getPropertyTypeSize(); ++i) {
-			PropertyType pt = directoryBeanMetaData.getPropertyType(i);
+		Object entry = ClassUtil.newInstance(beanMetaData.getBeanClass());
+		for (int i = 0; i < beanMetaData.getPropertyTypeSize(); ++i) {
+			PropertyType pt = beanMetaData.getPropertyType(i);
 			if (pt.getColumnName().equals("dn")) {
 				PropertyDesc pd = pt.getPropertyDesc();
 				pd.setValue(entry, result.getName());
@@ -92,8 +91,7 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 				ValueType valueType = pt.getValueType();
 				Object value =
 					valueType.getReadValue(result.getAttributes(), pt
-						.getColumnName(), directoryControlProperty
-						.getMultipleValueDelimiter());
+						.getColumnName(), property.getMultipleValueDelimiter());
 				PropertyDesc pd = pt.getPropertyDesc();
 				pd.setValue(entry, value);
 			} else if (!pt.isPersistent()) {
@@ -108,8 +106,7 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 							valueType.getReadValue(
 								result.getAttributes(),
 								columnName,
-								directoryControlProperty
-									.getMultipleValueDelimiter());
+								property.getMultipleValueDelimiter());
 						PropertyDesc pd = pt.getPropertyDesc();
 						pd.setValue(entry, value);
 						break;

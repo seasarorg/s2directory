@@ -94,8 +94,8 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		NamingEnumerationHandler handler =
 			createNamingEnumerationHandler(beanMetaData, method, method
 				.getReturnType());
-		SelectAutoCommand cmd =
-			new SelectAutoCommand(
+		SelectDynamicCommand cmd =
+			new SelectDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				null,
@@ -151,8 +151,8 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		// 引数の準備をします。
 		AnnotationMethodArgs methodArgs =
 			AnnotationMethodArgsFactory.create(method, annotationReader);
-		AuthenticateAutoCommand cmd =
-			new AuthenticateAutoCommand(
+		AuthenticateDynamicCommand cmd =
+			new AuthenticateDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
@@ -170,8 +170,8 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		// 引数の準備をします。
 		AnnotationMethodArgs methodArgs =
 			AnnotationMethodArgsFactory.create(method, annotationReader);
-		InsertAutoCommand cmd =
-			new InsertAutoCommand(
+		InsertDynamicCommand cmd =
+			new InsertDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
@@ -193,7 +193,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		AnnotationMethodArgs methodArgs =
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		DirectoryCommand cmd =
-			new UpdateAutoCommand(
+			new UpdateDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
@@ -212,7 +212,7 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		AnnotationMethodArgs methodArgs =
 			AnnotationMethodArgsFactory.create(method, annotationReader);
 		DirectoryCommand cmd =
-			new DeleteAutoCommand(
+			new DeleteDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs);
@@ -234,8 +234,8 @@ public class DirectoryCommandFactoryImpl implements DirectoryCommandFactory {
 		NamingEnumerationHandler handler =
 			createNamingEnumerationHandler(beanMetaData, method, method
 				.getReturnType());
-		SelectAutoCommand cmd =
-			new SelectAutoCommand(
+		SelectDynamicCommand cmd =
+			new SelectDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
 				methodArgs,

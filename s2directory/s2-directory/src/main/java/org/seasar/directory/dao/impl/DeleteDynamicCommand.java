@@ -28,7 +28,7 @@ import org.seasar.directory.impl.ExecuteHandler;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
+public class DeleteDynamicCommand extends AbstractDynamicDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -39,7 +39,7 @@ public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public DeleteAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+	public DeleteDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
 		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
@@ -52,9 +52,9 @@ public class DeleteAutoCommand extends AbstractAutoDirectoryCommand {
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		CommandContext cmd = apply(args);
+		CommandContext ctx = apply(args);
 		ExecuteHandler handler =
-			new DeleteHandler(getDirectoryDataSource(args), cmd.getDn());
+			new DeleteHandler(getDirectoryDataSource(args), ctx.getDn());
 		return handler.execute();
 	}
 }

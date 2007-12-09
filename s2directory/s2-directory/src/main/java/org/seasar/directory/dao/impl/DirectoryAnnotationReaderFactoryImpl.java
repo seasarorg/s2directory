@@ -36,7 +36,7 @@ public class DirectoryAnnotationReaderFactoryImpl implements
 	// TODO: 未実装 BACKPORT175_ANNOTATION_READER_FACTORY
 	private static final String BACKPORT175_ANNOTATION_READER_FACTORY =
 		"org.seasar.directory.dao.annotation.backport175.impl.AnnotationReaderFactoryImpl";
-	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
+	private DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	public DirectoryAnnotationReaderFactoryImpl() {
 		Class clazz = DirectoryFieldAnnotationReaderFactory.class;
@@ -49,19 +49,19 @@ public class DirectoryAnnotationReaderFactoryImpl implements
 			} catch (ClassNotFoundRuntimeException ignore2) {
 			}
 		}
-		directoryAnnotationReaderFactory =
+		annotationReaderFactory =
 			(DirectoryAnnotationReaderFactory)ClassUtil.newInstance(clazz);
 	}
 
 	public DirectoryBeanAnnotationReader createDirectoryBeanAnnotationReader(
 			Class beanClass) {
-		return directoryAnnotationReaderFactory
+		return annotationReaderFactory
 			.createDirectoryBeanAnnotationReader(beanClass);
 	}
 
 	public DirectoryDaoAnnotationReader createDirectoryDaoAnnotationReader(
 			BeanDesc daoBeanDesc) {
-		return directoryAnnotationReaderFactory
+		return annotationReaderFactory
 			.createDirectoryDaoAnnotationReader(daoBeanDesc);
 	}
 }
