@@ -29,7 +29,7 @@ import org.seasar.directory.impl.SelectHandler;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
+public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 	/** 検索結果ハンドラ */
 	private NamingEnumerationHandler namingEnumerationHandler;
 
@@ -43,7 +43,7 @@ public class SelectAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public SelectAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+	public SelectDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs,
 			NamingEnumerationHandler namingEnumerationHandler) {

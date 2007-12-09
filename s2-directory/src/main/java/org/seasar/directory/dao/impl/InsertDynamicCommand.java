@@ -28,7 +28,7 @@ import org.seasar.directory.impl.InsertHandler;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class InsertAutoCommand extends AbstractAutoDirectoryCommand {
+public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -39,7 +39,7 @@ public class InsertAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public InsertAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+	public InsertDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
 		super(dataSourceFactory, attributeHandlerFactory, methodArgs);

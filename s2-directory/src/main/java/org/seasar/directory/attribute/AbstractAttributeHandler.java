@@ -34,7 +34,7 @@ import org.seasar.framework.util.StringUtil;
  */
 public abstract class AbstractAttributeHandler implements AttributeHandler {
 	/** ディレクトリ用の値の型ファクトリ */
-	private DirectoryValueTypeFactory directoryValueTypeFactory;
+	private DirectoryValueTypeFactory valueTypeFactory;
 	/** 属性ハンドラが扱う属性名のリスト */
 	private List attributeNameList;
 
@@ -69,15 +69,15 @@ public abstract class AbstractAttributeHandler implements AttributeHandler {
 	 * {@inheritDoc}
 	 */
 	public DirectoryValueTypeFactory getDirectoryValueTypeFactory() {
-		return directoryValueTypeFactory;
+		return valueTypeFactory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory) {
-		this.directoryValueTypeFactory = directoryValueTypeFactory;
+			DirectoryValueTypeFactory valueTypeFactory) {
+		this.valueTypeFactory = valueTypeFactory;
 	}
 
 	/**

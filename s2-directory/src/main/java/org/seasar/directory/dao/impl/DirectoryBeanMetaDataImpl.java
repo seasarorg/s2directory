@@ -39,19 +39,18 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 	private String[] objectClasses;
 	private Map propertyTypesByColumnName_ = new CaseInsensitiveMap();
 	private String versionNoPropertyName_ = "versionNo";
-	private DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory;
+	private DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	public DirectoryBeanMetaDataImpl() {
 	}
 
 	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
-		return directoryAnnotationReaderFactory;
+		return annotationReaderFactory;
 	}
 
 	public void setDirectoryAnnotationReaderFactory(
-			DirectoryAnnotationReaderFactory directoryAnnotationReaderFactory) {
-		this.directoryAnnotationReaderFactory =
-			directoryAnnotationReaderFactory;
+			DirectoryAnnotationReaderFactory annotationReaderFactory) {
+		this.annotationReaderFactory = annotationReaderFactory;
 	}
 
 	public void initialize() {

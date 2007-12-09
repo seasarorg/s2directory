@@ -45,13 +45,13 @@ public class SelectHandler extends BasicDirectoryHandler implements
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 * @param filter
 	 * @param handler
 	 */
-	public SelectHandler(DirectoryDataSource directoryDataSource,
-			String filter, NamingEnumerationHandler handler, CommandContext ctx) {
-		super(directoryDataSource);
+	public SelectHandler(DirectoryDataSource dataSource, String filter,
+			NamingEnumerationHandler handler, CommandContext ctx) {
+		super(dataSource);
 		this.filter = filter;
 		this.handler = handler;
 		this.ctx = ctx;
@@ -71,8 +71,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 					logger.debug("Filter: " + filter);
 				}
 				NamingEnumeration results = search(filter);
-				return handler.handle(results, property
-					.getBaseDn());
+				return handler.handle(results, property.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
 				String dn = ctx.getDn();

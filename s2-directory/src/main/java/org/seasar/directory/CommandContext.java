@@ -107,9 +107,9 @@ public interface CommandContext {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryAttributeHandlerFactory
+	 * @param attributeHandlerFactory
 	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryAttributeHandlerFactory(
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory);
+			DirectoryAttributeHandlerFactory attributeHandlerFactory);
 }

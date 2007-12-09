@@ -52,8 +52,8 @@ public class CommandContextImpl implements CommandContext {
 	 * @param directoryValueTypeFactory
 	 */
 	public CommandContextImpl(
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		setDirectoryAttributeHandlerFactory(directoryAttributeHandlerFactory);
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
 	}
 
 	/**
@@ -242,8 +242,8 @@ public class CommandContextImpl implements CommandContext {
 	 * {@inheritDoc}
 	 */
 	public void setDirectoryAttributeHandlerFactory(
-			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
-		this.attributeHandlerFactory = directoryAttributeHandlerFactory;
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		this.attributeHandlerFactory = attributeHandlerFactory;
 	}
 
 	/**

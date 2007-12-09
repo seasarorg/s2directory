@@ -56,12 +56,11 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	/**
 	 * インスタンスを生成します。
 	 * 
-	 * @param directoryDataSource
+	 * @param dataSource
 	 * @param cmd
 	 */
-	public UpdateHandler(DirectoryDataSource directoryDataSource,
-			CommandContext ctx) {
-		super(directoryDataSource);
+	public UpdateHandler(DirectoryDataSource dataSource, CommandContext ctx) {
+		super(dataSource);
 		this.ctx = ctx;
 	}
 

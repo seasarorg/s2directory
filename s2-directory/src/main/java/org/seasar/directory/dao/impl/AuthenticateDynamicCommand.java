@@ -15,21 +15,22 @@
  */
 package org.seasar.directory.dao.impl;
 
-import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.impl.AuthenticateHandler;
 import org.seasar.directory.impl.ExecuteHandler;
-import org.seasar.directory.impl.UpdateHandler;
 
 /**
- * 動的に更新処理を実行するクラスです。
+ * 動的に認証処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
+public class AuthenticateDynamicCommand extends AbstractDynamicDirectoryCommand {
 	/**
+	 * インスタンスを作成します。
+	 * 
 	 * @param dataSourceFactory
 	 *            データソース
 	 * @param attributeHandlerFactory
@@ -37,7 +38,8 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	 * @param methodArgs
 	 *            関数の引数
 	 */
-	public UpdateAutoCommand(DirectoryDataSourceFactory dataSourceFactory,
+	public AuthenticateDynamicCommand(
+			DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
 		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
@@ -46,13 +48,12 @@ public class UpdateAutoCommand extends AbstractAutoDirectoryCommand {
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * 更新処理を実行します。
+	 * 認証処理を実行します。
 	 * </p>
 	 */
 	public Object execute(Object[] args) {
-		CommandContext ctx = apply(args);
 		ExecuteHandler handler =
-			new UpdateHandler(getDirectoryDataSource(args), ctx);
+			new AuthenticateHandler(getDirectoryDataSource(args));
 		return handler.execute();
 	}
 }

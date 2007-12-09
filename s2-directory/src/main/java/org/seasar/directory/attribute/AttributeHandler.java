@@ -39,11 +39,11 @@ public interface AttributeHandler {
 	/**
 	 * ディレクトリ用の値の型ファクトリを設定します。
 	 * 
-	 * @param directoryValueTypeFactory
+	 * @param valueTypeFactory
 	 *            ディレクトリ用の値の型ファクトリ
 	 */
 	public void setDirectoryValueTypeFactory(
-			DirectoryValueTypeFactory directoryValueTypeFactory);
+			DirectoryValueTypeFactory valueTypeFactory);
 
 	/**
 	 * 属性ハンドラが扱う属性名のリストを設定します。

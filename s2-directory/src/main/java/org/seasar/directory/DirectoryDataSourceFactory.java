@@ -16,17 +16,32 @@
 package org.seasar.directory;
 
 /**
- * 属性ハンドラファクトリインタフェースです。
+ * ディレクトリデータソースを作成するファクトリのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public interface DirectoryDataSourceFactory {
-
+	/**
+	 * インスタンス作成時の接続情報を取得します。
+	 * 
+	 * @return 接続情報
+	 */
 	public DirectoryControlProperty getDefaultDirectoryControlProperty();
 
+	/**
+	 * インスタンス作成時の接続情報から作成したディレクトリデータソース
+	 * 
+	 * @return ディレクトリデータソース
+	 */
 	public DirectoryDataSource getDirectoryDataSource();
 
+	/**
+	 * 指定された接続情報から作成したディレクトリデータソース
+	 * 
+	 * @param property
+	 * @return ディレクトリデータソース
+	 */
 	public DirectoryDataSource getDirectoryDataSource(
 			DirectoryControlProperty property);
 }

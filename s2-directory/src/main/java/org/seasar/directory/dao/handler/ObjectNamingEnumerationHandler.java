@@ -34,13 +34,14 @@ public class ObjectNamingEnumerationHandler extends
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryBeanMetaData
-	 * @param directoryControlProperty
+	 * @param beanMetaData
+	 *            ビーンメタデータ
+	 * @param property
+	 *            ディレクトリサーバ接続情報
 	 */
-	public ObjectNamingEnumerationHandler(
-			DirectoryBeanMetaData directoryBeanMetaData,
-			DirectoryControlProperty directoryControlProperty) {
-		super(directoryBeanMetaData, directoryControlProperty);
+	public ObjectNamingEnumerationHandler(DirectoryBeanMetaData beanMetaData,
+			DirectoryControlProperty property) {
+		super(beanMetaData, property);
 	}
 
 	/**

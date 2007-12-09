@@ -35,12 +35,15 @@ public class BeanListMetaDataNamingEnumerationHandler extends
 	/**
 	 * インスタンスを作成します。
 	 * 
-	 * @param directoryBeanMetaData
+	 * @param beanMetaData
+	 *            ビーンメタデータ
+	 * @param property
+	 *            ディレクトリサーバ接続情報
 	 */
 	public BeanListMetaDataNamingEnumerationHandler(
-			DirectoryBeanMetaData directoryBeanMetaData,
-			DirectoryControlProperty directoryControlProperty) {
-		super(directoryBeanMetaData, directoryControlProperty);
+			DirectoryBeanMetaData beanMetaData,
+			DirectoryControlProperty property) {
+		super(beanMetaData, property);
 	}
 
 	/**
