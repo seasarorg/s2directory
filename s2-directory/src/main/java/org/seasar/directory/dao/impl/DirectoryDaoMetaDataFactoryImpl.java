@@ -15,21 +15,20 @@
  */
 package org.seasar.directory.dao.impl;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.DirectoryDaoNamingConvention;
+import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
-import org.seasar.directory.dao.DirectoryBeanMetaData;
-import org.seasar.directory.dao.DirectoryCommand;
-import org.seasar.directory.dao.DirectoryCommandFactory;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.directory.dao.DirectoryDaoMetaData;
 import org.seasar.directory.dao.DirectoryDaoMetaDataFactory;
+import org.seasar.directory.dao.DirectoryDaoNamingConvention;
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.util.MethodUtil;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.Disposable;
+import org.seasar.framework.util.DisposableUtil;
 
 /**
  * ディレクトリメタデータを生成する実装クラスです。
@@ -38,39 +37,35 @@ import org.seasar.framework.util.MethodUtil;
  * @version $Date::                           $
  */
 public class DirectoryDaoMetaDataFactoryImpl implements
-		DirectoryDaoMetaDataFactory {
-	/** ディレクトリDaoメタデータのキャッシュ */
-	protected Map directoryDaoMetaDataCache = new HashMap();
-	/** ディレクトリアノテーションリーダファクトリ */
-	protected DirectoryAnnotationReaderFactory readerFactory;
+		DirectoryDaoMetaDataFactory, Disposable {
+	/** ディレクトリコマンドファクトリのBindingアノテーション */
+	public static final String dataSourceFactory_BINDING = "bindingType=must";
+	/** ディレクトリ属性ハンドラファクトリのBindingアノテーション */
+	public static final String attributeHandlerFactory_BINDING =
+		"bindingType=must";
+	/** ディレクトリアノテーションリーダファクトリのBindingアノテーション */
+	public static final String annotationReaderFactory_BINDING =
+		"bindingType=must";
+	/** ディレクトリ命名規則のBindingアノテーション */
+	public static final String daoNamingConvention_BINDING = "bindingType=must";
+
 	/** ディレクトリコマンドファクトリ */
-	protected DirectoryCommandFactory commandFactory;
+	protected DirectoryDataSourceFactory dataSourceFactory;
 	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+	/** ディレクトリアノテーションリーダファクトリ */
+	protected DirectoryAnnotationReaderFactory annotationReaderFactory;
 	/** ディレクトリ命名規則 */
-	protected DirectoryDaoNamingConvention configuration;
-	/** ビーンクラスのキャッシュ */
-	protected Map beanMetaDataCache = new HashMap();
+	protected DirectoryDaoNamingConvention daoNamingConvention;
+	/** ディレクトリDaoメタデータのキャッシュ */
+	protected Map daoMetaDataCache = new HashMap();
+	/** 初期化フラグ */
+	protected boolean initialized;
 
 	/**
-	 * インスタンスを生成します。
-	 * 
-	 * @param property
-	 *            ディレクトリサーバ接続情報
-	 * @param readerFactory
-	 *            ディレクトリアノテーションリーダファクトリ
-	 * @param attributeHandlerFactory
-	 *            ディレクトリ用の値の型ファクトリ
+	 * インスタンスを作成します。
 	 */
-	public DirectoryDaoMetaDataFactoryImpl(
-			DirectoryCommandFactory commandFactory,
-			DirectoryAnnotationReaderFactory readerFactory,
-			DirectoryAttributeHandlerFactory attributeHandlerFactory,
-			DirectoryDaoNamingConvention configuration) {
-		this.commandFactory = commandFactory;
-		this.readerFactory = readerFactory;
-		this.attributeHandlerFactory = attributeHandlerFactory;
-		this.configuration = configuration;
+	public DirectoryDaoMetaDataFactoryImpl() {
 	}
 
 	/**
@@ -78,60 +73,113 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 	 */
 	public synchronized DirectoryDaoMetaData getDirectoryDaoMetaData(
 			Class daoClass) {
-		String key = daoClass.getName();
-		DirectoryDaoMetaData dmd =
-			(DirectoryDaoMetaData)directoryDaoMetaDataCache.get(key);
+		if (!initialized) {
+			DisposableUtil.add(this);
+			initialized = true;
+		}
+		final String key = daoClass.getName();
+		DirectoryDaoMetaData dmd;
+		synchronized (daoMetaDataCache) {
+			dmd = (DirectoryDaoMetaData)daoMetaDataCache.get(key);
+		}
 		if (dmd != null) {
 			return dmd;
 		}
-		DirectoryDaoMetaDataImpl dmdi =
-			new DirectoryDaoMetaDataImpl(daoClass, readerFactory, configuration
-				.getDirectoryDaoSuffixes(), attributeHandlerFactory);
-		setupDirectoryCommand(dmdi);
-		directoryDaoMetaDataCache.put(key, dmdi);
+		final DirectoryDaoMetaData dmdi = createDirectoryDaoMetaData(daoClass);
+		synchronized (daoMetaDataCache) {
+			dmd = (DirectoryDaoMetaData)daoMetaDataCache.get(daoClass);
+			if (dmd != null) {
+				return dmd;
+			} else {
+				daoMetaDataCache.put(key, dmdi);
+			}
+		}
 		return dmdi;
 	}
 
-	protected void setupDirectoryCommand(
-			DirectoryDaoMetaDataImpl daoMetaDataImpl) {
-		BeanDesc idbd = daoMetaDataImpl.getDirectoryDaoBeanDesc();
-		String[] names = idbd.getMethodNames();
-		for (int i = 0; i < names.length; ++i) {
-			Method[] methods = idbd.getMethods(names[i]);
-			if (methods.length == 1 && MethodUtil.isAbstract(methods[0])) {
-				setupMethod(daoMetaDataImpl, methods[0]);
-			}
-		}
+	/**
+	 * 指定されたDAOクラスから作成したDirecotryDaoMetaDataのインスタンスを作成します。
+	 * 
+	 * @param daoClass
+	 *            作成元となるDAOクラス
+	 * @return 作成したDirecotryDaoMetaDataのインスタンス
+	 */
+	protected DirectoryDaoMetaData createDirectoryDaoMetaData(
+			final Class daoClass) {
+		final BeanDesc daoBeanDesc = BeanDescFactory.getBeanDesc(daoClass);
+		final DirectoryDaoAnnotationReader daoAnnotationReader =
+			annotationReaderFactory
+				.createDirectoryDaoAnnotationReader(daoBeanDesc);
+
+		final DirectoryDaoMetaDataImpl daoMetaData =
+			createDirectoryDaoMetaDataImpl();
+		daoMetaData.setDaoClass(daoClass);
+		daoMetaData.setDirectoryDataSourceFactory(dataSourceFactory);
+		daoMetaData
+			.setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
+
+		daoMetaData.setDirectoryDaoAnnotationReader(daoAnnotationReader);
+		daoMetaData
+			.setDirectoryAnnotationReaderFactory(annotationReaderFactory);
+		daoMetaData.setDirectoryDaoNamingConvention(daoNamingConvention);
+		daoMetaData.initialize();
+		return daoMetaData;
 	}
 
-	protected void setupMethod(DirectoryDaoMetaDataImpl daoMetaDataImpl,
-			Method method) {
-		DirectoryDaoAnnotationReader daoAnnotationReader =
-			daoMetaDataImpl.getDirectoryDaoAnnotationReader();
-		DirectoryBeanMetaData beanMetaData =
-			getDirectoryBeanMetaData(daoAnnotationReader.getBeanClass());
-		DirectoryCommand command =
-			commandFactory.createDirectoryCommand(
-				daoAnnotationReader,
-				beanMetaData,
-				method);
-		daoMetaDataImpl.setDirectoryCommand(method.getName(), command);
+	/**
+	 * DirecotryDaoMetaDataImplのインスタンスを作成します。
+	 * 
+	 * @return DirecotryDaoMetaDataImplのインスタンス
+	 */
+	protected DirectoryDaoMetaDataImpl createDirectoryDaoMetaDataImpl() {
+		return new DirectoryDaoMetaDataImpl();
 	}
 
-	public DirectoryBeanMetaData getDirectoryBeanMetaData(Class beanClass) {
-		DirectoryBeanMetaData beanMetaData =
-			(DirectoryBeanMetaData)beanMetaDataCache.get(beanClass);
-		if (beanMetaData == null) {
-			DirectoryBeanMetaDataImpl beanMetaDataImpl =
-				new DirectoryBeanMetaDataImpl();
-			beanMetaDataImpl.setBeanClass(beanClass);
-			beanMetaDataImpl.setDirectoryAnnotationReaderFactory(readerFactory);
-			beanMetaDataImpl
-				.setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
-			beanMetaDataImpl.initialize();
-			beanMetaData = beanMetaDataImpl;
-			beanMetaDataCache.put(beanClass, beanMetaData);
-		}
-		return beanMetaData;
+	/**
+	 * {@inheritDoc}
+	 */
+	public synchronized void dispose() {
+		daoMetaDataCache.clear();
+		initialized = false;
+	}
+
+	//
+	// getter / setter
+	//
+
+	public DirectoryDataSourceFactory getDirectoryDataSourceFactory() {
+		return dataSourceFactory;
+	}
+
+	public void setDirectoryDataSourceFactory(
+			DirectoryDataSourceFactory dataSourceFactory) {
+		this.dataSourceFactory = dataSourceFactory;
+	}
+
+	public DirectoryAttributeHandlerFactory getDirectoryAttributeHandlerFactory() {
+		return attributeHandlerFactory;
+	}
+
+	public void setDirectoryAttributeHandlerFactory(
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		this.attributeHandlerFactory = attributeHandlerFactory;
+	}
+
+	public DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
+		return annotationReaderFactory;
+	}
+
+	public void setDirectoryAnnotationReaderFactory(
+			DirectoryAnnotationReaderFactory annotationReaderFactory) {
+		this.annotationReaderFactory = annotationReaderFactory;
+	}
+
+	public DirectoryDaoNamingConvention getDirectoryDaoNamingConvention() {
+		return daoNamingConvention;
+	}
+
+	public void setDirectoryDaoNamingConvention(
+			DirectoryDaoNamingConvention daoNamingConvention) {
+		this.daoNamingConvention = daoNamingConvention;
 	}
 }

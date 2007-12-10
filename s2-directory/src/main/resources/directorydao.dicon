@@ -11,20 +11,19 @@
 	</component>
 	<component class="org.seasar.directory.attribute.UserPasswordAttributeHandler">
 		<property name="attributeNameList">{"userPassword", "alternativeUserPassword"}</property>
-	</component>	
+	</component>
+
+	<!-- factory -->
+	<component class="org.seasar.directory.impl.DirectoryDataSourceFactoryImpl"/>
 	<component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl">
 		<property name="ignoreCase">true</property>
 		<property name="defaultAttributeHandler">defaultHandler</property>
 		<property name="attributeHandlers">container.findComponents( @org.seasar.directory.attribute.AttributeHandler@class)</property>
 	</component>
-
-	<!-- factory -->
-	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>
-	<component class="org.seasar.directory.impl.DirectoryDataSourceFactoryImpl"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryCommandFactoryImpl"/>
-	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
+	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>	
 	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>
 	<component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
 
 	<!-- interceptor -->
 	<component name="interceptor"

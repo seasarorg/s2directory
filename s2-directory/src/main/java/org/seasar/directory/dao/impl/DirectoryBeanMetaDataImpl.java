@@ -44,15 +44,6 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 	public DirectoryBeanMetaDataImpl() {
 	}
 
-	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
-		return annotationReaderFactory;
-	}
-
-	public void setDirectoryAnnotationReaderFactory(
-			DirectoryAnnotationReaderFactory annotationReaderFactory) {
-		this.annotationReaderFactory = annotationReaderFactory;
-	}
-
 	public void initialize() {
 		beanAnnotationReader =
 			getDirectoryAnnotationReaderFactory()
@@ -62,6 +53,15 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		setupVersionNoPropertyName(beanDesc);
 		setupProperty(beanDesc);
 		super.initialize();
+	}
+
+	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
+		return annotationReaderFactory;
+	}
+
+	public void setDirectoryAnnotationReaderFactory(
+			DirectoryAnnotationReaderFactory annotationReaderFactory) {
+		this.annotationReaderFactory = annotationReaderFactory;
 	}
 
 	/**

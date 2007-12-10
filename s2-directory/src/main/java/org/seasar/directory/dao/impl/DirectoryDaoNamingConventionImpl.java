@@ -15,9 +15,7 @@
  */
 package org.seasar.directory.dao.impl;
 
-import java.lang.reflect.Method;
-
-import org.seasar.directory.DirectoryDaoNamingConvention;
+import org.seasar.directory.dao.DirectoryDaoNamingConvention;
 
 /**
  * ディレクトリ命名規約のインタフェースです。
@@ -27,88 +25,106 @@ import org.seasar.directory.DirectoryDaoNamingConvention;
  */
 public class DirectoryDaoNamingConventionImpl implements
 		DirectoryDaoNamingConvention {
+	/** ディレクトリDaoクラスの接尾辞 */
+	private String[] daoSuffixes = new String[] { "Dao" };
 
-	/** 認証処理を実行するメソッド名につけるprefix */
+	/** 認証処理を実行するメソッド名につける接頭辞 */
 	protected String[] authenticatePrefixes = new String[] { "auth" };
 
-	public void setAuthenticatePrefixes(String[] prefixes) {
-		this.authenticatePrefixes = prefixes;
-	}
-
-	public boolean isAuthenticateMethod(Method method) {
-		for (int i = 0; i < authenticatePrefixes.length; ++i) {
-			if (method.getName().startsWith(authenticatePrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/** 新規挿入処理を実行するメソッド名につけるprefix */
+	/** 新規挿入処理を実行するメソッド名につける接頭辞 */
 	protected String[] insertPrefixes =
 		new String[] { "insert", "create", "add" };
 
-	public void setInsertPrefixes(String[] prefixes) {
-		this.insertPrefixes = prefixes;
-	}
-
-	public boolean isInsertMethod(Method method) {
-		for (int i = 0; i < insertPrefixes.length; ++i) {
-			if (method.getName().startsWith(insertPrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/** 削除挿入処理を実行するメソッド名につけるprefix */
-	protected String[] deletePrefixes = new String[] { "delete", "remove" };
-
-	public void setDeletePrefixes(String[] prefixes) {
-		this.deletePrefixes = prefixes;
-	}
-
-	public boolean isDeleteMethod(Method method) {
-		for (int i = 0; i < deletePrefixes.length; ++i) {
-			if (method.getName().startsWith(deletePrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/** 更新挿入処理を実行するメソッド名につけるprefix */
+	/** 更新挿入処理を実行するメソッド名につける接頭辞 */
 	protected String[] updatePrefixes =
 		new String[] { "update", "modify", "store" };
 
-	public void setUpdatePrefixes(String[] prefixes) {
-		this.updatePrefixes = prefixes;
-	}
+	/** 削除処理を実行するメソッド名につける接頭辞 */
+	protected String[] deletePrefixes = new String[] { "delete", "remove" };
 
-	public boolean isUpdateMethod(Method method) {
-		for (int i = 0; i < updatePrefixes.length; ++i) {
-			if (method.getName().startsWith(updatePrefixes[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean isSelectMethod(Method method) {
-		if (isDeleteMethod(method) || isInsertMethod(method)
-			|| isUpdateMethod(method)) {
-			return false;
-		}
-		return true;
-	}
-
-	private String[] directoryDaoSuffixes;
-
-	public void setDirectoryDaoSuffixes(String[] daoSuffixes) {
-		this.directoryDaoSuffixes = daoSuffixes;
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public String[] getDirectoryDaoSuffixes() {
-		return directoryDaoSuffixes;
+		return daoSuffixes;
 	}
+
+	/**
+	 * ディレクトリDaoクラスの接尾辞を設定します。
+	 * 
+	 * @param daoSuffixes
+	 *            ディレクトリDaoクラスの接尾辞
+	 */
+	public void setDirectoryDaoSuffixes(String[] daoSuffixes) {
+		this.daoSuffixes = daoSuffixes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getAuthenticatePrefixes() {
+		return authenticatePrefixes;
+	}
+
+	/**
+	 * 認証処理を実行するメソッド名につける接頭辞を設定します。
+	 * 
+	 * @param authenticatePrefixes
+	 *            認証処理を実行するメソッド名につける接頭辞
+	 */
+	public void setAuthenticatePrefixes(String[] authenticatePrefixes) {
+		this.authenticatePrefixes = authenticatePrefixes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getInsertPrefixes() {
+		return insertPrefixes;
+	}
+
+	/**
+	 * 新規挿入処理を実行するメソッド名につける接頭辞を設定します。
+	 * 
+	 * @param insertPrefixes
+	 *            新規挿入処理を実行するメソッド名につける接頭辞
+	 */
+	public void setInsertPrefixes(String[] insertPrefixes) {
+		this.insertPrefixes = insertPrefixes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getUpdatePrefixes() {
+		return updatePrefixes;
+	}
+
+	/**
+	 * 更新挿入処理を実行するメソッド名につける接頭辞
+	 * 
+	 * @param updatePrefixes
+	 *            更新挿入処理を実行するメソッド名につける接頭辞
+	 */
+	public void setUpdatePrefixes(String[] updatePrefixes) {
+		this.updatePrefixes = updatePrefixes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getDeletePrefixes() {
+		return deletePrefixes;
+	}
+
+	/**
+	 * 削除処理を実行するメソッド名につける接頭辞を設定します。
+	 * 
+	 * @param deletePrefixes
+	 *            削除処理を実行するメソッド名につける接頭辞
+	 */
+	public void setDeletePrefixes(String[] deletePrefixes) {
+		this.deletePrefixes = deletePrefixes;
+	}
+
 }
