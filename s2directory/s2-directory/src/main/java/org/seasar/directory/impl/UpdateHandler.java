@@ -32,7 +32,6 @@ import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
-import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -84,19 +83,18 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	private Integer update(String dn) {
 		try {
 			// 更新対象を検索
-			String firstDn = DirectoryUtil.getFirstDn(dn);
-			String baseDn = DirectoryUtil.getBaseDn(dn);
-			NamingEnumeration currentEntrys = super.search(firstDn, baseDn);
-			String fullDn = firstDn + "," + baseDn;
+			NamingEnumeration currentEntrys = super.searchOneLevel(dn);
 			// 更新アイテムを作成
 			ModificationItem[] items = createModificationItems(currentEntrys);
 			if (logger.isDebugEnabled()) {
-				logger.debug("Update: " + fullDn);
-				for (int i = 0; i < items.length; i++) {
-					logger.debug("\t" + items[i]);
+				logger.debug("Update: " + dn);
+				if (items != null) {
+					for (int i = 0; i < items.length; i++) {
+						logger.debug("\t" + items[i]);
+					}
 				}
 			}
-			return super.update(fullDn, items);
+			return super.update(dn, items);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		}

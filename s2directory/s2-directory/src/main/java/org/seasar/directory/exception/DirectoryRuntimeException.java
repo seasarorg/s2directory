@@ -35,7 +35,7 @@ public class DirectoryRuntimeException extends SRuntimeException {
 	 *            NamingException
 	 */
 	public DirectoryRuntimeException(NamingException cause) {
-		super("DIRECTORY0001", new Object[] { cause }, cause);
+		super("DIR0001", new Object[] { cause }, cause);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class DirectoryRuntimeException extends SRuntimeException {
 	 * @param message
 	 */
 	public DirectoryRuntimeException(String message) {
-		super("DIRECTORY0001", new Object[] { message });
+		super("DIR0001", new Object[] { message });
 	}
 
 	/**

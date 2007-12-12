@@ -97,7 +97,7 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		super.tearDown();
 	}
 
-	public void testFilter() {
+	public void testFilter1() {
 		List list = posixGroupDtoDao.getPosixGroupList();
 		assertEquals(2, list.size());
 		PosixGroupDto group = (PosixGroupDto)list.get(0);

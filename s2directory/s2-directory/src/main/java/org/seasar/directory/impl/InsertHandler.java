@@ -82,11 +82,7 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	 */
 	private Integer insert(String dn) {
 		try {
-			// 追加対象が既に存在しているか検索
-			String firstDn = DirectoryUtil.getFirstDn(dn);
-			String baseDn = DirectoryUtil.getBaseDn(dn);
-			String fullDn = firstDn + "," + baseDn;
-			return super.insert(fullDn, createAttributes(dn));
+			return super.insert(dn, createAttributes(dn));
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		}

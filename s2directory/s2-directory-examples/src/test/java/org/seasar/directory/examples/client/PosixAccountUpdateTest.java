@@ -19,6 +19,7 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
+import org.seasar.directory.exception.DirectoryNoSuchEntryRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
@@ -62,7 +63,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		super.tearDown();
 	}
 
-	public void testUpdate() {
+	public void testUpdate1() {
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
 		assertEquals(true, account.getCn().equals(user1.getCn()));
@@ -83,6 +84,21 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		assertEquals("user1", account.getCn());
 		assertEquals(null, account.getDescription());
 		assertEquals("user1", account.getSn());
+	}
+
+	public void testUpdate2() {
+		// user1を取得します。
+		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
+		assertEquals(true, account.getCn().equals(user1.getCn()));
+		assertEquals(null, account.getDescription());
+		// 存在しないエントリの属性を更新しようとします。
+		account.setDn("uid=dummy,dc=seasar,dc=org");
+		try {
+			assertEquals(1, posixAccountDtoDao.update(account));
+			assertTrue(false);
+		} catch (DirectoryNoSuchEntryRuntimeException e) {
+			assertTrue(true);
+		}
 	}
 
 	public void testUpdateWithUserMode() {
