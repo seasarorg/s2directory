@@ -20,6 +20,7 @@ import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
+import org.seasar.directory.exception.DirectoryNoSuchEntryRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
@@ -64,14 +65,28 @@ public class PosixAccountDeleteTest extends DefaultDirectoryInformationTreeTest 
 		super.tearDown();
 	}
 
-	public void testDelete() {
+	public void testDelete1() {
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
 		// 削除します。
 		assertEquals(1, posixAccountDtoDao.delete(account));
 		assertEquals(null, posixAccountDtoDao.getUser(account));
-		// 既にないので0が返ります。
-		assertEquals(0, posixAccountDtoDao.delete(account));
+		// 初期化します。
+		assertEquals(1, posixAccountDtoDao.insert(user1));
+	}
+
+	public void testDelete2() {
+		// user1を取得します。
+		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
+		// 削除します。
+		assertEquals(1, posixAccountDtoDao.delete(account));
+		// 既に存在しないエントリを削除しようとすると例外が発生します。
+		try {
+			posixAccountDtoDao.delete(account);
+			assertTrue(false);
+		} catch (DirectoryNoSuchEntryRuntimeException e) {
+			assertTrue(true);
+		}
 		// 初期化します。
 		assertEquals(1, posixAccountDtoDao.insert(user1));
 	}

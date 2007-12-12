@@ -17,6 +17,7 @@ package org.seasar.directory.impl;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
@@ -79,10 +80,8 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + dn);
 				}
-				String firstDn = DirectoryUtil.getFirstDn(dn);
+				NamingEnumeration results = super.searchOneLevel(dn);
 				String baseDn = DirectoryUtil.getBaseDn(dn);
-
-				NamingEnumeration results = super.search(firstDn, baseDn);
 				return handler.handle(results, baseDn);
 			}
 		} catch (NamingException e) {

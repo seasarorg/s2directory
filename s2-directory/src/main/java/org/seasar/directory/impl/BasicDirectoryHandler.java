@@ -30,6 +30,7 @@ import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
 import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
 import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
+import org.seasar.directory.exception.DirectoryNoSuchEntryRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.directory.util.DirectoryUtil;
@@ -51,6 +52,7 @@ public class BasicDirectoryHandler {
 	 * 指定したデータソースを持ったインスタンスを作成します。
 	 * 
 	 * @param dataSource
+	 *            データース
 	 */
 	public BasicDirectoryHandler(DirectoryDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -58,18 +60,19 @@ public class BasicDirectoryHandler {
 	}
 
 	/**
-	 * directoryDataSourceを取得します。
+	 * データースを取得します。
 	 * 
-	 * @return directoryDataSource
+	 * @return dataSource データース
 	 */
 	public DirectoryDataSource getDirectoryDataSource() {
 		return dataSource;
 	}
 
 	/**
-	 * directoryDataSourceを設定します。
+	 * データースを設定します。
 	 * 
 	 * @param dataSource
+	 *            データース
 	 */
 	public void setDirectoryDataSource(DirectoryDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -124,7 +127,8 @@ public class BasicDirectoryHandler {
 	/**
 	 * 検索を実行します。
 	 * 
-	 * @return 検索結果を返します。
+	 * @param filter
+	 * @return 検索結果
 	 */
 	public NamingEnumeration search(String filter) {
 		return search(filter, property.getBaseDn());
@@ -133,11 +137,26 @@ public class BasicDirectoryHandler {
 	/**
 	 * 検索を実行します。
 	 * 
-	 * @return 検索結果を返します。
+	 * @param baseDn
+	 * @param filter
+	 * @return 検索結果
 	 */
-	public NamingEnumeration search(String filter, String baseDn) {
+	public NamingEnumeration search(String baseDn, String filter) {
 		SearchControls controls = new SearchControls();
 		controls.setSearchScope(property.getSearchControls());
+		return search(filter, baseDn, controls);
+	}
+
+	/**
+	 * 検索を実行します。
+	 * 
+	 * @param baseDn
+	 * @param filter
+	 * @param controls
+	 * @return 検索結果
+	 */
+	public NamingEnumeration search(String baseDn, String filter,
+			SearchControls controls) {
 		DirContext context = null;
 		try {
 			context = getConnection();
@@ -150,8 +169,33 @@ public class BasicDirectoryHandler {
 	}
 
 	/**
+	 * 指定したDNのエントリを検索します。
+	 * 
+	 * @param dn
+	 *            検索するDN
+	 * @return 検索結果
+	 */
+	public NamingEnumeration searchOneLevel(String dn) {
+		DirContext context = null;
+		try {
+			String firstDn = DirectoryUtil.getFirstDn(dn);
+			String baseDn = DirectoryUtil.getBaseDn(dn);
+			SearchControls controls = new SearchControls();
+			controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
+			NamingEnumeration results = search(baseDn, firstDn, controls);
+			return results;
+		} finally {
+			DirectoryDataSourceUtil.close(context);
+		}
+	}
+
+	/**
 	 * 作成を実行します。
 	 * 
+	 * @param dn
+	 *            作成するエントリのDN
+	 * @param attrs
+	 *            作成するエントリの属性
 	 * @return 作成した数を返します。
 	 */
 	public Integer insert(String dn, Attributes attrs) {
@@ -172,16 +216,49 @@ public class BasicDirectoryHandler {
 	/**
 	 * 更新を実行します。
 	 * 
-	 * @return 更新した数を返します。
+	 * @param dn
+	 *            更新対象のDN
+	 * @param items
+	 *            更新対象の属性
+	 * @return 更新した数
 	 */
 	public Integer update(String dn, ModificationItem[] items) {
-		if (items.length == 0)
-			return new Integer(0);
+		if (!isExistEntry(dn)) {
+			throw new DirectoryNoSuchEntryRuntimeException(dn);
+		} else {
+			if (items.length == 0) {
+				return new Integer(0);
+			}
+			DirContext context = null;
+			try {
+				context = getConnection();
+				context.modifyAttributes(dn, items);
+				return new Integer(1);
+			} catch (NamingException e) {
+				throw new DirectoryRuntimeException(e);
+			} finally {
+				DirectoryDataSourceUtil.close(context);
+			}
+		}
+	}
+
+	/**
+	 * 削除を実行します。
+	 * 
+	 * @param dn
+	 *            削除対象のDN
+	 * @return 削除した数を返します。
+	 */
+	public Integer delete(String dn) {
 		DirContext context = null;
 		try {
-			context = getConnection();
-			context.modifyAttributes(dn, items);
-			return new Integer(1);
+			if (!isExistEntry(dn)) {
+				throw new DirectoryNoSuchEntryRuntimeException(dn);
+			} else {
+				context = getConnection();
+				context.destroySubcontext(dn);
+				return new Integer(1);
+			}
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
@@ -190,19 +267,22 @@ public class BasicDirectoryHandler {
 	}
 
 	/**
-	 * 削除を実行します。
+	 * 指定したDNにエントリが存在しているかどうか調べます。
 	 * 
-	 * @return 削除した数を返します。
+	 * @param dn
+	 *            調査対象のDN
+	 * @return エントリが存在しているかどうか
 	 */
-	public Integer delete(String dn) {
+	public boolean isExistEntry(String dn) {
 		DirContext context = null;
 		try {
-			String firstDn = DirectoryUtil.getFirstDn(dn);
-			String baseDn = DirectoryUtil.getBaseDn(dn);
-			NamingEnumeration results = search(firstDn, baseDn);
-			context = getConnection();
-			context.destroySubcontext(dn);
-			return count(results);
+			NamingEnumeration results = searchOneLevel(dn);
+			int count = count(results);
+			if (count == 1) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
@@ -218,12 +298,12 @@ public class BasicDirectoryHandler {
 	 * @return 検索結果の数
 	 * @throws NamingException
 	 */
-	public Integer count(NamingEnumeration results) throws NamingException {
+	public int count(NamingEnumeration results) throws NamingException {
 		int count = 0;
 		while (results.hasMore()) {
 			results.next();
 			count++;
 		}
-		return new Integer(count);
+		return count;
 	}
 }
