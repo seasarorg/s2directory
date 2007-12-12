@@ -19,8 +19,8 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
-import org.seasar.directory.exception.DirectoryNoSuchEntryRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.exception.NoSuchEntryRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -96,7 +96,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		try {
 			assertEquals(1, posixAccountDtoDao.update(account));
 			assertTrue(false);
-		} catch (DirectoryNoSuchEntryRuntimeException e) {
+		} catch (NoSuchEntryRuntimeException e) {
 			assertTrue(true);
 		}
 	}

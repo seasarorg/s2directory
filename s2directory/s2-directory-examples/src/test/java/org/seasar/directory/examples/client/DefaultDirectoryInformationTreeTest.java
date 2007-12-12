@@ -21,7 +21,7 @@ import org.seasar.directory.examples.directorydao.OrganizationalUnitDirectoryDao
 import org.seasar.directory.examples.directorydao.PersonDirectoryDao;
 import org.seasar.directory.examples.entity.OrganizationalUnit;
 import org.seasar.directory.examples.entity.Person;
-import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
+import org.seasar.directory.exception.AuthenticationRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -46,7 +46,9 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		if (container == null) {
 			container = S2ContainerFactory.create(PATH);
 			container.init();
-			personDao = (PersonDirectoryDao)container.getComponent(PersonDirectoryDao.class);
+			personDao =
+				(PersonDirectoryDao)container
+					.getComponent(PersonDirectoryDao.class);
 			organizationalUnitDao =
 				(OrganizationalUnitDirectoryDao)container
 					.getComponent(OrganizationalUnitDirectoryDao.class);
@@ -66,7 +68,7 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		person.setCn("Manager");
 		try {
 			person = personDao.getPerson(person);
-		} catch (DirectoryAuthenticationRuntimeException e) {
+		} catch (AuthenticationRuntimeException e) {
 			// set super user for ApacheDS
 			isApacheDS = true;
 			DirectoryControlProperty property = getSuperUserPropertyOfApachDS();
@@ -74,7 +76,7 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		}
 		if (person != null) {
 			System.err
-					.println("### Please clean directory information tree!! ###");
+				.println("### Please clean directory information tree!! ###");
 		}
 		assertNull(person);
 	}
@@ -98,12 +100,13 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		person.setCn("system administrator");
 		try {
 			personDao.insertPerson(person);
-		} catch (DirectoryAuthenticationRuntimeException e) {
+		} catch (AuthenticationRuntimeException e) {
 			// set super user for ApacheDS
 			DirectoryControlProperty property = getSuperUserPropertyOfApachDS();
 			personDao.insertPersonWithUserMode(property, person);
 		}
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		// check ou=Users
 		OrganizationalUnit usersUnit = new OrganizationalUnit();
@@ -138,7 +141,8 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 	}
 
 	private DirectoryControlProperty getSuperUserPropertyOfApachDS() {
-		DirectoryControlProperty property = (DirectoryControlProperty)container
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlProperty.class);
 		property.setUser("uid=admin");
 		property.setPassword("secret");

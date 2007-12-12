@@ -15,27 +15,27 @@
  */
 package org.seasar.directory.exception;
 
-import javax.naming.NameAlreadyBoundException;
+import org.seasar.directory.DirectoryControlProperty;
 
 /**
- * 名前がすでに他のオブジェクトにバインドされているために、バインディングを追加できないことを示すメソッドによってスローされます。
+ * クライアントがディレクトリサービスまたはネーミングサービスと通信できない場合にスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryNameAlreadyBoundRuntimeException extends
+public final class CommunicationRuntimeException extends
 		DirectoryRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 指定された例外を使用して新しいインスタンスを構築します。
+	 * 指定されたサーバ接続情報を使用して新しいインスタンスを構築します。
 	 * 
-	 * @param cause
-	 *            NamingException この例外に関する詳細情報
+	 * @param property
+	 *            サーバ接続情報
 	 */
-	public DirectoryNameAlreadyBoundRuntimeException(
-			NameAlreadyBoundException cause) {
-		super("EDIR0004", new Object[] { cause.getRemainingName() });
+	public CommunicationRuntimeException(
+			DirectoryControlProperty property) {
+		super("EDIR0002", new Object[] { property.getUrl() });
 	}
 }

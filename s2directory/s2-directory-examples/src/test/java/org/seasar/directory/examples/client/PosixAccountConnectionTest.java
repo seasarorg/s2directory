@@ -19,8 +19,8 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
-import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
-import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
+import org.seasar.directory.exception.AuthenticationRuntimeException;
+import org.seasar.directory.exception.CommunicationRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -63,7 +63,7 @@ public class PosixAccountConnectionTest extends
 		try {
 			posixAccountDtoDao.insertWithUserMode(property, user1);
 			assertFalse(true);
-		} catch (DirectoryCommunicationRuntimeException e) {
+		} catch (CommunicationRuntimeException e) {
 			assertTrue(true);
 		}
 	}
@@ -76,7 +76,7 @@ public class PosixAccountConnectionTest extends
 		try {
 			posixAccountDtoDao.insertWithUserMode(property, user1);
 			assertFalse(true);
-		} catch (DirectoryAuthenticationRuntimeException e) {
+		} catch (AuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 	}

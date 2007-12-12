@@ -21,7 +21,7 @@ package org.seasar.directory.exception;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date:: 2007-12-09 14:06:53 +0900#$
  */
-public final class DirectoryNoSuchEntryRuntimeException extends
+public final class NoSuchEntryRuntimeException extends
 		DirectoryRuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public final class DirectoryNoSuchEntryRuntimeException extends
 	 * @param message
 	 *            この例外に関する詳細情報
 	 */
-	public DirectoryNoSuchEntryRuntimeException(String message) {
+	public NoSuchEntryRuntimeException(String message) {
 		super("EDIR0005", new Object[] { message });
 	}
 }
