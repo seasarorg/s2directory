@@ -18,12 +18,12 @@ package org.seasar.directory.exception;
 import org.seasar.directory.DirectoryControlProperty;
 
 /**
- * クライアントがディレクトリサービスまたはネーミングサービスと通信できない場合にスローされます。
+ * ネーミングサービスまたはディレクトリサービスにアクセスする際に認証エラーが発生した場合にスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DirectoryCommunicationRuntimeException extends
+public final class AuthenticationRuntimeException extends
 		DirectoryRuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -34,8 +34,8 @@ public final class DirectoryCommunicationRuntimeException extends
 	 * @param property
 	 *            サーバ接続情報
 	 */
-	public DirectoryCommunicationRuntimeException(
-			DirectoryControlProperty property) {
-		super("EDIR0002", new Object[] { property.getUrl() });
+	public AuthenticationRuntimeException(DirectoryControlProperty property) {
+		super("EDIR0003", new Object[] { property.getUrl(), property.getUser(),
+			property.getPassword() });
 	}
 }

@@ -45,8 +45,8 @@ public class DirectoryCommunicationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_ja() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPANESE);
-		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException =
-			new DirectoryCommunicationRuntimeException(property);
+		CommunicationRuntimeException directoryCommunicationRuntimeException =
+			new CommunicationRuntimeException(property);
 		// ## Act ##
 		String message = directoryCommunicationRuntimeException.getMessage();
 		// ## Assert ##
@@ -56,8 +56,8 @@ public class DirectoryCommunicationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_en() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.ENGLISH);
-		DirectoryCommunicationRuntimeException directoryCommunicationRuntimeException =
-			new DirectoryCommunicationRuntimeException(property);
+		CommunicationRuntimeException directoryCommunicationRuntimeException =
+			new CommunicationRuntimeException(property);
 		// ## Act ##
 		String message = directoryCommunicationRuntimeException.getMessage();
 		// ## Assert ##

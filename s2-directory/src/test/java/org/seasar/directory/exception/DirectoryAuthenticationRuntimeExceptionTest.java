@@ -47,8 +47,8 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_ja() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPANESE);
-		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException =
-			new DirectoryAuthenticationRuntimeException(property);
+		AuthenticationRuntimeException directoryAuthenticationRuntimeException =
+			new AuthenticationRuntimeException(property);
 		// ## Act ##
 		String message = directoryAuthenticationRuntimeException.getMessage();
 		// ## Assert ##
@@ -60,8 +60,8 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 	public void testErrorMessage_en() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.ENGLISH);
-		DirectoryAuthenticationRuntimeException directoryAuthenticationRuntimeException =
-			new DirectoryAuthenticationRuntimeException(property);
+		AuthenticationRuntimeException directoryAuthenticationRuntimeException =
+			new AuthenticationRuntimeException(property);
 		// ## Act ##
 		String message = directoryAuthenticationRuntimeException.getMessage();
 		// ## Assert ##

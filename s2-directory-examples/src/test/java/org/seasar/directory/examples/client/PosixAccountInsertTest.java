@@ -18,7 +18,7 @@ package org.seasar.directory.examples.client;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
-import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
+import org.seasar.directory.exception.NameAlreadyBoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -102,7 +102,7 @@ public class PosixAccountInsertTest extends DefaultDirectoryInformationTreeTest 
 		try {
 			posixAccountDtoDao.insert(user1);
 			assertFalse(true);
-		} catch (DirectoryNameAlreadyBoundRuntimeException e) {
+		} catch (NameAlreadyBoundRuntimeException e) {
 			assertTrue(true);
 		}
 	}

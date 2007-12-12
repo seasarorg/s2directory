@@ -19,7 +19,7 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
-import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
+import org.seasar.directory.exception.AuthenticationRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -111,7 +111,7 @@ public class PosixAccountPasswordUpdateTest extends
 			// パスワードが変更されたため更新時に例外が発生します。
 			posixAccountDtoDao.updateWithUserMode(property, account);
 			assertTrue(false);
-		} catch (DirectoryAuthenticationRuntimeException e) {
+		} catch (AuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 		property.setUser(account.getUid());
@@ -140,7 +140,7 @@ public class PosixAccountPasswordUpdateTest extends
 		try {
 			posixAccountDtoDao.updateWithUserMode(property, account);
 			assertFalse(true);
-		} catch (DirectoryAuthenticationRuntimeException e) {
+		} catch (AuthenticationRuntimeException e) {
 			assertTrue(true);
 		}
 	}

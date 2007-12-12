@@ -45,8 +45,8 @@ public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
 		NameAlreadyBoundException exception = new NameAlreadyBoundException();
 		exception.setRemainingName(new CompositeName(
 			"uid=user1,ou=Users,dc=seasar,dc=org"));
-		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
-			new DirectoryNameAlreadyBoundRuntimeException(exception);
+		NameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
+			new NameAlreadyBoundRuntimeException(exception);
 		// ## Act ##
 		String message = directoryNameAlreadyBoundRuntimeException.getMessage();
 		// ## Assert ##
@@ -59,8 +59,8 @@ public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
 		NameAlreadyBoundException exception = new NameAlreadyBoundException();
 		exception.setRemainingName(new CompositeName(
 			"uid=user1,ou=Users,dc=seasar,dc=org"));
-		DirectoryNameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
-			new DirectoryNameAlreadyBoundRuntimeException(exception);
+		NameAlreadyBoundRuntimeException directoryNameAlreadyBoundRuntimeException =
+			new NameAlreadyBoundRuntimeException(exception);
 		// ## Act ##
 		String message = directoryNameAlreadyBoundRuntimeException.getMessage();
 		// ## Assert ##

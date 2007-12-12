@@ -27,11 +27,11 @@ import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.exception.DirectoryAuthenticationRuntimeException;
-import org.seasar.directory.exception.DirectoryCommunicationRuntimeException;
-import org.seasar.directory.exception.DirectoryNameAlreadyBoundRuntimeException;
-import org.seasar.directory.exception.DirectoryNoSuchEntryRuntimeException;
+import org.seasar.directory.exception.AuthenticationRuntimeException;
+import org.seasar.directory.exception.CommunicationRuntimeException;
+import org.seasar.directory.exception.NameAlreadyBoundRuntimeException;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.exception.NoSuchEntryRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.exception.EmptyRuntimeException;
@@ -90,10 +90,10 @@ public class BasicDirectoryHandler {
 		try {
 			return dataSource.getConnection();
 		} catch (AuthenticationException ae) {
-			throw new DirectoryAuthenticationRuntimeException(dataSource
+			throw new AuthenticationRuntimeException(dataSource
 				.getDirectoryControlProperty());
 		} catch (CommunicationException ce) {
-			throw new DirectoryCommunicationRuntimeException(dataSource
+			throw new CommunicationRuntimeException(dataSource
 				.getDirectoryControlProperty());
 		} catch (NamingException ex) {
 			throw new DirectoryRuntimeException(ex);
@@ -205,7 +205,7 @@ public class BasicDirectoryHandler {
 			context.createSubcontext(dn, attrs);
 			return new Integer(1);
 		} catch (NameAlreadyBoundException e) {
-			throw new DirectoryNameAlreadyBoundRuntimeException(e);
+			throw new NameAlreadyBoundRuntimeException(e);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
@@ -224,7 +224,7 @@ public class BasicDirectoryHandler {
 	 */
 	public Integer update(String dn, ModificationItem[] items) {
 		if (!isExistEntry(dn)) {
-			throw new DirectoryNoSuchEntryRuntimeException(dn);
+			throw new NoSuchEntryRuntimeException(dn);
 		} else {
 			if (items.length == 0) {
 				return new Integer(0);
@@ -253,7 +253,7 @@ public class BasicDirectoryHandler {
 		DirContext context = null;
 		try {
 			if (!isExistEntry(dn)) {
-				throw new DirectoryNoSuchEntryRuntimeException(dn);
+				throw new NoSuchEntryRuntimeException(dn);
 			} else {
 				context = getConnection();
 				context.destroySubcontext(dn);
