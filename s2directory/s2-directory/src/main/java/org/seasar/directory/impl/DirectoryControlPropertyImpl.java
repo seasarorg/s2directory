@@ -28,6 +28,9 @@ import org.seasar.directory.DirectoryControlProperty;
  */
 public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
+	/** コネクションプーリング設定のBindingアノテーション */
+	public static final String directoryConnectionPool_BINDING = "bindingType=may";
+
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
 	/** 接続に使用するSSLソケットファクトリ */
