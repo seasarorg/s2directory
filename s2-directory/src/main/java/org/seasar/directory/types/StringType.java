@@ -21,6 +21,8 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 
+import org.seasar.directory.util.DirectoryDataSourceUtil;
+
 /**
  * String型での値取得クラスです。
  * 
@@ -56,6 +58,7 @@ public class StringType extends AbstractValueType {
 						multipleValueDelimiter);
 				}
 			}
+			DirectoryDataSourceUtil.close(array);
 			int index = buffer.lastIndexOf(multipleValueDelimiter);
 			if (index != -1) {
 				buffer.delete(index, buffer.length());

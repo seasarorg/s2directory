@@ -22,6 +22,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 
 /**
  * 検索結果の1つ目の属性値を返すオブジェクト型ハンドラクラスです。
@@ -58,7 +59,9 @@ public class ObjectNamingEnumerationHandler extends
 				String attributeName = attribute.getID();
 				return attributes.get(attributeName);
 			}
+			DirectoryDataSourceUtil.close(ae);
 		}
+		DirectoryDataSourceUtil.close(results);
 		return null;
 	}
 }

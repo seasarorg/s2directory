@@ -17,11 +17,14 @@ package org.seasar.directory.types;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
+
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 
 /**
  * List型での値取得クラスです。
@@ -50,6 +53,7 @@ public class ListType extends AbstractValueType {
 			while (array.hasMore()) {
 				value.add(array.next());
 			}
+			DirectoryDataSourceUtil.close(array);
 			return value;
 		} else {
 			return null;

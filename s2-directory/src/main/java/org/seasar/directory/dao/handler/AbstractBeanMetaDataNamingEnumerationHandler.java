@@ -17,16 +17,19 @@ package org.seasar.directory.dao.handler;
 
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
+
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.types.PropertyType;
 import org.seasar.directory.types.ValueType;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.util.CaseInsensitiveSet;
 import org.seasar.framework.util.ClassUtil;
@@ -134,6 +137,7 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 			String attributeName = attribute.getID();
 			columnNames.add(attributeName);
 		}
+		DirectoryDataSourceUtil.close(ae);
 		return columnNames;
 	}
 }
