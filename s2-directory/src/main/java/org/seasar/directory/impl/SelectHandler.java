@@ -72,13 +72,13 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + filter);
 				}
-				NamingEnumeration results = search(filter);
+				NamingEnumeration results = super.search(filter);
 				return handler.handle(results, property.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
 				String dn = ctx.getDn();
 				if (logger.isDebugEnabled()) {
-					logger.debug("Filter: " + dn);
+					logger.debug("Filter: " + dn + " [DN]");
 				}
 				NamingEnumeration results = super.searchOneLevel(dn);
 				String baseDn = DirectoryUtil.getBaseDn(dn);

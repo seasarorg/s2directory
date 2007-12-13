@@ -59,11 +59,19 @@ public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 	 */
 	public Object execute(Object[] args) {
 		CommandContext ctx = apply(args);
-		// TODO: ここでコマンドコンテキストを渡しちゃうのは良くない
-		// 将来的には BindVariables のようなものを使うようなものに直す
-		ExecuteHandler selectHandler =
-			new SelectHandler(getDirectoryDataSource(args), super
-				.getRunFilter(ctx), namingEnumerationHandler, ctx);
-		return selectHandler.execute();
+		String filter = super.getRunFilter(ctx);
+		if (filter == null) {
+			return null;
+		} else {
+			// TODO: ここでコマンドコンテキストを渡しちゃうのは良くない
+			// 将来的には BindVariables のようなものを使うようなものに直す
+			ExecuteHandler selectHandler =
+				new SelectHandler(
+					getDirectoryDataSource(args),
+					filter,
+					namingEnumerationHandler,
+					ctx);
+			return selectHandler.execute();
+		}
 	}
 }

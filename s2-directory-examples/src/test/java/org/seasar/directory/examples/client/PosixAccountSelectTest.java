@@ -100,7 +100,7 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 
 	public void testSelect4() {
 		PosixAccountDto search = new PosixAccountDto();
-		// 存在しないBaseDNへアクセスします
+		// 存在しないBaseDNへアクセスします。
 		search.setDn("uid=user1,dc=example,dc=org");
 		try {
 			posixAccountDtoDao.getUser(search);
@@ -108,5 +108,13 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 		} catch (DirectoryRuntimeException e) {
 			assertTrue(true);
 		}
+	}
+
+	public void testSelectNull() {
+		// 検索に使用するエンティティの値がすべて空の場合、
+		// 検索結果はnullになります。
+		PosixAccountDto search = new PosixAccountDto();
+		search = posixAccountDtoDao.getUser(search);
+		assertNull(search);
 	}
 }
