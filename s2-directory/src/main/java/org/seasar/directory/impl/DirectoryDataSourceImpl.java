@@ -85,6 +85,17 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
 		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
 
+		// コネクションプーリング
+		// Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and
+		// later releases.
+		// http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
+		if (property.isEnablePool()) {
+			env.put(CONNECTION_POOL_KEY, "true");
+		}
+
+		// デバッグ用、通信内容が16進で出力されます。
+		// env.put("com.sun.jndi.ldap.trace.ber", System.out);
+
 		// 接続処理
 		if (property.isEnableSSL()) {
 			// SSL接続

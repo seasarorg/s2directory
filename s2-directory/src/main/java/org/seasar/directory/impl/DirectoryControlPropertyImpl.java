@@ -16,10 +16,12 @@
 package org.seasar.directory.impl;
 
 import javax.naming.directory.SearchControls;
+
+import org.seasar.directory.DirectoryConnectionPool;
 import org.seasar.directory.DirectoryControlProperty;
 
 /**
- * ディレクトリ接続情報を表わすインタフェースです。
+ * ディレクトリ接続情報を表わす標準的な実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
@@ -60,12 +62,13 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private boolean enableSSL = false;
 	/** TLS接続するかどうか */
 	private boolean enableTLS = false;
+	/** コネクションプーリング設定 */
+	private DirectoryConnectionPool pool;
 
 	/**
-	 * Directory接続情報のインスタンスを作成します。
+	 * ディレクトリ接続情報のインスタンスを作成します。
 	 */
 	public DirectoryControlPropertyImpl() {
-		super();
 	}
 
 	/**
@@ -338,6 +341,24 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
+	public DirectoryConnectionPool getDirectoryConnectionPool() {
+		return pool;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDirectoryConnectionPool(DirectoryConnectionPool pool) {
+		this.pool = pool;
+	}
+
+	public boolean isEnablePool() {
+		return (pool != null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean hasAuthentication() {
 		return (user != null) && (password != null);
 	}
@@ -359,7 +380,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("searchControls: ").append(searchControls).append(", ");
 		buffer.append("allowAnonymous: ").append(allowAnonymous).append(", ");
 		buffer.append("enableSSL").append(enableSSL).append(", ");
-		buffer.append("enableTLS: ").append(enableTLS);
+		buffer.append("enableTLS: ").append(enableTLS).append(", ");
+		buffer.append("pool: ").append(pool);
 		return buffer.toString();
 	}
 }
