@@ -15,6 +15,7 @@
  */
 package org.seasar.directory.util;
 
+import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 
@@ -96,11 +97,26 @@ public final class DirectoryDataSourceUtil {
 	 *            ディレクトリコネクション
 	 */
 	public static void close(DirContext context) {
-		if (context == null) {
-			return;
-		}
 		try {
-			context.close();
+			if (context != null) {
+				context.close();
+			}
+		} catch (NamingException e) {
+			throw new DirectoryRuntimeException(e);
+		}
+	}
+
+	/**
+	 * ディレクトリ列挙を閉じます。
+	 * 
+	 * @param results
+	 *            ディレクトリ列挙
+	 */
+	public static void close(NamingEnumeration results) {
+		try {
+			if (results != null) {
+				results.close();
+			}
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		}
