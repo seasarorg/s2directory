@@ -234,6 +234,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			String attributeName = attribute.getID();
 			attributeNameSet.add(attributeName);
 		}
+		DirectoryDataSourceUtil.close(ae);
 		return attributeNameSet;
 	}
 }

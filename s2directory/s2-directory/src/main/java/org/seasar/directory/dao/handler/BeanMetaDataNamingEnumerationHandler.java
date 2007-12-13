@@ -21,6 +21,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.SearchResult;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 
 /**
  * 検索結果のオブジェクト型ハンドラクラスです。
@@ -61,6 +62,7 @@ public class BeanMetaDataNamingEnumerationHandler extends
 			Set attributeNameSet = super.createAttributesNames(result);
 			entry = super.createEntry(result, attributeNameSet);
 		}
+		DirectoryDataSourceUtil.close(results);
 		return entry;
 	}
 }
