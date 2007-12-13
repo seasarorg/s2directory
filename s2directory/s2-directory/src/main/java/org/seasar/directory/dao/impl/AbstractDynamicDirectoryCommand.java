@@ -150,6 +150,11 @@ public abstract class AbstractDynamicDirectoryCommand extends
 		// フィルタを作成します。
 		String filter = super.getFilter();
 		String ctxFilter = ctx.getFilter();
+		// 引数があるにも関わらずオブジェクトにすべての値がnullの場合は、
+		// OBJECTCLASSESによるフィルタも利用せずにnullを返す。
+		if (ctx.getArgKeySet().size() != 0 && StringUtil.isEmpty(ctxFilter)) {
+			return null;
+		}
 		if (StringUtil.isEmpty(filter)) {
 			filter = ctxFilter;
 		} else {
@@ -157,9 +162,6 @@ public abstract class AbstractDynamicDirectoryCommand extends
 				filter = "(&(" + filter + ")(" + ctxFilter + "))";
 			}
 		}
-		// フィルタが空の場合はダミーフィルタを設定します。
-		if (filter.length() == 0)
-			filter = "null=null";
 		return filter;
 	}
 }
