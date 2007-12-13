@@ -182,8 +182,7 @@ public class BasicDirectoryHandler {
 			String baseDn = DirectoryUtil.getBaseDn(dn);
 			SearchControls controls = new SearchControls();
 			controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
-			NamingEnumeration results = search(baseDn, firstDn, controls);
-			return results;
+			return search(baseDn, firstDn, controls);
 		} finally {
 			DirectoryDataSourceUtil.close(context);
 		}
@@ -275,8 +274,9 @@ public class BasicDirectoryHandler {
 	 */
 	public boolean isExistEntry(String dn) {
 		DirContext context = null;
+		NamingEnumeration results = null;
 		try {
-			NamingEnumeration results = searchOneLevel(dn);
+			results = searchOneLevel(dn);
 			int count = count(results);
 			if (count == 1) {
 				return true;
@@ -287,6 +287,7 @@ public class BasicDirectoryHandler {
 			throw new DirectoryRuntimeException(e);
 		} finally {
 			DirectoryDataSourceUtil.close(context);
+			DirectoryDataSourceUtil.close(results);
 		}
 	}
 

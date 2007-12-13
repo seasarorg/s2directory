@@ -21,6 +21,7 @@ import javax.naming.NamingException;
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
@@ -66,13 +67,14 @@ public class SelectHandler extends BasicDirectoryHandler implements
 	 * </p>
 	 */
 	public Object execute() throws NamingRuntimeException {
+		NamingEnumeration results = null;
 		try {
 			if (StringUtil.isEmpty(ctx.getDn())) {
 				// dn が無い場合、構築したフィルタで検索します。
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + filter);
 				}
-				NamingEnumeration results = super.search(filter);
+				results = super.search(filter);
 				return handler.handle(results, property.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
@@ -80,12 +82,14 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + dn + " [DN]");
 				}
-				NamingEnumeration results = super.searchOneLevel(dn);
+				results = super.searchOneLevel(dn);
 				String baseDn = DirectoryUtil.getBaseDn(dn);
 				return handler.handle(results, baseDn);
 			}
 		} catch (NamingException e) {
 			throw new NamingRuntimeException(e);
+		} finally {
+			DirectoryDataSourceUtil.close(results);
 		}
 	}
 }

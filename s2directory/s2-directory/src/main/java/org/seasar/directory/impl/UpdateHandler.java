@@ -32,6 +32,7 @@ import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -81,9 +82,10 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * @return 更新した数を返します。
 	 */
 	private Integer update(String dn) {
+		NamingEnumeration currentEntrys = null;
 		try {
 			// 更新対象を検索
-			NamingEnumeration currentEntrys = super.searchOneLevel(dn);
+			currentEntrys = super.searchOneLevel(dn);
 			// 更新アイテムを作成
 			ModificationItem[] items = createModificationItems(currentEntrys);
 			if (logger.isDebugEnabled()) {
@@ -97,6 +99,8 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			return super.update(dn, items);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
+		} finally {
+			DirectoryDataSourceUtil.close(currentEntrys);
 		}
 	}
 
