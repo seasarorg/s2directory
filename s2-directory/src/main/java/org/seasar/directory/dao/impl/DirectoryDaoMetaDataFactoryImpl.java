@@ -39,15 +39,15 @@ import org.seasar.framework.util.DisposableUtil;
 public class DirectoryDaoMetaDataFactoryImpl implements
 		DirectoryDaoMetaDataFactory, Disposable {
 	/** ディレクトリコマンドファクトリのBindingアノテーション */
-	public static final String dataSourceFactory_BINDING = "bindingType=must";
+	public static final String directoryDataSourceFactory_BINDING = "bindingType=must";
 	/** ディレクトリ属性ハンドラファクトリのBindingアノテーション */
-	public static final String attributeHandlerFactory_BINDING =
+	public static final String directoryAttributeHandlerFactory_BINDING =
 		"bindingType=must";
 	/** ディレクトリアノテーションリーダファクトリのBindingアノテーション */
-	public static final String annotationReaderFactory_BINDING =
+	public static final String directoryAnnotationReaderFactory_BINDING =
 		"bindingType=must";
 	/** ディレクトリ命名規則のBindingアノテーション */
-	public static final String daoNamingConvention_BINDING = "bindingType=must";
+	public static final String directoryDaoNamingConvention_BINDING = "bindingType=must";
 
 	/** ディレクトリコマンドファクトリ */
 	protected DirectoryDataSourceFactory dataSourceFactory;

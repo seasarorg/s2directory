@@ -20,7 +20,7 @@
 		<property name="timeout">300000</property>
 	</component>
 
-<!-- 
+<!--
 	# Directory Configuration
 -->
 	<component name="directoryControlProperty"
@@ -38,7 +38,7 @@
 		<property name="sslSocketFactory">
 			"javax.net.ssl.SSLSocketFactory"
 		</property>
-	--> 
+	-->
 		<property name="sslSocketFactory">
 			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
 		</property>
@@ -53,7 +53,7 @@
 		<property name="passwordAlgorithm">"SHA"</property>
 		<property name="multipleValueDelimiter">"__"</property>
 
-	<!-- 
+	<!--
 		# Other options and each default value.
 		<property name="passwordAlgorithm">"SSHA"</property>
 		<property name="userSuffix">"ou=Users"</property>
