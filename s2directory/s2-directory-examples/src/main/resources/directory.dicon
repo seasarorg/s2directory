@@ -2,6 +2,27 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
 "http://www.seasar.org/dtd/components.dtd">
 <components namespace="directory">
+
+<!--
+	# Connection Pooling Configuration
+		Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and later releases.
+		http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
+		http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/jndi/jndi-ldap.html#POOL
+-->
+	<component name="connectionPool"
+		class="org.seasar.directory.impl.DirectoryConnectionPoolImpl">
+		<property name="authentication">"none simple DIGEST-MD5"</property>
+		<property name="debug">"fine"</property>
+		<property name="initSize">2</property>
+		<property name="maxSize">20</property>
+		<property name="prefSize">10</property>
+		<property name="protocol">"plain ssl"</property>
+		<property name="timeout">300000</property>
+	</component>
+
+<!-- 
+	# Directory Configuration
+-->
 	<component name="directoryControlProperty"
 		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
 			instance="prototype">
@@ -21,6 +42,7 @@
 		<property name="sslSocketFactory">
 			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
 		</property>
+		<property name="enableTLS">false</property>
 
 		<property name="url">
 			"ldap://localhost:389"
@@ -30,7 +52,6 @@
 		<property name="password">"secret"</property>
 		<property name="passwordAlgorithm">"SHA"</property>
 		<property name="multipleValueDelimiter">"__"</property>
-		<property name="enableTLS">false</property>
 
 	<!-- 
 		# Other options and each default value.

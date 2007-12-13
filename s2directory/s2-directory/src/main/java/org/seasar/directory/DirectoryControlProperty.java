@@ -272,6 +272,28 @@ public interface DirectoryControlProperty {
 	public void setEnableTLS(boolean enableTls);
 
 	/**
+	 * コネクションプーリング設定を取得します。
+	 * 
+	 * @return コネクションプーリング設定
+	 */
+	public DirectoryConnectionPool getDirectoryConnectionPool();
+
+	/**
+	 * コネクションプーリング設定を取得します。
+	 * 
+	 * @param pool
+	 *            コネクションプーリング設定
+	 */
+	public void setDirectoryConnectionPool(DirectoryConnectionPool pool);
+
+	/**
+	 * コネクションプーリングを行うかどうか判断します。
+	 * 
+	 * @return コネクションプーリングを行うかどうか
+	 */
+	public boolean isEnablePool();
+
+	/**
 	 * 認証可能な情報を保持しているか調べます。
 	 * 
 	 * @return 認証可能な情報を保持している場合 true

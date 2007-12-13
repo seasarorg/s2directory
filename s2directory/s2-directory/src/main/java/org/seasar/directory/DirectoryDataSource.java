@@ -28,6 +28,9 @@ public interface DirectoryDataSource {
 	/** SSLソケットファクトリのための設定名 */
 	public final static String SSL_SOCKET_FACTORY_KEY =
 		"java.naming.ldap.factory.socket";
+	/** LDAPコネクションプーリングのための設定名 */
+	public final static String CONNECTION_POOL_KEY =
+		"com.sun.jndi.ldap.connect.pool";
 
 	/**
 	 * 接続情報を返します。
