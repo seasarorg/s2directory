@@ -91,19 +91,22 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 	}
 
 	private void setupDefaultDirectoryInformationTree() {
-		// add an administrator user entry for dc=seasar,dc=org
-		// cn=Manager,dc=seasar,dc=org
-		Person person = new Person();
-		person.setDn("cn=Manager,dc=seasar,dc=org");
-		person.setUserPassword("secret");
-		person.setSn("administrator");
-		person.setCn("system administrator");
-		try {
-			personDao.insertPerson(person);
-		} catch (AuthenticationRuntimeException e) {
-			// set super user for ApacheDS
-			DirectoryControlProperty property = getSuperUserPropertyOfApachDS();
-			personDao.insertPersonWithUserMode(property, person);
+		if (isApacheDS) {
+			// add an administrator user entry for dc=seasar,dc=org
+			// cn=Manager,dc=seasar,dc=org
+			Person person = new Person();
+			person.setDn("cn=Manager,dc=seasar,dc=org");
+			person.setUserPassword("secret");
+			person.setSn("administrator");
+			person.setCn("system administrator");
+			try {
+				personDao.insertPerson(person);
+			} catch (AuthenticationRuntimeException e) {
+				// set super user for ApacheDS
+				DirectoryControlProperty property =
+					getSuperUserPropertyOfApachDS();
+				personDao.insertPersonWithUserMode(property, person);
+			}
 		}
 		DirectoryControlProperty property =
 			(DirectoryControlProperty)container
