@@ -132,7 +132,7 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		Set columnNames = new CaseInsensitiveSet();
 		Attributes attributes = result.getAttributes();
 		NamingEnumeration ae = attributes.getAll();
-		while (ae.hasMoreElements()) {
+		while (ae.hasMore()) {
 			Attribute attribute = (Attribute)ae.next();
 			String attributeName = attribute.getID();
 			columnNames.add(attributeName);

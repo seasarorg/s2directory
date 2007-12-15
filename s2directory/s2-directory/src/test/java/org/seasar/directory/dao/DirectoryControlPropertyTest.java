@@ -31,7 +31,7 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
 public class DirectoryControlPropertyTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
-	private DirectoryDataSourceImpl directoryDataSource;
+	private DirectoryDataSourceImpl dataSource;
 
 	/**
 	 * テストの初期設定を行います。
@@ -42,7 +42,7 @@ public class DirectoryControlPropertyTest extends TestCase {
 		DirectoryControlProperty defaultProperty =
 			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
-		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
+		dataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class DirectoryControlPropertyTest extends TestCase {
 	 */
 	public void testDirectoryControlProperty() {
 		DirectoryControlProperty property =
-			directoryDataSource.getDirectoryControlProperty();
+			dataSource.getDirectoryControlProperty();
 		assertEquals("com.sun.jndi.ldap.LdapCtxFactory", property
 			.getInitialContextFactory());
 		assertEquals(
@@ -67,12 +67,12 @@ public class DirectoryControlPropertyTest extends TestCase {
 
 	public void testLdaps() {
 		DirectoryControlProperty property =
-			directoryDataSource.getDirectoryControlProperty();
+			dataSource.getDirectoryControlProperty();
 		property.setUrl("ldaps://localhost:389");
 		assertEquals(true, property.isEnableSSL());
-//		property.setUrl("ldap://localhost:389");
-//		System.out.println("property: " + property.getUrl());
-//		System.out.println("property: " + property.isUseSsl());
-//		assertEquals(false, property.isUseSsl());
+		// property.setUrl("ldap://localhost:389");
+		// System.out.println("property: " + property.getUrl());
+		// System.out.println("property: " + property.isUseSsl());
+		// assertEquals(false, property.isUseSsl());
 	}
 }

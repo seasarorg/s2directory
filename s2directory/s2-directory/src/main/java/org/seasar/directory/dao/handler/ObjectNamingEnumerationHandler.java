@@ -54,7 +54,7 @@ public class ObjectNamingEnumerationHandler extends
 			SearchResult result = (SearchResult)results.next();
 			Attributes attributes = result.getAttributes();
 			NamingEnumeration ae = attributes.getAll();
-			if (ae.hasMoreElements()) {
+			if (ae.hasMore()) {
 				Attribute attribute = (Attribute)ae.next();
 				String attributeName = attribute.getID();
 				return attributes.get(attributeName);

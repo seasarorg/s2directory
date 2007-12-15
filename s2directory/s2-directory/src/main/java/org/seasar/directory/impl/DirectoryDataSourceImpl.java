@@ -154,6 +154,14 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 			}
 			tls.negotiate(sslSocketFactory);
 		} catch (IOException e) {
+			if (tls != null) {
+				try {
+					tls.close();
+				} catch (IOException e1) {
+					// do nothing.
+				}
+			}
+			DirectoryDataSourceUtil.close(context);
 			// TODO: 専用の例外ハンドラ作成
 			throw new DirectoryRuntimeException("このサーバはTLS接続をサポートしていません。");
 		}

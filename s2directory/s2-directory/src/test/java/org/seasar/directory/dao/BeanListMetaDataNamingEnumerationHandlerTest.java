@@ -25,6 +25,7 @@ import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.dao.handler.BeanListMetaDataNamingEnumerationHandler;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
+import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -37,8 +38,8 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
 public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 	private static final String PATH = "directory.dicon";
 	/** Directory接続ファクトリを表わします。 */
-	private DirectoryDataSourceImpl directoryDataSource;
-	private DirectoryBeanMetaData directoryBeanMetaData;
+	private DirectoryDataSourceImpl dataSource;
+	private DirectoryBeanMetaData beanMetaData;
 
 	/**
 	 * テストの初期設定を行います。
@@ -48,27 +49,31 @@ public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 		DirectoryControlProperty defaultProperty =
 			(DirectoryControlProperty)container
 				.getComponent(DirectoryControlPropertyImpl.class);
-		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
+		dataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
 	public void testHandle() {
 		BeanListMetaDataNamingEnumerationHandler handler =
 			new BeanListMetaDataNamingEnumerationHandler(
-				directoryBeanMetaData,
-				directoryDataSource.getDirectoryControlProperty());
+				beanMetaData,
+				dataSource.getDirectoryControlProperty());
+		DirContext context = null;
+		NamingEnumeration ne = null;
 		try {
-			DirContext ctx = directoryDataSource.getConnection();
+			context = dataSource.getConnection();
 			SearchControls controls = new SearchControls();
 			controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-			NamingEnumeration ne =
-				ctx.search(
+			ne =
+				context.search(
 					"dc=seasar,dc=org",
 					"objectClass=posixGroup",
 					controls);
 			handler.handle(ne, "dc=seasar,dc=org");
-			ne.close();
 		} catch (NamingException e) {
 			assertTrue(true);
+		} finally {
+			DirectoryDataSourceUtil.close(ne);
+			DirectoryDataSourceUtil.close(context);
 		}
 	}
 }
