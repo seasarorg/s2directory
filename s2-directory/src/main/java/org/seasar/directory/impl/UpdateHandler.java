@@ -229,7 +229,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		Set attributeNameSet = new CaseInsensitiveSet();
 		Attributes attributes = entry.getAttributes();
 		NamingEnumeration ae = attributes.getAll();
-		while (ae.hasMoreElements()) {
+		while (ae.hasMore()) {
 			Attribute attribute = (Attribute)ae.next();
 			String attributeName = attribute.getID();
 			attributeNameSet.add(attributeName);

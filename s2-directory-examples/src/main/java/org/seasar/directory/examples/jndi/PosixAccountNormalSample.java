@@ -57,13 +57,14 @@ public class PosixAccountNormalSample {
 		env.put(
 			Context.INITIAL_CONTEXT_FACTORY,
 			"com.sun.jndi.ldap.LdapCtxFactory");
-		env.put(Context.PROVIDER_URL, "ldap://localhost:30390/");
+		env.put(Context.PROVIDER_URL, "ldap://192.168.3.202:389/");
 		try {
 			DirContext ctx = new InitialDirContext(env);
+			NamingEnumeration ne = null;
 			try {
 				SearchControls controls = new SearchControls();
 				controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-				NamingEnumeration ne =
+				ne =
 					ctx.search(
 						"dc=seasar,dc=org",
 						"objectClass=posixAccount",
@@ -110,6 +111,7 @@ public class PosixAccountNormalSample {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
+			ne.close();
 			ctx.close();
 		} catch (NamingException e) {
 			e.printStackTrace();

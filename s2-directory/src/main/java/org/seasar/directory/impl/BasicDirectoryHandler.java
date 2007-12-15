@@ -199,15 +199,17 @@ public class BasicDirectoryHandler {
 	 */
 	public Integer insert(String dn, Attributes attrs) {
 		DirContext context = null;
+		DirContext createdContext = null;
 		try {
 			context = getConnection();
-			context.createSubcontext(dn, attrs);
+			createdContext = context.createSubcontext(dn, attrs);
 			return new Integer(1);
 		} catch (NameAlreadyBoundException e) {
 			throw new NameAlreadyBoundRuntimeException(e);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
+			DirectoryDataSourceUtil.close(createdContext);
 			DirectoryDataSourceUtil.close(context);
 		}
 	}

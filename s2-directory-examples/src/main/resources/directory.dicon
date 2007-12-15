@@ -9,16 +9,20 @@
 		http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
 		http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/jndi/jndi-ldap.html#POOL
 -->
+<!--
+	# TODO: コネクションプール利用時、com.sun.jndi.ldap.pool以下で
+	# 物理コネクションが終了時に完全にcloseされてない様子
 	<component name="connectionPool"
 		class="org.seasar.directory.impl.DirectoryConnectionPoolImpl">
 		<property name="authentication">"none simple DIGEST-MD5"</property>
 		<property name="debug">"fine"</property>
-		<property name="initSize">2</property>
-		<property name="maxSize">20</property>
-		<property name="prefSize">10</property>
+		<property name="initSize">1</property>
+		<property name="maxSize">10</property>
+		<property name="prefSize">5</property>
 		<property name="protocol">"plain ssl"</property>
-		<property name="timeout">300000</property>
+		<property name="timeout">3000</property>
 	</component>
+-->
 
 <!--
 	# Directory Configuration

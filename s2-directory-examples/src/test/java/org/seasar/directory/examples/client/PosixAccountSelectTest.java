@@ -121,7 +121,7 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 	public void testSelectManyTimes() {
 		// user1を取得します。
 		PosixAccountDto account = null;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 300; i++) {
 			account = posixAccountDtoDao.getUser(user1);
 		}
 		assertEquals(true, account.getCn().equals(user1.getCn()));

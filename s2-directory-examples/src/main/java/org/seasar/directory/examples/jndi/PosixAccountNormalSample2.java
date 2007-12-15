@@ -92,8 +92,10 @@ public class PosixAccountNormalSample2 {
 									.get()));
 							}
 						}
+						ae.close();
 						posixAccounts.add(account);
 					}
+					ne.close();
 				}
 			} catch (NamingException e) {
 				e.printStackTrace();

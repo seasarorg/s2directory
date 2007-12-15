@@ -90,6 +90,7 @@ public class DirectoryDataSourceFactoryImpl implements
 					"com.sun.jndi.ldap.connect.pool.protocol",
 					String.valueOf(pool.getProtocol()));
 			}
+			// 初期化フラグを設定します。
 			initialized = true;
 		}
 	}
