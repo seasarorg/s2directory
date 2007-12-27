@@ -70,13 +70,6 @@ public interface CommandContext {
 	public void addArg(String name, Object arg, Class argType);
 
 	/**
-	 * フィルターを取得します。
-	 * 
-	 * @return フィルター
-	 */
-	public String getFilter();
-
-	/**
 	 * 識別名を取得します。
 	 * 
 	 * @return 識別名

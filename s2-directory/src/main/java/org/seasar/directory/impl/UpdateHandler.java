@@ -31,11 +31,11 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.types.PropertyType;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
-import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveSet;
@@ -50,6 +50,7 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
+	private DirectoryBeanMetaData beanMetaData;
 	/** 引数をコマンドとみなしたコンテキスト */
 	private CommandContext ctx;
 
@@ -59,8 +60,10 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 	 * @param dataSource
 	 * @param ctx
 	 */
-	public UpdateHandler(DirectoryDataSource dataSource, CommandContext ctx) {
+	public UpdateHandler(DirectoryDataSource dataSource,
+			DirectoryBeanMetaData beanMetaData, CommandContext ctx) {
 		super(dataSource);
+		this.beanMetaData = beanMetaData;
 		this.ctx = ctx;
 	}
 
@@ -144,19 +147,24 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 			if (argName.equals("#dto")) {
 				// 引数がDTOの場合、DTOに定義されたフィールドを
 				// 対象エントリの変更属性とみなします。
-				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
-				int size = beanDesc.getPropertyDescSize();
-				for (int i = 0; i < size; i++) {
-					PropertyDesc pd = beanDesc.getPropertyDesc(i);
-					String propName = pd.getPropertyName();
+				int propSize = beanMetaData.getPropertyTypeSize();
+				for (int j = 0; j < propSize; ++j) {
+					PropertyType pt = beanMetaData.getPropertyType(j);
+					PropertyDesc pd = pt.getPropertyDesc();
+					String attributeName = pt.getColumnName();
+					Object attributeValue = pd.getValue(argValue);
 					Attribute currentAttribute = null;
-					if (currentAttributeNameSet.contains(propName)) {
+					if (currentAttributeNameSet.contains(attributeName)) {
 						// 既に属性がある場合、値を変更するために現在の属性を取得します。
-						currentAttribute = result.getAttributes().get(propName);
+						currentAttribute =
+							result.getAttributes().get(attributeName);
 					}
 					ModificationItem modificationItem =
-						createModificationItem(currentAttribute, propName, pd
-							.getValue(argValue), pd.getPropertyType());
+						createModificationItem(
+							currentAttribute,
+							attributeName,
+							attributeValue,
+							pd.getPropertyType());
 					if (modificationItem != null) {
 						modificationItemList.add(modificationItem);
 					}

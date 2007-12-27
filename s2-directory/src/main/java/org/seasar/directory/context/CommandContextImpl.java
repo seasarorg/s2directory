@@ -16,15 +16,14 @@
 package org.seasar.directory.context;
 
 import java.util.Set;
+
 import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
-import org.seasar.directory.types.ValueType;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveMap;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * 引数をコマンドとみなしたコンテキストを表わします。
@@ -143,71 +142,6 @@ public class CommandContextImpl implements CommandContext {
 	public void addArg(String name, Object arg, Class argType) {
 		args.put(name, arg);
 		argTypes.put(name, argType);
-	}
-
-	/**
-	 * フィルターを取得します。
-	 * 
-	 * @return フィルター
-	 * @see org.seasar.directory.CommandContext#getFilter()
-	 */
-	public String getFilter() {
-		// 値が null ではない、属性を抽出します。
-		CaseInsensitiveMap fitlerArgs = new CaseInsensitiveMap();
-		int size = args.size();
-		for (int i = 0; i < size; i++) {
-			String argName = String.valueOf(args.getKey(i));
-			Object argValue = args.get(argName);
-			Class argClass = getArgType(argName);
-			if (argName.equals("#dto")) {
-				BeanDesc bd = BeanDescFactory.getBeanDesc(argClass);
-				int propSize = bd.getPropertyDescSize();
-				for (int j = 0; j < propSize; j++) {
-					PropertyDesc pd = bd.getPropertyDesc(j);
-					String propName = pd.getPropertyName();
-					Object propValue = pd.getValue(argValue);
-					if (propValue != null
-						&& !StringUtil.isEmpty(String.valueOf(propValue))) {
-						fitlerArgs.put(propName, propValue);
-					}
-				}
-			} else {
-				if (argValue != null
-					&& !StringUtil.isEmpty(String.valueOf(argValue))) {
-					fitlerArgs.put(argName, argValue);
-				}
-			}
-		}
-		// フィルターを作成します。
-		StringBuffer buffer = new StringBuffer();
-		size = fitlerArgs.size();
-		if (size > 0) {
-			// 値が null ではない属性が一つ以上ある場合、最初の条件を作成します。
-			Object key = fitlerArgs.getKey(0);
-			Object value = fitlerArgs.get(key);
-			ValueType type =
-				getDirectoryAttributeHandlerFactory()
-					.getDirectoryValueTypeFactory()
-					.getValueTypeByClass(value.getClass());
-			buffer.append(type.getFilter(key, value));
-		}
-		if (size > 1) {
-			// 値が null ではない属性が複数ある場合、先ほどの最初の条件に足してフィルタを作成します。
-			String firstFilter = buffer.toString();
-			buffer = new StringBuffer("(&");
-			buffer.append("(").append(firstFilter).append(")");
-			for (int i = 1; i < size; i++) {
-				Object key = fitlerArgs.getKey(i);
-				Object value = fitlerArgs.get(key);
-				if (value != null) {
-					buffer.append("(");
-					buffer.append(key).append("=").append(value);
-					buffer.append(")");
-				}
-			}
-			buffer.append(")");
-		}
-		return buffer.toString();
 	}
 
 	/**

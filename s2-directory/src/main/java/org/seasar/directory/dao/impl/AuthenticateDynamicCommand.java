@@ -17,7 +17,6 @@ package org.seasar.directory.dao.impl;
 
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSourceFactory;
-import org.seasar.directory.dao.AnnotationMethodArgs;
 import org.seasar.directory.impl.AuthenticateHandler;
 import org.seasar.directory.impl.ExecuteHandler;
 
@@ -40,9 +39,8 @@ public class AuthenticateDynamicCommand extends AbstractDynamicDirectoryCommand 
 	 */
 	public AuthenticateDynamicCommand(
 			DirectoryDataSourceFactory dataSourceFactory,
-			DirectoryAttributeHandlerFactory attributeHandlerFactory,
-			AnnotationMethodArgs methodArgs) {
-		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
+			DirectoryAttributeHandlerFactory attributeHandlerFactory) {
+		super(dataSourceFactory, attributeHandlerFactory, null, null);
 	}
 
 	/**

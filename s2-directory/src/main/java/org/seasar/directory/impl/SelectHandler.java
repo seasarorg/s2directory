@@ -18,7 +18,6 @@ package org.seasar.directory.impl;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
-import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.NamingEnumerationHandler;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
@@ -37,27 +36,27 @@ public class SelectHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
-	/** 検索結果のハンドラクラス */
-	private NamingEnumerationHandler handler;
+	/** 識別子 */
+	private String dn;
 	/** 検索フィルタ */
 	private String filter;
-	/** 引数をコマンドとみなしたコンテキスト */
-	private CommandContext ctx;
+	/** 検索結果のハンドラクラス */
+	private NamingEnumerationHandler handler;
 
 	/**
 	 * インスタンスを生成します。
 	 * 
 	 * @param dataSource
+	 * @param dn
 	 * @param filter
 	 * @param handler
-	 * @param ctx
 	 */
-	public SelectHandler(DirectoryDataSource dataSource, String filter,
-			NamingEnumerationHandler handler, CommandContext ctx) {
+	public SelectHandler(DirectoryDataSource dataSource, String dn,
+			String filter, NamingEnumerationHandler handler) {
 		super(dataSource);
+		this.dn = dn;
 		this.filter = filter;
 		this.handler = handler;
-		this.ctx = ctx;
 	}
 
 	/**
@@ -69,7 +68,7 @@ public class SelectHandler extends BasicDirectoryHandler implements
 	public Object execute() throws NamingRuntimeException {
 		NamingEnumeration results = null;
 		try {
-			if (StringUtil.isEmpty(ctx.getDn())) {
+			if (StringUtil.isEmpty(dn)) {
 				// dn が無い場合、構築したフィルタで検索します。
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + filter);
@@ -78,7 +77,6 @@ public class SelectHandler extends BasicDirectoryHandler implements
 				return handler.handle(results, property.getBaseDn());
 			} else {
 				// dn がある場合、dn で検索します。
-				String dn = ctx.getDn();
 				if (logger.isDebugEnabled()) {
 					logger.debug("Filter: " + dn + " [DN]");
 				}
