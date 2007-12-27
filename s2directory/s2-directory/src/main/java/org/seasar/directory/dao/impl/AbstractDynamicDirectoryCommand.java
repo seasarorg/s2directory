@@ -23,8 +23,8 @@ import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.DirectoryValueTypeFactory;
 import org.seasar.directory.context.CommandContextImpl;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * ディレクトリ用動的処理コマンドの抽象クラスです。
@@ -34,6 +34,9 @@ import org.seasar.framework.util.StringUtil;
  */
 public abstract class AbstractDynamicDirectoryCommand extends
 		AbstractDirectoryCommand {
+	/** ビーンメタデータ */
+	protected DirectoryBeanMetaData beanMetaData;
+	/** 関数の引数 */
 	private AnnotationMethodArgs methodArgs;
 
 	/**
@@ -49,8 +52,9 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	public AbstractDynamicDirectoryCommand(
 			DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
-			AnnotationMethodArgs methodArgs) {
+			DirectoryBeanMetaData beanMetaData, AnnotationMethodArgs methodArgs) {
 		super(dataSourceFactory, attributeHandlerFactory);
+		this.beanMetaData = beanMetaData;
 		this.methodArgs = methodArgs;
 	}
 
@@ -115,16 +119,17 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	 * @return データソース
 	 */
 	public DirectoryDataSource getDirectoryDataSource(Object[] args) {
-		if (args != null && methodArgs != null && args.length > 0) {
-			// 第一引数が接続情報である場合は、その接続情報を利用したデータソースを返します。
-			if (args[0] != null
-				&& methodArgs.getArgTypes()[0] == DirectoryControlProperty.class) {
+		if (args != null && args.length > 0) {
+			// 第一引数が接続情報である場合は、
+			// その接続情報を利用したデータソースを返します。
+			if (args[0] != null && args[0] instanceof DirectoryControlProperty) {
 				return dataSourceFactory
 					.getDirectoryDataSource((DirectoryControlProperty)args[0]);
 			}
-			// 第一引数以外に接続情報がある場合は、例外を発生させます。
+			// 第一引数以外に接続情報がある場合は、
+			// 例外を発生させます。
 			for (int i = 1; i < args.length; ++i) {
-				if (methodArgs.getArgTypes()[i] == DirectoryControlProperty.class) {
+				if (args[i] instanceof DirectoryControlProperty) {
 					throw new IllegalArgsPositionRuntimeException();
 				}
 			}
@@ -139,29 +144,5 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	 */
 	protected void applyObjectClass(CommandContext ctx) {
 		ctx.setObjectClasses(super.getObjectClasses());
-	}
-
-	/**
-	 * 実行フィルタを取得します。
-	 * 
-	 * @return runFilter フィルタ
-	 */
-	public String getRunFilter(CommandContext ctx) {
-		// フィルタを作成します。
-		String filter = super.getFilter();
-		String ctxFilter = ctx.getFilter();
-		// 引数があるにも関わらずオブジェクトにすべての値がnullの場合は、
-		// OBJECTCLASSESによるフィルタも利用せずにnullを返す。
-		if (ctx.getArgKeySet().size() != 0 && StringUtil.isEmpty(ctxFilter)) {
-			return null;
-		}
-		if (StringUtil.isEmpty(filter)) {
-			filter = ctxFilter;
-		} else {
-			if (!StringUtil.isEmpty(ctxFilter)) {
-				filter = "(&(" + filter + ")(" + ctxFilter + "))";
-			}
-		}
-		return filter;
 	}
 }

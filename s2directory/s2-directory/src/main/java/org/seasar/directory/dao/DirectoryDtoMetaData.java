@@ -25,8 +25,6 @@ import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
  * @version $Date::                           $
  */
 public interface DirectoryDtoMetaData {
-	public String COLUMN_KEY_SUFFIX = "_COLUMN";
-
 	public Class getBeanClass();
 
 	public int getPropertyTypeSize();

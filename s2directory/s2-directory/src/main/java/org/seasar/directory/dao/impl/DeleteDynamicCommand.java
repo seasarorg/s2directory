@@ -42,7 +42,7 @@ public class DeleteDynamicCommand extends AbstractDynamicDirectoryCommand {
 	public DeleteDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
 			AnnotationMethodArgs methodArgs) {
-		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
+		super(dataSourceFactory, attributeHandlerFactory, null, methodArgs);
 	}
 
 	/**

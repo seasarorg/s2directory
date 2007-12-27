@@ -39,6 +39,8 @@ public class DirectoryFieldBeanAnnotationReader implements
 	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
 	/** この属性だけ永続化する属性の設定名 */
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
+	/** 優先度の高い属性名の設定名 */
+	public String ATTRIBUTE_SUFFIX = "_ATTRIBUTE";
 	/** 属性名の設定名 */
 	public String COLUMN_SUFFIX = "_COLUMN";
 	/** 値の型の設定名 */
@@ -61,7 +63,14 @@ public class DirectoryFieldBeanAnnotationReader implements
 	 */
 	public String getColumnAnnotation(PropertyDesc pd) {
 		String propertyName = pd.getPropertyName();
+		String attributeNameKey = propertyName + ATTRIBUTE_SUFFIX;
 		String columnNameKey = propertyName + COLUMN_SUFFIX;
+		// ATTRIBUTEアノテーションがある場合、COLUMNアノテーションに優先して利用します。
+		if (beanDesc.hasField(attributeNameKey)) {
+			Field field = beanDesc.getField(attributeNameKey);
+			return (String)FieldUtil.get(field, null);
+		}
+		// ATTRIBUTEアノテーションがなく、COLUMNアノテーションがある場合は利用します。
 		if (beanDesc.hasField(columnNameKey)) {
 			Field field = beanDesc.getField(columnNameKey);
 			return (String)FieldUtil.get(field, null);

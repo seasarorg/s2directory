@@ -19,6 +19,7 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.impl.ExecuteHandler;
 import org.seasar.directory.impl.InsertHandler;
 
@@ -36,13 +37,19 @@ public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
 	 *            データソース
 	 * @param attributeHandlerFactory
 	 *            属性ハンドラファクトリ
+	 * @param beanMetaData
+	 *            ビーンメタデータ
 	 * @param methodArgs
 	 *            関数の引数
 	 */
 	public InsertDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
-			AnnotationMethodArgs methodArgs) {
-		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
+			DirectoryBeanMetaData beanMetaData, AnnotationMethodArgs methodArgs) {
+		super(
+			dataSourceFactory,
+			attributeHandlerFactory,
+			beanMetaData,
+			methodArgs);
 	}
 
 	/**

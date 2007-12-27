@@ -138,6 +138,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 				dataSourceFactory,
 				attributeHandlerFactory,
 				null,
+				null,
 				handler);
 		cmd.setFilter(filter);
 		directoryCmmands.put(method.getName(), cmd);
@@ -212,14 +213,10 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	 * @param method
 	 */
 	protected void setupAuthenticateMethodByAuto(final Method method) {
-		// 引数の準備をします。
-		final AnnotationMethodArgs methodArgs =
-			AnnotationMethodArgsFactory.create(method, daoAnnotationReader);
 		final AuthenticateDynamicCommand cmd =
 			new AuthenticateDynamicCommand(
 				dataSourceFactory,
-				attributeHandlerFactory,
-				methodArgs);
+				attributeHandlerFactory);
 		directoryCmmands.put(method.getName(), cmd);
 	}
 
@@ -236,6 +233,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 			new InsertDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
+				beanMetaData,
 				methodArgs);
 		// オブジェクトクラスを設定します。
 		cmd.setObjectClasses(daoAnnotationReader.getObjectClasses(beanMetaData
@@ -256,6 +254,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 			new UpdateDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
+				beanMetaData,
 				methodArgs);
 		directoryCmmands.put(method.getName(), cmd);
 	}
@@ -293,6 +292,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 			new SelectDynamicCommand(
 				dataSourceFactory,
 				attributeHandlerFactory,
+				beanMetaData,
 				methodArgs,
 				handler);
 		// フィルタの準備をします。

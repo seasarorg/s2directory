@@ -19,6 +19,7 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSourceFactory;
 import org.seasar.directory.dao.AnnotationMethodArgs;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.impl.ExecuteHandler;
 import org.seasar.directory.impl.UpdateHandler;
 
@@ -34,13 +35,19 @@ public class UpdateDynamicCommand extends AbstractDynamicDirectoryCommand {
 	 *            データソース
 	 * @param attributeHandlerFactory
 	 *            属性ハンドラファクトリ
+	 * @param beanMetaData
+	 *            ビーンメタデータ
 	 * @param methodArgs
 	 *            関数の引数
 	 */
 	public UpdateDynamicCommand(DirectoryDataSourceFactory dataSourceFactory,
 			DirectoryAttributeHandlerFactory attributeHandlerFactory,
-			AnnotationMethodArgs methodArgs) {
-		super(dataSourceFactory, attributeHandlerFactory, methodArgs);
+			DirectoryBeanMetaData beanMetaData, AnnotationMethodArgs methodArgs) {
+		super(
+			dataSourceFactory,
+			attributeHandlerFactory,
+			beanMetaData,
+			methodArgs);
 	}
 
 	/**
@@ -54,7 +61,7 @@ public class UpdateDynamicCommand extends AbstractDynamicDirectoryCommand {
 		// TODO: ここでコマンドコンテキストを渡しちゃうのは良くない
 		// 将来的には BindVariables のようなものを使うようなものに直す
 		ExecuteHandler handler =
-			new UpdateHandler(getDirectoryDataSource(args), ctx);
+			new UpdateHandler(getDirectoryDataSource(args), beanMetaData, ctx);
 		return handler.execute();
 	}
 }
