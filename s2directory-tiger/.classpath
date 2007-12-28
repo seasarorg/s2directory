@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="s2-directory-tiger/target/classes" path="s2-directory-tiger/src/main/java"/>
+	<classpathentry kind="src" output="s2-directory-tiger/target/classes" path="s2-directory-tiger/src/main/resources"/>
+	<classpathentry kind="src" output="s2-directory-tiger/target/test-classes" path="s2-directory-tiger/src/test/resources"/>
+	<classpathentry kind="src" output="s2-directory-tiger/target/test-classes" path="s2-directory-tiger/src/test/java"/>
+	<classpathentry kind="src" output="s2-directory-tiger-examples/target/classes" path="s2-directory-tiger-examples/src/main/java"/>
+	<classpathentry kind="src" output="s2-directory-tiger-examples/target/classes" path="s2-directory-tiger-examples/src/main/resources"/>
+	<classpathentry kind="src" output="s2-directory-tiger-examples/target/test-classes" path="s2-directory-tiger-examples/src/test/java"/>
+	<classpathentry kind="src" output="s2-directory-tiger-examples/target/test-classes" path="s2-directory-tiger-examples/src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/s2directory"/>
+	<classpathentry kind="output" path="s2-directory-tiger/target/classes"/>
+</classpath>
