@@ -24,11 +24,11 @@ import javax.naming.directory.Attributes;
  * @version $Date::                           $
  */
 public class AttributeSet {
-	private DirectoryConstants type;
+	private DirectoryConstant type;
 	private String name;
 	private Attributes attributes;
 
-	public AttributeSet(DirectoryConstants type, String name,
+	public AttributeSet(DirectoryConstant type, String name,
 			Attributes attributes) {
 		this.type = type;
 		this.name = name;
@@ -66,14 +66,14 @@ public class AttributeSet {
 	/**
 	 * @return Returns the type.
 	 */
-	public DirectoryConstants getType() {
+	public DirectoryConstant getType() {
 		return type;
 	}
 
 	/**
 	 * @param type The type to set.
 	 */
-	public void setType(DirectoryConstants type) {
+	public void setType(DirectoryConstant type) {
 		this.type = type;
 	}
 

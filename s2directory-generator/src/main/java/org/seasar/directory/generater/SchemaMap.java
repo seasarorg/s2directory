@@ -24,6 +24,9 @@ import java.util.HashMap;
  * @version $Date::                           $
  */
 public class SchemaMap extends HashMap {
+
+	private static final long serialVersionUID = 1L;
+
 	public SchemaMap() {
 		super();
 	}

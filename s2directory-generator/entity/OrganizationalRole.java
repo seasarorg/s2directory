@@ -1,0 +1,246 @@
+import java.io.Serializable;
+
+public class OrganizationalRole implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String dn;
+	private String cn;
+	private String x121Address;
+	private String registeredAddress;
+	private String destinationIndicator;
+	private String preferredDeliveryMethod;
+	private String telexNumber;
+	private String teletexTerminalIdentifier;
+	private String telephoneNumber;
+	private String internationaliSDNNumber;
+	private String facsimileTelephoneNumber;
+	private String seeAlso;
+	private String roleOccupant;
+	private String street;
+	private String postOfficeBox;
+	private String postalCode;
+	private String postalAddress;
+	private String physicalDeliveryOfficeName;
+	private String ou;
+	private String st;
+	private String l;
+	private String description;
+
+	public OrganizationalRole() {
+		super();
+	}
+
+	public OrganizationalRole(String cn) {
+		super();
+		this.cn = cn;
+	}
+
+	public void setDn(String dn) {
+		this.dn = dn;
+	}
+
+	public String getDn() {
+		return dn;
+	}
+
+	public void setCn(String cn) {
+		this.cn = cn;
+	}
+
+	public String getCn() {
+		return cn;
+	}
+
+	public void setX121Address(String x121Address) {
+		this.x121Address = x121Address;
+	}
+
+	public String getX121Address() {
+		return x121Address;
+	}
+
+	public void setRegisteredAddress(String registeredAddress) {
+		this.registeredAddress = registeredAddress;
+	}
+
+	public String getRegisteredAddress() {
+		return registeredAddress;
+	}
+
+	public void setDestinationIndicator(String destinationIndicator) {
+		this.destinationIndicator = destinationIndicator;
+	}
+
+	public String getDestinationIndicator() {
+		return destinationIndicator;
+	}
+
+	public void setPreferredDeliveryMethod(String preferredDeliveryMethod) {
+		this.preferredDeliveryMethod = preferredDeliveryMethod;
+	}
+
+	public String getPreferredDeliveryMethod() {
+		return preferredDeliveryMethod;
+	}
+
+	public void setTelexNumber(String telexNumber) {
+		this.telexNumber = telexNumber;
+	}
+
+	public String getTelexNumber() {
+		return telexNumber;
+	}
+
+	public void setTeletexTerminalIdentifier(String teletexTerminalIdentifier) {
+		this.teletexTerminalIdentifier = teletexTerminalIdentifier;
+	}
+
+	public String getTeletexTerminalIdentifier() {
+		return teletexTerminalIdentifier;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setInternationaliSDNNumber(String internationaliSDNNumber) {
+		this.internationaliSDNNumber = internationaliSDNNumber;
+	}
+
+	public String getInternationaliSDNNumber() {
+		return internationaliSDNNumber;
+	}
+
+	public void setFacsimileTelephoneNumber(String facsimileTelephoneNumber) {
+		this.facsimileTelephoneNumber = facsimileTelephoneNumber;
+	}
+
+	public String getFacsimileTelephoneNumber() {
+		return facsimileTelephoneNumber;
+	}
+
+	public void setSeeAlso(String seeAlso) {
+		this.seeAlso = seeAlso;
+	}
+
+	public String getSeeAlso() {
+		return seeAlso;
+	}
+
+	public void setRoleOccupant(String roleOccupant) {
+		this.roleOccupant = roleOccupant;
+	}
+
+	public String getRoleOccupant() {
+		return roleOccupant;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setPostOfficeBox(String postOfficeBox) {
+		this.postOfficeBox = postOfficeBox;
+	}
+
+	public String getPostOfficeBox() {
+		return postOfficeBox;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalAddress(String postalAddress) {
+		this.postalAddress = postalAddress;
+	}
+
+	public String getPostalAddress() {
+		return postalAddress;
+	}
+
+	public void setPhysicalDeliveryOfficeName(String physicalDeliveryOfficeName) {
+		this.physicalDeliveryOfficeName = physicalDeliveryOfficeName;
+	}
+
+	public String getPhysicalDeliveryOfficeName() {
+		return physicalDeliveryOfficeName;
+	}
+
+	public void setOu(String ou) {
+		this.ou = ou;
+	}
+
+	public String getOu() {
+		return ou;
+	}
+
+	public void setSt(String st) {
+		this.st = st;
+	}
+
+	public String getSt() {
+		return st;
+	}
+
+	public void setL(String l) {
+		this.l = l;
+	}
+
+	public String getL() {
+		return l;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("DN: ");
+		buffer.append("dn=").append(dn).append(", ");
+		buffer.append("MUST: ");
+		buffer.append("cn=").append(cn).append(", ");
+		buffer.append("MAY: ");
+		buffer.append("x121Address=").append(x121Address).append(", ");
+		buffer.append("registeredAddress=").append(registeredAddress).append(", ");
+		buffer.append("destinationIndicator=").append(destinationIndicator).append(", ");
+		buffer.append("preferredDeliveryMethod=").append(preferredDeliveryMethod).append(", ");
+		buffer.append("telexNumber=").append(telexNumber).append(", ");
+		buffer.append("teletexTerminalIdentifier=").append(teletexTerminalIdentifier).append(", ");
+		buffer.append("telephoneNumber=").append(telephoneNumber).append(", ");
+		buffer.append("internationaliSDNNumber=").append(internationaliSDNNumber).append(", ");
+		buffer.append("facsimileTelephoneNumber=").append(facsimileTelephoneNumber).append(", ");
+		buffer.append("seeAlso=").append(seeAlso).append(", ");
+		buffer.append("roleOccupant=").append(roleOccupant).append(", ");
+		buffer.append("street=").append(street).append(", ");
+		buffer.append("postOfficeBox=").append(postOfficeBox).append(", ");
+		buffer.append("postalCode=").append(postalCode).append(", ");
+		buffer.append("postalAddress=").append(postalAddress).append(", ");
+		buffer.append("physicalDeliveryOfficeName=").append(physicalDeliveryOfficeName).append(", ");
+		buffer.append("ou=").append(ou).append(", ");
+		buffer.append("st=").append(st).append(", ");
+		buffer.append("l=").append(l).append(", ");
+		buffer.append("description=").append(description);
+		return buffer.toString();
+	}
+
+	public int hashCode() {
+		return dn.hashCode();
+	}
+}

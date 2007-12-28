@@ -56,16 +56,16 @@ public class SchemaBuilder {
 				SearchResult result = (SearchResult)ne.next();
 				AttributeSet attrSet = AttributeSetFactory.create(result);
 				// System.out.println(attrSet.toString());
-				if (attrSet.getType() == DirectoryConstants.OBJECTCLASS) {
+				if (attrSet.getType() == DirectoryConstant.OBJECTCLASS) {
 					classDefinition.put(attrSet.getName(), attrSet
 							.getAttributes());
-				} else if (attrSet.getType() == DirectoryConstants.ATTRIBUTE) {
+				} else if (attrSet.getType() == DirectoryConstant.ATTRIBUTE) {
 					attributeDefinition.put(attrSet.getName(), attrSet
 							.getAttributes());
-				} else if (attrSet.getType() == DirectoryConstants.MATCHINGRULE) {
+				} else if (attrSet.getType() == DirectoryConstant.MATCHINGRULE) {
 					matchingRuleDefinition.put(attrSet.getName(), attrSet
 							.getAttributes());
-				} else if (attrSet.getType() == DirectoryConstants.SYNTAX) {
+				} else if (attrSet.getType() == DirectoryConstant.SYNTAX) {
 					syntaxDefinition.put(attrSet.getName(), attrSet
 							.getAttributes());
 				} else {

@@ -16,27 +16,17 @@
 package org.seasar.directory.generater.parser;
 
 /**
- * パーサ用のユーティリティクラスです。
+ * パーサ用定数クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class ParserUtils {
+public class ParserConstant {
+	/** output encoding */
+	public static final String OUTPUT_ENCODING = "UTF-8";
+	/** output directory */
+	public static final String OUTPUT_DIR_PATH =
+		"entity" + System.getProperty("file.separator");
 	/** indent string */
-	public static final String INDENT_STRING = ParserConstants.INDENT_STRING;
-
-	public static String getIndent(int amount) {
-		StringBuffer sb = new StringBuffer();
-		for (; amount != 0; amount--) {
-			sb.append(INDENT_STRING);
-		}
-		return sb.toString();
-	}
-
-	public static StringBuffer deleteLast(StringBuffer sb, int amount) {
-		if (sb.length() < amount)
-			return sb;
-		sb.delete(sb.length() - amount, sb.length());
-		return sb;
-	}
+	public static final String INDENT_STRING = "\t";
 }

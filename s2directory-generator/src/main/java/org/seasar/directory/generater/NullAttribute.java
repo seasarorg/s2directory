@@ -24,6 +24,9 @@ import javax.naming.directory.BasicAttribute;
  * @version $Date::                           $
  */
 public class NullAttribute extends BasicAttribute {
+
+	private static final long serialVersionUID = 1L;
+
 	private static NullAttribute instance = new NullAttribute();
 
 	private NullAttribute() {

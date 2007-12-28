@@ -44,7 +44,7 @@ public class AttributeSetFactory {
 			type = fullName.split("/")[0];
 			name = fullName.split("/")[1];
 		}
-		return new AttributeSet(DirectoryConstants.getType(type), name, result
+		return new AttributeSet(DirectoryConstant.getType(type), name, result
 				.getAttributes());
 	}
 }

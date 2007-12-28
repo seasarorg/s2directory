@@ -1,0 +1,45 @@
+import java.io.Serializable;
+
+public class UidObject implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String dn;
+	private String uid;
+
+	public UidObject() {
+		super();
+	}
+
+	public UidObject(String uid) {
+		super();
+		this.uid = uid;
+	}
+
+	public void setDn(String dn) {
+		this.dn = dn;
+	}
+
+	public String getDn() {
+		return dn;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("DN: ");
+		buffer.append("dn=").append(dn).append(", ");
+		buffer.append("MUST: ");
+		buffer.append("uid=").append(uid);
+		return buffer.toString();
+	}
+
+	public int hashCode() {
+		return dn.hashCode();
+	}
+}

@@ -16,13 +16,15 @@
 package org.seasar.directory.generater.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
+
+import org.seasar.directory.generater.AttributeField;
 import org.seasar.directory.generater.NullAttribute;
 import org.seasar.directory.generater.SchemaMap;
 import org.seasar.directory.generater.parser.ParseException;
@@ -33,12 +35,27 @@ import org.seasar.directory.generater.parser.ParseException;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryUtils {
+public class DirectoryUtil {
+	/** Javaの予約語 */
+	public static final String[] javaKeyword =
+		new String[] { "abstract", "assert", "boolean", "break", "byte",
+			"case", "catch", "char", "class", "const", "continue", "default",
+			"do", "double", "else", "enum", "extends", "false", "final",
+			"finally", "float", "for", "goto", "if", "implements", "import",
+			"instanceof", "int", "interface", "long", "native", "new", "null",
+			"package", "private", "protected", "public", "return", "short",
+			"static", "strictfp", "super", "switch", "synchrnized", "this",
+			"throw", "throws", "transient", "true", "try", "void", "volatile",
+			"while" };
+	/** フィールドもしくは関数名に利用できないキャラクタ */
+	public static final String[] javaNoIncludeChar = new String[] { "-" };
+
 	/**
 	 * Returns the character sequence which first character was changed into the
 	 * capital letter.
 	 * 
-	 * @param str the character sequence
+	 * @param str
+	 *            the character sequence
 	 * @return the character sequence
 	 */
 	public static String getFirstUpperString(String str) {
@@ -53,7 +70,8 @@ public class DirectoryUtils {
 	/**
 	 * Returns the simple class name without package name.
 	 * 
-	 * @param className the full class name
+	 * @param className
+	 *            the full class name
 	 * @return the simple class name without package name
 	 */
 	public static String getSimpleClassName(String className) {
@@ -66,28 +84,32 @@ public class DirectoryUtils {
 	/**
 	 * Returns the character sequence of set method.
 	 * 
-	 * @param methodName method name
+	 * @param methodName
+	 *            method name
 	 * @return the character sequence
 	 */
 	public static String getSetMethodName(String methodName) {
-		return "set" + DirectoryUtils.getFirstUpperString(methodName);
+		return "set" + DirectoryUtil.getFirstUpperString(methodName);
 	}
 
 	/**
 	 * Returns the character sequence of get method.
 	 * 
-	 * @param methodName method name
+	 * @param methodName
+	 *            method name
 	 * @return the character sequence
 	 */
 	public static String getGetMethodName(String methodName) {
-		return "get" + DirectoryUtils.getFirstUpperString(methodName);
+		return "get" + DirectoryUtil.getFirstUpperString(methodName);
 	}
 
 	/**
 	 * Returns the map of no multiple key value.
 	 * 
-	 * @param attrs the objectClass
-	 * @param key the definition name
+	 * @param attrs
+	 *            the objectClass
+	 * @param key
+	 *            the definition name
 	 * @return SchemaMap
 	 * @throws NamingException
 	 */
@@ -110,8 +132,10 @@ public class DirectoryUtils {
 	/**
 	 * Returns the attribute of the specific key.
 	 * 
-	 * @param attrs the objectClass
-	 * @param key the definition name
+	 * @param attrs
+	 *            the objectClass
+	 * @param key
+	 *            the definition name
 	 * @return the attribute
 	 */
 	public synchronized static Attribute getAttribute(Attributes attrs,
@@ -128,28 +152,50 @@ public class DirectoryUtils {
 	/**
 	 * Returns the field names.
 	 * 
-	 * @param attr a entry
+	 * @param attr
+	 *            a entry
 	 * @return the field names
 	 * @throws ParseException
 	 */
-	public synchronized static String[] createFieldNames(Attribute attr)
+	public synchronized static AttributeField[] createFieldNames(Attribute attr)
 			throws ParseException {
-		String[] instances = new String[attr.size()];
+		AttributeField[] instances = new AttributeField[attr.size()];
 		try {
+			String fieldName;
+			String attributeName;
 			for (int i = 0; i < instances.length; i++) {
-				instances[i] = String.valueOf(attr.get(i));
+				attributeName = String.valueOf(attr.get(i));
+				fieldName = getFiledName(attributeName);
+				instances[i] = new AttributeField(attributeName, fieldName);
 			}
 		} catch (NamingException e) {
 			throw new ParseException("Attribute \"" + attr.getID()
-					+ "\" cannot parse.", e);
+				+ "\" cannot parse.", e);
 		}
 		return instances;
+	}
+
+	public static String getFiledName(String attributeName) {
+		String fieldName = attributeName;
+		for (int i = 0; i < javaKeyword.length; i++) {
+			if (javaKeyword[i].equals(attributeName)) {
+				fieldName = fieldName + "_";
+				break;
+			}
+		}
+		for (int i = 0; i < javaNoIncludeChar.length; i++) {
+			if (fieldName.indexOf(javaNoIncludeChar[i]) != -1) {
+				fieldName = fieldName.replaceAll(javaNoIncludeChar[i], "");
+			}
+		}
+		return fieldName;
 	}
 
 	/**
 	 * Returns the first value of the specific attribute.
 	 * 
-	 * @param attr the attribute
+	 * @param attr
+	 *            the attribute
 	 * @return the first value
 	 * @throws ParseException
 	 */
@@ -157,7 +203,7 @@ public class DirectoryUtils {
 			throws ParseException {
 		if (attr.size() != 1) {
 			throw new ParseException("Attribute \"" + attr.getID()
-					+ "\" is not single value. values: " + attr.toString());
+				+ "\" is not single value. values: " + attr.toString());
 		}
 		try {
 			return String.valueOf(attr.get(0));
@@ -169,7 +215,8 @@ public class DirectoryUtils {
 	/**
 	 * Returns the valied object class name.
 	 * 
-	 * @param the className
+	 * @param the
+	 *            className
 	 * @return the valied object class name
 	 */
 	public static String getObjectClassName(String className) {
@@ -179,19 +226,28 @@ public class DirectoryUtils {
 	/**
 	 * Returns the unique string array.
 	 * 
-	 * @param target the target string array
-	 * @param master the master string array
+	 * @param target
+	 *            the target string array
+	 * @param master
+	 *            the master string array
 	 * @return the unique string array
 	 */
-	public static String[] getUniqueStringArray(String target[],
-			String master[]) {
-		List masterList = Arrays.asList(master);
+	public static AttributeField[] getUniqueStringArray(
+			AttributeField[] target, AttributeField[] master) {
 		List targetList = new ArrayList();
 		for (int i = 0; i < target.length; i++) {
-			if (!masterList.contains(target[i])) {
+			boolean hasAttribute = false;
+			for (int j = 0; j < master.length; j++) {
+				if (master[j].getAttributeName().equals(
+					target[i].getAttributeName())) {
+					hasAttribute = true;
+					break;
+				}
+			}
+			if (!hasAttribute) {
 				targetList.add(target[i]);
 			}
 		}
-		return (String[])targetList.toArray(new String[0]);
+		return (AttributeField[])targetList.toArray(new AttributeField[0]);
 	}
 }

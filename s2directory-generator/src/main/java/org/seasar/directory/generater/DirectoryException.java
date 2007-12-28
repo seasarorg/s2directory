@@ -22,6 +22,9 @@ package org.seasar.directory.generater;
  * @version $Date::                           $
  */
 public class DirectoryException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Directoryに関する例外を生成します。
 	 */

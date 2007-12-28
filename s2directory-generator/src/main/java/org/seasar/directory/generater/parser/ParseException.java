@@ -22,10 +22,14 @@ package org.seasar.directory.generater.parser;
  * @version $Date::                           $
  */
 public class ParseException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 例外を生成します。
 	 * 
-	 * @param message メッセージ
+	 * @param message
+	 *            メッセージ
 	 */
 	public ParseException(String message) {
 		super(message);
@@ -34,8 +38,10 @@ public class ParseException extends Exception {
 	/**
 	 * この例外の元になった例外を指定して例外を生成します。
 	 * 
-	 * @param message メッセージ
-	 * @param cause 元になった例外
+	 * @param message
+	 *            メッセージ
+	 * @param cause
+	 *            元になった例外
 	 */
 	public ParseException(String message, Throwable cause) {
 		super(message, cause);

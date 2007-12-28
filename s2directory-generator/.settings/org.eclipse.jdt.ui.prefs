@@ -1,5 +1,6 @@
-#Mon May 15 23:23:56 JST 2006
+#Fri Dec 28 19:40:40 JST 2007
 eclipse.preferences.version=1
-formatter_settings_version=8
+formatter_profile=_jfut
+formatter_settings_version=11
 internal.default.compliance=default
 org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8"?><templates/>

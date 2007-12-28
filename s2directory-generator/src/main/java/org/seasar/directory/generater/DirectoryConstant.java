@@ -21,14 +21,14 @@ package org.seasar.directory.generater;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public class DirectoryConstants {
+public class DirectoryConstant {
 	/** 値を表します。 */
 	private final String value;
 
 	/**
 	 * インスタンスを生成します。
 	 */
-	private DirectoryConstants(String value) {
+	private DirectoryConstant(String value) {
 		super();
 		this.value = value;
 	}
@@ -44,15 +44,15 @@ public class DirectoryConstants {
 	/**
 	 * 型定義名を表します。
 	 */
-	public static final DirectoryConstants OBJECTCLASS = new DirectoryConstants(
+	public static final DirectoryConstant OBJECTCLASS = new DirectoryConstant(
 			"ClassDefinition");
-	public static final DirectoryConstants ATTRIBUTE = new DirectoryConstants(
+	public static final DirectoryConstant ATTRIBUTE = new DirectoryConstant(
 			"AttributeDefinition");
-	public static final DirectoryConstants SYNTAX = new DirectoryConstants(
+	public static final DirectoryConstant SYNTAX = new DirectoryConstant(
 			"SyntaxDefinition");
-	public static final DirectoryConstants MATCHINGRULE = new DirectoryConstants(
+	public static final DirectoryConstant MATCHINGRULE = new DirectoryConstant(
 			"MatchingRule");
-	public static final DirectoryConstants UnkownDefinition = new DirectoryConstants(
+	public static final DirectoryConstant UnkownDefinition = new DirectoryConstant(
 			"UnkownDefinition");
 
 	/**
@@ -61,15 +61,15 @@ public class DirectoryConstants {
 	 * @param type 型名
 	 * @return 型のインスタンス
 	 */
-	public static DirectoryConstants getType(String type) {
+	public static DirectoryConstant getType(String type) {
 		if (type.equals("ClassDefinition"))
-			return DirectoryConstants.OBJECTCLASS;
+			return DirectoryConstant.OBJECTCLASS;
 		else if (type.equals("AttributeDefinition"))
-			return DirectoryConstants.ATTRIBUTE;
+			return DirectoryConstant.ATTRIBUTE;
 		else if (type.equals("MatchingRule"))
-			return DirectoryConstants.MATCHINGRULE;
+			return DirectoryConstant.MATCHINGRULE;
 		else if (type.equals("SyntaxDefinition"))
-			return DirectoryConstants.SYNTAX;
+			return DirectoryConstant.SYNTAX;
 		return UnkownDefinition;
 	}
 }

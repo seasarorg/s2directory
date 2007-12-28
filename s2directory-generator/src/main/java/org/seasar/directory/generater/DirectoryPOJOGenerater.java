@@ -29,8 +29,8 @@ import javax.naming.directory.DirContext;
 import org.seasar.directory.generater.parser.ObjectClassParser;
 import org.seasar.directory.generater.parser.ParseException;
 import org.seasar.directory.generater.parser.Parser;
-import org.seasar.directory.generater.parser.ParserConstants;
-import org.seasar.directory.generater.util.DirectoryUtils;
+import org.seasar.directory.generater.parser.ParserConstant;
+import org.seasar.directory.generater.util.DirectoryUtil;
 
 /**
  * オブジェクトクラスに対応したPOJOクラスを作成します。
@@ -72,7 +72,7 @@ public class DirectoryPOJOGenerater {
 		while (iter.hasNext()) {
 			String name = String.valueOf(iter.next());
 			try {
-				SchemaMap map = DirectoryUtils
+				SchemaMap map = DirectoryUtil
 						.getNoMultipleDirectoryDefinitionMap(
 								(Attributes)definition.get(name), "NAME");
 				if (map.size() > 1)
@@ -90,13 +90,13 @@ public class DirectoryPOJOGenerater {
 
 	public void parse(String name, Attributes attrs) throws ParseException,
 			IOException {
-		String fileName = DirectoryUtils.getObjectClassName(DirectoryUtils
+		String fileName = DirectoryUtil.getObjectClassName(DirectoryUtil
 				.getFirstUpperString(name))
 				+ ".java";
 		// 出力エンコーディング
-		String encoding = ParserConstants.OUTPUT_ENCODING;
+		String encoding = ParserConstant.OUTPUT_ENCODING;
 		// 出力先ディレクトリ
-		String outputDir = ParserConstants.OUTPUT_DIR_PATH;
+		String outputDir = ParserConstant.OUTPUT_DIR_PATH;
 		File outputDirFile = new File(outputDir);
 		if (!outputDirFile.exists()) {
 			outputDirFile.mkdir();
@@ -125,6 +125,6 @@ public class DirectoryPOJOGenerater {
 		// ビルドの開始
 		main.build(host, port);
 		System.out
-				.println(ParserConstants.OUTPUT_DIR_PATH + "ディレクトリ以下に作成しました。");
+				.println(ParserConstant.OUTPUT_DIR_PATH + "ディレクトリ以下に作成しました。");
 	}
 }
