@@ -32,7 +32,7 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  */
 public class PosixAccountWithAnnocationTest extends
 		DefaultDirectoryInformationTreeTest {
-	private static final String PATH = "app-tiger.dicon";
+	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
 	private static PosixAccountWithAnnocationDirectoryDao posixAccountWithAnnocationDirectoryDao;
