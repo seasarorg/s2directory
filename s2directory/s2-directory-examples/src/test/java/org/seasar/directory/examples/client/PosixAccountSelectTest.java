@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.examples.client;
 
+import java.util.List;
+
 import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
@@ -110,6 +112,11 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 		}
 	}
 
+	public void testSelectList() {
+		List accounts = posixAccountDtoDao.getAllUser();
+		assertNotNull(accounts);
+	}
+
 	public void testSelectNull() {
 		// 検索に使用するエンティティの値がすべて空の場合、
 		// 検索結果はnullになります。
@@ -121,7 +128,7 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 	public void testSelectManyTimes() {
 		// user1を取得します。
 		PosixAccountDto account = null;
-		for (int i = 0; i < 300; i++) {
+		for (int i = 0; i < 100; i++) {
 			account = posixAccountDtoDao.getUser(user1);
 		}
 		assertEquals(true, account.getCn().equals(user1.getCn()));
