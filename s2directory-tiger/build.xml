@@ -1,0 +1,30 @@
+<project name="s2directory-tiger" default="dist" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+
+	<!-- Please run "mvn clean deploy". -->
+
+	<target name="initTaskDefs">
+		<property name="ver" value="0.6"/>
+	</target>
+
+	<target name="dist" depends="initTaskDefs">
+		<mkdir dir="target"/>
+		<zip zipfile="target/s2-directory-tiger-${ver}.zip">
+			<zipfileset prefix="s2directory-tiger" dir=".">
+				<exclude name="**/target/**"/>
+				<exclude name="*.log"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory-tiger/lib" dir="s2-directory-tiger/target">
+				<include name="s2-directory-tiger-${ver}.jar"/>
+				<include name="s2-directory-tiger-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory-tiger/resources" dir="s2-directory-tiger/src/test/resources">
+				<include name="directory.dicon"/>
+				<include name="directorydao.dicon"/>
+				<include name="log4j.properties"/>
+			</zipfileset>
+			<zipfileset prefix="s2directory-tiger/doc" dir="../s2directory-www">
+				<exclude name="**/downloads/**"/>
+			</zipfileset>
+		</zip>
+	</target>
+</project>
