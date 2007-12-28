@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.examples.common;
+package org.seasar.directory.examples.client.common;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.framework.container.S2Container;

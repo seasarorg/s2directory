@@ -16,7 +16,7 @@
 package org.seasar.directory.examples.client;
 
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.examples.common.PosixAccountDtoFactory;
+import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.exception.AuthenticationRuntimeException;
