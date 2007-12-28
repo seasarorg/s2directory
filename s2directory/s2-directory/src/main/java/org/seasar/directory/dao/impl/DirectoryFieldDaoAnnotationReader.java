@@ -16,6 +16,7 @@
 package org.seasar.directory.dao.impl;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.directory.dao.util.DaoUtil;
@@ -62,7 +63,8 @@ public class DirectoryFieldDaoAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getArgNames(String methodName) {
+	public String[] getArgNames(Method method) {
+		String methodName = method.getName();
 		String argsKey = methodName + ARGS_SUFFIX;
 		if (daoBeanDesc.hasField(argsKey)) {
 			Field argNamesField = daoBeanDesc.getField(argsKey);
@@ -76,7 +78,8 @@ public class DirectoryFieldDaoAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getQuery(String methodName) {
+	public String getQuery(Method method) {
+		String methodName = method.getName();
 		String key = methodName + QUERY_SUFFIX;
 		if (daoBeanDesc.hasField(key)) {
 			Field queryField = daoBeanDesc.getField(key);
@@ -136,14 +139,16 @@ public class DirectoryFieldDaoAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getNoPersistentProps(String methodName) {
+	public String[] getNoPersistentProps(Method method) {
+		String methodName = method.getName();
 		return getProps(methodName, methodName + NO_PERSISTENT_PROPS_SUFFIX);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getPersistentProps(String methodName) {
+	public String[] getPersistentProps(Method method) {
+		String methodName = method.getName();
 		return getProps(methodName, methodName + PERSISTENT_PROPS_SUFFIX);
 	}
 
@@ -166,7 +171,8 @@ public class DirectoryFieldDaoAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getFilter(String methodName) {
+	public String getFilter(Method method) {
+		String methodName = method.getName();
 		String key = methodName + FILTER_SUFFIX;
 		if (daoBeanDesc.hasField(key)) {
 			Field queryField = daoBeanDesc.getField(key);

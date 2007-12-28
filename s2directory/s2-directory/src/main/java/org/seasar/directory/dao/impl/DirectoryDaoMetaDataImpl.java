@@ -113,7 +113,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 	}
 
 	protected void setupMethod(final Method method) {
-		final String filter = daoAnnotationReader.getFilter(method.getName());
+		final String filter = daoAnnotationReader.getFilter(method);
 		if (filter != null) {
 			// FILTERアノテーションが定義されていた場合
 			setupSelectMethodByManual(method, filter);
@@ -298,7 +298,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 		// フィルタの準備をします。
 		String filter =
 			createAutoSelectFilter(daoAnnotationReader, beanMetaData);
-		String query = daoAnnotationReader.getQuery(method.getName());
+		String query = daoAnnotationReader.getQuery(method);
 		if (query != null) {
 			if (StringUtil.isEmpty(filter)) {
 				filter = query;
