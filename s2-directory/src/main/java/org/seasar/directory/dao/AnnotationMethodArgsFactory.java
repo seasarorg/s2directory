@@ -34,7 +34,7 @@ public class AnnotationMethodArgsFactory {
 	public static AnnotationMethodArgs create(Method method,
 			DirectoryDaoAnnotationReader annotationReader) {
 		// ARGアノテーションを取得
-		String[] argNames = annotationReader.getArgNames(method.getName());
+		String[] argNames = annotationReader.getArgNames(method);
 		// 引数の型を取得
 		Object types[] = method.getParameterTypes();
 		if (types.length > 0) {

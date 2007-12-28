@@ -30,24 +30,17 @@ import org.seasar.framework.util.ClassUtil;
  */
 public class DirectoryAnnotationReaderFactoryImpl implements
 		DirectoryAnnotationReaderFactory {
-	// TODO: 未実装 TIGER_ANNOTATION_READER_FACTORY
+	// Tigerアノテーション用ファクトリ
 	private static final String TIGER_ANNOTATION_READER_FACTORY =
 		"org.seasar.directory.dao.annotation.tiger.impl.AnnotationReaderFactoryImpl";
-	// TODO: 未実装 BACKPORT175_ANNOTATION_READER_FACTORY
-	private static final String BACKPORT175_ANNOTATION_READER_FACTORY =
-		"org.seasar.directory.dao.annotation.backport175.impl.AnnotationReaderFactoryImpl";
 	private DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	public DirectoryAnnotationReaderFactoryImpl() {
 		Class clazz = DirectoryFieldAnnotationReaderFactory.class;
 		try {
 			clazz = ClassUtil.forName(TIGER_ANNOTATION_READER_FACTORY);
-		} catch (ClassNotFoundRuntimeException ignore1) {
-			try {
-				clazz =
-					ClassUtil.forName(BACKPORT175_ANNOTATION_READER_FACTORY);
-			} catch (ClassNotFoundRuntimeException ignore2) {
-			}
+		} catch (ClassNotFoundRuntimeException ignore) {
+			// do nothing
 		}
 		annotationReaderFactory =
 			(DirectoryAnnotationReaderFactory)ClassUtil.newInstance(clazz);

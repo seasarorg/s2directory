@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.dao;
 
+import java.lang.reflect.Method;
+
 /**
  * アノテーションを読み込むインタフェースです。
  * 
@@ -25,20 +27,20 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * QUERYアノテーションを取得します。
 	 * 
-	 * @param methodName
-	 *            関数名
+	 * @param method
+	 *            関数
 	 * @return QUERYアノテーションの値
 	 */
-	public String getQuery(String methodName);
+	public String getQuery(Method method);
 
 	/**
 	 * ARGSアノテーションを取得します。
 	 * 
-	 * @param methodName
+	 * @param method
 	 *            関数名
 	 * @return ARGSアノテーションの値
 	 */
-	public String[] getArgNames(String methodName);
+	public String[] getArgNames(Method method);
 
 	/**
 	 * メタ情報のクラスを取得します。
@@ -59,27 +61,27 @@ public interface DirectoryDaoAnnotationReader {
 	/**
 	 * 永続化対象にしない属性を取得します。
 	 * 
-	 * @param methodName
+	 * @param method
 	 *            関数名
 	 * @return 永続対象にしない属性の配列
 	 */
-	public String[] getNoPersistentProps(String methodName);
+	public String[] getNoPersistentProps(Method method);
 
 	/**
 	 * この属性だけ永続化する属性を取得します。
 	 * 
-	 * @param methodName
+	 * @param method
 	 *            関数名
 	 * @return 永続化する属性の配列
 	 */
-	public String[] getPersistentProps(String methodName);
+	public String[] getPersistentProps(Method method);
 
 	/**
 	 * FILTERアノテーションを取得します。
 	 * 
-	 * @param methodName
+	 * @param method
 	 *            関数名
 	 * @return FILTERアノテーションの値
 	 */
-	public String getFilter(String methodName);
+	public String getFilter(Method method);
 }
