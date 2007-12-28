@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.seasar.directory</groupId>
     <artifactId>s2-directory-project</artifactId>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.6</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>s2-directory-examples</artifactId>
@@ -26,7 +26,7 @@
     <dependency>
       <groupId>org.seasar.directory</groupId>
       <artifactId>s2-directory</artifactId>
-      <version>0.6-SNAPSHOT</version>
+      <version>${project.version}</version>
       <type>jar</type>
     </dependency>
   </dependencies>
