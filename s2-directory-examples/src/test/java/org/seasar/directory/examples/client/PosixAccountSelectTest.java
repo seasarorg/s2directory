@@ -112,17 +112,31 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 		}
 	}
 
-	public void testSelectList() {
-		List accounts = posixAccountDtoDao.getAllUser();
-		assertNotNull(accounts);
-	}
-
 	public void testSelectNull() {
+		// 検索結果の代入先がエンティティで、
 		// 検索に使用するエンティティの値がすべて空の場合、
 		// 検索結果はnullになります。
 		PosixAccountDto search = new PosixAccountDto();
 		search = posixAccountDtoDao.getUser(search);
 		assertNull(search);
+	}
+
+	public void testSelectList1() {
+		List accounts = posixAccountDtoDao.getAllUser();
+		assertEquals(1, accounts.size());
+		PosixAccountDto search = new PosixAccountDto();
+		search.setGidNumber("1000");
+		accounts = posixAccountDtoDao.getUserList(search);
+		assertEquals(1, accounts.size());
+	}
+
+	public void testSelectList2() {
+		// 検索結果の代入先がListで、
+		// 検索に使用するエンティティの値がすべて空の場合、
+		// 検索結果は空のListになります。
+		PosixAccountDto search = new PosixAccountDto();
+		List accounts = posixAccountDtoDao.getUserList(search);
+		assertEquals(0, accounts.size());
 	}
 
 	public void testSelectManyTimes() {

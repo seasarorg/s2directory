@@ -108,10 +108,11 @@ public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 		String argumentFilter = this.getArgumentFilter(ctx);
 
 		// 引数があるにも関わらずオブジェクトにすべての値がnullの場合は、
-		// オブジェクトクラスによるフィルタも利用せずにnullを返す。
+		// ダミーフィルタを返す。
 		if (ctx.getArgKeySet().size() != 0
 			&& StringUtil.isEmpty(argumentFilter)) {
-			return null;
+			System.out.println("# dummy");
+			return "dummy=dummy";
 		}
 
 		if (StringUtil.isEmpty(daoFilter)) {

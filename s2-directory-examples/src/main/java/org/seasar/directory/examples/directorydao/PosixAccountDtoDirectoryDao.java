@@ -59,6 +59,8 @@ public interface PosixAccountDtoDirectoryDao {
 	public PosixAccountDto getUserWithUserMode(DirectoryControlProperty user,
 			PosixAccountDto account);
 
+	public List getUserList(PosixAccountDto account);
+
 	public int insert(PosixAccountDto account);
 
 	public int insertWithUserMode(DirectoryControlProperty user,
