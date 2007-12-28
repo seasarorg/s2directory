@@ -17,8 +17,9 @@ package org.seasar.directory.examples.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.seasar.directory.examples.common.PosixAccountDtoFactory;
-import org.seasar.directory.examples.common.PosixGroupFactory;
+
+import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
+import org.seasar.directory.examples.client.common.PosixGroupFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.directorydao.PosixGroupDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
