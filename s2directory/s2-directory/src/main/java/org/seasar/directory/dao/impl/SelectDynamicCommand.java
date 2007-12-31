@@ -111,7 +111,6 @@ public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 		// ダミーフィルタを返す。
 		if (ctx.getArgKeySet().size() != 0
 			&& StringUtil.isEmpty(argumentFilter)) {
-			System.out.println("# dummy");
 			return "dummy=dummy";
 		}
 
