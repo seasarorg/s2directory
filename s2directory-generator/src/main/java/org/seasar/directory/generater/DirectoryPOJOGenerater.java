@@ -1,6 +1,6 @@
 package org.seasar.directory.generater;
 /*
- * Copyright 2004-2005 the Seasar Foundation and the Others.
+ * Copyright 2005-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
