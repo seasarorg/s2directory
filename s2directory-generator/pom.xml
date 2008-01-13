@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.seasar.directory</groupId>
+  <artifactId>s2-directory-generator</artifactId>
+  <packaging>jar</packaging>
+  <name>S2Directory Generator Project</name>
+  <version>0.3-SNAPSHOT</version>
+  <description>Object / Directory Mapping, Object / LDAP Mapping</description>
+  <url>http://s2directory.sandbox.seasar.org/</url>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://www.seasar.org/issues/browse/DIRECTORY</url>
+  </issueManagement>
+  <inceptionYear>2005</inceptionYear>
+  <mailingLists>
+    <mailingList>
+      <name>Seasar-user</name>
+      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-user</subscribe>
+      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-user</unsubscribe>
+      <post>seasar-user@ml.seasar.org</post>
+      <archive>https://www.seasar.org/mailman/listinfo/seasar-user</archive>
+    </mailingList>
+    <mailingList>
+      <name>Seasar-dev</name>
+      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-dev</subscribe>
+      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-dev</unsubscribe>
+      <post>seasar-dev@ml.seasar.org</post>
+      <archive>https://www.seasar.org/mailman/listinfo/seasar-dev</archive>
+    </mailingList>
+    <mailingList>
+      <name>Seasar-user-en</name>
+      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-user-en</subscribe>
+      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-user-en</unsubscribe>
+      <post>seasar-user-en@ml.seasar.org</post>
+      <archive>http://ml.seasar.org/archives/seasar-user-en/</archive>
+    </mailingList>
+  </mailingLists>
+  <developers>
+    <developer>
+      <id>jfut</id>
+      <name>Jun Futagawa</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>t-wada</id>
+      <name>Takuto Wada</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/sandbox/s2directory/trunk/s2directory/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/s2directory/trunk/s2directory/</developerConnection>
+    <url>http://svn.seasar.org/browse/?root=sandbox.s2directory</url>
+  </scm>
+  <organization>
+    <name>The Seasar Foundation</name>
+    <url>http://www.seasar.org/</url>
+  </organization>
+  <build>
+    <defaultGoal>validate</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.4</source>
+            <target>1.4</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <configuration>
+            <updateReleaseInfo>true</updateReleaseInfo>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>source-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
+  </build>
+  <repositories>
+    <repository>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>http://maven.seasar.org/maven2</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.3.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+<!-- This means that it used the localRepository setting.
+      <url></url>
+-->
+      <url>dav:https://www.seasar.org/maven/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>
