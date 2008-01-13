@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
   <name>S2Directory Project</name>
   <version>0.7-SNAPSHOT</version>
-  <description>Object / Directory Mapping,Object</description>
+  <description>Object / Directory Mapping, Object / LDAP Mapping</description>
   <url>http://s2directory.sandbox.seasar.org/</url>
   <issueManagement>
     <system>JIRA</system>
