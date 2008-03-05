@@ -48,12 +48,12 @@ public class PermissiveSSLSocketFactory extends SSLSocketFactory {
 				new TrustManager[] { new PermissiveTrustManager() },
 				null);
 			factory = (SSLSocketFactory)sslContext.getSocketFactory();
-		} catch (NoSuchAlgorithmException exc) {
+		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalStateException("Unable to get SSL context: "
-				+ exc.getMessage());
-		} catch (KeyManagementException exc) {
-			throw new IllegalStateException("Unable to initialize ctx "
-				+ "with BogusTrustManager: " + exc.getMessage());
+				+ e.getMessage());
+		} catch (KeyManagementException e) {
+			throw new IllegalStateException("Unable to initialize ctx: "
+				+ e.getMessage());
 		}
 	}
 
