@@ -117,8 +117,13 @@ public class BasicDirectoryHandler {
 			} else {
 				return false;
 			}
-		} catch (NamingException e) {
+		} catch (AuthenticationException ae) {
 			return false;
+		} catch (CommunicationException ce) {
+			throw new CommunicationRuntimeException(dataSource
+				.getDirectoryControlProperty());
+		} catch (NamingException ex) {
+			throw new DirectoryRuntimeException(ex);
 		} finally {
 			DirectoryDataSourceUtil.close(context);
 		}

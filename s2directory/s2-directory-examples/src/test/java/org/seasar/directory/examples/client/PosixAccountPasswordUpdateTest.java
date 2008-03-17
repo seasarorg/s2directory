@@ -20,6 +20,7 @@ import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.exception.AuthenticationRuntimeException;
+import org.seasar.directory.exception.CommunicationRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -72,6 +73,23 @@ public class PosixAccountPasswordUpdateTest extends
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
 		property.setPassword("invalid_pass");
 		assertEquals(false, posixAccountDtoDao.authenticateByUserMode(property));
+	}
+
+	public void testAuthenticateByUserException() {
+		// ユーザによる接続情報を設定します。
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container
+				.getComponent(DirectoryControlProperty.class);
+		property.setUser(user1.getUid());
+		property.setPassword(user1.getUserPassword());
+		// Invalid url
+		property.setUrl("ldap://localhost:12345");
+		try {
+			posixAccountDtoDao.authenticateByUserMode(property);
+			assertFalse(true);
+		} catch (CommunicationRuntimeException ce) {
+			assertTrue(true);
+		}
 	}
 
 	public void testSelectAndUpdatePassword() {
