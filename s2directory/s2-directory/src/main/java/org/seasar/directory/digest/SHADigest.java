@@ -38,7 +38,7 @@ public class SHADigest extends AbstractMessageDigest {
 	 * {@inheritDoc}
 	 */
 	public String create(String password) {
-		return create(password);
+		return create(password, -1);
 	}
 
 	/**

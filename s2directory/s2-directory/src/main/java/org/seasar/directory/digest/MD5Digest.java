@@ -38,7 +38,7 @@ public class MD5Digest extends AbstractMessageDigest {
 	 * {@inheritDoc}
 	 */
 	public String create(String password) {
-		return create(password);
+		return create(password, -1);
 	}
 
 	/**
