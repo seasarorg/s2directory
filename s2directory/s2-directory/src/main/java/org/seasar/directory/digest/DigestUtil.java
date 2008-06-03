@@ -23,20 +23,9 @@ import java.util.Random;
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
-public final class DigestUtils {
+public final class DigestUtil {
 	/** 乱数器 */
 	private static final Random RANDOM = new Random();
-	/** 乱数用の種のデフォルトの長さ */
-	private static final int SALT_LENGTH = 4;
-
-	/**
-	 * 乱数用の種を生成します。
-	 * 
-	 * @return 乱数用の種
-	 */
-	public static byte[] getRandomSalt() {
-		return getRandomSalt(SALT_LENGTH);
-	}
 
 	/**
 	 * 指定された長さの乱数用の種を生成します。

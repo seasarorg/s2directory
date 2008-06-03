@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" skipped="0" tests="2" time="0.22" failures="0" name="org.seasar.directory.attribute.DefaultAttributeTypeTest">
+  <properties>
+    <property value="Sun Microsystems Inc." name="java.vendor"/>
+    <property value="E:\Java\Resource\Maven\repository" name="localRepository"/>
+    <property value="SUN_STANDARD" name="sun.java.launcher"/>
+    <property value="HotSpot Client Compiler" name="sun.management.compiler"/>
+    <property value="$P$G" name="env.PROMPT"/>
+    <property value="Windows Vista" name="os.name"/>
+    <property value="NO" name="env.FP_NO_HOST_CHECK"/>
+    <property value="C:\Software\Java\jdk\jre\lib\rt.jar;C:\Software\Java\jdk\jre\lib\i18n.jar;C:\Software\Java\jdk\jre\lib\sunrsasign.jar;C:\Software\Java\jdk\jre\lib\jsse.jar;C:\Software\Java\jdk\jre\lib\jce.jar;C:\Software\Java\jdk\jre\lib\charsets.jar;C:\Software\Java\jdk\jre\classes" name="sun.boot.class.path"/>
+    <property value="JUN-LAB-HP" name="env.COMPUTERNAME"/>
+    <property value="C:\Program Files\Common Files" name="env.CommonProgramW6432"/>
+    <property value="C:\ProgramData" name="env.ALLUSERSPROFILE"/>
+    <property value="windows" name="sun.desktop"/>
+    <property value="Sun Microsystems Inc." name="java.vm.specification.vendor"/>
+    <property value="1.5.0_15-b04" name="java.runtime.version"/>
+    <property value="\Users\jun" name="env.HOMEPATH"/>
+    <property value="jun" name="user.name"/>
+    <property value="ja" name="user.language"/>
+    <property value="C:\Software\Java\jdk\jre\bin" name="sun.boot.library.path"/>
+    <property value="C:\Software\Java\maven\bin\..\bin\m2.conf" name="classworlds.conf"/>
+    <property value="1.5.0_15" name="java.version"/>
+    <property value="Intel64 Family 6 Model 15 Stepping 6, GenuineIntel" name="env.PROCESSOR_IDENTIFIER"/>
+    <property value="Asia/Tokyo" name="user.timezone"/>
+    <property value="C:\Users\jun\AppData\Local\Temp" name="env.TEMP"/>
+    <property value="32" name="sun.arch.data.model"/>
+    <property value="C:\Software\Java\jdk\jre\lib\endorsed" name="java.endorsed.dirs"/>
+    <property value="AMD64" name="env.PROCESSOR_ARCHITEW6432"/>
+    <property value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86" name="sun.cpu.isalist"/>
+    <property value="C:" name="env.HOMEDRIVE"/>
+    <property value="MS932" name="sun.jnu.encoding"/>
+    <property value="sun.io" name="file.encoding.pkg"/>
+    <property value="\" name="file.separator"/>
+    <property value="Java Platform API Specification" name="java.specification.name"/>
+    <property value="49.0" name="java.class.version"/>
+    <property value="JP" name="user.country"/>
+    <property value="C:\Software\Java\jdk\jre" name="java.home"/>
+    <property value="C:\Users\jun\AppData\Roaming" name="env.APPDATA"/>
+    <property value="C:\Users\Public" name="env.PUBLIC"/>
+    <property value="mixed mode, sharing" name="java.vm.info"/>
+    <property value="C:\Windows\system32\cmd.exe" name="env.ComSpec"/>
+    <property value="Windows_NT" name="env.OS"/>
+    <property value="C:\Program Files (x86)\Common Files" name="env.CommonProgramFiles"/>
+    <property value="6.0" name="os.version"/>
+    <property value="C:\Program Files" name="env.ProgramW6432"/>
+    <property value=";" name="path.separator"/>
+    <property value="1.5.0_15-b04" name="java.vm.version"/>
+    <property value="" name="user.variant"/>
+    <property value="C:\Users\jun" name="env.USERPROFILE"/>
+    <property value="C:\Software\Java\jdk" name="env.JAVA_HOME"/>
+    <property value="sun.awt.windows.WPrinterJob" name="java.awt.printerjob"/>
+    <property value="C:\Users\jun\AppData\Local\Temp" name="env.TMP"/>
+    <property value="UnicodeLittle" name="sun.io.unicode.encoding"/>
+    <property value="sun.awt.windows.WToolkit" name="awt.toolkit"/>
+    <property value="C:\Users\jun" name="user.home"/>
+    <property value="C:\ProgramData" name="env.ProgramData"/>
+    <property value="Console" name="env.SESSIONNAME"/>
+    <property value="C:\Program Files (x86)" name="env.ProgramFiles(x86)"/>
+    <property value="Sun Microsystems Inc." name="java.specification.vendor"/>
+    <property value="C:\Software\Java\maven\bin\.." name="env.M2_HOME"/>
+    <property value="2" name="env.NUMBER_OF_PROCESSORS"/>
+    <property value="C:\Software\Java\jdk\bin;.;C:\Windows\system32;C:\Windows;C:\Software\Java\jdk\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Software\Java\ant\bin;C:\Software\Java\maven\bin;C:\Cygwin\bin" name="java.library.path"/>
+    <property value="http://java.sun.com/" name="java.vendor.url"/>
+    <property value="test" name="env.MAVEN_CMD_LINE_ARGS"/>
+    <property value="Sun Microsystems Inc." name="java.vm.vendor"/>
+    <property value="C:\Software\Java\maven\bin\.." name="maven.home"/>
+    <property value="Java(TM) 2 Runtime Environment, Standard Edition" name="java.runtime.name"/>
+    <property value="C:\Software\Java\maven\bin\..\boot\classworlds-1.1.jar" name="java.class.path"/>
+    <property value="&quot;C:\Software\Java\jdk\bin\java.exe&quot;" name="env.MAVEN_JAVA_EXE"/>
+    <property value="Java Virtual Machine Specification" name="java.vm.specification.name"/>
+    <property value="\\JUN-LAB-HP" name="env.LOGONSERVER"/>
+    <property value="C:\Windows" name="env.windir"/>
+    <property value="1.0" name="java.vm.specification.version"/>
+    <property value="x86" name="env.PROCESSOR_ARCHITECTURE"/>
+    <property value="Service Pack 1" name="sun.os.patch.level"/>
+    <property value="little" name="sun.cpu.endian"/>
+    <property value="C:\Users\jun" name="env.HOME"/>
+    <property value="C:\Program Files (x86)" name="env.ProgramFiles"/>
+    <property value="C:\Software\Java\ant" name="env.ANT_HOME"/>
+    <property value="E:\Eclipse\Workspace\1.5\Seasar\s2directory\s2-directory\target\test-classes;E:\Eclipse\Workspace\1.5\Seasar\s2directory\s2-directory\target\classes;E:\Java\Resource\Maven\repository\org\seasar\container\s2-extension\2.4.13\s2-extension-2.4.13.jar;E:\Java\Resource\Maven\repository\org\seasar\container\s2-framework\2.4.13\s2-framework-2.4.13.jar;E:\Java\Resource\Maven\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;E:\Java\Resource\Maven\repository\commons-logging\commons-logging\1.1\commons-logging-1.1.jar;E:\Java\Resource\Maven\repository\jboss\javassist\3.4.ga\javassist-3.4.ga.jar;E:\Java\Resource\Maven\repository\junit\junit\3.8.2\junit-3.8.2.jar;E:\Java\Resource\Maven\repository\ognl\ognl\2.6.7\ognl-2.6.7.jar;E:\Java\Resource\Maven\repository\poi\poi\2.5.1-final-20040804\poi-2.5.1-final-20040804.jar;E:\Java\Resource\Maven\repository\log4j\log4j\1.2.13\log4j-1.2.13.jar;" name="surefire.test.class.path"/>
+    <property value="C:\Users\jun\AppData\Local\Temp\" name="java.io.tmpdir"/>
+    <property value="0f06" name="env.PROCESSOR_REVISION"/>
+    <property value="C:\Program Files (x86)\Common Files" name="env.CommonProgramFiles(x86)"/>
+    <property value="http://java.sun.com/cgi-bin/bugreport.cgi" name="java.vendor.url.bug"/>
+    <property value="C:\Windows" name="env.SystemRoot"/>
+    <property value="sun.awt.Win32GraphicsEnvironment" name="java.awt.graphicsenv"/>
+    <property value="x86" name="os.arch"/>
+    <property value="C:\Software\Java\jdk\jre\lib\ext" name="java.ext.dirs"/>
+    <property value="E:\Eclipse\Workspace\1.5\Seasar\s2directory\s2-directory" name="user.dir"/>
+    <property value="C:\Users\jun\AppData\Local" name="env.LOCALAPPDATA"/>
+    <property value="C:\Software\Java\maven" name="env.MAVEN_HOME"/>
+    <property value="
+" name="line.separator"/>
+    <property value="Java HotSpot(TM) Client VM" name="java.vm.name"/>
+    <property value="&quot;C:\Software\Java\maven\bin\..\boot\classworlds-1.1.jar&quot;" name="env.CLASSWORLDS_JAR"/>
+    <property value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC" name="env.PATHEXT"/>
+    <property value="C:\Software\Java\jdk\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Software\Java\ant\bin;C:\Software\Java\maven\bin;C:\Cygwin\bin" name="env.Path"/>
+    <property value="E:\Eclipse\Workspace\1.5\Seasar\s2directory\s2-directory" name="basedir"/>
+    <property value="0" name="env.ERROR_CODE"/>
+    <property value="jun" name="env.USERNAME"/>
+    <property value="C:" name="env.SystemDrive"/>
+    <property value="MS932" name="file.encoding"/>
+    <property value="JUN-LAB-HP" name="env.USERDOMAIN"/>
+    <property value="1.5" name="java.specification.version"/>
+    <property value="6" name="env.PROCESSOR_LEVEL"/>
+  </properties>
+  <testcase classname="org.seasar.directory.attribute.DefaultAttributeTypeTest" time="0.119" name="testGetAddAttribute"/>
+  <testcase classname="org.seasar.directory.attribute.DefaultAttributeTypeTest" time="0.035" name="testGetModificationItem"/>
+</testsuite>

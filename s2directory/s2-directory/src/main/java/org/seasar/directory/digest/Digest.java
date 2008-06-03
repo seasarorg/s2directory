@@ -26,16 +26,30 @@ public interface Digest {
 	 * 指定されたパスワードをハッシュ化します。
 	 * 
 	 * @param password
+	 * 		平文パスワード
 	 * @return ハッシュ化された文字列
 	 */
 	public String create(String password);
 
 	/**
-	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。<br />
-	 * パスワードが正しい場合 <code>true</code> 不正な場合 <code>false</code> を返します。
+	 * 指定されたパスワードをハッシュ化します。
+	 * 
+	 * @param password
+	 * 		平文パスワード
+	 * @param saltLenght
+	 * 		saltの長さ
+	 * @return ハッシュ化された文字列
+	 */
+	public String create(String password, int saltLenght);
+
+	/**
+	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。<br /> パスワードが正しい場合 <code>true</code> 不正な場合
+	 * <code>false</code> を返します。
 	 * 
 	 * @param digest
+	 * 		ハッシュ化された文字列
 	 * @param password
+	 * 		平文パスワード
 	 * @return 検証結果
 	 */
 	public boolean verify(String digest, String password);

@@ -40,7 +40,7 @@ public interface DirectoryControlProperty {
 	 * 接続に使用するコンテキストファクトリを設定します。
 	 * 
 	 * @param contextFactory
-	 *            接続に使用するコンテキストファクトリ
+	 * 		接続に使用するコンテキストファクトリ
 	 */
 	public void setInitialContextFactory(String contextFactory);
 
@@ -55,7 +55,7 @@ public interface DirectoryControlProperty {
 	 * 接続に使用するSSLソケットファクトリを設定します。
 	 * 
 	 * @param sslSocketFactory
-	 *            SSLソケットファクトリ
+	 * 		SSLソケットファクトリ
 	 */
 	public void setSslSocketFactory(String sslSocketFactory);
 
@@ -68,7 +68,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param url
-	 *            指定されたurlを設定します。
+	 * 		指定されたurlを設定します。
 	 */
 	public void setUrl(String url);
 
@@ -81,7 +81,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param password
-	 *            パスワードを設定します。
+	 * 		パスワードを設定します。
 	 */
 	public void setPassword(String password);
 
@@ -95,10 +95,25 @@ public interface DirectoryControlProperty {
 	/**
 	 * パスワードの形式を設定します。
 	 * 
-	 * @param Algorithm
-	 *            パスワードの形式
+	 * @param passwordAlgorithm
+	 * 		パスワードの形式
 	 */
-	public void setPasswordAlgorithm(String Algorithm);
+	public void setPasswordAlgorithm(String passwordAlgorithm);
+
+	/**
+	 * パスワードハッシュ作成時に使用するsaltの長さを返します。
+	 * 
+	 * @return パスワードハッシュ作成時に使用するsaltの長さ
+	 */
+	public int getPasswordSaltLength();
+
+	/**
+	 * パスワードハッシュ作成時に使用するsaltの長さを設定します。
+	 * 
+	 * @param passwordSaltLength
+	 * 		パスワードハッシュ作成時に使用するsaltの長さ
+	 */
+	public void setPasswordSaltLength(int passwordSaltLength);
 
 	/**
 	 * ユーザ名を返します。
@@ -109,7 +124,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param user
-	 *            ユーザ名を設定します。
+	 * 		ユーザ名を設定します。
 	 */
 	public void setUser(String user);
 
@@ -122,7 +137,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param baseDn
-	 *            指定された基底となる識別名を設定します。
+	 * 		指定された基底となる識別名を設定します。
 	 */
 	public void setBaseDn(String baseDn);
 
@@ -137,7 +152,7 @@ public interface DirectoryControlProperty {
 	 * ユーザユニットの接尾辞を設定します。
 	 * 
 	 * @param userSuffix
-	 *            ユーザユニットの接尾辞
+	 * 		ユーザユニットの接尾辞
 	 */
 	public void setUserSuffix(String userSuffix);
 
@@ -152,7 +167,7 @@ public interface DirectoryControlProperty {
 	 * ユーザを識別するための属性名を設定します。
 	 * 
 	 * @param userAttributeName
-	 *            ユーザを識別するための属性名
+	 * 		ユーザを識別するための属性名
 	 */
 	public void setUserAttributeName(String userAttributeName);
 
@@ -167,7 +182,7 @@ public interface DirectoryControlProperty {
 	 * グループユニットの接尾辞を設定します。
 	 * 
 	 * @param groupSuffix
-	 *            グループユニットの接尾辞
+	 * 		グループユニットの接尾辞
 	 */
 	public void setGroupSuffix(String groupSuffix);
 
@@ -182,7 +197,7 @@ public interface DirectoryControlProperty {
 	 * グループを識別するための属性名を設定します。
 	 * 
 	 * @param groupAttributeName
-	 *            グループを識別するための属性名
+	 * 		グループを識別するための属性名
 	 */
 	public void setGroupAttributeName(String groupAttributeName);
 
@@ -197,7 +212,7 @@ public interface DirectoryControlProperty {
 	 * 複数の属性値のための区切り文字を設定します。
 	 * 
 	 * @param multipleValueDelimiter
-	 *            複数の属性値のための区切り文字
+	 * 		複数の属性値のための区切り文字
 	 */
 	public void setMultipleValueDelimiter(String multipleValueDelimiter);
 
@@ -210,7 +225,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param filter
-	 *            指定されたフィルタを設定します。
+	 * 		指定されたフィルタを設定します。
 	 */
 	public void setFilter(String filter);
 
@@ -223,7 +238,7 @@ public interface DirectoryControlProperty {
 
 	/**
 	 * @param searchControls
-	 *            検索コントロールを設定します。
+	 * 		検索コントロールを設定します。
 	 */
 	public void setSearchControls(int searchControls);
 
@@ -238,7 +253,7 @@ public interface DirectoryControlProperty {
 	 * 匿名接続を許可するか設定します。
 	 * 
 	 * @param allowAnonymous
-	 *            匿名接続を許可するかどうか
+	 * 		匿名接続を許可するかどうか
 	 */
 	public void setAllowAnonymous(boolean allowAnonymous);
 
@@ -267,7 +282,7 @@ public interface DirectoryControlProperty {
 	 * TLS接続が有効かどうか設定します。
 	 * 
 	 * @param enableTls
-	 *            TLS接続を有効かどう
+	 * 		TLS接続を有効かどう
 	 */
 	public void setEnableTLS(boolean enableTls);
 
@@ -282,7 +297,7 @@ public interface DirectoryControlProperty {
 	 * コネクションプーリング設定を取得します。
 	 * 
 	 * @param pool
-	 *            コネクションプーリング設定
+	 * 		コネクションプーリング設定
 	 */
 	public void setDirectoryConnectionPool(DirectoryConnectionPool pool);
 

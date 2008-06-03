@@ -36,6 +36,13 @@ public class PlainDigest implements Digest {
 	 * {@inheritDoc}
 	 */
 	public String create(String password) {
+		return create(password);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String create(String password, int saltLenght) {
 		return password;
 	}
 

@@ -62,12 +62,27 @@ public class DigestFactoryTest extends TestCase {
 	/**
 	 * SMD5のテストを行います。
 	 */
-	public void testSMD5Digest() throws NoSuchAlgorithmException {
+	public void testSMD5Digest1() throws NoSuchAlgorithmException {
 		String pass = "secret";
 		String hash = "{SMD5}KNaOGWWWmCgJou1M6cUgt0l1QyA=";
 		Digest digest = DigestFactory.getDigest(hash);
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
+		assertEquals(true, digest.verify(hash, pass));
+		digest = DigestFactory.getDigest("SMD5");
+		assertEquals(true, digest.verify(hash, pass));
+	}
+
+	/**
+	 * SMD5のテストを行います。
+	 */
+	public void testSMD5Digest2() throws NoSuchAlgorithmException {
+		int saltLength = 8;
+		String pass = "secret";
+		String hash = "{SMD5}F5Z9wOVz7wHf/Vq9YSKIwnUxUitDPUpm";
+		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals(true, digest.verify(hash, pass));
+		hash = digest.create(pass, saltLength);
 		assertEquals(true, digest.verify(hash, pass));
 		digest = DigestFactory.getDigest("SMD5");
 		assertEquals(true, digest.verify(hash, pass));
@@ -90,12 +105,27 @@ public class DigestFactoryTest extends TestCase {
 	/**
 	 * SSHAのテストを行います。
 	 */
-	public void testSSHADigest() throws NoSuchAlgorithmException {
+	public void testSSHADigest1() throws NoSuchAlgorithmException {
 		String pass = "secret";
 		String hash = "{SSHA}DeqCMzuWq1PMxsXCjLgEc3llb8Kmr1UK";
 		Digest digest = DigestFactory.getDigest(hash);
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
+		assertEquals(true, digest.verify(hash, pass));
+		digest = DigestFactory.getDigest("SSHA");
+		assertEquals(true, digest.verify(hash, pass));
+	}
+
+	/**
+	 * SSHAのテストを行います。
+	 */
+	public void testSSHADigest2() throws NoSuchAlgorithmException {
+		int saltLength = 8;
+		String pass = "secret";
+		String hash = "{SSHA}h+nfjiWESqi/sC1s7EsX82RHr4wqQFthISFgeA==";
+		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals(true, digest.verify(hash, pass));
+		hash = digest.create(pass, saltLength);
 		assertEquals(true, digest.verify(hash, pass));
 		digest = DigestFactory.getDigest("SSHA");
 		assertEquals(true, digest.verify(hash, pass));

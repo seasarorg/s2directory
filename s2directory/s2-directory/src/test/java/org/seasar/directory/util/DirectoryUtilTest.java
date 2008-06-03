@@ -60,8 +60,8 @@ public class DirectoryUtilTest extends TestCase {
 
 	public void testGetPassword() {
 		assertEquals("{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==", DirectoryUtil
-			.createPassword("secret", "MD5"));
+			.createPassword("secret", "MD5", -1));
 		assertEquals("{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=", DirectoryUtil
-			.createPassword("secret", "SHA"));
+			.createPassword("secret", "SHA", -1));
 	}
 }

@@ -53,6 +53,6 @@ public class UserPasswordAttributeHandler extends AbstractAttributeHandler {
 			return value;
 		String stringValue = String.valueOf(value);
 		return DirectoryUtil.createPassword(stringValue, property
-			.getPasswordAlgorithm());
+			.getPasswordAlgorithm(), property.getPasswordSaltLength());
 	}
 }

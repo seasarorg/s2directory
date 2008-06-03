@@ -29,7 +29,8 @@ import org.seasar.directory.DirectoryControlProperty;
 public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
 	/** コネクションプーリング設定のBindingアノテーション */
-	public static final String directoryConnectionPool_BINDING = "bindingType=may";
+	public static final String directoryConnectionPool_BINDING =
+		"bindingType=may";
 
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
@@ -43,6 +44,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String password;
 	/** パスワード形式 */
 	private String passwordAlgorithm = "SSHA";
+	/** パスワードハッシュ作成時に使用するsaltの長さ */
+	private int passwordSaltLength = 4;
 	/** 基底となる識別名 */
 	private String baseDn;
 	/** ユーザユニットの接尾辞 */
@@ -78,9 +81,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 * 指定されたユーザ情報を保持したDirectory接続情報のインスタンスを作成します。
 	 * 
 	 * @param user
-	 *            ユーザ名
+	 * 		ユーザ名
 	 * @param password
-	 *            パスワード
+	 * 		パスワード
 	 */
 	public DirectoryControlPropertyImpl(String user, String password) {
 		this.user = user;
@@ -171,6 +174,20 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 */
 	public void setPasswordAlgorithm(String passwordAlgorithm) {
 		this.passwordAlgorithm = passwordAlgorithm;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public int getPasswordSaltLength() {
+		return passwordSaltLength;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setPasswordSaltLength(int passwordSaltLength) {
+		this.passwordSaltLength = passwordSaltLength;
 	}
 
 	/**

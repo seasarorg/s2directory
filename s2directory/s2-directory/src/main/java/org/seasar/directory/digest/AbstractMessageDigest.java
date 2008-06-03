@@ -30,13 +30,16 @@ public abstract class AbstractMessageDigest implements Digest {
 	/** メッセージダイジェストアルゴリズム */
 	private MessageDigest md;
 	/** エンコーディング */
-	private final static String ENCODING = "UTF-8";
+	private static final String ENCODING = "UTF-8";
+
+	/** デフォルトのsaltの長さ */
+	protected static final int DEFAULT_SALT_LENGTH = 4;
 
 	/**
 	 * インスタンスを作成します。
 	 * 
 	 * @param algorithm
-	 *            暗号アルゴリズム
+	 * 		暗号アルゴリズム
 	 */
 	public AbstractMessageDigest(String algorithm) {
 		try {
@@ -51,17 +54,17 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * 指定された乱数を用いてパスワードをハッシュ化します。
 	 * 
 	 * @param salt
-	 *            乱数
+	 * 		乱数
 	 * @param password
-	 *            ハッシュ化するパスワード
+	 * 		ハッシュ化するパスワード
 	 */
-	public String create(byte[] salt, String password) {
+	public String createHash(byte[] salt, String password) {
 		md.reset();
 		try {
 			md.update(password.getBytes(ENCODING));
 			md.update(salt);
 			byte[] pwhash = md.digest();
-			return Base64Util.encode(DigestUtils.concat(pwhash, salt));
+			return Base64Util.encode(DigestUtil.concat(pwhash, salt));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new Error(e);
@@ -72,15 +75,16 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。
 	 * 
 	 * @param digest
-	 *            ハッシュ化されたパスワード
+	 * 		ハッシュ化されたパスワード
 	 * @param password
-	 *            確認するパスワード
+	 * 		確認するパスワード
+	 * @param size
 	 */
-	public boolean verify(String digest, String password, int size) {
+	public boolean verifyPassword(String digest, String password, int size) {
 		if (digest.length() < 4) {
 			return false;
 		}
-		byte[][] hs = DigestUtils.split(Base64Util.decode(digest), size);
+		byte[][] hs = DigestUtil.split(Base64Util.decode(digest), size);
 		byte[] hash = hs[0];
 		byte[] salt = hs[1];
 		md.reset();

@@ -24,6 +24,8 @@ package org.seasar.directory.digest;
 public class SHADigest extends AbstractMessageDigest {
 	/** 暗号形式 */
 	public static final String LABEL = "{SHA}";
+	/** ハッシュ部分の長さ */
+	protected static final int HASH_LENGTH = 20;
 
 	/**
 	 * インスタンスを生成します。
@@ -36,13 +38,23 @@ public class SHADigest extends AbstractMessageDigest {
 	 * {@inheritDoc}
 	 */
 	public String create(String password) {
-		return LABEL + super.create(new byte[0], password);
+		return create(password);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String create(String password, int saltLenght) {
+		return LABEL + super.createHash(new byte[0], password);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean verify(String digest, String password) {
-		return super.verify(digest.substring(LABEL.length()), password, 20);
+		return super.verifyPassword(
+			digest.substring(LABEL.length()),
+			password,
+			HASH_LENGTH);
 	}
 }
