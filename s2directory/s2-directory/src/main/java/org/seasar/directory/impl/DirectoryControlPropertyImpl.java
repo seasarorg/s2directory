@@ -38,6 +38,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String sslSocketFactory = "javax.net.ssl.SSLSocketFactory";
 	/** URL */
 	private String url;
+	/** 基底となる識別名 */
+	private String baseDn;
+	/** バインドDn */
+	private String bindDn;
 	/** ユーザ名 */
 	private String user;
 	/** パスワード */
@@ -46,8 +50,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String passwordAlgorithm = "SSHA";
 	/** パスワードハッシュ作成時に使用するsaltの長さ */
 	private int passwordSaltLength = 4;
-	/** 基底となる識別名 */
-	private String baseDn;
 	/** ユーザユニットの接尾辞 */
 	private String userSuffix = "ou=Users";
 	/** ユーザを識別するための属性名 */
@@ -146,6 +148,34 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 			setEnableSSL(false);
 		}
 		this.url = url;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getBaseDn() {
+		return baseDn;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBaseDn(String baseDn) {
+		this.baseDn = baseDn;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getBindDn() {
+		return bindDn;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBindDn(String bindDn) {
+		this.bindDn = bindDn;
 	}
 
 	/**
@@ -277,20 +307,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getBaseDn() {
-		return baseDn;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setBaseDn(String baseDn) {
-		this.baseDn = baseDn;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getFilter() {
 		return filter;
 	}
@@ -380,7 +396,7 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 * {@inheritDoc}
 	 */
 	public boolean hasAuthentication() {
-		return (user != null) && (password != null);
+		return (bindDn != null) && (password != null);
 	}
 
 	/**
@@ -393,9 +409,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(
 			", ");
 		buffer.append("url: ").append(url).append(", ");
+		buffer.append("baseDn: ").append(baseDn).append(", ");
+		buffer.append("bindDn: ").append(baseDn).append(", ");
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");
-		buffer.append("dn: ").append(baseDn).append(", ");
 		buffer.append("filter: ").append(filter).append(", ");
 		buffer.append("searchControls: ").append(searchControls).append(", ");
 		buffer.append("allowAnonymous: ").append(allowAnonymous).append(", ");

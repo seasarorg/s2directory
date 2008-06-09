@@ -50,7 +50,7 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 		if (logger.isDebugEnabled()) {
 			DirectoryControlProperty property =
 				super.getDirectoryDataSource().getDirectoryControlProperty();
-			logger.debug("Authenticate: [user] " + property.getUser()
+			logger.debug("Authenticate: [user] " + property.getBindDn()
 				+ " [password] " + property.getPassword());
 		}
 		return new Boolean(super.authenticate());

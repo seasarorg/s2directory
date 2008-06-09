@@ -34,12 +34,13 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリサーバ接続情報をセットアップします。
 	 * 
 	 * @param property
-	 *            ディレクトリサーバ接続情報
+	 * 		ディレクトリサーバ接続情報
 	 */
 	public static void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
+		// ユーザ名が設定されている場合、バインドDNにユーザ名から求めたユーザを使用します。
 		if (property.getUser() != null) {
-			property.setUser(getFullUserDn(property));
+			property.setBindDn(getFullUserDn(property));
 		}
 	}
 
@@ -47,7 +48,7 @@ public final class DirectoryDataSourceUtil {
 	 * 完全なユーザDnを取得します。
 	 * 
 	 * @param property
-	 *            ディレクトリサーバ接続情報
+	 * 		ディレクトリサーバ接続情報
 	 * @return 完全なユーザDn
 	 */
 	private static String getFullUserDn(DirectoryControlProperty property) {
@@ -94,7 +95,7 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリコネクションを閉じます。
 	 * 
 	 * @param context
-	 *            ディレクトリコネクション
+	 * 		ディレクトリコネクション
 	 */
 	public static void close(DirContext context) {
 		try {
@@ -110,7 +111,7 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリ列挙を閉じます。
 	 * 
 	 * @param results
-	 *            ディレクトリ列挙
+	 * 		ディレクトリ列挙
 	 */
 	public static void close(NamingEnumeration results) {
 		try {

@@ -52,7 +52,7 @@
 			"ldap://localhost:389"
 		</property>
 		<property name="baseDn">"dc=seasar,dc=org"</property>
-		<property name="user">"cn=Manager"</property>
+		<property name="bindDn">"cn=Manager,dc=seasar,dc=org"</property>
 		<property name="password">"secret"</property>
 		<property name="passwordAlgorithm">"SHA"</property>
 		<property name="passwordSaltLength">"8"</property>
@@ -60,6 +60,7 @@
 
 	<!--
 		# Other options and each default value.
+		<property name="user">""</property>
 		<property name="passwordAlgorithm">"SSHA"</property>
 		<property name="passwordSaltLength">"4"</property>
 		<property name="userSuffix">"ou=Users"</property>

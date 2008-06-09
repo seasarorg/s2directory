@@ -49,7 +49,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 * 指定された接続情報を保持したデータソースのインスタンスを作成します。
 	 * 
 	 * @param property
-	 *            接続情報
+	 * 		接続情報
 	 */
 	public DirectoryDataSourceImpl(DirectoryControlProperty property) {
 		this.defaultProperty = property;
@@ -82,7 +82,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		env.put(Context.INITIAL_CONTEXT_FACTORY, property
 			.getInitialContextFactory());
 		env.put(Context.PROVIDER_URL, property.getUrl());
-		env.put(Context.SECURITY_PRINCIPAL, property.getUser());
+		env.put(Context.SECURITY_PRINCIPAL, property.getBindDn());
 		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
 
 		// コネクションプーリング
@@ -113,7 +113,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 * 指定された接続情報を使用して作成したコネクションを返します。
 	 * 
 	 * @param env
-	 *            接続情報
+	 * 		接続情報
 	 * @return コネクション
 	 * @throws NamingException
 	 */
@@ -123,9 +123,9 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 
 	/**
 	 * @param env
-	 *            接続情報
+	 * 		接続情報
 	 * @param property
-	 *            接続情報
+	 * 		接続情報
 	 * @return TLSコネクション
 	 * @throws NamingException
 	 */
@@ -170,9 +170,9 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 
 	/**
 	 * @param env
-	 *            接続情報
+	 * 		接続情報
 	 * @param property
-	 *            接続情報
+	 * 		接続情報
 	 * @return SSLコネクション
 	 * @throws NamingException
 	 */
@@ -189,14 +189,14 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 * ディレクトリサーバ接続情報をセットアップします。
 	 * 
 	 * @param property
-	 *            接続情報
+	 * 		接続情報
 	 */
 	protected void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
 		if (property.isAllowAnonymous()) {
 			// 匿名接続を許可する場合、認証情報の null を空に置き換えます。
-			if (property.getUser() == null)
-				property.setUser("");
+			if (property.getBindDn() == null)
+				property.setBindDn("");
 			if (property.getPassword() == null)
 				property.setPassword("");
 		}

@@ -73,6 +73,32 @@ public interface DirectoryControlProperty {
 	public void setUrl(String url);
 
 	/**
+	 * 基底となる識別名を返します。
+	 * 
+	 * @return 基底となる識別名
+	 */
+	public String getBaseDn();
+
+	/**
+	 * @param baseDn
+	 * 		指定された基底となる識別名を設定します。
+	 */
+	public void setBaseDn(String baseDn);
+
+	/**
+	 * バインド識別名を返します。
+	 * 
+	 * @return バインド識別名
+	 */
+	public String getBindDn();
+
+	/**
+	 * @param bindDn
+	 * 		バインド識別名を設定します。
+	 */
+	public void setBindDn(String bindDn);
+
+	/**
 	 * パスワードを返します。
 	 * 
 	 * @return パスワード
@@ -127,19 +153,6 @@ public interface DirectoryControlProperty {
 	 * 		ユーザ名を設定します。
 	 */
 	public void setUser(String user);
-
-	/**
-	 * 基底となる識別名を返します。
-	 * 
-	 * @return 基底となる識別名
-	 */
-	public String getBaseDn();
-
-	/**
-	 * @param baseDn
-	 * 		指定された基底となる識別名を設定します。
-	 */
-	public void setBaseDn(String baseDn);
 
 	/**
 	 * ユーザユニットの接尾辞を取得します。

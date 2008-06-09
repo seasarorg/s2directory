@@ -35,7 +35,7 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 		defaultLocale = Locale.getDefault();
 		property = new DirectoryControlPropertyImpl();
 		property.setUrl("ldap://localhost:389");
-		property.setUser("cn=Manager,dc=seasar,dc=org");
+		property.setBindDn("cn=Manager,dc=seasar,dc=org");
 		property.setPassword("secret");
 	}
 

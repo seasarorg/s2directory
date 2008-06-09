@@ -57,7 +57,8 @@ public class DirectoryControlPropertyTest extends TestCase {
 			"org.seasar.directory.impl.PermissiveSSLSocketFactory",
 			property.getSslSocketFactory());
 		assertEquals("ldap://localhost:389", property.getUrl());
-		assertEquals("cn=Manager", property.getUser());
+		assertEquals("cn=Manager,dc=seasar,dc=org", property.getBindDn());
+		assertEquals(null, property.getUser());
 		assertEquals("secret", property.getPassword());
 		assertEquals("uid", property.getUserAttributeName());
 		assertEquals("SHA", property.getPasswordAlgorithm());

@@ -32,10 +32,10 @@ public final class AuthenticationRuntimeException extends
 	 * 指定されたサーバ接続情報を使用して新しいインスタンスを構築します。
 	 * 
 	 * @param property
-	 *            サーバ接続情報
+	 * 		サーバ接続情報
 	 */
 	public AuthenticationRuntimeException(DirectoryControlProperty property) {
-		super("EDIR0003", new Object[] { property.getUrl(), property.getUser(),
-			property.getPassword() });
+		super("EDIR0003", new Object[] { property.getUrl(),
+			property.getBindDn(), property.getPassword() });
 	}
 }
