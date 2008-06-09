@@ -1,6 +1,11 @@
+# 注意事項
+
+s2-directory/src/test/resources と s2-directory-examples/src/test/resources に
+directory.dicon が重複しているのは、 mvn test 時に必要になるためです。
+
 # テスト方法
 
-1mvn test
+mvn test
 
 # ローカルビルド
 
