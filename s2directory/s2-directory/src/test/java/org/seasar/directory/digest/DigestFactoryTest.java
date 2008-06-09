@@ -36,6 +36,8 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "secret";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{PLAIN}", digest.getLabel());
+		assertEquals(hash, digest.create(pass));
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
 		assertEquals(true, digest.verify(hash, pass));
@@ -52,6 +54,8 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{MD5}Xr4ilOzQ4PCOq3aQ0qbuaQ==";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{MD5}", digest.getLabel());
+		assertEquals(hash, digest.create(pass));
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
 		assertEquals(true, digest.verify(hash, pass));
@@ -66,6 +70,7 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{SMD5}KNaOGWWWmCgJou1M6cUgt0l1QyA=";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{SMD5}", digest.getLabel());
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
 		assertEquals(true, digest.verify(hash, pass));
@@ -81,6 +86,7 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{SMD5}F5Z9wOVz7wHf/Vq9YSKIwnUxUitDPUpm";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{SMD5}", digest.getLabel());
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass, saltLength);
 		assertEquals(true, digest.verify(hash, pass));
@@ -95,6 +101,8 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{SHA}", digest.getLabel());
+		assertEquals(hash, digest.create(pass));
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
 		assertEquals(true, digest.verify(hash, pass));
@@ -109,6 +117,7 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{SSHA}DeqCMzuWq1PMxsXCjLgEc3llb8Kmr1UK";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{SSHA}", digest.getLabel());
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass);
 		assertEquals(true, digest.verify(hash, pass));
@@ -124,6 +133,7 @@ public class DigestFactoryTest extends TestCase {
 		String pass = "secret";
 		String hash = "{SSHA}h+nfjiWESqi/sC1s7EsX82RHr4wqQFthISFgeA==";
 		Digest digest = DigestFactory.getDigest(hash);
+		assertEquals("{SSHA}", digest.getLabel());
 		assertEquals(true, digest.verify(hash, pass));
 		hash = digest.create(pass, saltLength);
 		assertEquals(true, digest.verify(hash, pass));
