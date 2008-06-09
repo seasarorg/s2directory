@@ -52,7 +52,7 @@ public class BasicDirectoryHandler {
 	 * 指定したデータソースを持ったインスタンスを作成します。
 	 * 
 	 * @param dataSource
-	 *            データース
+	 * 		データース
 	 */
 	public BasicDirectoryHandler(DirectoryDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -72,7 +72,7 @@ public class BasicDirectoryHandler {
 	 * データースを設定します。
 	 * 
 	 * @param dataSource
-	 *            データース
+	 * 		データース
 	 */
 	public void setDirectoryDataSource(DirectoryDataSource dataSource) {
 		this.dataSource = dataSource;
@@ -177,7 +177,7 @@ public class BasicDirectoryHandler {
 	 * 指定したDNのエントリを検索します。
 	 * 
 	 * @param dn
-	 *            検索するDN
+	 * 		検索するDN
 	 * @return 検索結果
 	 */
 	public NamingEnumeration searchOneLevel(String dn) {
@@ -197,9 +197,9 @@ public class BasicDirectoryHandler {
 	 * 作成を実行します。
 	 * 
 	 * @param dn
-	 *            作成するエントリのDN
+	 * 		作成するエントリのDN
 	 * @param attrs
-	 *            作成するエントリの属性
+	 * 		作成するエントリの属性
 	 * @return 作成した数を返します。
 	 */
 	public Integer insert(String dn, Attributes attrs) {
@@ -223,9 +223,9 @@ public class BasicDirectoryHandler {
 	 * 更新を実行します。
 	 * 
 	 * @param dn
-	 *            更新対象のDN
+	 * 		更新対象のDN
 	 * @param items
-	 *            更新対象の属性
+	 * 		更新対象の属性
 	 * @return 更新した数
 	 */
 	public Integer update(String dn, ModificationItem[] items) {
@@ -252,7 +252,7 @@ public class BasicDirectoryHandler {
 	 * 削除を実行します。
 	 * 
 	 * @param dn
-	 *            削除対象のDN
+	 * 		削除対象のDN
 	 * @return 削除した数を返します。
 	 */
 	public Integer delete(String dn) {
@@ -276,7 +276,7 @@ public class BasicDirectoryHandler {
 	 * 指定したDNにエントリが存在しているかどうか調べます。
 	 * 
 	 * @param dn
-	 *            調査対象のDN
+	 * 		調査対象のDN
 	 * @return エントリが存在しているかどうか
 	 */
 	public boolean isExistEntry(String dn) {
@@ -302,7 +302,7 @@ public class BasicDirectoryHandler {
 	 * 検索結果の数を返します。
 	 * 
 	 * @param results
-	 *            検索結果
+	 * 		検索結果
 	 * @return 検索結果の数
 	 * @throws NamingException
 	 */

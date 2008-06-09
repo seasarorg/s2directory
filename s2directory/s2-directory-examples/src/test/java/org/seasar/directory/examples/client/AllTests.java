@@ -27,18 +27,19 @@ import junit.framework.TestSuite;
 public class AllTests {
 	public static Test suite() {
 		TestSuite suite =
-			new TestSuite("Test for examples.directorydao.client");
+			new TestSuite("Test for org.seasar.directory.examples.client");
 		// $JUnit-BEGIN$
-		suite.addTestSuite(PosixAccountConnectionTest.class);
-		suite.addTestSuite(PosixAccountDeleteTest.class);
-		suite.addTestSuite(PosixAccountInsertTest.class);
+		suite.addTestSuite(InetOrgPersonUpdateTest.class);
+		suite.addTestSuite(PosixGroupUpdateTest.class);
+		suite.addTestSuite(PosixGroupInsertTest.class);
 		suite.addTestSuite(PosixAccountPasswordUpdateTest.class);
 		suite.addTestSuite(PosixAccountSelectTest.class);
-		suite.addTestSuite(PosixAccountUpdateTest.class);
+		suite.addTestSuite(PosixAccountInsertTest.class);
 		suite.addTestSuite(PosixAccountWithAnnocationTest.class);
 		suite.addTestSuite(PosixGroupDtoTest.class);
-		suite.addTestSuite(PosixGroupInsertTest.class);
-		suite.addTestSuite(PosixGroupUpdateTest.class);
+		suite.addTestSuite(PosixAccountDeleteTest.class);
+		suite.addTestSuite(PosixAccountConnectionTest.class);
+		suite.addTestSuite(PosixAccountUpdateTest.class);
 		suite.addTestSuite(PosixGroupWithListInsertTest.class);
 		// $JUnit-END$
 		return suite;

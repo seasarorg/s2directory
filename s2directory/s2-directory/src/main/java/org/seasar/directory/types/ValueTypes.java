@@ -15,63 +15,50 @@
  */
 package org.seasar.directory.types;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.sql.Types;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 値の型の集合クラスです。
+ * 値タイプの集合クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  * @version $Date::                           $
  */
 public class ValueTypes {
+	/**
+	 * String用の値タイプです。
+	 */
 	public static final ValueType STRING = new StringType();
+	/**
+	 * List用の値タイプです。
+	 */
 	public static final ValueType LIST = new ListType();
-	// public static final ValueType SHORT = new ShortType();
-	// public static final ValueType INTEGER = new IntegerType();
-	// public static final ValueType LONG = new LongType();
-	// public static final ValueType FLOAT = new FloatType();
-	// public static final ValueType DOUBLE = new DoubleType();
-	// public static final ValueType BIGDECIMAL = new BigDecimalType();
-	// public static final ValueType TIME = new TimeType();
-	// public static final ValueType SQLDATE = new SqlDateType();
-	// public static final ValueType TIMESTAMP = new TimestampType();
-	// public static final ValueType BINARY = new BinaryType();
-	// public static final ValueType BOOLEAN = new BooleanType();
+	/**
+	 * Binary用の値タイプです。
+	 */
+	public static final ValueType BINARY = new BinaryType();
+	/**
+	 * 汎用的な値タイプです。
+	 */
 	public static final ValueType OBJECT = new ObjectType();
+
+	/**
+	 * バイト配列用の型です。
+	 */
 	private static final Class BYTE_ARRAY_CLASS = new byte[0].getClass();
-	/** 値の型の集合を現します。 */
+
+	/** 値タイプの集合を現します。 */
 	private static Map types = Collections.synchronizedMap(new HashMap());
+
 	/**
 	 * 初期化します。
 	 */
 	static {
 		registerValueType(String.class, STRING);
 		registerValueType(List.class, LIST);
-		// registerValueType(short.class, SHORT);
-		// registerValueType(Short.class, SHORT);
-		// registerValueType(int.class, INTEGER);
-		// registerValueType(Integer.class, INTEGER);
-		// registerValueType(long.class, LONG);
-		// registerValueType(Long.class, LONG);
-		// registerValueType(float.class, FLOAT);
-		// registerValueType(Float.class, FLOAT);
-		// registerValueType(double.class, DOUBLE);
-		// registerValueType(Double.class, DOUBLE);
-		// registerValueType(BigDecimal.class, BIGDECIMAL);
-		// registerValueType(java.sql.Date.class, SQLDATE);
-		// registerValueType(java.sql.Time.class, TIME);
-		// registerValueType(java.util.Date.class, TIMESTAMP);
-		// registerValueType(Timestamp.class, TIMESTAMP);
-		// registerValueType(Calendar.class, TIMESTAMP);
-		// registerValueType(BYTE_ARRAY_CLASS, BINARY);
-		// registerValueType(boolean.class, BOOLEAN);
-		// registerValueType(Boolean.class, BOOLEAN);
+		registerValueType(BYTE_ARRAY_CLASS, BINARY);
 	}
 
 	/**
@@ -81,17 +68,25 @@ public class ValueTypes {
 		super();
 	}
 
+	/**
+	 * 値タイプを登録します。
+	 * 
+	 * @param clazz
+	 * 		型
+	 * @param valueType
+	 * 		値タイプ
+	 */
 	public static void registerValueType(Class clazz, ValueType valueType) {
 		types.put(clazz, valueType);
 	}
 
-	public static ValueType getValueType(Object obj) {
-		if (obj == null) {
-			return OBJECT;
-		}
-		return getValueType(obj.getClass());
-	}
-
+	/**
+	 * 指定された型に対応する値タイプを取得します。
+	 * 
+	 * @param clazz
+	 * 		型
+	 * @return 値タイプ
+	 */
 	public static ValueType getValueType(Class clazz) {
 		// スーパークラスで取得
 		for (Class c = clazz; c != null; c = c.getSuperclass()) {
@@ -112,45 +107,14 @@ public class ValueTypes {
 		return OBJECT;
 	}
 
+	/**
+	 * 指定された型に対応する値タイプを取得します。
+	 * 
+	 * @param clazz
+	 * 		型
+	 * @return 値タイプ
+	 */
 	private static ValueType getValueType0(Class clazz) {
 		return (ValueType)types.get(clazz);
-	}
-
-	public static ValueType getValueType(int type) {
-		switch (type) {
-		case Types.TINYINT:
-		case Types.SMALLINT:
-			return getValueType(Short.class);
-		case Types.INTEGER:
-			return getValueType(Integer.class);
-		case Types.BIGINT:
-			return getValueType(Long.class);
-		case Types.REAL:
-		case Types.FLOAT:
-			return getValueType(Float.class);
-		case Types.DOUBLE:
-			return getValueType(Double.class);
-		case Types.DECIMAL:
-		case Types.NUMERIC:
-			return getValueType(BigDecimal.class);
-		case Types.DATE:
-			return getValueType(Timestamp.class);
-		case Types.TIME:
-			return getValueType(java.sql.Time.class);
-		case Types.TIMESTAMP:
-			return getValueType(Timestamp.class);
-		case Types.BINARY:
-		case Types.VARBINARY:
-		case Types.LONGVARBINARY:
-			return getValueType(BYTE_ARRAY_CLASS);
-		case Types.CHAR:
-		case Types.LONGVARCHAR:
-		case Types.VARCHAR:
-			return getValueType(String.class);
-		case Types.BOOLEAN:
-			return getValueType(Boolean.class);
-		default:
-			return OBJECT;
-		}
 	}
 }
