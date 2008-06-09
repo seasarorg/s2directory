@@ -60,7 +60,7 @@
 
 	<!--
 		# Other options and each default value.
-		<property name="user">""</property>
+		<property name="user"></property>
 		<property name="passwordAlgorithm">"SSHA"</property>
 		<property name="passwordSaltLength">"4"</property>
 		<property name="userSuffix">"ou=Users"</property>
