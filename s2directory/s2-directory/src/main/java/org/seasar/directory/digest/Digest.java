@@ -23,6 +23,13 @@ package org.seasar.directory.digest;
  */
 public interface Digest {
 	/**
+	 * ラベルを取得します。
+	 * 
+	 * @return ラベル 例: {SSHA}
+	 */
+	public String getLabel();
+
+	/**
 	 * 指定されたパスワードをハッシュ化します。
 	 * 
 	 * @param password

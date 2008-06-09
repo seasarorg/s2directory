@@ -28,6 +28,13 @@ public class SMD5Digest extends MD5Digest {
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getLabel() {
+		return LABEL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public String create(String password) {
 		return create(password, DEFAULT_SALT_LENGTH);
 	}

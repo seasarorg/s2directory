@@ -28,6 +28,13 @@ public class SSHADigest extends SHADigest {
 	/**
 	 * {@inheritDoc}
 	 */
+	public String getLabel() {
+		return LABEL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public String create(String password) {
 		return create(password, DEFAULT_SALT_LENGTH);
 	}
