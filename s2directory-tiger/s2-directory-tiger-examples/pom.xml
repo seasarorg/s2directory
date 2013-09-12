@@ -1,15 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>org.seasar.directory</groupId>
     <artifactId>s2-directory-tiger-project</artifactId>
     <version>0.7-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
+
   <artifactId>s2-directory-tiger-examples</artifactId>
   <packaging>jar</packaging>
   <name>S2Directory Tiger Examples</name>
   <url>http://s2directory.sandbox.seasar.org/</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>s2-directory-tiger</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seasar.dao</groupId>
+      <artifactId>s2-dao-tiger</artifactId>
+      <version>1.0.47</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <testResources>
       <testResource>
@@ -23,17 +39,5 @@
       </testResource>
     </testResources>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>s2-directory-tiger</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.dao</groupId>
-      <artifactId>s2-dao-tiger</artifactId>
-      <version>1.0.47</version>
-    </dependency>
-  </dependencies>
+
 </project>

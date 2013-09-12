@@ -116,17 +116,21 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		OrganizationalUnit usersUnit = new OrganizationalUnit();
 		usersUnit.setDn("ou=Users," + property.getBaseDn());
 		usersUnit.setOu("Users");
-		assertNull(organizationalUnitDao.getOrganizationalUnit(usersUnit));
-		// add ou=Users
-		organizationalUnitDao.insertOrganizationalUnit(usersUnit);
 		usersUnit = organizationalUnitDao.getOrganizationalUnit(usersUnit);
+		if (usersUnit == null) {
+			// add ou=Users
+			organizationalUnitDao.insertOrganizationalUnit(usersUnit);
+			usersUnit = organizationalUnitDao.getOrganizationalUnit(usersUnit);
+		}
 		// check ou=Groups
 		OrganizationalUnit groupsUnit = new OrganizationalUnit();
 		groupsUnit.setDn("ou=Groups," + property.getBaseDn());
 		groupsUnit.setOu("Groups");
-		assertNull(organizationalUnitDao.getOrganizationalUnit(groupsUnit));
-		// add ou=Groups
-		organizationalUnitDao.insertOrganizationalUnit(groupsUnit);
+		groupsUnit = organizationalUnitDao.getOrganizationalUnit(groupsUnit);
+		if (groupsUnit == null) {
+			// add ou=Groups
+			organizationalUnitDao.insertOrganizationalUnit(groupsUnit);
+		}
 	}
 
 	private void tearDownDefaultDirectoryInformationTree() {
@@ -135,13 +139,13 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		usersUnit.setOu("Users");
 		usersUnit = organizationalUnitDao.getOrganizationalUnit(usersUnit);
 		// delete ou=Users
-		organizationalUnitDao.deleteOrganizationalUnit(usersUnit);
+		// organizationalUnitDao.deleteOrganizationalUnit(usersUnit);
 		// search ou=Groups
 		OrganizationalUnit groupsUnit = new OrganizationalUnit();
 		groupsUnit.setOu("Groups");
 		groupsUnit = organizationalUnitDao.getOrganizationalUnit(groupsUnit);
 		// delete ou=Groups
-		organizationalUnitDao.deleteOrganizationalUnit(groupsUnit);
+		// organizationalUnitDao.deleteOrganizationalUnit(groupsUnit);
 	}
 
 	private DirectoryControlProperty getSuperUserPropertyOfApachDS() {
