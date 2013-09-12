@@ -47,11 +47,9 @@ public class InetOrgPersonUpdateTest extends
 			container = S2ContainerFactory.create(PATH);
 			container.init();
 			posixAccountDtoDao =
-				(PosixAccountDtoDirectoryDao)container
-					.getComponent(PosixAccountDtoDirectoryDao.class);
+				(PosixAccountDtoDirectoryDao)container.getComponent(PosixAccountDtoDirectoryDao.class);
 			inetOrgPersonDao =
-				(InetOrgPersonDirectoryDao)container
-					.getComponent(InetOrgPersonDirectoryDao.class);
+				(InetOrgPersonDirectoryDao)container.getComponent(InetOrgPersonDirectoryDao.class);
 		}
 		PosixAccountDtoFactory posixAccountDtoFactory =
 			new PosixAccountDtoFactory(container);
@@ -71,28 +69,28 @@ public class InetOrgPersonUpdateTest extends
 	 * プロバイダの非文字列属性の組み込みリストにある場合
 	 */
 	public void testBinaryData1() {
-		byte[] data1 = "test string 1".getBytes();
-		byte[] data2 = "test string 2".getBytes();
+		byte[] data1 = "'10'B".getBytes();
+		byte[] data2 = "'11'B".getBytes();
 		// user1を取得します。
 		InetOrgPerson search = new InetOrgPerson();
 		search.setUid("user1");
 		InetOrgPerson account = inetOrgPersonDao.getInetOrgPerson(search);
-		assertEquals(null, account.getPhoto());
+		assertEquals(null, account.getX500UniqueIdentifier());
 		// 更新1
-		account.setPhoto(data1);
+		account.setX500UniqueIdentifier(data1);
 		inetOrgPersonDao.updateInetOrgPerson(account);
 		account = inetOrgPersonDao.getInetOrgPerson(search);
-		assertEquals(new String(data1), new String(account.getPhoto()));
+		assertEquals(new String(data1), new String(account.getX500UniqueIdentifier()));
 		// 更新2
-		account.setPhoto(data2);
+		account.setX500UniqueIdentifier(data2);
 		inetOrgPersonDao.updateInetOrgPerson(account);
 		account = inetOrgPersonDao.getInetOrgPerson(search);
-		assertEquals(new String(data2), new String(account.getPhoto()));
+		assertEquals(new String(data2), new String(account.getX500UniqueIdentifier()));
 		// 削除
-		account.setPhoto(null);
+		account.setX500UniqueIdentifier(null);
 		inetOrgPersonDao.updateInetOrgPerson(account);
 		account = inetOrgPersonDao.getInetOrgPerson(search);
-		assertEquals(null, account.getPhoto());
+		assertEquals(null, account.getX500UniqueIdentifier());
 	}
 
 	/**

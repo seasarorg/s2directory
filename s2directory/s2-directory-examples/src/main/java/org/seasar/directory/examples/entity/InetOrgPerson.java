@@ -38,12 +38,12 @@ public class InetOrgPerson implements Serializable {
 	private String mobile;
 	private String o;
 	private String pager;
-	private byte[] photo;
+	private String photo;
 	private String roomNumber;
 	private String secretary;
 	private String uid;
 	private String userCertificate;
-	private String x500UniqueIdentifier;
+	private byte[] x500UniqueIdentifier;
 	private String preferredLanguage;
 	private String userSMIMECertificate;
 	private String userPKCS12;
@@ -204,11 +204,11 @@ public class InetOrgPerson implements Serializable {
 		return pager;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
@@ -244,11 +244,11 @@ public class InetOrgPerson implements Serializable {
 		return userCertificate;
 	}
 
-	public void setX500UniqueIdentifier(String x500UniqueIdentifier) {
+	public void setX500UniqueIdentifier(byte[] x500UniqueIdentifier) {
 		this.x500UniqueIdentifier = x500UniqueIdentifier;
 	}
 
-	public String getX500UniqueIdentifier() {
+	public byte[] getX500UniqueIdentifier() {
 		return x500UniqueIdentifier;
 	}
 

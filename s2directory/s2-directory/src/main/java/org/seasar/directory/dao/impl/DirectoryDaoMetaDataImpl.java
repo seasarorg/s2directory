@@ -320,16 +320,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 		final String[] objectClasses =
 			annotationReader.getObjectClasses(beanMetaData.getObjectClasses());
 		final StringBuffer buffer = new StringBuffer();
-		if (false) {
-			buffer.append("(&");
-			for (int i = 0; i < objectClasses.length; i++) {
-				buffer.append("(objectclass=").append(objectClasses[i]).append(
-					")");
-			}
-			buffer.append(")");
-		} else {
-			buffer.append("objectclass=").append(objectClasses[0]);
-		}
+		buffer.append("objectclass=").append(objectClasses[0]);
 		return buffer.toString();
 	}
 
