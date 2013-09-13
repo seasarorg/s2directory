@@ -55,4 +55,5 @@ public interface PosixGroupDirectoryDao {
 	public int delete(PosixGroup group);
 
 	public List getAllGroup();
+
 }

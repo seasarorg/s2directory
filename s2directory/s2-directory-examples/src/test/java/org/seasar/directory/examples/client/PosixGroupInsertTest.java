@@ -89,5 +89,13 @@ public class PosixGroupInsertTest extends DefaultDirectoryInformationTreeTest {
 	public void testInsertCheck() {
 		PosixGroup group = posixGroupDao.getPosixGroup(group1);
 		assertEquals("user1__user2", group.getMemberUid());
+
+		// TODO: setMultipleValueDelimiter の結果をハンドル時に使用できるようにする
+		// DirectoryControlProperty property =
+		// (DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
+		// property.setMultipleValueDelimiter("");
+		// group = posixGroupDao.getPosixGroupWithUserMode(property, group1);
+		// assertEquals("user1user2", group.getMemberUid());
 	}
+
 }

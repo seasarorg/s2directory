@@ -59,9 +59,11 @@ public class StringType extends AbstractValueType {
 				}
 			}
 			DirectoryDataSourceUtil.close(array);
-			int index = buffer.lastIndexOf(multipleValueDelimiter);
-			if (index != -1) {
-				buffer.delete(index, buffer.length());
+			if (0 < multipleValueDelimiter.length()) {
+				int index = buffer.lastIndexOf(multipleValueDelimiter);
+				if (index != -1) {
+					buffer.delete(index, buffer.length());
+				}
 			}
 			return buffer.toString();
 		} else {

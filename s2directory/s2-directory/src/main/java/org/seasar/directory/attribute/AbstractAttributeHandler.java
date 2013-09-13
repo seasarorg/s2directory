@@ -111,6 +111,7 @@ public abstract class AbstractAttributeHandler implements AttributeHandler {
 		String stringValue = String.valueOf(value);
 		ValueType stringValueType = valueTypeFactory.getStringValueType();
 		if (type == stringValueType
+			&& 0 < property.getMultipleValueDelimiter().length()
 			&& stringValue.indexOf(property.getMultipleValueDelimiter()) != -1) {
 			// String型で定義されていて、多重属性を持つ場合List型に変換します。
 			value =
@@ -170,4 +171,5 @@ public abstract class AbstractAttributeHandler implements AttributeHandler {
 		}
 		return null;
 	}
+
 }
