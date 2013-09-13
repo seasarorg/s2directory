@@ -45,9 +45,13 @@ public class StringType extends AbstractValueType {
 	 */
 	public Object getReadValue(Attribute attribute,
 			String multipleValueDelimiter) throws NamingException {
-		if (attribute != null && attribute.size() > 0) {
+		if (attribute != null && 0 < attribute.size()) {
 			StringBuffer buffer = new StringBuffer();
 			NamingEnumeration array = attribute.getAll();
+			boolean isMultipleValue = (1 < attribute.size()) ? true : false;
+			if (StringUtil.isEmpty(multipleValueDelimiter) == true) {
+				isMultipleValue = false;
+			}
 			while (array.hasMore()) {
 				Object value = array.next();
 				if (value instanceof String) {
@@ -57,12 +61,12 @@ public class StringType extends AbstractValueType {
 					// バイナリ型
 					buffer.append(new String((byte[])value));
 				}
-				if (StringUtil.isEmpty(multipleValueDelimiter) == false) {
+				if (isMultipleValue == true) {
 					buffer.append(multipleValueDelimiter);
 				}
 			}
 			DirectoryDataSourceUtil.close(array);
-			if (StringUtil.isEmpty(multipleValueDelimiter) == false) {
+			if (isMultipleValue == true) {
 				int index = buffer.lastIndexOf(multipleValueDelimiter);
 				if (index != -1) {
 					buffer.delete(index, buffer.length());
