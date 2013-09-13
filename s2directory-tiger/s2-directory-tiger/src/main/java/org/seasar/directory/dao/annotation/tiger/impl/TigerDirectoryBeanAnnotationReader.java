@@ -152,8 +152,8 @@ public class TigerDirectoryBeanAnnotationReader extends
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getNoPersistentProps(String methodName) {
-		return super.getNoPersistentProps(methodName);
+	public String[] getNoPersistentProps() {
+		return super.getNoPersistentProps();
 	}
 
 	/**
@@ -166,13 +166,6 @@ public class TigerDirectoryBeanAnnotationReader extends
 			return super.getObjectClasses();
 		}
 		return objectClasses.value();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String[] getPersistentProps(String methodName) {
-		return super.getPersistentProps(methodName);
 	}
 
 	/**
