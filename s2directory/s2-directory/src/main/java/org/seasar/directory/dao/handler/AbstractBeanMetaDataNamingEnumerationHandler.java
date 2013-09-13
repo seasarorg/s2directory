@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -93,13 +93,14 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 			} else if (attributeNameSet.contains(pt.getColumnName())) {
 				ValueType valueType = pt.getValueType();
 				Object value =
-					valueType.getReadValue(result.getAttributes(), pt
-						.getColumnName(), property.getMultipleValueDelimiter());
+					valueType.getReadValue(
+						result.getAttributes(),
+						pt.getColumnName(),
+						property.getMultipleValueDelimiter());
 				PropertyDesc pd = pt.getPropertyDesc();
 				pd.setValue(entry, value);
 			} else if (!pt.isPersistent()) {
-				for (Iterator iter = attributeNameSet.iterator(); iter
-					.hasNext();) {
+				for (Iterator iter = attributeNameSet.iterator(); iter.hasNext();) {
 					String columnName = (String)iter.next();
 					String columnName2 =
 						StringUtil.replace(columnName, "_", "");

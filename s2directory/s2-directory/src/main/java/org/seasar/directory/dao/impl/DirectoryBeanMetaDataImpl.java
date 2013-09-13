@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -17,6 +17,7 @@ package org.seasar.directory.dao.impl;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+
 import org.seasar.directory.dao.DirectoryAnnotationReaderFactory;
 import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.types.PropertyType;
@@ -46,8 +47,8 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 
 	public void initialize() {
 		beanAnnotationReader =
-			getDirectoryAnnotationReaderFactory()
-				.createDirectoryBeanAnnotationReader(getBeanClass());
+			getDirectoryAnnotationReaderFactory().createDirectoryBeanAnnotationReader(
+				getBeanClass());
 		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(getBeanClass());
 		setupObjectClasses(beanDesc);
 		setupVersionNoPropertyName(beanDesc);
@@ -87,9 +88,9 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		PropertyType propertyType =
 			(PropertyType)propertyTypesByColumnName_.get(columnName);
 		if (propertyType == null) {
-			throw new ColumnNotFoundRuntimeException(super
-				.getBeanClass()
-				.getName(), columnName);
+			throw new ColumnNotFoundRuntimeException(
+				super.getBeanClass().getName(),
+				columnName);
 		}
 		return propertyType;
 	}
@@ -110,9 +111,9 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		}
 		int index = alias.lastIndexOf('_');
 		if (index < 0) {
-			throw new ColumnNotFoundRuntimeException(super
-				.getBeanClass()
-				.getName(), alias);
+			throw new ColumnNotFoundRuntimeException(
+				super.getBeanClass().getName(),
+				alias);
 		}
 		String columnName = alias.substring(0, index);
 		return columnName;

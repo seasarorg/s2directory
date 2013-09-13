@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -41,8 +41,7 @@ public class DirectoryDataSourceUtilTest extends TestCase {
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
 		DirectoryControlProperty defaultProperty =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlPropertyImpl.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlPropertyImpl.class);
 		directoryDataSource = new DirectoryDataSourceImpl(defaultProperty);
 	}
 
@@ -60,23 +59,27 @@ public class DirectoryDataSourceUtilTest extends TestCase {
 		// ユーザ名のみの形式のテストを行います。
 		property.setUser("user1 ");
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1 ,ou=Users,dc=seasar,dc=org", property
-			.getBindDn());
+		assertEquals(
+			"uid=user1 ,ou=Users,dc=seasar,dc=org",
+			property.getBindDn());
 		// ユーザ名のみの形式のテストを行います。(半角スペースあり)
 		property.setUser("user 1 ");
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
-		assertEquals("uid=user 1 ,ou=Users,dc=seasar,dc=org", property
-			.getBindDn());
+		assertEquals(
+			"uid=user 1 ,ou=Users,dc=seasar,dc=org",
+			property.getBindDn());
 		// ユーザ識別子が付与した形式のテストを行います。
 		property.setUser("uid=user1  ");
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
-		assertEquals("uid=user1  ,ou=Users,dc=seasar,dc=org", property
-			.getBindDn());
+		assertEquals(
+			"uid=user1  ,ou=Users,dc=seasar,dc=org",
+			property.getBindDn());
 		// ユーザ識別子(uid)が含まれている形式のテストを行います。
 		property.setUser("uiduser1,  ou=Users");
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
-		assertEquals("uid=uiduser1,  ou=Users,dc=seasar,dc=org", property
-			.getBindDn());
+		assertEquals(
+			"uid=uiduser1,  ou=Users,dc=seasar,dc=org",
+			property.getBindDn());
 		// ユーザ識別子(uid)が含まれている形式のテストを行います。
 		property.setUser("uid= uiduser1 ,	ou=Users,dc=ju");
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);

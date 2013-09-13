@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -34,7 +34,7 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリサーバ接続情報をセットアップします。
 	 * 
 	 * @param property
-	 * 		ディレクトリサーバ接続情報
+	 *            ディレクトリサーバ接続情報
 	 */
 	public static void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
@@ -48,7 +48,7 @@ public final class DirectoryDataSourceUtil {
 	 * 完全なユーザDnを取得します。
 	 * 
 	 * @param property
-	 * 		ディレクトリサーバ接続情報
+	 *            ディレクトリサーバ接続情報
 	 * @return 完全なユーザDn
 	 */
 	private static String getFullUserDn(DirectoryControlProperty property) {
@@ -95,7 +95,7 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリコネクションを閉じます。
 	 * 
 	 * @param context
-	 * 		ディレクトリコネクション
+	 *            ディレクトリコネクション
 	 */
 	public static void close(DirContext context) {
 		try {
@@ -111,7 +111,7 @@ public final class DirectoryDataSourceUtil {
 	 * ディレクトリ列挙を閉じます。
 	 * 
 	 * @param results
-	 * 		ディレクトリ列挙
+	 *            ディレクトリ列挙
 	 */
 	public static void close(NamingEnumeration results) {
 		try {

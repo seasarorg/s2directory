@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -91,10 +91,8 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 		DirectoryBeanMetaDataImpl beanMetaDataImpl =
 			new DirectoryBeanMetaDataImpl();
 		beanMetaDataImpl.setBeanClass(beanClass);
-		beanMetaDataImpl
-			.setDirectoryAnnotationReaderFactory(annotationReaderFactory);
-		beanMetaDataImpl
-			.setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
+		beanMetaDataImpl.setDirectoryAnnotationReaderFactory(annotationReaderFactory);
+		beanMetaDataImpl.setDirectoryAttributeHandlerFactory(attributeHandlerFactory);
 		beanMetaDataImpl.initialize();
 		beanMetaData = beanMetaDataImpl;
 
@@ -236,8 +234,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 				beanMetaData,
 				methodArgs);
 		// オブジェクトクラスを設定します。
-		cmd.setObjectClasses(daoAnnotationReader.getObjectClasses(beanMetaData
-			.getObjectClasses()));
+		cmd.setObjectClasses(daoAnnotationReader.getObjectClasses(beanMetaData.getObjectClasses()));
 		directoryCmmands.put(method.getName(), cmd);
 	}
 

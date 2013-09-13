@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -47,8 +47,7 @@ public class PosixAccountPasswordUpdateTest extends
 			container = S2ContainerFactory.create(PATH);
 			container.init();
 			posixAccountDtoDao =
-				(PosixAccountDtoDirectoryDao)container
-					.getComponent(PosixAccountDtoDirectoryDao.class);
+				(PosixAccountDtoDirectoryDao)container.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
 		PosixAccountDtoFactory posixAccountDtoFactory =
 			new PosixAccountDtoFactory(container);
@@ -66,8 +65,7 @@ public class PosixAccountPasswordUpdateTest extends
 	public void testAuthenticateByUser() {
 		// ユーザによる接続情報を設定します。
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
@@ -78,8 +76,7 @@ public class PosixAccountPasswordUpdateTest extends
 	public void testAuthenticateByUserException() {
 		// ユーザによる接続情報を設定します。
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// Invalid url
@@ -95,8 +92,7 @@ public class PosixAccountPasswordUpdateTest extends
 	public void testSelectAndUpdatePassword() {
 		// ユーザによる接続情報を設定します。
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
 		// パスワードを更新します。
@@ -115,16 +111,16 @@ public class PosixAccountPasswordUpdateTest extends
 
 	public void testSelectAndUpdatePasswordWithUserMode() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
 		// パスワードを更新します。
 		account.setUserPassword("newpass");
-		assertEquals(1, posixAccountDtoDao
-			.updateWithUserMode(property, account));
+		assertEquals(
+			1,
+			posixAccountDtoDao.updateWithUserMode(property, account));
 		try {
 			// パスワードが変更されたため更新時に例外が発生します。
 			posixAccountDtoDao.updateWithUserMode(property, account);
@@ -137,8 +133,9 @@ public class PosixAccountPasswordUpdateTest extends
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
 		// パスワードを更新します。
 		account.setUserPassword(user1.getUserPassword());
-		assertEquals(1, posixAccountDtoDao
-			.updateWithUserMode(property, account));
+		assertEquals(
+			1,
+			posixAccountDtoDao.updateWithUserMode(property, account));
 		property.setUser(account.getUid());
 		property.setPassword(account.getUserPassword());
 		assertEquals(true, posixAccountDtoDao.authenticateByUserMode(property));
@@ -146,8 +143,7 @@ public class PosixAccountPasswordUpdateTest extends
 
 	public void testSelectAndFaildUpdatePasswordWithUserMode() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		// 誤ったパスワードを設定します。
 		property.setPassword("invalid_pass");

@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -17,15 +17,17 @@ package org.seasar.directory.attribute;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.ModificationItem;
+
 import junit.framework.TestCase;
+
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.attribute.AttributeHandler;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -46,11 +48,9 @@ public class DefaultAttributeTypeTest extends TestCase {
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
 		directoryAttributeTypeFactory =
-			(DirectoryAttributeHandlerFactory)container
-				.getComponent(DirectoryAttributeHandlerFactory.class);
+			(DirectoryAttributeHandlerFactory)container.getComponent(DirectoryAttributeHandlerFactory.class);
 		property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 	}
 
 	public void testGetAddAttribute() {
@@ -64,8 +64,9 @@ public class DefaultAttributeTypeTest extends TestCase {
 				"uid",
 				inputValue,
 				String.class);
-		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-			.getClass());
+		assertEquals(
+			javax.naming.directory.BasicAttribute.class,
+			attribute.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get());
@@ -81,8 +82,9 @@ public class DefaultAttributeTypeTest extends TestCase {
 				"uid",
 				inputValue,
 				String.class);
-		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-			.getClass());
+		assertEquals(
+			javax.naming.directory.BasicAttribute.class,
+			attribute.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get(0));
@@ -100,8 +102,9 @@ public class DefaultAttributeTypeTest extends TestCase {
 				"uid",
 				inputList,
 				List.class);
-		assertEquals(javax.naming.directory.BasicAttribute.class, attribute
-			.getClass());
+		assertEquals(
+			javax.naming.directory.BasicAttribute.class,
+			attribute.getClass());
 		assertEquals("uid", attribute.getID());
 		try {
 			assertEquals("user1", attribute.get(0));

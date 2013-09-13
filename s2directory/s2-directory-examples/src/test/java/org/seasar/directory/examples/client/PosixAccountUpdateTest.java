@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -46,8 +46,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 			container = S2ContainerFactory.create(PATH);
 			container.init();
 			posixAccountDtoDao =
-				(PosixAccountDtoDirectoryDao)container
-					.getComponent(PosixAccountDtoDirectoryDao.class);
+				(PosixAccountDtoDirectoryDao)container.getComponent(PosixAccountDtoDirectoryDao.class);
 		}
 		PosixAccountDtoFactory posixAccountDtoFactory =
 			new PosixAccountDtoFactory(container);
@@ -103,8 +102,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 
 	public void testUpdateWithUserMode() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。
@@ -116,8 +114,9 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		account.setCn("user2");
 		account.setDescription("user2 description");
 		account.setSn("user2");
-		assertEquals(1, posixAccountDtoDao
-			.updateWithUserMode(property, account));
+		assertEquals(
+			1,
+			posixAccountDtoDao.updateWithUserMode(property, account));
 		// user1を取得し直します。
 		account = posixAccountDtoDao.getUserWithUserMode(property, user1);
 		assertEquals("user2", account.getCn());
@@ -152,8 +151,7 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 
 	public void testUpdateSchemeViolationWithUserMode() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser(user1.getUid());
 		property.setPassword(user1.getUserPassword());
 		// user1を取得します。

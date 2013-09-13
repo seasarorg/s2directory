@@ -13,6 +13,15 @@
   <name>S2Directory Examples</name>
   <url>http://s2directory.sandbox.seasar.org/</url>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.seasar.directory</groupId>
+      <artifactId>s2-directory</artifactId>
+      <version>${parent.version}</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+
   <build>
     <testResources>
       <testResource>
@@ -26,14 +35,5 @@
       </testResource>
     </testResources>
   </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.seasar.directory</groupId>
-      <artifactId>s2-directory</artifactId>
-      <version>${parent.version}</version>
-      <type>jar</type>
-    </dependency>
-  </dependencies>
 
 </project>

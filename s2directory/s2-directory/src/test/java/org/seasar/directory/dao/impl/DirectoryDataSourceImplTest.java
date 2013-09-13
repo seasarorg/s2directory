@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -49,8 +49,7 @@ public class DirectoryDataSourceImplTest extends TestCase {
 	 */
 	public void testGetConnection() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlPropertyImpl.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlPropertyImpl.class);
 		DirectoryDataSourceImpl directoryDataSource =
 			new DirectoryDataSourceImpl(property);
 		try {
@@ -70,59 +69,58 @@ public class DirectoryDataSourceImplTest extends TestCase {
 	}
 
 	/** TODO: ApacheDSのSSL環境を用意して動作確認 */
-//	public void testGetSSLConnection() {
-//		DirectoryControlProperty property =
-//			(DirectoryControlProperty)container
-//				.getComponent(DirectoryControlPropertyImpl.class);
-//		property.setUrl("ldaps://localhost:636");
-//		DirectoryDataSourceImpl directoryDataSource =
-//			new DirectoryDataSourceImpl(property);
-//		try {
-//			directoryDataSource.getConnection(property);
-//			assertTrue(true);
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//			property = getSuperUserPropertyOfApachDS();
-//			assertTrue(false);
-//		}
-//	}
-//
-//	public void testGetTLSConnection() {
-//		DirectoryControlProperty property =
-//			(DirectoryControlProperty)container
-//				.getComponent(DirectoryControlPropertyImpl.class);
-//		property.setUrl("ldap://localhost:389");
-//		property.setEnableTLS(true);
-//		DirectoryDataSourceImpl directoryDataSource =
-//			new DirectoryDataSourceImpl(property);
-//		try {
-//			directoryDataSource.getConnection(property);
-//			assertTrue(true);
-//		} catch (NamingException e) {
-//			assertTrue(false);
-//		}
-//	}
-//
-//	public void testGetSSLTLSConnection() {
-//		DirectoryControlProperty property =
-//			(DirectoryControlProperty)container
-//				.getComponent(DirectoryControlPropertyImpl.class);
-//		property.setUrl("ldaps://localhost:389");
-//		property.setEnableTLS(true);
-//		DirectoryDataSourceImpl directoryDataSource =
-//			new DirectoryDataSourceImpl(property);
-//		try {
-//			directoryDataSource.getConnection(property);
-//			assertTrue(false);
-//		} catch (NamingException e) {
-//			assertTrue(true);
-//		}
-//	}
+	// public void testGetSSLConnection() {
+	// DirectoryControlProperty property =
+	// (DirectoryControlProperty)container
+	// .getComponent(DirectoryControlPropertyImpl.class);
+	// property.setUrl("ldaps://localhost:636");
+	// DirectoryDataSourceImpl directoryDataSource =
+	// new DirectoryDataSourceImpl(property);
+	// try {
+	// directoryDataSource.getConnection(property);
+	// assertTrue(true);
+	// } catch (NamingException e) {
+	// e.printStackTrace();
+	// property = getSuperUserPropertyOfApachDS();
+	// assertTrue(false);
+	// }
+	// }
+	//
+	// public void testGetTLSConnection() {
+	// DirectoryControlProperty property =
+	// (DirectoryControlProperty)container
+	// .getComponent(DirectoryControlPropertyImpl.class);
+	// property.setUrl("ldap://localhost:389");
+	// property.setEnableTLS(true);
+	// DirectoryDataSourceImpl directoryDataSource =
+	// new DirectoryDataSourceImpl(property);
+	// try {
+	// directoryDataSource.getConnection(property);
+	// assertTrue(true);
+	// } catch (NamingException e) {
+	// assertTrue(false);
+	// }
+	// }
+	//
+	// public void testGetSSLTLSConnection() {
+	// DirectoryControlProperty property =
+	// (DirectoryControlProperty)container
+	// .getComponent(DirectoryControlPropertyImpl.class);
+	// property.setUrl("ldaps://localhost:389");
+	// property.setEnableTLS(true);
+	// DirectoryDataSourceImpl directoryDataSource =
+	// new DirectoryDataSourceImpl(property);
+	// try {
+	// directoryDataSource.getConnection(property);
+	// assertTrue(false);
+	// } catch (NamingException e) {
+	// assertTrue(true);
+	// }
+	// }
 
 	private DirectoryControlProperty getSuperUserPropertyOfApachDS() {
 		DirectoryControlProperty property =
-			(DirectoryControlProperty)container
-				.getComponent(DirectoryControlProperty.class);
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 		property.setUser("uid=admin");
 		property.setPassword("secret");
 		property.setUserSuffix("");

@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -18,6 +18,7 @@ package org.seasar.directory.digest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import org.seasar.framework.util.Base64Util;
 
 /**
@@ -39,7 +40,7 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * インスタンスを作成します。
 	 * 
 	 * @param algorithm
-	 * 		暗号アルゴリズム
+	 *            暗号アルゴリズム
 	 */
 	public AbstractMessageDigest(String algorithm) {
 		try {
@@ -54,9 +55,9 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * 指定された乱数を用いてパスワードをハッシュ化します。
 	 * 
 	 * @param salt
-	 * 		乱数
+	 *            乱数
 	 * @param password
-	 * 		ハッシュ化するパスワード
+	 *            ハッシュ化するパスワード
 	 */
 	public String createHash(byte[] salt, String password) {
 		md.reset();
@@ -75,9 +76,9 @@ public abstract class AbstractMessageDigest implements Digest {
 	 * 指定されたハッシュ値とパスワードのハッシュが同じか判別します。
 	 * 
 	 * @param digest
-	 * 		ハッシュ化されたパスワード
+	 *            ハッシュ化されたパスワード
 	 * @param password
-	 * 		確認するパスワード
+	 *            確認するパスワード
 	 * @param size
 	 */
 	public boolean verifyPassword(String digest, String password, int size) {

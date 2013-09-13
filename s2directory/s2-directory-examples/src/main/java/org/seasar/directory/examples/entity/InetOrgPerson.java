@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -282,15 +282,9 @@ public class InetOrgPerson implements Serializable {
 		buffer.append("dn=").append(dn).append(", ");
 		buffer.append("MAY: ");
 		buffer.append("audio=").append(audio).append(", ");
-		buffer
-			.append("businessCategory=")
-			.append(businessCategory)
-			.append(", ");
+		buffer.append("businessCategory=").append(businessCategory).append(", ");
 		buffer.append("carLicense=").append(carLicense).append(", ");
-		buffer
-			.append("departmentNumber=")
-			.append(departmentNumber)
-			.append(", ");
+		buffer.append("departmentNumber=").append(departmentNumber).append(", ");
 		buffer.append("displayName=").append(displayName).append(", ");
 		buffer.append("employeeNumber=").append(employeeNumber).append(", ");
 		buffer.append("employeeType=").append(employeeType).append(", ");
@@ -311,16 +305,12 @@ public class InetOrgPerson implements Serializable {
 		buffer.append("secretary=").append(secretary).append(", ");
 		buffer.append("uid=").append(uid).append(", ");
 		buffer.append("userCertificate=").append(userCertificate).append(", ");
-		buffer
-			.append("x500UniqueIdentifier=")
-			.append(x500UniqueIdentifier)
-			.append(", ");
+		buffer.append("x500UniqueIdentifier=").append(x500UniqueIdentifier).append(
+			", ");
 		buffer.append("preferredLanguage=").append(preferredLanguage).append(
 			", ");
-		buffer
-			.append("userSMIMECertificate=")
-			.append(userSMIMECertificate)
-			.append(", ");
+		buffer.append("userSMIMECertificate=").append(userSMIMECertificate).append(
+			", ");
 		buffer.append("userPKCS12=").append(userPKCS12);
 		return buffer.toString();
 	}
