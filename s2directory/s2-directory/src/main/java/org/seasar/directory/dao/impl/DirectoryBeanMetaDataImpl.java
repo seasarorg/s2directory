@@ -53,7 +53,7 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		setupObjectClasses(beanDesc);
 		setupVersionNoPropertyName(beanDesc);
 		setupProperty(beanDesc);
-		super.initialize();
+		// super.initialize();
 	}
 
 	protected DirectoryAnnotationReaderFactory getDirectoryAnnotationReaderFactory() {
@@ -139,6 +139,16 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 			} else {
 				pt = createPropertyType(beanDesc, pd);
 				addPropertyType(pt);
+			}
+		}
+
+		// 非永続化カラムに非永続化のフラグを設定します。
+		final String[] noPersistentProps =
+			beanAnnotationReader.getNoPersistentProps();
+		if (noPersistentProps != null) {
+			for (int i = 0; i < noPersistentProps.length; ++i) {
+				PropertyType pt = getPropertyType(noPersistentProps[i].trim());
+				pt.setPersistent(false);
 			}
 		}
 	}

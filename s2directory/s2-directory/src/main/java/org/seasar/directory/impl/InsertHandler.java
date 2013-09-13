@@ -28,11 +28,11 @@ import org.seasar.directory.CommandContext;
 import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.directory.DirectoryDataSource;
 import org.seasar.directory.attribute.AttributeHandler;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.types.PropertyType;
 import org.seasar.directory.util.DirectoryUtil;
-import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
 
@@ -44,8 +44,13 @@ import org.seasar.framework.log.Logger;
  */
 public class InsertHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
+
+	/** ビーンメタデータ */
+	private DirectoryBeanMetaData beanMetaData;
+
 	/** 引数をコマンドとみなしたコンテキスト */
 	private CommandContext ctx;
 
@@ -55,8 +60,10 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	 * @param dataSource
 	 * @param ctx
 	 */
-	public InsertHandler(DirectoryDataSource dataSource, CommandContext ctx) {
+	public InsertHandler(DirectoryDataSource dataSource,
+			DirectoryBeanMetaData beanMetaData, CommandContext ctx) {
 		super(dataSource);
+		this.beanMetaData = beanMetaData;
 		this.ctx = ctx;
 	}
 
@@ -119,10 +126,13 @@ public class InsertHandler extends BasicDirectoryHandler implements
 			if (argName.equals("#dto")) {
 				// 引数がDTOの場合、DTOに定義されたフィールドを
 				// 作成するエントリの属性とみなします。
-				BeanDesc beanDesc = BeanDescFactory.getBeanDesc(argClass);
-				int size = beanDesc.getPropertyDescSize();
+				int size = beanMetaData.getPropertyTypeSize();
 				for (int i = 0; i < size; i++) {
-					PropertyDesc pd = beanDesc.getPropertyDesc(i);
+					PropertyType pt = beanMetaData.getPropertyType(i);
+					if (pt.isPersistent() == false) {
+						continue;
+					}
+					PropertyDesc pd = pt.getPropertyDesc();
 					String propName = pd.getPropertyName();
 					Attribute addAttribute =
 						createAttribute(

@@ -30,6 +30,7 @@ import org.seasar.directory.impl.InsertHandler;
  * @version $Date::                           $
  */
 public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -63,7 +64,8 @@ public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
 		// TODO: ここでコマンドコンテキストを渡しちゃうのは良くない
 		// 将来的には BindVariables のようなものを使うようなものに直す
 		ExecuteHandler handler =
-			new InsertHandler(getDirectoryDataSource(args), ctx);
+			new InsertHandler(getDirectoryDataSource(args), beanMetaData, ctx);
 		return handler.execute();
 	}
+
 }

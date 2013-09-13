@@ -18,6 +18,7 @@ package org.seasar.directory.examples.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.client.common.PosixGroupDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
@@ -109,9 +110,34 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		assertEquals("user1__user2", group.getMemberUid());
 	}
 
+	public void testInsert1() {
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
+
+		// 作成します。
+		PosixGroupDto newgroup1 = posixGroupDtoDao.getPosixGroup(group1);
+		newgroup1.setDn("cn=newgroup1,ou=Groups," + property.getBaseDn());
+		newgroup1.setCn("newgroup1");
+		newgroup1.setDescription("New Group Description");
+		newgroup1.setField1("dummy");
+		newgroup1.publicField1 = "dummy";
+		assertEquals(1, posixGroupDtoDao.insertPosixGroup(newgroup1));
+
+		// 検索します。
+		PosixGroupDto search = new PosixGroupDto();
+		search.setCn("newgroup1");
+		PosixGroupDto dbNewgroup1 = posixGroupDtoDao.getPosixGroup(search);
+		assertEquals("newgroup1", dbNewgroup1.getCn());
+
+		// 削除します。
+		posixGroupDtoDao.deletePosixGroup(dbNewgroup1);
+	}
+
 	public void testUpdate1() {
 		PosixGroupDto group = posixGroupDtoDao.getPosixGroup(group1);
 		group.setDescription("New Group Description");
+		group.setField1("dummy");
+		group.publicField1 = "dummy";
 		assertEquals(1, posixGroupDtoDao.updatePosixGroup(group));
 		group = posixGroupDtoDao.getPosixGroup(group1);
 		assertEquals("New Group Description", group.getDescription());

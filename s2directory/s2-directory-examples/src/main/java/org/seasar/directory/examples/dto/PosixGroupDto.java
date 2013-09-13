@@ -28,11 +28,16 @@ public class PosixGroupDto extends PosixGroup {
 	private static final long serialVersionUID = 1L;
 
 	/** 非永続化属性 */
-	public static final String NO_PERSISTENT_PROPS = "field1, field2";
+	public static final String NO_PERSISTENT_PROPS =
+		"field1, field2, publicField1";
+
 	/** field1 */
 	private String field1;
+
 	/** field2 */
 	private String field2;
+
+	public Object publicField1;
 
 	/**
 	 * field1を取得します。

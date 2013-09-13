@@ -32,14 +32,13 @@ import org.seasar.framework.util.StringUtil;
  */
 public class DirectoryFieldBeanAnnotationReader implements
 		DirectoryBeanAnnotationReader {
+
 	/** BEANアノテーションの設定名 */
 	public String BEAN = "BEAN";
 	/** オブジェクトクラスアノテーションの設定名 */
 	public String OBJECTCLASSES = "OBJECTCLASSES";
 	/** 永続化対象にしない属性の設定名 */
-	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
-	/** この属性だけ永続化する属性の設定名 */
-	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
+	public String NO_PERSISTENT_PROPS = "NO_PERSISTENT_PROPS";
 	/** 優先度の高い属性名の設定名 */
 	public String ATTRIBUTE_SUFFIX = "_ATTRIBUTE";
 	/** 属性名の設定名 */
@@ -103,29 +102,11 @@ public class DirectoryFieldBeanAnnotationReader implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public String[] getNoPersistentProps(String methodName) {
-		return getProps(methodName, methodName + NO_PERSISTENT_PROPS_SUFFIX);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String[] getPersistentProps(String methodName) {
-		return getProps(methodName, methodName + PERSISTENT_PROPS_SUFFIX);
-	}
-
-	/**
-	 * 指定された関数用のフィールドを取得します。
-	 * 
-	 * @param methodName
-	 * @param fieldName
-	 * @return
-	 */
-	private String[] getProps(String methodName, String fieldName) {
-		if (beanDesc.hasField(fieldName)) {
-			Field field = beanDesc.getField(fieldName);
-			String s = (String)FieldUtil.get(field, null);
-			return StringUtil.split(s, ", ");
+	public String[] getNoPersistentProps() {
+		if (beanDesc.hasField(NO_PERSISTENT_PROPS)) {
+			Field field = beanDesc.getField(NO_PERSISTENT_PROPS);
+			String str = (String)FieldUtil.get(field, null);
+			return StringUtil.split(str, ", ");
 		}
 		return null;
 	}
@@ -141,4 +122,5 @@ public class DirectoryFieldBeanAnnotationReader implements
 		}
 		return null;
 	}
+
 }

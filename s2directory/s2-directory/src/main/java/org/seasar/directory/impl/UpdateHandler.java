@@ -48,9 +48,13 @@ import org.seasar.framework.util.CaseInsensitiveSet;
  */
 public class UpdateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
+
+	/** ビーンメタデータ */
 	private DirectoryBeanMetaData beanMetaData;
+
 	/** 引数をコマンドとみなしたコンテキスト */
 	private CommandContext ctx;
 
@@ -150,6 +154,9 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 				int propSize = beanMetaData.getPropertyTypeSize();
 				for (int j = 0; j < propSize; ++j) {
 					PropertyType pt = beanMetaData.getPropertyType(j);
+					if (pt.isPersistent() == false) {
+						continue;
+					}
 					PropertyDesc pd = pt.getPropertyDesc();
 					String attributeName = pt.getColumnName();
 					Object attributeValue = pd.getValue(argValue);
@@ -244,4 +251,5 @@ public class UpdateHandler extends BasicDirectoryHandler implements
 		DirectoryDataSourceUtil.close(ae);
 		return attributeNameSet;
 	}
+
 }
