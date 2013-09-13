@@ -67,7 +67,7 @@
 		<property name="userAttributeName">"uid"</property>
 		<property name="groupSuffix">"ou=Groups"</property>
 		<property name="groupAttributeName">"memberUid"</property>
-		<property name="multipleValueDelimiter">","</property>
+		<property name="multipleValueDelimiter"></property>
 	-->
 	</component>
 </components>

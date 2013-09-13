@@ -22,6 +22,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 
 import org.seasar.directory.util.DirectoryDataSourceUtil;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * String型での値取得クラスです。
@@ -51,15 +52,17 @@ public class StringType extends AbstractValueType {
 				Object value = array.next();
 				if (value instanceof String) {
 					// テキスト型
-					buffer.append(value).append(multipleValueDelimiter);
+					buffer.append(value);
 				} else {
 					// バイナリ型
-					buffer.append(new String((byte[])value)).append(
-						multipleValueDelimiter);
+					buffer.append(new String((byte[])value));
+				}
+				if (StringUtil.isEmpty(multipleValueDelimiter) == false) {
+					buffer.append(multipleValueDelimiter);
 				}
 			}
 			DirectoryDataSourceUtil.close(array);
-			if (0 < multipleValueDelimiter.length()) {
+			if (StringUtil.isEmpty(multipleValueDelimiter) == false) {
 				int index = buffer.lastIndexOf(multipleValueDelimiter);
 				if (index != -1) {
 					buffer.delete(index, buffer.length());

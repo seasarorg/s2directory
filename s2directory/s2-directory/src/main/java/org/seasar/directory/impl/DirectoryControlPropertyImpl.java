@@ -59,7 +59,7 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** グループを識別するための属性名 */
 	private String groupAttributeName = "memberUid";
 	/** 複数値のための区切り文字 */
-	private String multipleValueDelimiter = ",";
+	private String multipleValueDelimiter;
 	/** フィルタ */
 	private String filter;
 	/** 検索コントロール */
