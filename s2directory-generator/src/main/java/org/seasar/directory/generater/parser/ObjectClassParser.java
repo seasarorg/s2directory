@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -37,8 +37,9 @@ public class ObjectClassParser implements Parser {
 	public void parse(Attributes attrs, BufferedWriter writer)
 			throws ParseException, IOException {
 		String objectClassName =
-			DirectoryUtil.getObjectClassName(DirectoryUtil
-				.getSingleValue(DirectoryUtil.getAttribute(attrs, "NAME")));
+			DirectoryUtil.getObjectClassName(DirectoryUtil.getSingleValue(DirectoryUtil.getAttribute(
+				attrs,
+				"NAME")));
 		StringBuffer buffer = new StringBuffer();
 		// インポートを生成します。
 		buffer.append(createImportDefinition());
@@ -100,7 +101,8 @@ public class ObjectClassParser implements Parser {
 	 * @return
 	 */
 	protected String createClassDefinition(String className) {
-		return "public class " + DirectoryUtil.getFirstUpperString(className)
+		return "public class "
+			+ DirectoryUtil.getFirstUpperString(className)
 			+ " implements Serializable {\n";
 	}
 
@@ -136,13 +138,18 @@ public class ObjectClassParser implements Parser {
 	 */
 	protected String createOneFieldDefinition(AttributeField attributeField) {
 		String filedDefinition =
-			ParserUtil.getIndent(1) + "private String "
-				+ attributeField.getFieldName() + ";\n";
+			ParserUtil.getIndent(1)
+				+ "private String "
+				+ attributeField.getFieldName()
+				+ ";\n";
 		if (attributeField.isNeedAnnotation()) {
 			filedDefinition =
-				"public static final String " + attributeField.getFieldName()
-					+ "_COLUMN = \"" + attributeField.getAttributeName()
-					+ "\";\n" + filedDefinition;
+				"public static final String "
+					+ attributeField.getFieldName()
+					+ "_COLUMN = \""
+					+ attributeField.getAttributeName()
+					+ "\";\n"
+					+ filedDefinition;
 			return filedDefinition;
 		} else {
 			return filedDefinition;
@@ -215,8 +222,7 @@ public class ObjectClassParser implements Parser {
 	protected String createSetter(AttributeField instanceName) {
 		StringBuffer buffer = new StringBuffer(ParserUtil.getIndent(1));
 		buffer.append("public void ");
-		buffer.append(DirectoryUtil.getSetMethodName(instanceName
-			.getFieldName()));
+		buffer.append(DirectoryUtil.getSetMethodName(instanceName.getFieldName()));
 		buffer.append("(String " + instanceName.getFieldName() + ") {\n");
 		buffer.append(setInstance(instanceName));
 		buffer.append(ParserUtil.getIndent(1) + "}\n\n");
@@ -242,11 +248,12 @@ public class ObjectClassParser implements Parser {
 	protected String createGetter(AttributeField instanceName) {
 		StringBuffer buffer = new StringBuffer(ParserUtil.getIndent(1));
 		buffer.append("public String ");
-		buffer.append(DirectoryUtil.getGetMethodName(instanceName
-			.getFieldName()));
+		buffer.append(DirectoryUtil.getGetMethodName(instanceName.getFieldName()));
 		buffer.append("() {\n");
-		buffer.append(ParserUtil.getIndent(2) + "return "
-			+ instanceName.getFieldName() + ";\n");
+		buffer.append(ParserUtil.getIndent(2)
+			+ "return "
+			+ instanceName.getFieldName()
+			+ ";\n");
 		buffer.append(ParserUtil.getIndent(1) + "}\n\n");
 		return buffer.toString();
 	}
@@ -275,7 +282,8 @@ public class ObjectClassParser implements Parser {
 			buffer.append(INDENT + "buffer.append(\"MUST: \");\n");
 			for (int i = 0; i < mustNames.length; i++) {
 				buffer.append(INDENT + "buffer");
-				buffer.append(".append(\"" + mustNames[i].getFieldName()
+				buffer.append(".append(\""
+					+ mustNames[i].getFieldName()
 					+ "=\")");
 				buffer.append(".append(" + mustNames[i].getFieldName() + ")");
 				buffer.append(".append(\", \");\n");
@@ -286,7 +294,8 @@ public class ObjectClassParser implements Parser {
 			buffer.append(INDENT + "buffer.append(\"MAY: \");\n");
 			for (int i = 0; i < mayNames.length; i++) {
 				buffer.append(INDENT + "buffer");
-				buffer.append(".append(\"" + mayNames[i].getFieldName()
+				buffer.append(".append(\""
+					+ mayNames[i].getFieldName()
 					+ "=\")");
 				buffer.append(".append(" + mayNames[i].getFieldName() + ")");
 				buffer.append(".append(\", \");\n");

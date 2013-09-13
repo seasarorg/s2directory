@@ -1,4 +1,20 @@
+/*
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package org.seasar.directory.generater;
+
 /*
  * Copyright 2005-2008 the Seasar Foundation and the Others.
  *
@@ -23,9 +39,11 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
+
 import org.seasar.directory.generater.parser.ObjectClassParser;
 import org.seasar.directory.generater.parser.ParseException;
 import org.seasar.directory.generater.parser.Parser;
@@ -72,15 +90,16 @@ public class DirectoryPOJOGenerater {
 		while (iter.hasNext()) {
 			String name = String.valueOf(iter.next());
 			try {
-				SchemaMap map = DirectoryUtil
-						.getNoMultipleDirectoryDefinitionMap(
-								(Attributes)definition.get(name), "NAME");
+				SchemaMap map =
+					DirectoryUtil.getNoMultipleDirectoryDefinitionMap(
+						(Attributes)definition.get(name),
+						"NAME");
 				if (map.size() > 1)
 					parse(map);
 				else if (map.size() == 1)
 					parse(name, (Attributes)definition.get(name));
 				else { // map.size() == 0: no name objectClass
-					// do nothing.
+						// do nothing.
 				}
 			} catch (NamingException e) {
 				throw new ParseException("", e);
@@ -90,8 +109,8 @@ public class DirectoryPOJOGenerater {
 
 	public void parse(String name, Attributes attrs) throws ParseException,
 			IOException {
-		String fileName = DirectoryUtil.getObjectClassName(DirectoryUtil
-				.getFirstUpperString(name))
+		String fileName =
+			DirectoryUtil.getObjectClassName(DirectoryUtil.getFirstUpperString(name))
 				+ ".java";
 		// 出力エンコーディング
 		String encoding = ParserConstant.OUTPUT_ENCODING;
@@ -106,8 +125,8 @@ public class DirectoryPOJOGenerater {
 		// パースし、結果をファイルに出力します。
 		File target = new File(outputDir + fileName);
 		FileOutputStream out = new FileOutputStream(target);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out,
-				encoding));
+		BufferedWriter writer =
+			new BufferedWriter(new OutputStreamWriter(out, encoding));
 		parser.parse(attrs, writer);
 		writer.close();
 	}
@@ -124,7 +143,6 @@ public class DirectoryPOJOGenerater {
 		}
 		// ビルドの開始
 		main.build(host, port);
-		System.out
-				.println(ParserConstant.OUTPUT_DIR_PATH + "ディレクトリ以下に作成しました。");
+		System.out.println(ParserConstant.OUTPUT_DIR_PATH + "ディレクトリ以下に作成しました。");
 	}
 }

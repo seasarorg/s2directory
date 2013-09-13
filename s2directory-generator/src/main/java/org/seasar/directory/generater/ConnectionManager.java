@@ -1,12 +1,12 @@
 /*
- * Copyright 2005-2008 the Seasar Foundation and the Others.
- *
+ * Copyright 2005-2013 the Seasar Foundation and the Others.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
@@ -16,6 +16,7 @@
 package org.seasar.directory.generater;
 
 import java.util.Properties;
+
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -34,7 +35,8 @@ public class ConnectionManager {
 	/** Directory directory environment */
 	private static Properties env = null;
 
-	private ConnectionManager() {}
+	private ConnectionManager() {
+	}
 
 	public static DirContext connect(String host, int port)
 			throws DirectoryException {
@@ -55,8 +57,9 @@ public class ConnectionManager {
 			close();
 		}
 		env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY,
-				"com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(
+			Context.INITIAL_CONTEXT_FACTORY,
+			"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, "ldap://" + host + ":" + port);
 		env.put(Context.SECURITY_PRINCIPAL, dn);
 		if (doAuthenticate) {
@@ -102,7 +105,8 @@ public class ConnectionManager {
 	/**
 	 * Get the object value of attribute.
 	 * 
-	 * @param attribute name
+	 * @param attribute
+	 *            name
 	 * @return value
 	 */
 	public Object read(String dn) {
