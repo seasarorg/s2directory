@@ -38,7 +38,7 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** 接続に使用するSSLソケットファクトリ */
 	private String sslSocketFactory = "javax.net.ssl.SSLSocketFactory";
 	/** 認証メカニズム */
-	private String authentication = "simple";
+	private String authentication = AUTHENTICATION_SIMPLE;
 	/** URL */
 	private String url;
 	/** 基底となる識別名 */
