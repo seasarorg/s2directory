@@ -28,6 +28,7 @@ import org.seasar.directory.DirectoryControlProperty;
  */
 public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
+
 	/** コネクションプーリング設定のBindingアノテーション */
 	public static final String directoryConnectionPool_BINDING =
 		"bindingType=may";
@@ -36,6 +37,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
 	/** 接続に使用するSSLソケットファクトリ */
 	private String sslSocketFactory = "javax.net.ssl.SSLSocketFactory";
+	/** 認証メカニズム */
+	private String authentication = "simple";
 	/** URL */
 	private String url;
 	/** 基底となる識別名 */
@@ -64,8 +67,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	private String filter;
 	/** 検索コントロール */
 	private int searchControls = SearchControls.SUBTREE_SCOPE;
-	/** 匿名接続を許可するかどうか */
-	private boolean allowAnonymous = false;
 	/** SSL接続するかどうか */
 	private boolean enableSSL = false;
 	/** TLS接続するかどうか */
@@ -335,15 +336,15 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isAllowAnonymous() {
-		return allowAnonymous;
+	public String getAuthentication() {
+		return authentication;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setAllowAnonymous(boolean allowAnonymous) {
-		this.allowAnonymous = allowAnonymous;
+	public void setAuthentication(String authentication) {
+		this.authentication = authentication;
 	}
 
 	/**
@@ -395,30 +396,24 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasAuthentication() {
-		return (bindDn != null) && (password != null);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
 			", ");
 		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(
 			", ");
+		buffer.append("authentication: ").append(authentication).append(", ");
 		buffer.append("url: ").append(url).append(", ");
 		buffer.append("baseDn: ").append(baseDn).append(", ");
-		buffer.append("bindDn: ").append(baseDn).append(", ");
+		buffer.append("bindDn: ").append(bindDn).append(", ");
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");
 		buffer.append("filter: ").append(filter).append(", ");
 		buffer.append("searchControls: ").append(searchControls).append(", ");
-		buffer.append("allowAnonymous: ").append(allowAnonymous).append(", ");
 		buffer.append("enableSSL").append(enableSSL).append(", ");
 		buffer.append("enableTLS: ").append(enableTLS).append(", ");
 		buffer.append("pool: ").append(pool);
 		return buffer.toString();
 	}
+
 }

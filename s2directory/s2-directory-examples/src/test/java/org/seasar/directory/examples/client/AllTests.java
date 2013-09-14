@@ -33,6 +33,7 @@ public class AllTests {
 		suite.addTestSuite(PosixGroupUpdateTest.class);
 		suite.addTestSuite(PosixGroupInsertTest.class);
 		suite.addTestSuite(PosixAccountPasswordUpdateTest.class);
+		suite.addTestSuite(PosixAccountSelectAnonymousTest.class);
 		suite.addTestSuite(PosixAccountSelectTest.class);
 		suite.addTestSuite(PosixAccountInsertTest.class);
 		suite.addTestSuite(PosixAccountWithAnnocationTest.class);

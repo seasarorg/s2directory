@@ -22,6 +22,13 @@ package org.seasar.directory;
  * @version $Date::                           $
  */
 public interface DirectoryControlProperty {
+
+	/** 匿名バインドのための認証メカニズム定数です。 */
+	public static final String AUTHENTICATION_NONE = "none";
+
+	/** 簡単な認証バインドのための認証メカニズム定数です。 */
+	public static final String AUTHENTICATION_SIMPLE = "simple";
+
 	/**
 	 * クローンを生成します。
 	 * 
@@ -58,6 +65,21 @@ public interface DirectoryControlProperty {
 	 *            SSLソケットファクトリ
 	 */
 	public void setSslSocketFactory(String sslSocketFactory);
+
+	/**
+	 * 認証メカニズムを設定します。
+	 * 
+	 * @return 認証メカニズム
+	 */
+	public String getAuthentication();
+
+	/**
+	 * 認証メカニズムを返します。
+	 * 
+	 * @param authentication
+	 *            認証メカニズム
+	 */
+	public void setAuthentication(String authentication);
 
 	/**
 	 * urlを返します。
@@ -256,21 +278,6 @@ public interface DirectoryControlProperty {
 	public void setSearchControls(int searchControls);
 
 	/**
-	 * 匿名接続を許可するか判断します。
-	 * 
-	 * @return allowAnonymous
-	 */
-	public boolean isAllowAnonymous();
-
-	/**
-	 * 匿名接続を許可するか設定します。
-	 * 
-	 * @param allowAnonymous
-	 *            匿名接続を許可するかどうか
-	 */
-	public void setAllowAnonymous(boolean allowAnonymous);
-
-	/**
 	 * SSL接続が有効かどうか判断します。
 	 * 
 	 * @return SSL接続が有効化どうか
@@ -320,11 +327,4 @@ public interface DirectoryControlProperty {
 	 * @return コネクションプーリングを行うかどうか
 	 */
 	public boolean isEnablePool();
-
-	/**
-	 * 認証可能な情報を保持しているか調べます。
-	 * 
-	 * @return 認証可能な情報を保持している場合 true
-	 */
-	public boolean hasAuthentication();
 }

@@ -15,12 +15,14 @@
  */
 package org.seasar.directory.examples.client;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
 import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -62,10 +64,15 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 		super.tearDown();
 	}
 
-	public void testSelect1() {
+	public void testSelect1() throws NoSuchAlgorithmException {
 		// user1を取得します。
 		PosixAccountDto account = posixAccountDtoDao.getUser(user1);
 		assertEquals(true, account.getCn().equals(user1.getCn()));
+		assertEquals(
+			true,
+			DirectoryUtil.verifyPassword(
+				account.getUserPassword(),
+				user1.getUserPassword()));
 		assertEquals(null, account.getDescription());
 	}
 
@@ -75,6 +82,11 @@ public class PosixAccountSelectTest extends DefaultDirectoryInformationTreeTest 
 		search.setDn("uid=user1,ou=Users,dc=seasar,dc=org");
 		PosixAccountDto account = posixAccountDtoDao.getUser(search);
 		assertEquals(true, account.getCn().equals(user1.getCn()));
+		assertEquals(
+			true,
+			DirectoryUtil.verifyPassword(
+				account.getUserPassword(),
+				user1.getUserPassword()));
 		assertEquals(null, account.getDescription());
 	}
 

@@ -76,15 +76,19 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 */
 	public DirContext getConnection(DirectoryControlProperty property)
 			throws NamingException {
-		// 接続設定準備
+		// 接続設定を準備します。
 		setupDirectoryControlProperty(property);
 		Properties env = new Properties();
 		env.put(
 			Context.INITIAL_CONTEXT_FACTORY,
 			property.getInitialContextFactory());
 		env.put(Context.PROVIDER_URL, property.getUrl());
-		env.put(Context.SECURITY_PRINCIPAL, property.getBindDn());
-		env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
+		env.put(Context.SECURITY_AUTHENTICATION, property.getAuthentication());
+		if (DirectoryControlProperty.AUTHENTICATION_NONE.equals(property.getAuthentication()) == false) {
+			// 匿名接続以外の場合のみ認証情報を設定します。
+			env.put(Context.SECURITY_PRINCIPAL, property.getBindDn());
+			env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
+		}
 
 		// コネクションプーリング
 		// Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and
@@ -192,18 +196,6 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	 */
 	protected void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
-		if (property.isAllowAnonymous()) {
-			// 匿名接続を許可する場合、認証情報の null を空に置き換えます。
-			if (property.getBindDn() == null)
-				property.setBindDn("");
-			if (property.getPassword() == null)
-				property.setPassword("");
-		}
-		if (!property.isAllowAnonymous() && !property.hasAuthentication()) {
-			// TODO: 専用の例外ハンドラ作成
-			// 匿名接続が許可されていないのに、認証情報が null の場合
-			throw new DirectoryRuntimeException("匿名接続は許可されていません。");
-		}
 		if (property.isEnableSSL() && property.isEnableTLS()) {
 			// TODO: 専用の例外ハンドラ作成
 			throw new DirectoryRuntimeException("SSL接続とTLS接続の併用はできません。");

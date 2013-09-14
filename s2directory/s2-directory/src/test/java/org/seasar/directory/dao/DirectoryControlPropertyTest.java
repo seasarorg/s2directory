@@ -63,7 +63,9 @@ public class DirectoryControlPropertyTest extends TestCase {
 		assertEquals("secret", property.getPassword());
 		assertEquals("uid", property.getUserAttributeName());
 		assertEquals("SHA", property.getPasswordAlgorithm());
-		assertEquals("__", property.getMultipleValueDelimiter());
+		assertEquals(
+			"DEFAULT_MULTIPLE_VALUE_DELIMITER",
+			property.getMultipleValueDelimiter());
 		assertEquals(false, property.isEnableSSL());
 	}
 
@@ -72,9 +74,6 @@ public class DirectoryControlPropertyTest extends TestCase {
 			dataSource.getDirectoryControlProperty();
 		property.setUrl("ldaps://localhost:389");
 		assertEquals(true, property.isEnableSSL());
-		// property.setUrl("ldap://localhost:389");
-		// System.out.println("property: " + property.getUrl());
-		// System.out.println("property: " + property.isUseSsl());
-		// assertEquals(false, property.isUseSsl());
 	}
+
 }
