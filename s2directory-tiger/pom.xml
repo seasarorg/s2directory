@@ -94,7 +94,7 @@
     <repository>
       <uniqueVersion>false</uniqueVersion>
       <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
+      <name>The Seasar Foundation Maven Repository</name>
 <!-- This means that it used the localRepository setting.
       <url></url>
 -->
@@ -103,7 +103,7 @@
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <name>The Seasar Foundation Maven Snapshot Repository</name>
       <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
     </snapshotRepository>
   </distributionManagement>
@@ -111,10 +111,26 @@
   <repositories>
     <repository>
       <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
+      <name>The Seasar Foundation Maven Repository</name>
       <url>http://maven.seasar.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>maven-snapshot.seasar.org</id>
+      <name>The Seasar Foundation Maven Snapshot Repository</name>
+      <url>http://maven.seasar.org/maven2-snapshot</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
     </repository>
   </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
