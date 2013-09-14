@@ -60,6 +60,7 @@
 
 	<!--
 		# Other options and each default value.
+		<property name="authentication">"simple"</property>
 		<property name="user"></property>
 		<property name="passwordAlgorithm">"SSHA"</property>
 		<property name="passwordSaltLength">"8"</property>
@@ -67,7 +68,7 @@
 		<property name="userAttributeName">"uid"</property>
 		<property name="groupSuffix">"ou=Groups"</property>
 		<property name="groupAttributeName">"memberUid"</property>
-		<property name="multipleValueDelimiter">","</property>
+		<property name="multipleValueDelimiter">"DEFAULT_MULTIPLE_VALUE_DELIMITER"</property>
 	-->
 	</component>
 </components>
