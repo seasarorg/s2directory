@@ -31,7 +31,8 @@ import javax.net.ssl.SSLSocketFactory;
 
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.DirectoryDataSource;
-import org.seasar.directory.exception.DirectoryRuntimeException;
+import org.seasar.directory.exception.UnsupportedSSLAndTLSConnectionRuntimeException;
+import org.seasar.directory.exception.UnsupportedTLSConnectionRuntimeException;
 import org.seasar.directory.util.DirectoryDataSourceUtil;
 import org.seasar.framework.util.ClassUtil;
 
@@ -164,9 +165,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 					// do nothing.
 				}
 			}
-			DirectoryDataSourceUtil.close(context);
-			// TODO: 専用の例外ハンドラ作成
-			throw new DirectoryRuntimeException("このサーバはTLS接続をサポートしていません。");
+			throw new UnsupportedTLSConnectionRuntimeException();
 		}
 		return context;
 	}
@@ -197,8 +196,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	protected void setupDirectoryControlProperty(
 			DirectoryControlProperty property) {
 		if (property.isEnableSSL() && property.isEnableTLS()) {
-			// TODO: 専用の例外ハンドラ作成
-			throw new DirectoryRuntimeException("SSL接続とTLS接続の併用はできません。");
+			throw new UnsupportedSSLAndTLSConnectionRuntimeException();
 		}
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
 	}

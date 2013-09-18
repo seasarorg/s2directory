@@ -16,11 +16,11 @@
 package org.seasar.directory.exception;
 
 /**
- * 指定したDNにエントリが存在しないことを通知します。
+ * 接続先サーバが TLS 接続をサポートしていないことを通知します。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  */
-public final class NoSuchEntryRuntimeException extends
+public final class UnsupportedTLSConnectionRuntimeException extends
 		DirectoryRuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -31,8 +31,8 @@ public final class NoSuchEntryRuntimeException extends
 	 * @param message
 	 *            この例外に関する詳細情報
 	 */
-	public NoSuchEntryRuntimeException(String message) {
-		super("EDIR0007", new Object[] { message });
+	public UnsupportedTLSConnectionRuntimeException() {
+		super("EDIR0006", new Object[] {});
 	}
 
 }
