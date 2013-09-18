@@ -68,7 +68,7 @@ public class DirectoryDataSourceImplTest extends TestCase {
 		}
 	}
 
-	/** TODO: ApacheDSのSSL環境を用意して動作確認 */
+	/** ApacheDSのSSL環境を用意して動作確認 */
 	// public void testGetSSLConnection() {
 	// DirectoryControlProperty property =
 	// (DirectoryControlProperty)container

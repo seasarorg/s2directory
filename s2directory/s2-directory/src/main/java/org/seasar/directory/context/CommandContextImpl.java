@@ -75,8 +75,6 @@ public class CommandContextImpl implements CommandContext {
 			if (args.size() == 1) {
 				return args.get(0);
 			}
-			// TODO: ログ形式
-			logger.log("WDAO0001", new Object[] { name });
 			return null;
 		}
 	}
@@ -106,8 +104,6 @@ public class CommandContextImpl implements CommandContext {
 			if (argTypes.size() == 1) {
 				return (Class)argTypes.get(0);
 			}
-			// TODO: ログ形式
-			logger.log("WDAO0001", new Object[] { name });
 			return null;
 		}
 	}
