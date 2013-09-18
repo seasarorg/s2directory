@@ -22,9 +22,9 @@ import org.seasar.framework.container.S2Container;
  * ディレクトリDTO生成クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDtoFactory {
+
 	/** ディレクトトリ接続情報 */
 	protected DirectoryControlProperty property;
 
@@ -37,4 +37,5 @@ public class DirectoryDtoFactory {
 		property =
 			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
 	}
+
 }

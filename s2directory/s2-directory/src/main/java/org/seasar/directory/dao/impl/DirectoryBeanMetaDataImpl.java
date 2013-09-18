@@ -33,13 +33,16 @@ import org.seasar.framework.util.FieldUtil;
  * ビーンメタデータを表すクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		implements DirectoryBeanMetaData {
+
 	private String[] objectClasses;
+
 	private Map propertyTypesByColumnName_ = new CaseInsensitiveMap();
+
 	private String versionNoPropertyName_ = "versionNo";
+
 	private DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	public DirectoryBeanMetaDataImpl() {
@@ -157,4 +160,5 @@ public class DirectoryBeanMetaDataImpl extends DirectoryDtoMetaDataImpl
 		return getBeanClass().isAssignableFrom(clazz)
 			|| clazz.isAssignableFrom(getBeanClass());
 	}
+
 }

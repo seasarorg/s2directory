@@ -34,12 +34,14 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * List型ハンドラのテストクラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
+
 	private static final String PATH = "directory.dicon";
+
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl dataSource;
+
 	private DirectoryBeanMetaData beanMetaData;
 
 	/**
@@ -76,4 +78,5 @@ public class BeanListMetaDataNamingEnumerationHandlerTest extends TestCase {
 			DirectoryDataSourceUtil.close(context);
 		}
 	}
+
 }

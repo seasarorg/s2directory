@@ -19,7 +19,6 @@ package org.seasar.directory;
  * ディレクトリコネクションプーリングの設定情報を表すインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 public interface DirectoryConnectionPool {
 
@@ -127,4 +126,5 @@ public interface DirectoryConnectionPool {
 	 *            プール内に存在できる期間 (ミリ秒)
 	 */
 	public void setTimeout(int timeout);
+
 }

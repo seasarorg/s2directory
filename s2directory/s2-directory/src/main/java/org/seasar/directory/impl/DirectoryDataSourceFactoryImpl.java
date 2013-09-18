@@ -24,12 +24,13 @@ import org.seasar.directory.DirectoryDataSourceFactory;
  * ディレクトリデータソースを作成する標準的な実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDataSourceFactoryImpl implements
 		DirectoryDataSourceFactory {
+
 	/** インスタンス作成時の接続情報 */
 	private DirectoryControlProperty defaultProperty;
+
 	/** 初期化フラグ */
 	protected boolean initialized = false;
 
@@ -119,4 +120,5 @@ public class DirectoryDataSourceFactoryImpl implements
 		DirectoryDataSource dataSource = new DirectoryDataSourceImpl(property);
 		return dataSource;
 	}
+
 }

@@ -23,10 +23,11 @@ import org.seasar.directory.examples.entity.PosixGroup;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface PosixGroupDirectoryDao {
+
 	public Class BEAN = PosixGroup.class;
+
 	public static final String getPosixGroupList_QUERY =
 		"objectclass=posixGroup";
 

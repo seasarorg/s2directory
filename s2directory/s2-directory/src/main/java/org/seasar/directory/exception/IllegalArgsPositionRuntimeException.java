@@ -21,7 +21,6 @@ import org.seasar.framework.exception.SRuntimeException;
  * 不正な引数がある場合に発生する例外クラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public class IllegalArgsPositionRuntimeException extends SRuntimeException {
 
@@ -30,4 +29,5 @@ public class IllegalArgsPositionRuntimeException extends SRuntimeException {
 	public IllegalArgsPositionRuntimeException() {
 		super("ESSR0066", new Object[] {});
 	}
+
 }

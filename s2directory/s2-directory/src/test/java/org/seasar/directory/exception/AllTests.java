@@ -22,9 +22,9 @@ import junit.framework.TestSuite;
  * テストスイートクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class AllTests {
+
 	public static Test suite() {
 		TestSuite suite =
 			new TestSuite("Test for org.seasar.directory.exception");
@@ -35,4 +35,5 @@ public class AllTests {
 		// $JUnit-END$
 		return suite;
 	}
+
 }

@@ -22,9 +22,9 @@ import javax.net.ssl.SSLSession;
  * すべてのホスト名が有効なものであると見なします。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2006-04-30 02:34:00 +0900#$
  */
 public class PermissiveHostnameVerifier implements HostnameVerifier {
+
 	/**
 	 * すべてのホスト名の検証を有効であると返します。
 	 * 
@@ -37,4 +37,5 @@ public class PermissiveHostnameVerifier implements HostnameVerifier {
 	public boolean verify(String hostname, SSLSession session) {
 		return true;
 	}
+
 }

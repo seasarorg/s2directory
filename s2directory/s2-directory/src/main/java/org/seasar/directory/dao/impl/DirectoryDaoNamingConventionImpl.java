@@ -21,10 +21,10 @@ import org.seasar.directory.dao.DirectoryDaoNamingConvention;
  * ディレクトリ命名規約のインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDaoNamingConventionImpl implements
 		DirectoryDaoNamingConvention {
+
 	/** ディレクトリDaoクラスの接尾辞 */
 	private String[] daoSuffixes = new String[] { "Dao" };
 

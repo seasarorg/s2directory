@@ -24,9 +24,9 @@ import org.aopalliance.intercept.MethodInvocation;
  * Invocationに関するユーティリティクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class InvocationUtil {
+
 	public static String toDetailString(Invocation invocation) throws Throwable {
 		Method method = ((MethodInvocation)invocation).getMethod();
 		StringBuffer buff = new StringBuffer();
@@ -44,4 +44,5 @@ public final class InvocationUtil {
 		buff.append(")");
 		return buff.toString();
 	}
+
 }

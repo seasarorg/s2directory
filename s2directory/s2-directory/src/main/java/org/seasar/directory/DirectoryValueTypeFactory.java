@@ -21,9 +21,9 @@ import org.seasar.directory.types.ValueType;
  * ディレクトリ用の値の型ファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryValueTypeFactory {
+
 	/**
 	 * コンポーネント名から値の型を取得します。
 	 * 
@@ -62,4 +62,5 @@ public interface DirectoryValueTypeFactory {
 	 * @return String型
 	 */
 	public ValueType getStringValueType();
+
 }

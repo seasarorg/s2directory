@@ -30,12 +30,13 @@ import org.seasar.directory.exception.IllegalArgsPositionRuntimeException;
  * ディレクトリ用動的処理コマンドの抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractDynamicDirectoryCommand extends
 		AbstractDirectoryCommand {
+
 	/** ビーンメタデータ */
 	protected DirectoryBeanMetaData beanMetaData;
+
 	/** 関数の引数 */
 	private AnnotationMethodArgs methodArgs;
 
@@ -141,4 +142,5 @@ public abstract class AbstractDynamicDirectoryCommand extends
 	protected void applyObjectClass(CommandContext ctx) {
 		ctx.setObjectClasses(super.getObjectClasses());
 	}
+
 }

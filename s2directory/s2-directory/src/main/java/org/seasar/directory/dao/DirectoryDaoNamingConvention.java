@@ -19,9 +19,9 @@ package org.seasar.directory.dao;
  * ディレクトリDao命名規約のインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDaoNamingConvention {
+
 	/**
 	 * ディレクトリDaoクラスの接尾辞を取得します。
 	 * 

@@ -28,26 +28,34 @@ import org.seasar.framework.util.StringUtil;
  * フィールドアノテーションを読み込むクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryFieldDaoAnnotationReader implements
 		DirectoryDaoAnnotationReader {
+
 	/** BEANアノテーションの設定名 */
 	public String BEAN = "BEAN";
+
 	/** オブジェクトクラスアノテーション */
 	public String OBJECTCLASSES = "OBJECTCLASSES";
+
 	/** ARGSアノテーションの設定名 */
 	public String ARGS_SUFFIX = "_ARGS";
+
 	/** FILTERアノテーションの設定名 */
 	public String FILTER_SUFFIX = "_FILTER";
+
 	/** QUERYアノテーションの設定名 */
 	public String QUERY_SUFFIX = "_QUERY";
+
 	/** 永続化対象にしない属性の設定名 */
 	public String NO_PERSISTENT_PROPS_SUFFIX = "_NO_PERSISTENT_PROPS";
+
 	/** この属性だけ永続化する属性の設定名 */
 	public String PERSISTENT_PROPS_SUFFIX = "_PERSISTENT_PROPS";
+
 	/** Daoクラスのメタ情報 */
 	protected BeanDesc daoBeanDesc;
+
 	/** 基底オブジェクトクラス */
 	private final static String BASE_OBJECTCLASS = "top";
 
@@ -180,4 +188,5 @@ public class DirectoryFieldDaoAnnotationReader implements
 		}
 		return null;
 	}
+
 }

@@ -19,7 +19,6 @@ package org.seasar.directory.exception;
  * 指定したDNにエントリが存在しないことを通知します。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-09 14:06:53 +0900#$
  */
 public final class NoSuchEntryRuntimeException extends
 		DirectoryRuntimeException {
@@ -35,4 +34,5 @@ public final class NoSuchEntryRuntimeException extends
 	public NoSuchEntryRuntimeException(String message) {
 		super("EDIR0005", new Object[] { message });
 	}
+
 }

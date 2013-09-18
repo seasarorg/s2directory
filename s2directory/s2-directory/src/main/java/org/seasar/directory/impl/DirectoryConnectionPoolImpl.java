@@ -21,21 +21,27 @@ import org.seasar.directory.DirectoryConnectionPool;
  * ディレクトリコネクションプーリングの設定情報の標準的な実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-09 23:25:52 +0900#$
  */
 public class DirectoryConnectionPoolImpl implements DirectoryConnectionPool {
+
 	/** プールできる接続のスペース区切りの認証タイプのリスト */
 	private String authentication;
+
 	/** 生成されるデバッグ出力のレベルを示す文字列 */
 	private String debug;
+
 	/** 接続IDに対して接続を最初に作成するときの接続数 */
 	private int initSize = -1;
+
 	/** 同時に維持できる接続ID別の最大接続数 */
 	private int maxSize = -1;
+
 	/** 同時に維持しなければならない接続ID別の優先的接続数 */
 	private int prefSize = -1;
+
 	/** プールできる接続の、スペース区切りのプロトコルタイプのリスト */
 	private String protocol;
+
 	/** アイドル状態の接続が切断されず、プールから除外されることなくプール内に存在できる期間 (ミリ秒) */
 	private int timeout = -1;
 
@@ -152,4 +158,5 @@ public class DirectoryConnectionPoolImpl implements DirectoryConnectionPool {
 		buffer.append("timeout: ").append(timeout);
 		return buffer.toString();
 	}
+
 }

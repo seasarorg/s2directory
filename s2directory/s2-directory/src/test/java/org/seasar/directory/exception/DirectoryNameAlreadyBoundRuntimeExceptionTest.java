@@ -26,9 +26,9 @@ import junit.framework.TestCase;
  * エントリが既に存在する例外クラスのテストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
+
 	private Locale defaultLocale;
 
 	protected void setUp() throws Exception {
@@ -72,4 +72,5 @@ public class DirectoryNameAlreadyBoundRuntimeExceptionTest extends TestCase {
 	private void assertContains(String s, String contained) {
 		assertEquals(s, true, s.indexOf(contained) > -1);
 	}
+
 }

@@ -32,11 +32,12 @@ import org.seasar.framework.util.StringUtil;
  * 属性ハンドラの抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractAttributeHandler implements AttributeHandler {
+
 	/** ディレクトリ用の値の型ファクトリ */
 	private DirectoryValueTypeFactory valueTypeFactory;
+
 	/** 属性ハンドラが扱う属性名のリスト */
 	private List attributeNameList;
 
@@ -103,8 +104,9 @@ public abstract class AbstractAttributeHandler implements AttributeHandler {
 			String attributeName, Object value, Class valueClass) {
 		// 追加する値を属性名に適した値に変換します。
 		value = toAttributeValue(property, value);
-		if (value == null)
+		if (value == null) {
 			return null;
+		}
 		DirectoryValueTypeFactory valueTypeFactory =
 			getDirectoryValueTypeFactory();
 		ValueType type = valueTypeFactory.getValueTypeByClass(valueClass);

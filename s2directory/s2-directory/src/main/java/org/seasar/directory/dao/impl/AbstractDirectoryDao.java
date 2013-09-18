@@ -19,7 +19,6 @@ package org.seasar.directory.dao.impl;
  * DreictoryDaoの基底となるマーカー抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractDirectoryDao {
 }

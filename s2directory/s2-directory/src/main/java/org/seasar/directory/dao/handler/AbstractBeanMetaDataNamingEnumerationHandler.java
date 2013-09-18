@@ -39,12 +39,13 @@ import org.seasar.framework.util.StringUtil;
  * 検索結果の抽象ハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		NamingEnumerationHandler {
+
 	/** メタデータ */
 	private DirectoryBeanMetaData beanMetaData;
+
 	/** ディレクトリサーバ接続情報 */
 	private DirectoryControlProperty property;
 
@@ -141,4 +142,5 @@ public abstract class AbstractBeanMetaDataNamingEnumerationHandler implements
 		DirectoryDataSourceUtil.close(ae);
 		return columnNames;
 	}
+
 }

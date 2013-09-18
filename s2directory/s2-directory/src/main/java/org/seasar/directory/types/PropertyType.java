@@ -18,12 +18,12 @@ package org.seasar.directory.types;
 import org.seasar.framework.beans.PropertyDesc;
 
 /**
- * TODO: コメント
+ * ディレクトリ用のプロパティタイプのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface PropertyType {
+
 	public PropertyDesc getPropertyDesc();
 
 	public ValueType getValueType();
@@ -37,4 +37,5 @@ public interface PropertyType {
 	public boolean isPersistent();
 
 	public void setPersistent(boolean persistent);
+
 }

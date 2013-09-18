@@ -45,31 +45,39 @@ import org.seasar.framework.util.StringUtil;
  * DirectoryDao用のメタ情報を表わすクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
+
 	/** Daoクラス */
 	protected Class daoClass;
+
 	/** Daoインターフェイス */
 	protected Class daoInterface;
+
 	/** Daoクラスの定義 */
 	protected BeanDesc daoBeanDesc;
+
 	/** Daoアノテーションリーダー */
 	protected DirectoryDaoAnnotationReader daoAnnotationReader;
 
 	/** データソースファクトリ */
 	protected DirectoryDataSourceFactory dataSourceFactory;
+
 	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+
 	/** ディレクトリアノテーションリーダーファクトリ */
 	protected DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	/** ビーンクラス */
 	protected Class beanClass;
+
 	/** ビーンメタデータ */
 	protected DirectoryBeanMetaData beanMetaData;
+
 	/** コマンドのキャッシュ */
 	protected Map directoryCmmands = new HashMap();
+
 	/** ディレクトリDao命名規約 */
 	protected DirectoryDaoNamingConvention daoNamingConvention;
 
@@ -528,4 +536,5 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 			final DirectoryDaoNamingConvention daoNamingConvention) {
 		this.daoNamingConvention = daoNamingConvention;
 	}
+
 }

@@ -26,13 +26,14 @@ import org.seasar.framework.util.ClassUtil;
  * ディレクトリアノテーションリーダファクトリです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryAnnotationReaderFactoryImpl implements
 		DirectoryAnnotationReaderFactory {
+
 	// Tigerアノテーション用ファクトリ
 	private static final String TIGER_ANNOTATION_READER_FACTORY =
 		"org.seasar.directory.dao.annotation.tiger.impl.AnnotationReaderFactoryImpl";
+
 	private DirectoryAnnotationReaderFactory annotationReaderFactory;
 
 	public DirectoryAnnotationReaderFactoryImpl() {
@@ -55,4 +56,5 @@ public class DirectoryAnnotationReaderFactoryImpl implements
 			BeanDesc daoBeanDesc) {
 		return annotationReaderFactory.createDirectoryDaoAnnotationReader(daoBeanDesc);
 	}
+
 }

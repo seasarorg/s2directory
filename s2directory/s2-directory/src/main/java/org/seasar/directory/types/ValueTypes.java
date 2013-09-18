@@ -24,21 +24,24 @@ import java.util.Map;
  * 値タイプの集合クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class ValueTypes {
+
 	/**
 	 * String用の値タイプです。
 	 */
 	public static final ValueType STRING = new StringType();
+
 	/**
 	 * List用の値タイプです。
 	 */
 	public static final ValueType LIST = new ListType();
+
 	/**
 	 * Binary用の値タイプです。
 	 */
 	public static final ValueType BINARY = new BinaryType();
+
 	/**
 	 * 汎用的な値タイプです。
 	 */
@@ -117,4 +120,5 @@ public class ValueTypes {
 	private static ValueType getValueType0(Class clazz) {
 		return (ValueType)types.get(clazz);
 	}
+
 }

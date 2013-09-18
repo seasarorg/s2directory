@@ -27,9 +27,9 @@ import org.seasar.directory.impl.UpdateHandler;
  * 動的に更新処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class UpdateDynamicCommand extends AbstractDynamicDirectoryCommand {
+
 	/**
 	 * @param dataSourceFactory
 	 *            データソース
@@ -64,4 +64,5 @@ public class UpdateDynamicCommand extends AbstractDynamicDirectoryCommand {
 			new UpdateHandler(getDirectoryDataSource(args), beanMetaData, ctx);
 		return handler.execute();
 	}
+
 }

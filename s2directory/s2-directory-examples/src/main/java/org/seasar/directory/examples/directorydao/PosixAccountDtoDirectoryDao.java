@@ -24,9 +24,9 @@ import org.seasar.directory.examples.dto.PosixAccountDto;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface PosixAccountDtoDirectoryDao {
+
 	public Class BEAN = PosixAccountDto.class;
 
 	public String OBJECTCLASSES = "posixAccount, inetOrgPerson";
@@ -78,4 +78,5 @@ public interface PosixAccountDtoDirectoryDao {
 
 	public int deleteWithUserMode(DirectoryControlProperty user,
 			PosixAccountDto account);
+
 }

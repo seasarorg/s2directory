@@ -24,9 +24,9 @@ import javax.naming.directory.BasicAttribute;
  * Binary型での値取得クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2008-01-13 16:59:44 +0900#$
  */
 public class BinaryType extends AbstractValueType {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,4 +62,5 @@ public class BinaryType extends AbstractValueType {
 		attribute.add(value);
 		return attribute;
 	}
+
 }

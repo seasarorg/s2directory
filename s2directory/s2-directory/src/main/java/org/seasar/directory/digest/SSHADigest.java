@@ -19,9 +19,9 @@ package org.seasar.directory.digest;
  * SSHAによるハッシュを扱うクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class SSHADigest extends SHADigest {
+
 	/** 暗号形式 */
 	public static final String LABEL = "{SSHA}";
 
@@ -56,4 +56,5 @@ public class SSHADigest extends SHADigest {
 			password,
 			HASH_LENGTH);
 	}
+
 }

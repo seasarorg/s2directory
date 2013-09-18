@@ -26,13 +26,15 @@ import java.util.regex.Pattern;
  * ダイジェストの生成クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class DigestFactory {
+
 	/** 暗号方式を形式 */
 	private static final Pattern pattern = Pattern.compile("^\\{.+\\}");
+
 	/** ダイジェストのマップ */
 	private static Map digests = Collections.synchronizedMap(new HashMap());
+
 	/**
 	 * 初期化します。
 	 */
@@ -79,4 +81,5 @@ public final class DigestFactory {
 		}
 		return digest;
 	}
+
 }

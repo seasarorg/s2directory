@@ -19,9 +19,9 @@ package org.seasar.directory.dao.util;
  * Daoに関するユーティリティクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class DaoUtil {
+
 	/**
 	 * 指定されたクラスのシンプルクラス名を返します。
 	 * 
@@ -37,4 +37,5 @@ public final class DaoUtil {
 		}
 		return className;
 	}
+
 }

@@ -22,12 +22,13 @@ import javax.naming.directory.DirContext;
  * このディレクトリデータソースが表す物理LDAPソースへの接続に対するファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDataSource {
+
 	/** SSLソケットファクトリのための設定名 */
 	public final static String SSL_SOCKET_FACTORY_KEY =
 		"java.naming.ldap.factory.socket";
+
 	/** LDAPコネクションプーリングのための設定名 */
 	public final static String CONNECTION_POOL_KEY =
 		"com.sun.jndi.ldap.connect.pool";
@@ -57,4 +58,5 @@ public interface DirectoryDataSource {
 	 */
 	public DirContext getConnection(DirectoryControlProperty property)
 			throws NamingException;
+
 }

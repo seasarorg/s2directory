@@ -18,17 +18,21 @@ package org.seasar.directory.types;
 import org.seasar.framework.beans.PropertyDesc;
 
 /**
- * TODO: コメント
+ * ディレクトリ用のプロパティタイプの実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PropertyTypeImpl implements PropertyType {
-	private PropertyDesc propertyDesc_;
-	private String propertyName_;
-	private String columnName_;
-	private ValueType valueType_;
-	private boolean persistent_ = true;
+
+	private PropertyDesc propertyDesc;
+
+	private String propertyName;
+
+	private String columnName;
+
+	private ValueType valueType;
+
+	private boolean persistent = true;
 
 	public PropertyTypeImpl(PropertyDesc propertyDesc, ValueType valueType) {
 		this(propertyDesc, valueType, propertyDesc.getPropertyName());
@@ -36,43 +40,44 @@ public class PropertyTypeImpl implements PropertyType {
 
 	public PropertyTypeImpl(PropertyDesc propertyDesc, ValueType valueType,
 			String columnName) {
-		propertyDesc_ = propertyDesc;
-		propertyName_ = propertyDesc.getPropertyName();
-		valueType_ = valueType;
-		columnName_ = columnName;
+		this.propertyDesc = propertyDesc;
+		this.propertyName = propertyDesc.getPropertyName();
+		this.valueType = valueType;
+		this.columnName = columnName;
 	}
 
 	public PropertyTypeImpl(String propertyName, ValueType valueType) {
-		propertyName_ = propertyName;
-		valueType_ = valueType;
-		columnName_ = propertyName;
+		this.propertyName = propertyName;
+		this.valueType = valueType;
+		this.columnName = propertyName;
 	}
 
 	public PropertyDesc getPropertyDesc() {
-		return propertyDesc_;
+		return propertyDesc;
 	}
 
 	public String getPropertyName() {
-		return propertyName_;
+		return propertyName;
 	}
 
 	public String getColumnName() {
-		return columnName_;
+		return columnName;
 	}
 
 	public void setColumnName(String columnName) {
-		columnName_ = columnName;
+		this.columnName = columnName;
 	}
 
 	public ValueType getValueType() {
-		return valueType_;
+		return valueType;
 	}
 
 	public boolean isPersistent() {
-		return persistent_;
+		return persistent;
 	}
 
 	public void setPersistent(boolean persistent) {
-		persistent_ = persistent;
+		this.persistent = persistent;
 	}
+
 }

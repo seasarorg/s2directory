@@ -21,9 +21,9 @@ import org.seasar.directory.attribute.AttributeHandler;
  * 属性ハンドラファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryAttributeHandlerFactory {
+
 	/**
 	 * ディレクトリ用の値の型ファクトリを取得します。
 	 * 
@@ -67,4 +67,5 @@ public interface DirectoryAttributeHandlerFactory {
 	 * @return 属性ハンドラ
 	 */
 	public AttributeHandler getAttributeHandler(String attributeName);
+
 }

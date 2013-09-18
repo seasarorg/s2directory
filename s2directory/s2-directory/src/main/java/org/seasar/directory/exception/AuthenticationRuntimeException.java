@@ -21,7 +21,6 @@ import org.seasar.directory.DirectoryControlProperty;
  * ネーミングサービスまたはディレクトリサービスにアクセスする際に認証エラーが発生した場合にスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class AuthenticationRuntimeException extends
 		DirectoryRuntimeException {
@@ -40,4 +39,5 @@ public final class AuthenticationRuntimeException extends
 			property.getBindDn(),
 			property.getPassword() });
 	}
+
 }

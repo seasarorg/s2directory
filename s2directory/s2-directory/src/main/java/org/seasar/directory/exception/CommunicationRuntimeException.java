@@ -21,7 +21,6 @@ import org.seasar.directory.DirectoryControlProperty;
  * クライアントがディレクトリサービスまたはネーミングサービスと通信できない場合にスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class CommunicationRuntimeException extends
 		DirectoryRuntimeException {
@@ -37,4 +36,5 @@ public final class CommunicationRuntimeException extends
 	public CommunicationRuntimeException(DirectoryControlProperty property) {
 		super("EDIR0002", new Object[] { property.getUrl() });
 	}
+
 }

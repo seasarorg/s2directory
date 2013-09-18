@@ -24,9 +24,9 @@ import org.seasar.directory.examples.entity.InetOrgPerson;
  * InetOrgPersonのDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 public interface InetOrgPersonDirectoryDao {
+
 	/** BEANアノテーション */
 	public static final Class BEAN = InetOrgPerson.class;
 
@@ -96,4 +96,5 @@ public interface InetOrgPersonDirectoryDao {
 	 * @return
 	 */
 	public List getInetOrgPersonList();
+
 }

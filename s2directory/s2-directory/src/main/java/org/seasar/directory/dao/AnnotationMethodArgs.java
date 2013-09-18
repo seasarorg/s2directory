@@ -19,9 +19,9 @@ package org.seasar.directory.dao;
  * アノテーションを保持したメソッドを表すインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface AnnotationMethodArgs {
+
 	/**
 	 * argNamesを取得します。
 	 * 
@@ -35,4 +35,5 @@ public interface AnnotationMethodArgs {
 	 * @return argTypes
 	 */
 	public Class[] getArgTypes();
+
 }

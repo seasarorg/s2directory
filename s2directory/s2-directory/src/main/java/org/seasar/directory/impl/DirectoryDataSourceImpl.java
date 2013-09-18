@@ -39,9 +39,9 @@ import org.seasar.framework.util.ClassUtil;
  * サーバに接続するためのリソースを提供するデータソースクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDataSourceImpl implements DirectoryDataSource {
+
 	/** 接続情報 */
 	private DirectoryControlProperty defaultProperty;
 
@@ -202,4 +202,5 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		}
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
 	}
+
 }

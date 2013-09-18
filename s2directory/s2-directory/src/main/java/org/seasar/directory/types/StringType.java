@@ -28,9 +28,9 @@ import org.seasar.framework.util.StringUtil;
  * String型での値取得クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class StringType extends AbstractValueType {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,4 +87,5 @@ public class StringType extends AbstractValueType {
 		attribute.add(value);
 		return attribute;
 	}
+
 }

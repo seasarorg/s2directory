@@ -15,36 +15,26 @@
  */
 package org.seasar.directory.dao;
 
-import org.seasar.directory.types.PropertyType;
-import org.seasar.extension.jdbc.ColumnNotFoundRuntimeException;
-import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
-
 /**
  * ディレクトリ用のビーンメタデータを表すクラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
+
 	public String RELNO_SUFFIX = "_RELNO";
+
 	public String RELKEYS_SUFFIX = "_RELKEYS";
+
 	public String ID_SUFFIX = "_ID";
+
 	public String NO_PERSISTENT_PROPS = "NO_PERSISTENT_PROPS";
+
 	public String VERSION_NO_PROPERTY = "VERSION_NO_PROPERTY";
+
 	public String TIMESTAMP_PROPERTY = "TIMESTAMP_PROPERTY";
 
 	public String[] getObjectClasses();
-
-	/** TODO: 未使用 */
-	public PropertyType getVersionNoPropertyType()
-			throws PropertyNotFoundRuntimeException;
-
-	/** TODO: 未使用 */
-	public String convertFullColumnName(String alias);
-
-	/** TODO: 未使用 */
-	public PropertyType getPropertyTypeByColumnName(String columnName)
-			throws ColumnNotFoundRuntimeException;
 
 	public boolean hasPropertyTypeByColumnName(String columnName);
 
@@ -56,4 +46,5 @@ public interface DirectoryBeanMetaData extends DirectoryDtoMetaData {
 	 * @return 割り当て可能なクラスがある場合 true
 	 */
 	public boolean isBeanClassAssignable(Class clazz);
+
 }

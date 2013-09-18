@@ -23,9 +23,9 @@ import javax.naming.directory.Attributes;
  * 値の型インタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface ValueType {
+
 	/**
 	 * 指定した属性の読み出し用の属性値を属性の集合から取得します。
 	 * <p>
@@ -84,4 +84,5 @@ public interface ValueType {
 	 */
 	public Attribute getWriteValue(String attributeName, Object value,
 			String multipleValueDelimiter);
+
 }

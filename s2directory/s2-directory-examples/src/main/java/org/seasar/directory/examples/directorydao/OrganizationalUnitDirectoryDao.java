@@ -21,9 +21,9 @@ import org.seasar.directory.examples.entity.OrganizationalUnit;
  * OrganizationalUnitのDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date::                           $
  */
 public interface OrganizationalUnitDirectoryDao {
+
 	/** BEANアノテーション */
 	public static final Class BEAN = OrganizationalUnit.class;
 
@@ -63,4 +63,5 @@ public interface OrganizationalUnitDirectoryDao {
 	 */
 	public OrganizationalUnit getOrganizationalUnit(
 			OrganizationalUnit organizationalUnit);
+
 }

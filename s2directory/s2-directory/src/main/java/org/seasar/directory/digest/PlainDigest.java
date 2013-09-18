@@ -19,9 +19,9 @@ package org.seasar.directory.digest;
  * 平文パスワードを扱うクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PlainDigest implements Digest {
+
 	/** 暗号形式 */
 	public static final String LABEL = "{PLAIN}";
 
@@ -59,4 +59,5 @@ public class PlainDigest implements Digest {
 	public boolean verify(String digest, String password) {
 		return digest.equals(password);
 	}
+
 }

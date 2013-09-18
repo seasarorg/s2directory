@@ -21,9 +21,9 @@ import junit.framework.TestCase;
  * データソース用ユーティリティクラスのテストクラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public class DirectoryUtilTest extends TestCase {
+
 	public void testGetFirstDn() {
 		assertEquals(
 			"uid=user1",
@@ -69,4 +69,5 @@ public class DirectoryUtilTest extends TestCase {
 			"{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=",
 			DirectoryUtil.createPassword("secret", "SHA", -1));
 	}
+
 }

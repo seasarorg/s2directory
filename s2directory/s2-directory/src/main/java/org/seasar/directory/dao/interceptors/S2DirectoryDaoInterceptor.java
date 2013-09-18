@@ -30,7 +30,6 @@ import org.seasar.framework.util.NumberConversionUtil;
  * Daoクラスの関数が呼び出されるとその処理に割り込み結果を返します。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 
@@ -77,4 +76,5 @@ public class S2DirectoryDaoInterceptor extends AbstractInterceptor {
 		}
 		return ret;
 	}
+
 }

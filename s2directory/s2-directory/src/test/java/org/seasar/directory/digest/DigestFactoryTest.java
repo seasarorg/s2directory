@@ -23,9 +23,9 @@ import junit.framework.TestCase;
  * DigestFactoryのテストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DigestFactoryTest extends TestCase {
+
 	/**
 	 * MD5のテストを行います。
 	 * 
@@ -153,4 +153,5 @@ public class DigestFactoryTest extends TestCase {
 		}
 		assertTrue(false);
 	}
+
 }

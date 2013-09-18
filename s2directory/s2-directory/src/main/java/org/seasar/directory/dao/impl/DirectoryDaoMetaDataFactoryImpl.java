@@ -34,33 +34,41 @@ import org.seasar.framework.util.DisposableUtil;
  * ディレクトリメタデータを生成する実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDaoMetaDataFactoryImpl implements
 		DirectoryDaoMetaDataFactory, Disposable {
+
 	/** ディレクトリコマンドファクトリのBindingアノテーション */
 	public static final String directoryDataSourceFactory_BINDING =
 		"bindingType=must";
+
 	/** ディレクトリ属性ハンドラファクトリのBindingアノテーション */
 	public static final String directoryAttributeHandlerFactory_BINDING =
 		"bindingType=must";
+
 	/** ディレクトリアノテーションリーダファクトリのBindingアノテーション */
 	public static final String directoryAnnotationReaderFactory_BINDING =
 		"bindingType=must";
+
 	/** ディレクトリ命名規則のBindingアノテーション */
 	public static final String directoryDaoNamingConvention_BINDING =
 		"bindingType=must";
 
 	/** ディレクトリコマンドファクトリ */
 	protected DirectoryDataSourceFactory dataSourceFactory;
+
 	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+
 	/** ディレクトリアノテーションリーダファクトリ */
 	protected DirectoryAnnotationReaderFactory annotationReaderFactory;
+
 	/** ディレクトリ命名規則 */
 	protected DirectoryDaoNamingConvention daoNamingConvention;
+
 	/** ディレクトリDaoメタデータのキャッシュ */
 	protected Map daoMetaDataCache = new HashMap();
+
 	/** 初期化フラグ */
 	protected boolean initialized;
 
@@ -181,4 +189,5 @@ public class DirectoryDaoMetaDataFactoryImpl implements
 			DirectoryDaoNamingConvention daoNamingConvention) {
 		this.daoNamingConvention = daoNamingConvention;
 	}
+
 }

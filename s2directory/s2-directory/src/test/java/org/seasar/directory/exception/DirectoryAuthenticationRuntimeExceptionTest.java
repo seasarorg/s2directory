@@ -26,10 +26,11 @@ import org.seasar.directory.impl.DirectoryControlPropertyImpl;
  * サーバ接続認証の例外クラスのテストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
+
 	private Locale defaultLocale;
+
 	private DirectoryControlProperty property;
 
 	protected void setUp() throws Exception {
@@ -75,4 +76,5 @@ public class DirectoryAuthenticationRuntimeExceptionTest extends TestCase {
 	private void assertContains(String s, String contained) {
 		assertEquals(s, true, s.indexOf(contained) > -1);
 	}
+
 }

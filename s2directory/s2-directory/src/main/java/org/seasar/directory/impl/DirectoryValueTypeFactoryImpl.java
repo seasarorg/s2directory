@@ -24,9 +24,9 @@ import org.seasar.framework.container.S2Container;
  * ディレクトリ用の値の型ファクトリクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryValueTypeFactoryImpl implements DirectoryValueTypeFactory {
+
 	private S2Container container;
 
 	/**
@@ -73,4 +73,5 @@ public class DirectoryValueTypeFactoryImpl implements DirectoryValueTypeFactory 
 	public ValueType getStringValueType() {
 		return ValueTypes.STRING;
 	}
+
 }

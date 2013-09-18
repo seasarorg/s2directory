@@ -19,9 +19,9 @@ package org.seasar.directory.digest;
  * ダイジェストインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface Digest {
+
 	/**
 	 * ラベルを取得します。
 	 * 
@@ -60,4 +60,5 @@ public interface Digest {
 	 * @return 検証結果
 	 */
 	public boolean verify(String digest, String password);
+
 }

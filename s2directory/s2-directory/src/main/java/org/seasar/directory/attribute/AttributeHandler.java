@@ -28,9 +28,9 @@ import org.seasar.directory.DirectoryValueTypeFactory;
  * 属性ハンドラのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface AttributeHandler {
+
 	/**
 	 * ディレクトリ用の値の型ファクトリを取得します。
 	 * 
@@ -98,4 +98,5 @@ public interface AttributeHandler {
 			DirectoryControlProperty property, Attribute currentAttribute,
 			String attributeName, Object newValue, Class newValueClass)
 			throws NamingException;
+
 }

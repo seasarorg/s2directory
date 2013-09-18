@@ -19,13 +19,14 @@ package org.seasar.directory.types;
  * 値の型抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractValueType implements ValueType {
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public String getFilter(Object key, Object value) {
 		return key + "=" + value;
 	}
+
 }

@@ -24,9 +24,9 @@ import org.seasar.directory.examples.entity.PosixAccountWithAnnotation;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 public interface PosixAccountWithAnnocationDirectoryDao {
+
 	public Class BEAN = PosixAccountWithAnnotation.class;
 
 	public boolean authenticate();
@@ -75,4 +75,5 @@ public interface PosixAccountWithAnnocationDirectoryDao {
 
 	public int deleteWithUserMode(DirectoryControlProperty user,
 			PosixAccountWithAnnotation account);
+
 }

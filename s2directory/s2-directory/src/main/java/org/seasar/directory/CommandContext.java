@@ -21,9 +21,9 @@ import java.util.Set;
  * 引数をコマンドとみなしたコンテキストのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface CommandContext {
+
 	/**
 	 * 指定した引数名の値を取得します。
 	 * 
@@ -105,4 +105,5 @@ public interface CommandContext {
 	 */
 	public void setDirectoryAttributeHandlerFactory(
 			DirectoryAttributeHandlerFactory attributeHandlerFactory);
+
 }

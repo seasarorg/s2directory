@@ -21,9 +21,9 @@ import java.util.Random;
  * ダイジェスト用のユーティリティクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class DigestUtil {
+
 	/** 乱数器 */
 	private static final Random RANDOM = new Random();
 
@@ -111,4 +111,5 @@ public final class DigestUtil {
 		byte[][] array = { left, right };
 		return array;
 	}
+
 }

@@ -24,9 +24,9 @@ import org.seasar.directory.digest.DigestFactory;
  * ディレクトリに関するユーティリティクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class DirectoryUtil {
+
 	/**
 	 * 指定された識別名からトップの識別名を取得します。
 	 * 
@@ -118,4 +118,5 @@ public final class DirectoryUtil {
 			return "";
 		}
 	}
+
 }

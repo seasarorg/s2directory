@@ -36,9 +36,9 @@ import org.seasar.framework.util.StringUtil;
  * 動的に読み出し処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
+
 	/** 検索結果ハンドラ */
 	private NamingEnumerationHandler namingEnumerationHandler;
 
@@ -200,4 +200,5 @@ public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 		}
 		return fitlerArgs;
 	}
+
 }

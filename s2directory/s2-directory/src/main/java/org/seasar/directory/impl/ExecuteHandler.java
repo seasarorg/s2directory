@@ -21,9 +21,9 @@ import org.seasar.framework.exception.NamingRuntimeException;
  * コマンドを実行するハンドラインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface ExecuteHandler {
+
 	/**
 	 * 処理を実行します。
 	 * 
@@ -31,4 +31,5 @@ public interface ExecuteHandler {
 	 * @throws NamingRuntimeException
 	 */
 	public Object execute() throws NamingRuntimeException;
+
 }

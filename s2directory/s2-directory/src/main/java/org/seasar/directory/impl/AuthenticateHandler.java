@@ -24,10 +24,10 @@ import org.seasar.framework.log.Logger;
  * 認証を処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class AuthenticateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
 
@@ -57,4 +57,5 @@ public class AuthenticateHandler extends BasicDirectoryHandler implements
 		}
 		return new Boolean(super.authenticate());
 	}
+
 }

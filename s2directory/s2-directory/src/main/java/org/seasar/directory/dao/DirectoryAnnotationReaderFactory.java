@@ -21,9 +21,9 @@ import org.seasar.framework.beans.BeanDesc;
  * ディレクトリアノテーションリーダファクトリインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryAnnotationReaderFactory {
+
 	/**
 	 * Daoクラスのアノテーションリーダを作成します。
 	 * 
@@ -41,4 +41,5 @@ public interface DirectoryAnnotationReaderFactory {
 	 */
 	public DirectoryBeanAnnotationReader createDirectoryBeanAnnotationReader(
 			Class beanClass);
+
 }

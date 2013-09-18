@@ -21,11 +21,12 @@ import org.seasar.directory.dao.AnnotationMethodArgs;
  * ARGSによるアノテーション情報を保持したメソッドを表すクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class ArgsAnnotationMethodArgsImpl implements AnnotationMethodArgs {
+
 	/** 引数 */
 	private String[] argNames = new String[0];
+
 	/** 引数の型 */
 	private Class[] argTypes = new Class[0];
 
@@ -60,4 +61,5 @@ public class ArgsAnnotationMethodArgsImpl implements AnnotationMethodArgs {
 	public Class[] getArgTypes() {
 		return argTypes;
 	}
+
 }

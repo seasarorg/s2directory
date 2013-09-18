@@ -21,7 +21,6 @@ import org.seasar.framework.exception.SRuntimeException;
  * 指定されたクラスが存在しないことを通知するシグナルを発生させます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDaoNotFoundRuntimeException extends SRuntimeException {
 
@@ -48,4 +47,5 @@ public class DirectoryDaoNotFoundRuntimeException extends SRuntimeException {
 	public Class getTargetClass() {
 		return targetClass;
 	}
+
 }

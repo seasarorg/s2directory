@@ -35,9 +35,9 @@ import org.seasar.directory.examples.entity.PosixAccount;
  * 通常の手段でPosixAccountクラスにオブジェクトを代入する例です。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PosixAccountNormalSample {
+
 	public static void run() {
 		int COUNT1 = 10;
 		int COUNT2 = 10;
@@ -126,4 +126,5 @@ public class PosixAccountNormalSample {
 	public static void main(String[] args) {
 		run();
 	}
+
 }

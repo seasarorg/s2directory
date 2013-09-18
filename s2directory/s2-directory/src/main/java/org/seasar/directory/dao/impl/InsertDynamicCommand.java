@@ -27,7 +27,6 @@ import org.seasar.directory.impl.InsertHandler;
  * 新規追加処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class InsertDynamicCommand extends AbstractDynamicDirectoryCommand {
 

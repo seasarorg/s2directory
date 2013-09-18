@@ -26,9 +26,9 @@ import org.seasar.framework.container.S2Container;
  * PosixGroup生成クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PosixGroupFactory extends DirectoryDtoFactory {
+
 	/**
 	 * 指定されたコンテナを持ったインスタンスを作成します。
 	 * 
@@ -82,4 +82,5 @@ public class PosixGroupFactory extends DirectoryDtoFactory {
 		group.setDescription("Group " + name);
 		return group;
 	}
+
 }

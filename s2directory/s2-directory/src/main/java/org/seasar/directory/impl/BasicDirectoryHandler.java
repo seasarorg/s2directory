@@ -40,11 +40,12 @@ import org.seasar.framework.exception.EmptyRuntimeException;
  * ディレクトリサーバと接続し、処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class BasicDirectoryHandler {
+
 	/** データソース */
 	private DirectoryDataSource dataSource;
+
 	/** ディレクトリサーバ接続情報 */
 	protected DirectoryControlProperty property;
 
@@ -314,4 +315,5 @@ public class BasicDirectoryHandler {
 		}
 		return count;
 	}
+
 }

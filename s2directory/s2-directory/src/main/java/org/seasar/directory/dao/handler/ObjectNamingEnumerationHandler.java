@@ -29,10 +29,10 @@ import org.seasar.directory.util.DirectoryDataSourceUtil;
  * 検索結果の1つ目の属性値を返すオブジェクト型ハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class ObjectNamingEnumerationHandler extends
 		AbstractBeanMetaDataNamingEnumerationHandler {
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -65,4 +65,5 @@ public class ObjectNamingEnumerationHandler extends
 		DirectoryDataSourceUtil.close(results);
 		return null;
 	}
+
 }

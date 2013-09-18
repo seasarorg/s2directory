@@ -23,7 +23,6 @@ import org.seasar.framework.exception.SRuntimeException;
  * Context および DirContext インタフェースでの操作によってスローされるすべての例外のスーパークラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryRuntimeException extends SRuntimeException {
 
@@ -59,4 +58,5 @@ public class DirectoryRuntimeException extends SRuntimeException {
 	public DirectoryRuntimeException(String messageCode, Object[] args) {
 		super(messageCode, args);
 	}
+
 }

@@ -21,7 +21,6 @@ import javax.naming.NameAlreadyBoundException;
  * 名前がすでに他のオブジェクトにバインドされているために、バインディングを追加できないことを示すメソッドによってスローされます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class NameAlreadyBoundRuntimeException extends
 		DirectoryRuntimeException {
@@ -37,4 +36,5 @@ public final class NameAlreadyBoundRuntimeException extends
 	public NameAlreadyBoundRuntimeException(NameAlreadyBoundException cause) {
 		super("EDIR0004", new Object[] { cause.getRemainingName() });
 	}
+
 }

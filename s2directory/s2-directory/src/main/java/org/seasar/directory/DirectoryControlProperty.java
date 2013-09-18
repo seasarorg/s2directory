@@ -19,7 +19,6 @@ package org.seasar.directory;
  * ディレクトリサーバ接続情報を表わすインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryControlProperty {
 
@@ -327,4 +326,5 @@ public interface DirectoryControlProperty {
 	 * @return コネクションプーリングを行うかどうか
 	 */
 	public boolean isEnablePool();
+
 }

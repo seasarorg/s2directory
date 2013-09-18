@@ -21,9 +21,9 @@ import org.seasar.framework.beans.PropertyDesc;
  * アノテーションを読み込むインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryBeanAnnotationReader {
+
 	/**
 	 * 属性を取得します。
 	 * 
@@ -62,4 +62,5 @@ public interface DirectoryBeanAnnotationReader {
 	 * @return 値の型
 	 */
 	public String getValueType(PropertyDesc pd);
+
 }

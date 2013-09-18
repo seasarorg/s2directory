@@ -18,12 +18,12 @@ package org.seasar.directory.attribute;
 import org.seasar.directory.DirectoryControlProperty;
 
 /**
- * 属性dnのためのハンドラクラスです。
+ * 属性 dn のためのハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DistinguishedNameAttributeHandler extends AbstractAttributeHandler {
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -47,4 +47,5 @@ public class DistinguishedNameAttributeHandler extends AbstractAttributeHandler 
 			Object value) {
 		return null;
 	}
+
 }

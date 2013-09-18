@@ -44,7 +44,6 @@ import org.seasar.framework.util.CaseInsensitiveSet;
  * 更新を処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class UpdateHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {

@@ -24,10 +24,10 @@ import org.seasar.framework.beans.BeanDesc;
  * フィールドを使うディレクトリアノテーションリーダのファクトリクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryFieldAnnotationReaderFactory implements
 		DirectoryAnnotationReaderFactory {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -43,4 +43,5 @@ public class DirectoryFieldAnnotationReaderFactory implements
 			Class beanClass) {
 		return new DirectoryFieldBeanAnnotationReader(beanClass);
 	}
+
 }

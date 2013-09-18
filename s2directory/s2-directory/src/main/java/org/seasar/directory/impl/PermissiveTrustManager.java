@@ -24,9 +24,9 @@ import javax.net.ssl.X509TrustManager;
  * 使用される証明書は、信頼されない証明書発行局発行の証明書、 期限の切れた証明書であっても利用できます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2006-04-30 02:34:00 +0900#$
  */
 public class PermissiveTrustManager implements X509TrustManager {
+
 	/**
 	 * 常に信頼できる証明書であると返します。<br />
 	 * jdk 1.3/jsse 1.0.3_01用の関数です。
@@ -81,4 +81,5 @@ public class PermissiveTrustManager implements X509TrustManager {
 	public X509Certificate[] getAcceptedIssuers() {
 		return new X509Certificate[0];
 	}
+
 }

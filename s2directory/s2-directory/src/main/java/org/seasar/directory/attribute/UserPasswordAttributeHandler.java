@@ -22,9 +22,9 @@ import org.seasar.directory.util.DirectoryUtil;
  * 属性userPasswordのためのハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class UserPasswordAttributeHandler extends AbstractAttributeHandler {
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -49,12 +49,14 @@ public class UserPasswordAttributeHandler extends AbstractAttributeHandler {
 	 */
 	public Object toAttributeValue(DirectoryControlProperty property,
 			Object value) {
-		if (value == null)
+		if (value == null) {
 			return value;
+		}
 		String stringValue = String.valueOf(value);
 		return DirectoryUtil.createPassword(
 			stringValue,
 			property.getPasswordAlgorithm(),
 			property.getPasswordSaltLength());
 	}
+
 }

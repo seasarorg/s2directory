@@ -31,10 +31,10 @@ import org.seasar.directory.util.DirectoryDataSourceUtil;
  * 検索結果のList型ハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class BeanListMetaDataNamingEnumerationHandler extends
 		AbstractBeanMetaDataNamingEnumerationHandler {
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -69,4 +69,5 @@ public class BeanListMetaDataNamingEnumerationHandler extends
 		DirectoryDataSourceUtil.close(results);
 		return list;
 	}
+
 }

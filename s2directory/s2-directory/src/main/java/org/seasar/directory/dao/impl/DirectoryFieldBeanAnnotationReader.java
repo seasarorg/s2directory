@@ -28,23 +28,28 @@ import org.seasar.framework.util.StringUtil;
  * フィールドアノテーションを読み込むクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryFieldBeanAnnotationReader implements
 		DirectoryBeanAnnotationReader {
 
 	/** BEANアノテーションの設定名 */
 	public String BEAN = "BEAN";
+
 	/** オブジェクトクラスアノテーションの設定名 */
 	public String OBJECTCLASSES = "OBJECTCLASSES";
+
 	/** 永続化対象にしない属性の設定名 */
 	public String NO_PERSISTENT_PROPS = "NO_PERSISTENT_PROPS";
+
 	/** 優先度の高い属性名の設定名 */
 	public String ATTRIBUTE_SUFFIX = "_ATTRIBUTE";
+
 	/** 属性名の設定名 */
 	public String COLUMN_SUFFIX = "_COLUMN";
+
 	/** 値の型の設定名 */
 	public String VALUE_TYPE_SUFFIX = "_VALUE_TYPE";
+
 	/** メタ情報 */
 	protected BeanDesc beanDesc;
 

@@ -21,9 +21,9 @@ import org.seasar.directory.DirectoryControlProperty;
  * 通常属性のためのハンドラクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DefaultAttributeHandler extends AbstractAttributeHandler {
+
 	/**
 	 * {@inheritDoc}
 	 * <p>
@@ -44,4 +44,5 @@ public class DefaultAttributeHandler extends AbstractAttributeHandler {
 			Object value) {
 		return value;
 	}
+
 }

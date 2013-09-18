@@ -19,9 +19,9 @@ package org.seasar.directory.digest;
  * SMD5によるハッシュを扱うクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class SMD5Digest extends MD5Digest {
+
 	/** 暗号形式 */
 	public static final String LABEL = "{SMD5}";
 
@@ -56,4 +56,5 @@ public class SMD5Digest extends MD5Digest {
 			password,
 			HASH_LENGTH);
 	}
+
 }

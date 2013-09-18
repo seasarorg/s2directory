@@ -35,11 +35,13 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * 標準属性ハンドラのテストクラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public class DefaultAttributeTypeTest extends TestCase {
+
 	private static final String PATH = "directorydao.dicon";
+
 	private DirectoryAttributeHandlerFactory directoryAttributeTypeFactory;
+
 	private DirectoryControlProperty property;
 
 	/**
@@ -172,4 +174,5 @@ public class DefaultAttributeTypeTest extends TestCase {
 		assertEquals(DirContext.ADD_ATTRIBUTE, item.getModificationOp());
 		assertEquals("user1", item.getAttribute().get());
 	}
+
 }

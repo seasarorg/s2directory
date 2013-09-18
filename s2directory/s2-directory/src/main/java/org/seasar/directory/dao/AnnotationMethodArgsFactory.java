@@ -24,9 +24,9 @@ import org.seasar.directory.dao.impl.ArgsAnnotationMethodArgsImpl;
  * アノテーションを保持したメソッドのファクトリクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class AnnotationMethodArgsFactory {
+
 	/**
 	 * アノテーションを保持したメソッドのインスタンスを作成します。
 	 * 
@@ -62,4 +62,5 @@ public class AnnotationMethodArgsFactory {
 			return null;
 		}
 	}
+
 }

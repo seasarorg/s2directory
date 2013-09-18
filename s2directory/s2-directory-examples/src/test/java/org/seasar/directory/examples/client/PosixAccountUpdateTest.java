@@ -28,12 +28,15 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * PosixAccountエントリの更新テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest {
+
 	private static final String PATH = "app.dicon";
+
 	private static S2Container container;
+
 	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
+
 	private static PosixAccountDto user1;
 
 	public static void main(String[] args) {
@@ -171,4 +174,5 @@ public class PosixAccountUpdateTest extends DefaultDirectoryInformationTreeTest 
 		// 初期化します。
 		assertEquals(0, posixAccountDtoDao.update(user1));
 	}
+
 }

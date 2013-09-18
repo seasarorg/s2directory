@@ -22,9 +22,9 @@ import org.seasar.directory.examples.entity.Person;
  * PersonのDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date::                           $
  */
 public interface PersonDirectoryDao {
+
 	/** BEANアノテーション */
 	public static final Class BEAN = Person.class;
 
@@ -87,4 +87,5 @@ public interface PersonDirectoryDao {
 	 */
 	public Person getPersonWithUserMode(DirectoryControlProperty property,
 			Person person);
+
 }

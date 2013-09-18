@@ -29,16 +29,19 @@ import org.seasar.directory.attribute.AttributeHandler;
  * 属性ハンドラファクトリクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryAttributeHandlerFactoryImpl implements
 		DirectoryAttributeHandlerFactory {
+
 	/** ディレクトリ用の値の型ファクトリ */
 	private DirectoryValueTypeFactory valueTypeFactory;
+
 	/** 属性名の大文字と小文字を区別するかどうか */
 	private boolean ignoreCase = true;
+
 	/** 標準で使用する属性ハンドラ */
 	private AttributeHandler defaultAttributeHandler;
+
 	/** 属性ハンドラの集合 */
 	private static Map handlers = Collections.synchronizedMap(new HashMap());
 
@@ -151,4 +154,5 @@ public class DirectoryAttributeHandlerFactoryImpl implements
 		// handler.setDirectoryValueTypeFactory(getDirectoryValueTypeFactory());
 		return handler;
 	}
+
 }

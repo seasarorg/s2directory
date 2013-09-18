@@ -23,12 +23,13 @@ import org.seasar.framework.log.Logger;
  * 削除を処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DeleteHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
+
 	/** 削除する識別子 */
 	private String dn;
 
@@ -55,4 +56,5 @@ public class DeleteHandler extends BasicDirectoryHandler implements
 		}
 		return super.delete(dn);
 	}
+
 }

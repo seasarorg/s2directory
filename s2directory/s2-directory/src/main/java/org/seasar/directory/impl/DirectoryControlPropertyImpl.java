@@ -24,7 +24,6 @@ import org.seasar.directory.DirectoryControlProperty;
  * ディレクトリ接続情報を表わす標準的な実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		Cloneable {
@@ -35,42 +34,61 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
+
 	/** 接続に使用するSSLソケットファクトリ */
 	private String sslSocketFactory = "javax.net.ssl.SSLSocketFactory";
+
 	/** 認証メカニズム */
 	private String authentication = AUTHENTICATION_SIMPLE;
+
 	/** URL */
 	private String url;
+
 	/** 基底となる識別名 */
 	private String baseDn;
+
 	/** バインドDn */
 	private String bindDn;
+
 	/** ユーザ名 */
 	private String user;
+
 	/** パスワード */
 	private String password;
+
 	/** パスワード形式 */
 	private String passwordAlgorithm = "SSHA";
+
 	/** パスワードハッシュ作成時に使用するsaltの長さ */
 	private int passwordSaltLength = 4;
+
 	/** ユーザユニットの接尾辞 */
 	private String userSuffix = "ou=Users";
+
 	/** ユーザを識別するための属性名 */
 	private String userAttributeName = "uid";
+
 	/** グループユニットの接尾辞 */
 	private String groupSuffix = "ou=Groups";
+
 	/** グループを識別するための属性名 */
 	private String groupAttributeName = "memberUid";
+
 	/** 複数値のための区切り文字 */
 	private String multipleValueDelimiter = "DEFAULT_MULTIPLE_VALUE_DELIMITER";
+
 	/** フィルタ */
 	private String filter;
+
 	/** 検索コントロール */
 	private int searchControls = SearchControls.SUBTREE_SCOPE;
+
 	/** SSL接続するかどうか */
 	private boolean enableSSL = false;
+
 	/** TLS接続するかどうか */
 	private boolean enableTLS = false;
+
 	/** コネクションプーリング設定 */
 	private DirectoryConnectionPool pool;
 

@@ -26,7 +26,6 @@ import org.seasar.directory.exception.DirectoryRuntimeException;
  * ディレクトリコネクションを作成するユーティリティです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public final class DirectoryDataSourceUtil {
 
@@ -122,4 +121,5 @@ public final class DirectoryDataSourceUtil {
 			throw new DirectoryRuntimeException(e);
 		}
 	}
+
 }

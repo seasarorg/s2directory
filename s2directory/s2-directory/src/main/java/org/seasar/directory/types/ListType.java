@@ -30,9 +30,9 @@ import org.seasar.directory.util.DirectoryDataSourceUtil;
  * List型での値取得クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class ListType extends AbstractValueType {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,4 +89,5 @@ public class ListType extends AbstractValueType {
 		}
 		return attributes;
 	}
+
 }

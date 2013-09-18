@@ -30,13 +30,17 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * 基本となるディレクトリ情報ツリーを作成する抽象テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
+
 	private static final String PATH = "app.dicon";
+
 	private static boolean isApacheDS = false;
+
 	private static S2Container container;
+
 	private static PersonDirectoryDao personDao;
+
 	private static OrganizationalUnitDirectoryDao organizationalUnitDao;
 
 	public static void main(String[] args) {
@@ -153,4 +157,5 @@ public abstract class DefaultDirectoryInformationTreeTest extends TestCase {
 		property.setBaseDn("ou=system");
 		return property;
 	}
+
 }

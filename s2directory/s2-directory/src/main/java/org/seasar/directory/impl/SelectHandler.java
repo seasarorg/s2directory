@@ -30,16 +30,19 @@ import org.seasar.framework.util.StringUtil;
  * 読み出し処理クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class SelectHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(SelectHandler.class);
+
 	/** 識別子 */
 	private String dn;
+
 	/** 検索フィルタ */
 	private String filter;
+
 	/** 検索結果のハンドラクラス */
 	private NamingEnumerationHandler handler;
 
@@ -90,4 +93,5 @@ public class SelectHandler extends BasicDirectoryHandler implements
 			DirectoryDataSourceUtil.close(results);
 		}
 	}
+
 }

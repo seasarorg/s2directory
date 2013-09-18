@@ -21,9 +21,9 @@ import java.lang.reflect.Method;
  * アノテーションを読み込むインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDaoAnnotationReader {
+
 	/**
 	 * QUERYアノテーションを取得します。
 	 * 
@@ -84,4 +84,5 @@ public interface DirectoryDaoAnnotationReader {
 	 * @return FILTERアノテーションの値
 	 */
 	public String getFilter(Method method);
+
 }

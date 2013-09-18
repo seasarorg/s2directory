@@ -24,9 +24,9 @@ import org.seasar.directory.impl.ExecuteHandler;
  * 動的に認証処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class AuthenticateDynamicCommand extends AbstractDynamicDirectoryCommand {
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -54,4 +54,5 @@ public class AuthenticateDynamicCommand extends AbstractDynamicDirectoryCommand 
 			new AuthenticateHandler(getDirectoryDataSource(args));
 		return handler.execute();
 	}
+
 }

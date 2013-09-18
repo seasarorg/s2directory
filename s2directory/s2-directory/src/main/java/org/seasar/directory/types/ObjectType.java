@@ -21,12 +21,12 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 
 /**
- * Object型での値取得クラスです。 TODO: 必要かどうか
+ * Object 型での値取得クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class ObjectType extends AbstractValueType {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,4 +53,5 @@ public class ObjectType extends AbstractValueType {
 		attribute.add(value);
 		return attribute;
 	}
+
 }

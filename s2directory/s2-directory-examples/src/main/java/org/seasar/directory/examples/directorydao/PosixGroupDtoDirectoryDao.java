@@ -23,9 +23,9 @@ import org.seasar.directory.examples.dto.PosixGroupDto;
  * PosixグループDtoDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date::                           $
  */
 public interface PosixGroupDtoDirectoryDao {
+
 	/** BEANアノテーション */
 	public static final Class BEAN = PosixGroupDto.class;
 
@@ -89,4 +89,5 @@ public interface PosixGroupDtoDirectoryDao {
 	 * @return グループリスト
 	 */
 	public List getPosixGroupListByMemberUid(List memberUid);
+
 }

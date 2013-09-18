@@ -29,12 +29,12 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * 接続テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-07 00:03:58 +0900#$
  */
 public class DirectoryDataSourceImplTest extends TestCase {
+
 	private static final String PATH = "directory.dicon";
 
-	S2Container container;
+	private S2Container container;
 
 	/**
 	 * テストの初期設定を行います。
@@ -127,4 +127,5 @@ public class DirectoryDataSourceImplTest extends TestCase {
 		property.setBaseDn("ou=system");
 		return property;
 	}
+
 }

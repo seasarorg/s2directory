@@ -40,7 +40,6 @@ import org.seasar.framework.log.Logger;
  * 新規追加処理するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class InsertHandler extends BasicDirectoryHandler implements
 		ExecuteHandler {
@@ -172,4 +171,5 @@ public class InsertHandler extends BasicDirectoryHandler implements
 				valueClass);
 		return addAttribute;
 	}
+
 }

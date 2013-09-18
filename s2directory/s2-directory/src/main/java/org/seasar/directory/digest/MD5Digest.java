@@ -19,11 +19,12 @@ package org.seasar.directory.digest;
  * MD5によるハッシュを扱うクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class MD5Digest extends AbstractMessageDigest {
+
 	/** 暗号形式 */
 	public static final String LABEL = "{MD5}";
+
 	/** ハッシュ部分の長さ */
 	protected static final int HASH_LENGTH = 16;
 
@@ -64,4 +65,5 @@ public class MD5Digest extends AbstractMessageDigest {
 			password,
 			HASH_LENGTH);
 	}
+
 }

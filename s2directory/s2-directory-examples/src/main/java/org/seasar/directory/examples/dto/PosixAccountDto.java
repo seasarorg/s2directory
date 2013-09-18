@@ -21,7 +21,6 @@ import org.seasar.directory.examples.entity.PosixAccount;
  * PosixアカウントDtoクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Revision$ $Date$
  */
 public class PosixAccountDto extends PosixAccount {
 
@@ -47,4 +46,5 @@ public class PosixAccountDto extends PosixAccount {
 	public void setSn(String sn) {
 		this.sn = sn;
 	}
+
 }

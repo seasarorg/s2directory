@@ -19,9 +19,9 @@ package org.seasar.directory;
  * ディレクトリデータソースを作成するファクトリのインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDataSourceFactory {
+
 	/**
 	 * インスタンス作成時の接続情報を取得します。
 	 * 
@@ -44,4 +44,5 @@ public interface DirectoryDataSourceFactory {
 	 */
 	public DirectoryDataSource getDirectoryDataSource(
 			DirectoryControlProperty property);
+
 }

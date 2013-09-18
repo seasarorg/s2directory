@@ -26,9 +26,9 @@ import org.seasar.directory.impl.ExecuteHandler;
  * 動的に削除処理を実行するクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DeleteDynamicCommand extends AbstractDynamicDirectoryCommand {
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -57,4 +57,5 @@ public class DeleteDynamicCommand extends AbstractDynamicDirectoryCommand {
 			new DeleteHandler(getDirectoryDataSource(args), ctx.getDn());
 		return handler.execute();
 	}
+
 }

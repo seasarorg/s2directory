@@ -25,11 +25,12 @@ import org.seasar.framework.util.Base64Util;
  * メッセージダイジェストの抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractMessageDigest implements Digest {
+
 	/** メッセージダイジェストアルゴリズム */
 	private MessageDigest md;
+
 	/** エンコーディング */
 	private static final String ENCODING = "UTF-8";
 
@@ -102,4 +103,5 @@ public abstract class AbstractMessageDigest implements Digest {
 		}
 		return valid;
 	}
+
 }

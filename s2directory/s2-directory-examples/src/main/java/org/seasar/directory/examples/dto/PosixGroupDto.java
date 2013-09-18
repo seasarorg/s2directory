@@ -21,7 +21,6 @@ import org.seasar.directory.examples.entity.PosixGroup;
  * PosixグループDtoクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Revision$ $Date$
  */
 public class PosixGroupDto extends PosixGroup {
 
@@ -74,4 +73,5 @@ public class PosixGroupDto extends PosixGroup {
 	public void setField2(String field2) {
 		this.field2 = field2;
 	}
+
 }

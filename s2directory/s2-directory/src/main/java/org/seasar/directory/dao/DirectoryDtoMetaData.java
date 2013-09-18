@@ -19,12 +19,12 @@ import org.seasar.directory.types.PropertyType;
 import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 
 /**
- * DTO (Data Transter Object)のメタデータインタフェースです。
+ * DTO のメタデータインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDtoMetaData {
+
 	public Class getBeanClass();
 
 	public int getPropertyTypeSize();
@@ -35,4 +35,5 @@ public interface DirectoryDtoMetaData {
 			throws PropertyNotFoundRuntimeException;
 
 	public boolean hasPropertyType(String propertyName);
+
 }

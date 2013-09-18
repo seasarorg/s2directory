@@ -31,15 +31,18 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * DTO用のメタデータを表すクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
+
 	/** ビーンクラス */
 	private Class beanClass;
+
 	/** プロパティクラスの集合 */
 	private CaseInsensitiveMap propertyTypes = new CaseInsensitiveMap();
+
 	/** ビーンアノテーションリーダー */
 	protected DirectoryBeanAnnotationReader beanAnnotationReader;
+
 	/** ディレクトリ属性ハンドラファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
 
@@ -165,4 +168,5 @@ public class DirectoryDtoMetaDataImpl implements DirectoryDtoMetaData {
 			DirectoryAttributeHandlerFactory directoryAttributeHandlerFactory) {
 		this.attributeHandlerFactory = directoryAttributeHandlerFactory;
 	}
+
 }

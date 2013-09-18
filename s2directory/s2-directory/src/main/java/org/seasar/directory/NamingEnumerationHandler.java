@@ -22,9 +22,9 @@ import javax.naming.NamingException;
  * 検索結果を扱うインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface NamingEnumerationHandler {
+
 	/**
 	 * 指定された検索結果を処理し、結果オブジェクトを返します。
 	 * 
@@ -37,4 +37,5 @@ public interface NamingEnumerationHandler {
 	 */
 	public Object handle(NamingEnumeration results, String baseDn)
 			throws NamingException;
+
 }

@@ -23,15 +23,18 @@ import org.seasar.directory.dao.DirectoryCommand;
  * ディレクトリ用処理コマンドの抽象クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public abstract class AbstractDirectoryCommand implements DirectoryCommand {
+
 	/** データソース */
 	protected DirectoryDataSourceFactory dataSourceFactory;
+
 	/** ディレクトリ用の値の型ファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+
 	/** フィルタ */
 	private String filter;
+
 	/** オブジェクトクラス */
 	private String[] objectClasses;
 
@@ -94,4 +97,5 @@ public abstract class AbstractDirectoryCommand implements DirectoryCommand {
 	public void setObjectClasses(String[] objectClasses) {
 		this.objectClasses = objectClasses;
 	}
+
 }

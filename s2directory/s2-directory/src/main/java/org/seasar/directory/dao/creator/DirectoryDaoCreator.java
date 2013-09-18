@@ -22,12 +22,16 @@ import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.convention.NamingConvention;
 
 /**
- * SMART deployにおいてDirectoryDaoのコンポーネント定義を作成する{@link ComponentCreator}の実装クラスです。
+ * SMART deploy において DirectoryDao のコンポーネント定義を作成する{@link ComponentCreator}
+ * の実装クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryDaoCreator extends ComponentCreatorImpl {
+
+	/** 接頭辞です。 */
+	private static final String NAME_SUFFIX = "Directory";
+
 	/**
 	 * インスタンスを作成します。
 	 * 
@@ -36,7 +40,7 @@ public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	 */
 	public DirectoryDaoCreator(NamingConvention namingConvention) {
 		super(namingConvention);
-		setNameSuffix("Directory" + namingConvention.getDaoSuffix());
+		setNameSuffix(NAME_SUFFIX + namingConvention.getDaoSuffix());
 		setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		setEnableInterface(true);
 		setEnableAbstract(true);
@@ -60,4 +64,5 @@ public class DirectoryDaoCreator extends ComponentCreatorImpl {
 	public void setDirectoryDaoCustomizer(ComponentCustomizer customizer) {
 		setCustomizer(customizer);
 	}
+
 }

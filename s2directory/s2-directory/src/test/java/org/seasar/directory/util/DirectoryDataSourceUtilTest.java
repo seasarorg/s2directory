@@ -28,10 +28,11 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * データソース用ユーティリティクラスのテストクラスです。
  * 
  * @author Jun Futagawa
- * @version $Revision$ $Date$
  */
 public class DirectoryDataSourceUtilTest extends TestCase {
+
 	private static final String PATH = "directory.dicon";
+
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSource directoryDataSource;
 
@@ -96,4 +97,5 @@ public class DirectoryDataSourceUtilTest extends TestCase {
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
 		assertEquals("uid=user1,dc= seasar, dc=org", property.getBindDn());
 	}
+
 }

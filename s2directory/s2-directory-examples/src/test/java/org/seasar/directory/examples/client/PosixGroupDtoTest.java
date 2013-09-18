@@ -32,14 +32,19 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * PosixAccountエントリの追加テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
+
 	private static final String PATH = "app.dicon";
+
 	private static S2Container container;
+
 	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
+
 	private static PosixAccountDto user1, user2;
+
 	private static PosixGroupDtoDirectoryDao posixGroupDtoDao;
+
 	private static PosixGroupDto group1, group2;
 
 	public static void main(String[] args) {
@@ -158,4 +163,5 @@ public class PosixGroupDtoTest extends DefaultDirectoryInformationTreeTest {
 		// 初期化します。
 		assertEquals(1, posixGroupDtoDao.updatePosixGroup(group1));
 	}
+
 }

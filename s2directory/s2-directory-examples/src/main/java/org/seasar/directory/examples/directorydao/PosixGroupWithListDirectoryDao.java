@@ -23,10 +23,11 @@ import org.seasar.directory.examples.entity.PosixGroupWithList;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface PosixGroupWithListDirectoryDao {
+
 	public Class BEAN = PosixGroupWithList.class;
+
 	public String OBJECTCLASSES = "posixGroup";
 
 	public static final String getPosixGroupList_QUERY =
@@ -58,4 +59,5 @@ public interface PosixGroupWithListDirectoryDao {
 	public int delete(PosixGroupWithList group);
 
 	public List getAllGroup();
+
 }

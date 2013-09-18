@@ -27,10 +27,11 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * 接続テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class DirectoryControlPropertyTest extends TestCase {
+
 	private static final String PATH = "directory.dicon";
+
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl dataSource;
 

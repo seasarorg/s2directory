@@ -27,14 +27,18 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * InetOrgPersonエントリの更新テストクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2008-01-13 16:59:44 +0900#$
  */
 public class InetOrgPersonUpdateTest extends
 		DefaultDirectoryInformationTreeTest {
+
 	private static final String PATH = "app.dicon";
+
 	private static S2Container container;
+
 	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
+
 	private static PosixAccountDto user1;
+
 	private static InetOrgPersonDirectoryDao inetOrgPersonDao;
 
 	public static void main(String[] args) {
@@ -124,4 +128,5 @@ public class InetOrgPersonUpdateTest extends
 		account = inetOrgPersonDao.getInetOrgPerson(search);
 		assertEquals(null, account.getMail());
 	}
+
 }

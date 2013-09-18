@@ -21,9 +21,9 @@ import org.seasar.framework.beans.MethodNotFoundRuntimeException;
  * DirectoryDao用のメタ情報を表わすインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public interface DirectoryDaoMetaData {
+
 	/**
 	 * ビーンクラスを取得します。
 	 * 
@@ -58,4 +58,5 @@ public interface DirectoryDaoMetaData {
 	 * @return ディレクトリコマンドを持っている場合 <code>true</code> 持っていない場合 <code>false</code>
 	 */
 	public boolean hasDirectoryCommand(String methodName);
+
 }

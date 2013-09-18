@@ -29,19 +29,24 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * 引数をコマンドとみなしたコンテキストを表わします。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date::                           $
  */
 public class CommandContextImpl implements CommandContext {
+
 	/** ロガー */
 	private static Logger logger = Logger.getLogger(CommandContextImpl.class);
+
 	/** 引数の値マップ */
 	private CaseInsensitiveMap args = new CaseInsensitiveMap();
+
 	/** 引数の型マップ */
 	private CaseInsensitiveMap argTypes = new CaseInsensitiveMap();
+
 	/** オブジェクトクラス */
 	private String[] objectClasses;
+
 	/** ディレクトリ用の値の型ファクトリ */
 	protected DirectoryAttributeHandlerFactory attributeHandlerFactory;
+
 	/** 識別名 */
 	private String dn;
 
@@ -190,4 +195,5 @@ public class CommandContextImpl implements CommandContext {
 		buffer.append(argTypes);
 		return buffer.toString();
 	}
+
 }
