@@ -24,10 +24,10 @@ import org.seasar.directory.tiger.examples.dto.PosixGroupDto;
  * PosixグループDtoDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = PosixGroupDto.class)
 public interface PosixGroupDtoDirectoryDao {
+
 	/**
 	 * 指定したPosixグループを追加します。
 	 * 
@@ -87,4 +87,5 @@ public interface PosixGroupDtoDirectoryDao {
 	 */
 	public List<PosixGroupDto> getPosixGroupListByMemberUid(
 			List<PosixGroupDto> memberUid);
+
 }

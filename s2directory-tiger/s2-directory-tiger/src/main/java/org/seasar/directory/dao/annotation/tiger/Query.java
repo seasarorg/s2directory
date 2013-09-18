@@ -24,10 +24,11 @@ import java.lang.annotation.Target;
  * Queryアノテーションです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-28 13:04:57 +0900#$
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Query {
+
 	String value();
+
 }

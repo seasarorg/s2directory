@@ -23,10 +23,10 @@ import org.seasar.directory.tiger.examples.entity.Person;
  * PersonのDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = Person.class)
 public interface PersonDirectoryDao {
+
 	/**
 	 * 指定したPersonを追加します。
 	 * 
@@ -86,4 +86,5 @@ public interface PersonDirectoryDao {
 	 */
 	public Person getPersonWithUserMode(DirectoryControlProperty property,
 			Person person);
+
 }

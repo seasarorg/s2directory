@@ -27,7 +27,6 @@ import org.seasar.directory.tiger.examples.entity.PosixAccountWithAnnotation;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = PosixAccountWithAnnotation.class)
 public interface PosixAccountWithAnnocationDirectoryDao {
@@ -72,4 +71,5 @@ public interface PosixAccountWithAnnocationDirectoryDao {
 
 	public int deleteWithUserMode(DirectoryControlProperty user,
 			PosixAccountWithAnnotation account);
+
 }

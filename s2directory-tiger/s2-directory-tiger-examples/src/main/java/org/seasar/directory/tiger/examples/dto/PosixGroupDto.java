@@ -21,7 +21,6 @@ import org.seasar.directory.tiger.examples.entity.PosixGroup;
  * PosixグループDtoクラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Revision: 126 $ $Date: 2007-12-08 03:35:41 +0900 (土, 08 12 2007) $
  */
 public class PosixGroupDto extends PosixGroup {
 
@@ -29,8 +28,10 @@ public class PosixGroupDto extends PosixGroup {
 
 	/** 非永続化属性 */
 	public static final String NO_PERSISTENT_PROPS = "field1, field2";
+
 	/** field1 */
 	private String field1;
+
 	/** field2 */
 	private String field2;
 
@@ -69,4 +70,5 @@ public class PosixGroupDto extends PosixGroup {
 	public void setField2(String field2) {
 		this.field2 = field2;
 	}
+
 }

@@ -25,11 +25,12 @@ import java.lang.annotation.Target;
  * Columnアノテーションです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-28 13:04:57 +0900#$
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.FIELD })
 public @interface Column {
+
 	String value();
+
 }

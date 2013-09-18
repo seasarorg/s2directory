@@ -22,10 +22,10 @@ import org.seasar.directory.tiger.examples.entity.OrganizationalUnit;
  * OrganizationalUnitのDaoクラスです。
  * 
  * @author Jun Futagawa
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = OrganizationalUnit.class)
 public interface OrganizationalUnitDirectoryDao {
+
 	/**
 	 * 指定したOrganizationalUnitを追加します。
 	 * 
@@ -62,4 +62,5 @@ public interface OrganizationalUnitDirectoryDao {
 	 */
 	public OrganizationalUnit getOrganizationalUnit(
 			OrganizationalUnit organizationalUnit);
+
 }

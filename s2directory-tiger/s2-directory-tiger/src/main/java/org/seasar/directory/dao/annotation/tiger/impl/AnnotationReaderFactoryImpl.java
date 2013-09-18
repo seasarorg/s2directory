@@ -24,7 +24,6 @@ import org.seasar.framework.beans.BeanDesc;
  * Tigerアノテーションを利用したディレクトリアノテーションリーダファクトリです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-28 13:04:57 +0900#$
  */
 public class AnnotationReaderFactoryImpl implements
 		DirectoryAnnotationReaderFactory {
@@ -51,4 +50,5 @@ public class AnnotationReaderFactoryImpl implements
 		}
 		return new TigerDirectoryDaoAnnotationReader(daoBeanDesc);
 	}
+
 }

@@ -22,9 +22,9 @@ import org.seasar.framework.container.S2Container;
  * PosixAccountDto生成クラスです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-28 16:29:46 +0900#$
  */
 public class PosixAccountDtoFactory extends DirectoryDtoFactory {
+
 	/**
 	 * 指定されたコンテナを持ったインスタンスを作成します。
 	 * 
@@ -60,4 +60,5 @@ public class PosixAccountDtoFactory extends DirectoryDtoFactory {
 		account.setSn(name);
 		return account;
 	}
+
 }

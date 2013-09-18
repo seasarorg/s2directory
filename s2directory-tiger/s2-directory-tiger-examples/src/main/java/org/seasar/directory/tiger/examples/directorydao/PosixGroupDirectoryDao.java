@@ -24,10 +24,10 @@ import org.seasar.directory.tiger.examples.entity.PosixGroup;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = PosixGroup.class)
 public interface PosixGroupDirectoryDao {
+
 	public static final String getPosixGroupList_QUERY =
 		"objectclass=posixGroup";
 
@@ -56,4 +56,5 @@ public interface PosixGroupDirectoryDao {
 	public int delete(PosixGroup group);
 
 	public List<PosixGroup> getAllGroup();
+
 }

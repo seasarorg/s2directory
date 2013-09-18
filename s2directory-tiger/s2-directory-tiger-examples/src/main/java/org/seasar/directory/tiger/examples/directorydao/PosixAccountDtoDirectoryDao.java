@@ -25,10 +25,10 @@ import org.seasar.directory.tiger.examples.dto.PosixAccountDto;
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-08 03:35:41 +0900#$
  */
 @S2Directory(bean = PosixAccountDto.class)
 public interface PosixAccountDtoDirectoryDao {
+
 	public String OBJECTCLASSES = "posixAccount, inetOrgPerson";
 
 	public boolean authenticate();
@@ -76,4 +76,5 @@ public interface PosixAccountDtoDirectoryDao {
 
 	public int deleteWithUserMode(DirectoryControlProperty user,
 			PosixAccountDto account);
+
 }

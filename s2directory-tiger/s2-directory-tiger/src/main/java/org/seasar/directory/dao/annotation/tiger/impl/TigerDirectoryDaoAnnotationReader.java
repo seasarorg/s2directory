@@ -34,17 +34,20 @@ import org.seasar.framework.util.ConstructorUtil;
  * Daoクラスに定義されたTigerアノテーションを読み込みます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
- * @version $Date:: 2007-12-28 13:04:57 +0900#$
  */
 public class TigerDirectoryDaoAnnotationReader extends
 		DirectoryFieldDaoAnnotationReader {
+
 	/** S2DaoのDaoAnnotationReaderクラス名 */
 	private static final String S2DAO_TIGER_DAO_ANNOTATION_READER =
 		"org.seasar.dao.annotation.tiger.impl.DaoAnnotationReader";
+
 	/** S2DaoのDaoAnnotationReaderインスタンス */
 	private Object S2DaoDaoAnnotationReader;
+
 	/** S2DaoのDaoAnnotationReaderのビーン定義 */
 	private BeanDesc S2DaoDaoAnnotationReaderBeanDesc;
+
 	/** S2Dao Tigerが存在するかどうか */
 	private boolean hasS2DaoTiger = false;
 
@@ -205,4 +208,5 @@ public class TigerDirectoryDaoAnnotationReader extends
 			methodName,
 			args);
 	}
+
 }
