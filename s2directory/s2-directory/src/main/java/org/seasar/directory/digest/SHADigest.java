@@ -25,9 +25,6 @@ public class SHADigest extends AbstractMessageDigest {
 	/** 暗号形式 */
 	public static final String LABEL = "{SHA}";
 
-	/** ハッシュ部分の長さ */
-	protected static final int HASH_LENGTH = 20;
-
 	/**
 	 * インスタンスを生成します。
 	 */
@@ -60,10 +57,7 @@ public class SHADigest extends AbstractMessageDigest {
 	 * {@inheritDoc}
 	 */
 	public boolean verify(String digest, String password) {
-		return super.verifyPassword(
-			digest.substring(LABEL.length()),
-			password,
-			HASH_LENGTH);
+		return super.verifyPassword(digest.substring(LABEL.length()), password);
 	}
 
 }

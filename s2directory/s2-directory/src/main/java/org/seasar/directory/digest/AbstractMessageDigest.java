@@ -28,14 +28,17 @@ import org.seasar.framework.util.Base64Util;
  */
 public abstract class AbstractMessageDigest implements Digest {
 
-	/** メッセージダイジェストアルゴリズム */
-	private MessageDigest md;
-
 	/** エンコーディング */
 	private static final String ENCODING = "UTF-8";
 
 	/** デフォルトのsaltの長さ */
 	protected static final int DEFAULT_SALT_LENGTH = 4;
+
+	/** ダイジェストのアルゴリズム名です。 */
+	private final String algorithm;
+
+	/** ダイジェストの長さです。 */
+	private final int digestLength;
 
 	/**
 	 * インスタンスを作成します。
@@ -44,8 +47,18 @@ public abstract class AbstractMessageDigest implements Digest {
 	 *            暗号アルゴリズム
 	 */
 	public AbstractMessageDigest(String algorithm) {
+		this.algorithm = algorithm;
+		this.digestLength = getMessageDigest().getDigestLength();
+	}
+
+	/**
+	 * {@link MessageDigest} のインスタンスを返します。
+	 * 
+	 * @return {@link MessageDigest} のインスタンス
+	 */
+	public MessageDigest getMessageDigest() {
 		try {
-			md = MessageDigest.getInstance(algorithm);
+			return MessageDigest.getInstance(algorithm);
 		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalArgumentException(algorithm
 				+ " algorithm is not suported.");
@@ -61,11 +74,11 @@ public abstract class AbstractMessageDigest implements Digest {
 	 *            ハッシュ化するパスワード
 	 */
 	public String createHash(byte[] salt, String password) {
-		md.reset();
 		try {
-			md.update(password.getBytes(ENCODING));
-			md.update(salt);
-			byte[] pwhash = md.digest();
+			MessageDigest messageDigest = getMessageDigest();
+			messageDigest.update(password.getBytes(ENCODING));
+			messageDigest.update(salt);
+			byte[] pwhash = messageDigest.digest();
 			return Base64Util.encode(DigestUtil.concat(pwhash, salt));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -80,28 +93,23 @@ public abstract class AbstractMessageDigest implements Digest {
 	 *            ハッシュ化されたパスワード
 	 * @param password
 	 *            確認するパスワード
-	 * @param size
 	 */
-	public boolean verifyPassword(String digest, String password, int size) {
+	public boolean verifyPassword(String digest, String password) {
+		MessageDigest messageDigest = getMessageDigest();
 		if (digest.length() < 4) {
 			return false;
 		}
-		byte[][] hs = DigestUtil.split(Base64Util.decode(digest), size);
+		byte[][] hs = DigestUtil.split(Base64Util.decode(digest), digestLength);
 		byte[] hash = hs[0];
 		byte[] salt = hs[1];
-		md.reset();
 		try {
-			md.update(password.getBytes(ENCODING));
+			messageDigest.update(password.getBytes(ENCODING));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		md.update(salt);
-		byte[] pwhash = md.digest();
-		boolean valid = true;
-		if (!MessageDigest.isEqual(hash, pwhash)) {
-			valid = false;
-		}
-		return valid;
+		messageDigest.update(salt);
+		byte[] pwhash = messageDigest.digest();
+		return MessageDigest.isEqual(hash, pwhash);
 	}
 
 }

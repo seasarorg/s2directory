@@ -51,10 +51,7 @@ public class SMD5Digest extends MD5Digest {
 	 * {@inheritDoc}
 	 */
 	public boolean verify(String digest, String password) {
-		return super.verifyPassword(
-			digest.substring(LABEL.length()),
-			password,
-			HASH_LENGTH);
+		return super.verifyPassword(digest.substring(LABEL.length()), password);
 	}
 
 }

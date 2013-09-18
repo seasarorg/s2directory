@@ -25,9 +25,6 @@ public class MD5Digest extends AbstractMessageDigest {
 	/** 暗号形式 */
 	public static final String LABEL = "{MD5}";
 
-	/** ハッシュ部分の長さ */
-	protected static final int HASH_LENGTH = 16;
-
 	/**
 	 * インスタンスを生成します。
 	 */
@@ -60,10 +57,7 @@ public class MD5Digest extends AbstractMessageDigest {
 	 * {@inheritDoc}
 	 */
 	public boolean verify(String digest, String password) {
-		return super.verifyPassword(
-			digest.substring(LABEL.length()),
-			password,
-			HASH_LENGTH);
+		return super.verifyPassword(digest.substring(LABEL.length()), password);
 	}
 
 }
