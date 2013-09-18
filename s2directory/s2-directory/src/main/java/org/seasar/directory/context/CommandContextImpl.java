@@ -22,7 +22,6 @@ import org.seasar.directory.DirectoryAttributeHandlerFactory;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveMap;
 
 /**
@@ -31,9 +30,6 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * @author Jun Futagawa (Integsystem Corporation)
  */
 public class CommandContextImpl implements CommandContext {
-
-	/** ロガー */
-	private static Logger logger = Logger.getLogger(CommandContextImpl.class);
 
 	/** 引数の値マップ */
 	private CaseInsensitiveMap args = new CaseInsensitiveMap();
