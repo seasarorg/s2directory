@@ -27,12 +27,6 @@
       <testResource>
         <directory>${basedir}/src/test/resources</directory>
       </testResource>
-      <testResource>
-        <directory>${basedir}/../s2-directory/src/test/resources</directory>
-        <includes>
-          <include>data/**</include>
-        </includes>
-      </testResource>
     </testResources>
   </build>
 
