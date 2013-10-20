@@ -32,7 +32,7 @@ ant dist
 
 ## Release
 
-* Release file: target/s2-directory-X.Y.Z.zip
+* Release file: target/s2-directory-x.y.z.zip
 
 ```
 set JAVA_HOME=C:\Software\Java\jdk-1.5
