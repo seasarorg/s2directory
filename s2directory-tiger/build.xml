@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="s2directory-tiger" default="dist" basedir=".">
 
-	<property name="version" value="0.7-SNAPSHOT" />
+	<property name="version" value="0.7.0" />
 
 	<!-- ant dist -->
 	<target name="dist">
