@@ -23,11 +23,11 @@ set JAVA_HOME=C:\Software\Java\jdk-1.5
 C:\Software\Java\apache-maven-2.2.1-bin\bin\mvn -Duser.name="The Seasar Foundation" clean deploy
 ```
 
-## Update pom
+## Update pom version
 
 ```
 # Edit version in ..\build.xml (s2-directory-project\build.xml)
-ant dist
+ant update-pom
 ```
 
 ## Release
