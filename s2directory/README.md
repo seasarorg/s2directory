@@ -16,13 +16,6 @@ set JAVA_HOME=C:\Software\Java\jdk-1.5
 C:\Software\Java\apache-maven-2.2.1-bin\bin\mvn -Duser.name="The Seasar Foundation" clean install
 ```
 
-## Deploy to Maven repository
-
-```
-set JAVA_HOME=C:\Software\Java\jdk-1.5
-C:\Software\Java\apache-maven-2.2.1-bin\bin\mvn -Duser.name="The Seasar Foundation" clean deploy
-```
-
 ## Update pom version
 
 ```
@@ -38,4 +31,11 @@ ant update-pom
 set JAVA_HOME=C:\Software\Java\jdk-1.5
 C:\Software\Java\apache-maven-2.2.1-bin\bin\mvn -Duser.name="The Seasar Foundation" clean package
 ant dist
+```
+
+## Deploy to Maven repository
+
+```
+set JAVA_HOME=C:\Software\Java\jdk-1.5
+C:\Software\Java\apache-maven-2.2.1-bin\bin\mvn -Duser.name="The Seasar Foundation" deploy
 ```
