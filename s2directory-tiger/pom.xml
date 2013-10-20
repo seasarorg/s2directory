@@ -6,7 +6,7 @@
   <artifactId>s2-directory-tiger-project</artifactId>
   <packaging>pom</packaging>
   <name>S2Directory Tiger Project</name>
-  <version>0.7.0</version>
+  <version>0.7.1-SNAPSHOT</version>
   <description>Object / Directory Mapping, Object / LDAP Mapping</description>
   <url>http://s2directory.sandbox.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
