@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="s2directory" default="dist" basedir=".">
 
-	<property name="version" value="0.7-SNAPSHOT" />
+	<property name="version" value="0.7.0" />
 
 	<!-- ant update-pom -->
     <target name="update-pom">
@@ -9,6 +9,10 @@
 			match="(&lt;artifactId&gt;s2-directory-project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)"
 			replace="\1${version}\2" encoding="UTF-8">
 			<fileset dir="." includes="**/pom.xml" />
+		</replaceregexp>
+		<replaceregexp
+			match="(&lt;artifactId&gt;s2-directory-tiger-project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)"
+			replace="\1${version}\2" encoding="UTF-8">
 			<fileset dir="../s2directory-tiger" includes="**/pom.xml" />
 		</replaceregexp>
     </target>
