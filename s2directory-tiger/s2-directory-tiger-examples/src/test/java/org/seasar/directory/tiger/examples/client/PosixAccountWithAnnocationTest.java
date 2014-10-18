@@ -16,10 +16,11 @@
 package org.seasar.directory.tiger.examples.client;
 
 import org.seasar.directory.tiger.examples.client.common.PosixAccountDtoFactory;
+import org.seasar.directory.tiger.examples.client.common.PosixAccountWithAnnotationDtoFactory;
 import org.seasar.directory.tiger.examples.directorydao.PosixAccountDtoDirectoryDao;
-import org.seasar.directory.tiger.examples.directorydao.PosixAccountWithAnnocationDirectoryDao;
+import org.seasar.directory.tiger.examples.directorydao.PosixAccountWithAnnocationDtoDirectoryDao;
 import org.seasar.directory.tiger.examples.dto.PosixAccountDto;
-import org.seasar.directory.tiger.examples.entity.PosixAccountWithAnnotation;
+import org.seasar.directory.tiger.examples.dto.PosixAccountWithAnnotationDto;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -34,7 +35,7 @@ public class PosixAccountWithAnnocationTest extends
 	private static final String PATH = "app.dicon";
 	private static S2Container container;
 	private static PosixAccountDtoDirectoryDao posixAccountDtoDao;
-	private static PosixAccountWithAnnocationDirectoryDao posixAccountWithAnnocationDirectoryDao;
+	private static PosixAccountWithAnnocationDtoDirectoryDao posixAccountWithAnnocationDtoDirectoryDao;
 	private static PosixAccountDto user1;
 
 	public static void main(String[] args) {
@@ -48,8 +49,8 @@ public class PosixAccountWithAnnocationTest extends
 			container.init();
 			posixAccountDtoDao =
 				(PosixAccountDtoDirectoryDao)container.getComponent(PosixAccountDtoDirectoryDao.class);
-			posixAccountWithAnnocationDirectoryDao =
-				(PosixAccountWithAnnocationDirectoryDao)container.getComponent(PosixAccountWithAnnocationDirectoryDao.class);
+			posixAccountWithAnnocationDtoDirectoryDao =
+				(PosixAccountWithAnnocationDtoDirectoryDao)container.getComponent(PosixAccountWithAnnocationDtoDirectoryDao.class);
 		}
 		PosixAccountDtoFactory posixAccountDtoFactory =
 			new PosixAccountDtoFactory(container);
@@ -65,52 +66,75 @@ public class PosixAccountWithAnnocationTest extends
 		super.tearDown();
 	}
 
+	public void testInsert1() {
+		PosixAccountWithAnnotationDtoFactory posixAccountDtoFactory =
+			new PosixAccountWithAnnotationDtoFactory(container);
+		PosixAccountWithAnnotationDto user1 =
+			posixAccountDtoFactory.getUser("newuser1");
+		assertEquals(
+			null,
+			posixAccountWithAnnocationDtoDirectoryDao.getUser(user1));
+		try {
+			assertEquals(
+				1,
+				posixAccountWithAnnocationDtoDirectoryDao.insert(user1));
+		} finally {
+			assertEquals(
+				1,
+				posixAccountWithAnnocationDtoDirectoryDao.delete(user1));
+		}
+	}
+
 	public void testSelect1() {
-		PosixAccountWithAnnotation account = null;
-		PosixAccountWithAnnotation search = new PosixAccountWithAnnotation();
+		PosixAccountWithAnnotationDto account = null;
+		PosixAccountWithAnnotationDto search =
+			new PosixAccountWithAnnotationDto();
 		// DN指定で検索
 		search.setDn("uid=user1,ou=Users,dc=seasar,dc=org");
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("user1", account.getCn());
 		// アノテーションの指定してある属性を使用して検索
-		search = new PosixAccountWithAnnotation();
+		search = new PosixAccountWithAnnotationDto();
 		search.setHome("/home/users/user1");
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("user1", account.getCn());
 	}
 
 	public void testUpdate1() {
-		PosixAccountWithAnnotation account = null;
-		PosixAccountWithAnnotation search = new PosixAccountWithAnnotation();
+		PosixAccountWithAnnotationDto account = null;
+		PosixAccountWithAnnotationDto search =
+			new PosixAccountWithAnnotationDto();
 		// DN指定で検索
 		search.setDn("uid=user1,ou=Users,dc=seasar,dc=org");
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		// ATTRIBUTEアノテーションの指定してある属性を使用して更新
 		account.setHome("/foo/bar");
-		posixAccountWithAnnocationDirectoryDao.update(account);
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		posixAccountWithAnnocationDtoDirectoryDao.update(account);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("/foo/bar", account.getHome());
 		account.setHome("/home/users/user1");
-		posixAccountWithAnnocationDirectoryDao.update(account);
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		posixAccountWithAnnocationDtoDirectoryDao.update(account);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("/home/users/user1", account.getHome());
 	}
 
 	public void testUpdate2() {
-		PosixAccountWithAnnotation account = null;
-		PosixAccountWithAnnotation search = new PosixAccountWithAnnotation();
+		PosixAccountWithAnnotationDto account = null;
+		PosixAccountWithAnnotationDto search =
+			new PosixAccountWithAnnotationDto();
 		// DN指定で検索
 		search.setDn("uid=user1,ou=Users,dc=seasar,dc=org");
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		// ATTRIBUTEアノテーションとCOLUMNアノテーションの
 		// 両方が指定してある属性を使用して更新
 		account.setGid("9999");
-		posixAccountWithAnnocationDirectoryDao.update(account);
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		posixAccountWithAnnocationDtoDirectoryDao.update(account);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("9999", account.getGid());
 		account.setGid("1000");
-		posixAccountWithAnnocationDirectoryDao.update(account);
-		account = posixAccountWithAnnocationDirectoryDao.getUser(search);
+		posixAccountWithAnnocationDtoDirectoryDao.update(account);
+		account = posixAccountWithAnnocationDtoDirectoryDao.getUser(search);
 		assertEquals("1000", account.getGid());
 	}
+
 }
