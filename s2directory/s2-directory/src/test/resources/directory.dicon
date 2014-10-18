@@ -34,12 +34,23 @@
 	</component>
 
 <!--
+	# Default SearchControls
+	http://docs.oracle.com/javase/1.5.0/docs/api/javax/naming/directory/SearchControls.html
+-->
+	<component name="directoryDefaultSearchControls" class="javax.naming.directory.SearchControls">
+		<property name="countLimit">1000</property>
+		<property name="searchScope">@javax.naming.directory.SearchControls@SUBTREE_SCOPE</property>
+		<property name="timeLimit">5000</property>
+	</component>
+
+<!--
 	# Directory Configuration
 -->
 	<component name="directoryControlProperty"
 		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
 			instance="prototype">
 		<property name="defaultEnvironment">directoryDefaultEnvironment</property>
+		<property name="defaultSearchControls">directoryDefaultSearchControls</property>
 
 		<property name="initialContextFactory">
 			"com.sun.jndi.ldap.LdapCtxFactory"

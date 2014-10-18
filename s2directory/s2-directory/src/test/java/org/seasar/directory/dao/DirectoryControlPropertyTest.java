@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.dao;
 
+import javax.naming.directory.SearchControls;
+
 import junit.framework.TestCase;
 
 import org.seasar.directory.DirectoryControlProperty;
@@ -75,6 +77,20 @@ public class DirectoryControlPropertyTest extends TestCase {
 			dataSource.getDirectoryControlProperty();
 		property.setUrl("ldaps://localhost:389");
 		assertEquals(true, property.isEnableSSL());
+	}
+
+	/**
+	 * defaultSearchControlsのテストを行います。
+	 */
+	public void testDefaultSearchControls() {
+		DirectoryControlProperty property =
+			dataSource.getDirectoryControlProperty();
+		SearchControls controls = property.getDefaultSearchControls();
+		assertEquals(1000, controls.getCountLimit());
+		assertEquals(false, controls.getDerefLinkFlag());
+		assertEquals(null, controls.getReturningAttributes());
+		assertEquals(SearchControls.SUBTREE_SCOPE, controls.getSearchScope());
+		assertEquals(5000, controls.getTimeLimit());
 	}
 
 }

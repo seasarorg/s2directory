@@ -148,8 +148,7 @@ public class BasicDirectoryHandler {
 	 * @return 検索結果
 	 */
 	public NamingEnumeration search(String baseDn, String filter) {
-		SearchControls controls = new SearchControls();
-		controls.setSearchScope(property.getSearchControls());
+		SearchControls controls = property.getDefaultSearchControls();
 		return search(filter, baseDn, controls);
 	}
 
@@ -186,7 +185,7 @@ public class BasicDirectoryHandler {
 		try {
 			String firstDn = DirectoryUtil.getFirstDn(dn);
 			String baseDn = DirectoryUtil.getBaseDn(dn);
-			SearchControls controls = new SearchControls();
+			SearchControls controls = property.getDefaultSearchControls();
 			controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
 			return search(baseDn, firstDn, controls);
 		} finally {

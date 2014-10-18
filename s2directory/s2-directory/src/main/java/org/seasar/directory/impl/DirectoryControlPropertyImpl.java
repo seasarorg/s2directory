@@ -37,6 +37,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** デフォルトのディレクトリ接続情報 */
 	private Hashtable defaultEnvironment;
 
+	/** デフォルトの {@link SearchControls} */
+	private SearchControls defaultSearchControls;
+
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
 
@@ -84,9 +87,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 
 	/** フィルタ */
 	private String filter;
-
-	/** 検索コントロール */
-	private int searchControls = SearchControls.SUBTREE_SCOPE;
 
 	/** SSL接続するかどうか */
 	private boolean enableSSL = false;
@@ -142,6 +142,25 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 */
 	public void setDefaultEnvironment(Hashtable defaultEnvironment) {
 		this.defaultEnvironment = defaultEnvironment;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public SearchControls getDefaultSearchControls() {
+		if (defaultSearchControls != null) {
+			return defaultSearchControls;
+		}
+		SearchControls controls = new SearchControls();
+		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		return controls;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDefaultSearchControls(SearchControls defaultSearchControls) {
+		this.defaultSearchControls = defaultSearchControls;
 	}
 
 	/**
@@ -362,20 +381,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getSearchControls() {
-		return searchControls;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setSearchControls(int searchControls) {
-		this.searchControls = searchControls;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getAuthentication() {
 		return authentication;
 	}
@@ -449,7 +454,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");
 		buffer.append("filter: ").append(filter).append(", ");
-		buffer.append("searchControls: ").append(searchControls).append(", ");
 		buffer.append("enableSSL").append(enableSSL).append(", ");
 		buffer.append("enableTLS: ").append(enableTLS).append(", ");
 		buffer.append("pool: ").append(pool);
