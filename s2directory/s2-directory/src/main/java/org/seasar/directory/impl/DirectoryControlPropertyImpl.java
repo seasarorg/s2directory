@@ -28,8 +28,7 @@ import org.seasar.directory.util.DirectoryUtil;
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  */
-public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
-		Cloneable {
+public class DirectoryControlPropertyImpl implements DirectoryControlProperty {
 
 	/** コネクションプーリング設定のBindingアノテーション */
 	public static final String directoryConnectionPool_BINDING =
@@ -115,17 +114,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	public DirectoryControlPropertyImpl(String user, String password) {
 		this.user = user;
 		this.password = password;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object clone() {
-		try {
-			return (super.clone());
-		} catch (CloneNotSupportedException e) {
-			throw (new InternalError(e.getMessage()));
-		}
 	}
 
 	/**

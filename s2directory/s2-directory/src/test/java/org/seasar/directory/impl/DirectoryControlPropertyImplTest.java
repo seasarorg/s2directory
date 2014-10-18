@@ -22,8 +22,6 @@ import javax.naming.directory.SearchControls;
 import junit.framework.TestCase;
 
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.impl.DirectoryControlPropertyImpl;
-import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 

@@ -33,13 +33,6 @@ public interface DirectoryControlProperty {
 	public static final String AUTHENTICATION_SIMPLE = "simple";
 
 	/**
-	 * クローンを生成します。
-	 * 
-	 * @return クローン
-	 */
-	public Object clone();
-
-	/**
 	 * デフォルトのディレクトリ接続情報を取得します。
 	 * 
 	 * @return デフォルトのディレクトリ接続情報
