@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.util;
 
+import javax.naming.directory.SearchControls;
+
 import junit.framework.TestCase;
 
 /**
@@ -68,6 +70,23 @@ public class DirectoryUtilTest extends TestCase {
 		assertEquals(
 			"{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=",
 			DirectoryUtil.createPassword("secret", "SHA", -1));
+	}
+
+	public void testToStringFromSearchControls() {
+		assertEquals("", DirectoryUtil.toStringFromSearchControls(null));
+		assertEquals(
+			"{countLimit: 0, derefLinkFlag: false, returningAttributes: null, searchScope: ONELEVEL_SCOPE, timeLimit: 0}",
+			DirectoryUtil.toStringFromSearchControls(new SearchControls()));
+
+		SearchControls controls = new SearchControls();
+		controls.setCountLimit(1);
+		controls.setDerefLinkFlag(true);
+		controls.setReturningAttributes(new String[] { "a", "b", "c" });
+		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		controls.setTimeLimit(1);
+		assertEquals(
+			"{countLimit: 1, derefLinkFlag: true, returningAttributes: [a, b, c], searchScope: SUBTREE_SCOPE, timeLimit: 1}",
+			DirectoryUtil.toStringFromSearchControls(controls));
 	}
 
 }

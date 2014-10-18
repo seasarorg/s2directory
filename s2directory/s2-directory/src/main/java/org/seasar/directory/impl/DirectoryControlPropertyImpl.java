@@ -21,6 +21,7 @@ import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.DirectoryConnectionPool;
 import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.util.DirectoryUtil;
 
 /**
  * ディレクトリ接続情報を表わす標準的な実装クラスです。
@@ -443,6 +444,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("defaultEnvironment: ").append(
+			defaultEnvironment.toString()).append(", ");
+		buffer.append("defaultSearchControls: ").append(
+			DirectoryUtil.toStringFromSearchControls(defaultSearchControls)).append(", ");
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
 			", ");
 		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(
@@ -459,5 +464,4 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("pool: ").append(pool);
 		return buffer.toString();
 	}
-
 }

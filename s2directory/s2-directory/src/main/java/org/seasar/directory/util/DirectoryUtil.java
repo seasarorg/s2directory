@@ -16,6 +16,9 @@
 package org.seasar.directory.util;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
+import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.digest.Digest;
 import org.seasar.directory.digest.DigestFactory;
@@ -117,6 +120,44 @@ public final class DirectoryUtil {
 		} catch (NoSuchAlgorithmException e) {
 			return "";
 		}
+	}
+
+	/**
+	 * {@link SearchControls} の文字列表現を返します。
+	 * 
+	 * @param controls
+	 *            {@link SearchControls}
+	 * @return {@link SearchControls} の文字列表現
+	 */
+	public static String toStringFromSearchControls(SearchControls controls) {
+		if (controls == null) {
+			return "";
+		}
+		StringBuffer buffer = new StringBuffer("{");
+		buffer.append("countLimit: ").append(controls.getCountLimit()).append(
+			", ");
+		buffer.append("derefLinkFlag: ").append(controls.getDerefLinkFlag()).append(
+			", ");
+		buffer.append("returningAttributes: ");
+		String[] attrs = controls.getReturningAttributes();
+		buffer.append(attrs != null ? Arrays.asList(attrs).toString() : "null");
+		buffer.append(", ");
+		buffer.append("searchScope: ");
+		switch (controls.getSearchScope()) {
+		case SearchControls.OBJECT_SCOPE:
+			buffer.append("OBJECT_SCOPE");
+			break;
+		case SearchControls.ONELEVEL_SCOPE:
+			buffer.append("ONELEVEL_SCOPE");
+			break;
+		case SearchControls.SUBTREE_SCOPE:
+			buffer.append("SUBTREE_SCOPE");
+			break;
+		}
+		buffer.append(", ");
+		buffer.append("timeLimit: ").append(controls.getTimeLimit());
+		buffer.append("}");
+		return buffer.toString();
 	}
 
 }
