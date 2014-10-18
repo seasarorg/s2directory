@@ -15,10 +15,13 @@
  */
 package org.seasar.directory.impl;
 
+import java.util.Hashtable;
+
 import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.DirectoryConnectionPool;
 import org.seasar.directory.DirectoryControlProperty;
+import org.seasar.directory.util.DirectoryUtil;
 
 /**
  * ディレクトリ接続情報を表わす標準的な実装クラスです。
@@ -31,6 +34,12 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** コネクションプーリング設定のBindingアノテーション */
 	public static final String directoryConnectionPool_BINDING =
 		"bindingType=may";
+
+	/** デフォルトのディレクトリ接続情報 */
+	private Hashtable defaultEnvironment;
+
+	/** デフォルトの {@link SearchControls} */
+	private SearchControls defaultSearchControls;
 
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
@@ -80,9 +89,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** フィルタ */
 	private String filter;
 
-	/** 検索コントロール */
-	private int searchControls = SearchControls.SUBTREE_SCOPE;
-
 	/** SSL接続するかどうか */
 	private boolean enableSSL = false;
 
@@ -120,6 +126,42 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		} catch (CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Hashtable getDefaultEnvironment() {
+		if (defaultEnvironment != null) {
+			return defaultEnvironment;
+		}
+		return new Hashtable();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDefaultEnvironment(Hashtable defaultEnvironment) {
+		this.defaultEnvironment = defaultEnvironment;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public SearchControls getDefaultSearchControls() {
+		if (defaultSearchControls != null) {
+			return defaultSearchControls;
+		}
+		SearchControls controls = new SearchControls();
+		controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		return controls;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDefaultSearchControls(SearchControls defaultSearchControls) {
+		this.defaultSearchControls = defaultSearchControls;
 	}
 
 	/**
@@ -340,20 +382,6 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getSearchControls() {
-		return searchControls;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setSearchControls(int searchControls) {
-		this.searchControls = searchControls;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public String getAuthentication() {
 		return authentication;
 	}
@@ -416,6 +444,10 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("defaultEnvironment: ").append(
+			defaultEnvironment.toString()).append(", ");
+		buffer.append("defaultSearchControls: ").append(
+			DirectoryUtil.toStringFromSearchControls(defaultSearchControls)).append(", ");
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
 			", ");
 		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(
@@ -427,11 +459,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		buffer.append("user: ").append(user).append(", ");
 		buffer.append("password: ").append(password).append(", ");
 		buffer.append("filter: ").append(filter).append(", ");
-		buffer.append("searchControls: ").append(searchControls).append(", ");
 		buffer.append("enableSSL").append(enableSSL).append(", ");
 		buffer.append("enableTLS: ").append(enableTLS).append(", ");
 		buffer.append("pool: ").append(pool);
 		return buffer.toString();
 	}
-
 }

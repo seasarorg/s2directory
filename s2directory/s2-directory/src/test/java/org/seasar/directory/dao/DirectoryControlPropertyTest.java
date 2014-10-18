@@ -15,6 +15,10 @@
  */
 package org.seasar.directory.dao;
 
+import java.util.Hashtable;
+
+import javax.naming.directory.SearchControls;
+
 import junit.framework.TestCase;
 
 import org.seasar.directory.DirectoryControlProperty;
@@ -32,6 +36,10 @@ public class DirectoryControlPropertyTest extends TestCase {
 
 	private static final String PATH = "directory.dicon";
 
+	private DirectoryControlProperty property1;
+
+	private DirectoryControlProperty property2;
+
 	/** Directory接続ファクトリを表わします。 */
 	private DirectoryDataSourceImpl dataSource;
 
@@ -41,9 +49,11 @@ public class DirectoryControlPropertyTest extends TestCase {
 	public void setUp() {
 		S2Container container = S2ContainerFactory.create(PATH);
 		container.init();
-		DirectoryControlProperty defaultProperty =
+		property1 =
 			(DirectoryControlProperty)container.getComponent(DirectoryControlPropertyImpl.class);
-		dataSource = new DirectoryDataSourceImpl(defaultProperty);
+		property2 =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlPropertyImpl.class);
+		dataSource = new DirectoryDataSourceImpl(property1);
 	}
 
 	/**
@@ -75,6 +85,54 @@ public class DirectoryControlPropertyTest extends TestCase {
 			dataSource.getDirectoryControlProperty();
 		property.setUrl("ldaps://localhost:389");
 		assertEquals(true, property.isEnableSSL());
+	}
+
+	/**
+	 * defaultEnvironmentのテストを行います。
+	 */
+	public void testDefaultEnvironment() {
+		Hashtable environment1 = property1.getDefaultEnvironment();
+		assertEquals(
+			"500",
+			environment1.get("com.sun.jndi.ldap.connect.timeout"));
+		assertEquals("5000", environment1.get("com.sun.jndi.ldap.read.timeout"));
+		assertNull(environment1.get("dummy.not.found"));
+
+		// instance=prototype を確認します。
+		environment1.put("com.sun.jndi.ldap.connect.timeout", "1000");
+		assertEquals(
+			"1000",
+			environment1.get("com.sun.jndi.ldap.connect.timeout"));
+
+		Hashtable environmen2 = property2.getDefaultEnvironment();
+		assertEquals(
+			"500",
+			environmen2.get("com.sun.jndi.ldap.connect.timeout"));
+		assertEquals("5000", environmen2.get("com.sun.jndi.ldap.read.timeout"));
+		assertNull(environmen2.get("dummy.not.found"));
+	}
+
+	/**
+	 * defaultSearchControlsのテストを行います。
+	 */
+	public void testDefaultSearchControls() {
+		SearchControls controls1 = property1.getDefaultSearchControls();
+		assertEquals(1000, controls1.getCountLimit());
+		assertEquals(false, controls1.getDerefLinkFlag());
+		assertEquals(null, controls1.getReturningAttributes());
+		assertEquals(SearchControls.SUBTREE_SCOPE, controls1.getSearchScope());
+		assertEquals(5000, controls1.getTimeLimit());
+
+		// instance=prototype を確認します。
+		controls1.setCountLimit(2000);
+		assertEquals(2000, controls1.getCountLimit());
+
+		SearchControls controls2 = property2.getDefaultSearchControls();
+		assertEquals(1000, controls2.getCountLimit());
+		assertEquals(false, controls2.getDerefLinkFlag());
+		assertEquals(null, controls2.getReturningAttributes());
+		assertEquals(SearchControls.SUBTREE_SCOPE, controls2.getSearchScope());
+		assertEquals(5000, controls2.getTimeLimit());
 	}
 
 }

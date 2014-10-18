@@ -15,6 +15,10 @@
  */
 package org.seasar.directory;
 
+import java.util.Hashtable;
+
+import javax.naming.directory.SearchControls;
+
 /**
  * ディレクトリサーバ接続情報を表わすインタフェースです。
  * 
@@ -34,6 +38,34 @@ public interface DirectoryControlProperty {
 	 * @return クローン
 	 */
 	public Object clone();
+
+	/**
+	 * デフォルトのディレクトリ接続情報を取得します。
+	 * 
+	 * @return デフォルトのディレクトリ接続情報
+	 */
+	public Hashtable getDefaultEnvironment();
+
+	/**
+	 * デフォルトのディレクトリ接続情報を設定します。
+	 * 
+	 * @param defaultEnvironment
+	 *            デフォルトのディレクトリ接続情報
+	 */
+	public void setDefaultEnvironment(Hashtable defaultEnvironment);
+
+	/**
+	 * デフォルトの {@link SearchControls} を取得します。
+	 */
+	public SearchControls getDefaultSearchControls();
+
+	/**
+	 * デフォルトの {@link SearchControls} を設定します。
+	 * 
+	 * @param defaultSearchControls
+	 *            デフォルトの {@link SearchControls}
+	 */
+	public void setDefaultSearchControls(SearchControls defaultSearchControls);
 
 	/**
 	 * 接続に使用するコンテキストファクトリを取得します。
@@ -262,19 +294,6 @@ public interface DirectoryControlProperty {
 	 *            指定されたフィルタを設定します。
 	 */
 	public void setFilter(String filter);
-
-	/**
-	 * 検索コントロールを返します。
-	 * 
-	 * @return 検索コントロール
-	 */
-	public int getSearchControls();
-
-	/**
-	 * @param searchControls
-	 *            検索コントロールを設定します。
-	 */
-	public void setSearchControls(int searchControls);
 
 	/**
 	 * SSL接続が有効かどうか判断します。
