@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
-"http://www.seasar.org/dtd/components.dtd">
+	"http://www.seasar.org/dtd/components.dtd">
 <components namespace="directory">
 
 <!--
@@ -28,7 +28,8 @@
 	# Default Environment Properties
 	http://docs.oracle.com/javase/6/docs/technotes/guides/jndi/jndi-ldap.html
 -->
-	<component name="directoryDefaultEnvironment" class="java.util.Hashtable">
+	<component name="directoryDefaultEnvironment" class="java.util.Hashtable"
+		instance="prototype">
 		<initMethod>#self.put("com.sun.jndi.ldap.connect.timeout", "500")</initMethod>
 		<initMethod>#self.put("com.sun.jndi.ldap.read.timeout", "5000")</initMethod>
 	</component>
@@ -37,7 +38,8 @@
 	# Default SearchControls
 	http://docs.oracle.com/javase/1.5.0/docs/api/javax/naming/directory/SearchControls.html
 -->
-	<component name="directoryDefaultSearchControls" class="javax.naming.directory.SearchControls">
+	<component name="directoryDefaultSearchControls" class="javax.naming.directory.SearchControls"
+		instance="prototype">
 		<property name="countLimit">1000</property>
 		<property name="searchScope">@javax.naming.directory.SearchControls@SUBTREE_SCOPE</property>
 		<property name="timeLimit">5000</property>
