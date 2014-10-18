@@ -32,7 +32,7 @@ public final class UnsupportedTLSConnectionRuntimeException extends
 	 *            この例外に関する詳細情報
 	 */
 	public UnsupportedTLSConnectionRuntimeException() {
-		super("EDIR0006", new Object[] {});
+		super("EDIR0007", new Object[] {});
 	}
 
 }

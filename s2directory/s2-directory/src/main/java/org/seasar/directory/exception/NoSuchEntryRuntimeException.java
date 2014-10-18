@@ -32,7 +32,7 @@ public final class NoSuchEntryRuntimeException extends
 	 *            この例外に関する詳細情報
 	 */
 	public NoSuchEntryRuntimeException(String message) {
-		super("EDIR0007", new Object[] { message });
+		super("EDIR0005", new Object[] { message });
 	}
 
 }
