@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.dao;
+package org.seasar.directory.impl;
 
 import java.util.Hashtable;
 
@@ -32,7 +32,7 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  */
-public class DirectoryControlPropertyTest extends TestCase {
+public class DirectoryControlPropertyImplTest extends TestCase {
 
 	private static final String PATH = "directory.dicon";
 
@@ -110,6 +110,14 @@ public class DirectoryControlPropertyTest extends TestCase {
 			environmen2.get("com.sun.jndi.ldap.connect.timeout"));
 		assertEquals("5000", environmen2.get("com.sun.jndi.ldap.read.timeout"));
 		assertNull(environmen2.get("dummy.not.found"));
+
+		try {
+			property1.setDefaultEnvironment(null);
+			property1.toString();
+			assertTrue(true);
+		} catch (NullPointerException e) {
+			fail();
+		}
 	}
 
 	/**
@@ -133,6 +141,14 @@ public class DirectoryControlPropertyTest extends TestCase {
 		assertEquals(null, controls2.getReturningAttributes());
 		assertEquals(SearchControls.SUBTREE_SCOPE, controls2.getSearchScope());
 		assertEquals(5000, controls2.getTimeLimit());
+
+		try {
+			property1.setDefaultSearchControls(null);
+			property1.toString();
+			assertTrue(true);
+		} catch (NullPointerException e) {
+			fail();
+		}
 	}
 
 }

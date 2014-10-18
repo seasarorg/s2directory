@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.dao;
 
+import org.seasar.directory.impl.DirectoryControlPropertyImplTest;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -30,7 +32,7 @@ public class AllTests {
 			new TestSuite("Test for test.org.seasar.directory.dao");
 		// $JUnit-BEGIN$
 		suite.addTestSuite(BeanListMetaDataNamingEnumerationHandlerTest.class);
-		suite.addTestSuite(DirectoryControlPropertyTest.class);
+		suite.addTestSuite(DirectoryControlPropertyImplTest.class);
 		// $JUnit-END$
 		return suite;
 	}
