@@ -15,6 +15,8 @@
  */
 package org.seasar.directory;
 
+import java.util.Hashtable;
+
 /**
  * ディレクトリサーバ接続情報を表わすインタフェースです。
  * 
@@ -34,6 +36,21 @@ public interface DirectoryControlProperty {
 	 * @return クローン
 	 */
 	public Object clone();
+
+	/**
+	 * デフォルトのディレクトリ接続情報を取得します。
+	 * 
+	 * @return デフォルトのディレクトリ接続情報
+	 */
+	public Hashtable getDefaultEnvironment();
+
+	/**
+	 * デフォルトのディレクトリ接続情報を設定します。
+	 * 
+	 * @param defaultEnvironment
+	 *            デフォルトのディレクトリ接続情報
+	 */
+	public void setDefaultEnvironment(Hashtable defaultEnvironment);
 
 	/**
 	 * 接続に使用するコンテキストファクトリを取得します。

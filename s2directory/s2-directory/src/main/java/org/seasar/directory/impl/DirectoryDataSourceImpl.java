@@ -16,7 +16,7 @@
 package org.seasar.directory.impl;
 
 import java.io.IOException;
-import java.util.Properties;
+import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -79,63 +79,43 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 			throws NamingException {
 		// 接続設定を準備します。
 		setupDirectoryControlProperty(property);
-		Properties env = new Properties();
-		env.put(
-			Context.INITIAL_CONTEXT_FACTORY,
-			property.getInitialContextFactory());
-		env.put(Context.PROVIDER_URL, property.getUrl());
-		env.put(Context.SECURITY_AUTHENTICATION, property.getAuthentication());
-		if (DirectoryControlProperty.AUTHENTICATION_NONE.equals(property.getAuthentication()) == false) {
-			// 匿名接続以外の場合のみ認証情報を設定します。
-			env.put(Context.SECURITY_PRINCIPAL, property.getBindDn());
-			env.put(Context.SECURITY_CREDENTIALS, property.getPassword());
-		}
-
-		// コネクションプーリング
-		// Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and
-		// later releases.
-		// http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
-		if (property.isEnablePool()) {
-			env.put(CONNECTION_POOL_KEY, "true");
-		}
-
-		// デバッグ用、通信内容が16進で出力されます。
-		// env.put("com.sun.jndi.ldap.trace.ber", System.out);
+		Hashtable environment = getEnvironment(property);
 
 		// 接続処理
 		if (property.isEnableSSL()) {
 			// SSL接続
-			return getSSLConnection(env, property);
+			return getSSLConnection(environment, property);
 		}
 		if (property.isEnableTLS()) {
 			// TLS接続
-			return getTLSConnection(env, property);
+			return getTLSConnection(environment, property);
 		}
 		// 通常接続
-		return getConnection(env);
+		return getConnection(environment);
 	}
 
 	/**
 	 * 指定された接続情報を使用して作成したコネクションを返します。
 	 * 
-	 * @param env
+	 * @param environment
 	 *            接続情報
 	 * @return コネクション
 	 * @throws NamingException
 	 */
-	protected DirContext getConnection(Properties env) throws NamingException {
-		return new InitialDirContext(env);
+	protected DirContext getConnection(Hashtable environment)
+			throws NamingException {
+		return new InitialDirContext(environment);
 	}
 
 	/**
-	 * @param env
+	 * @param environment
 	 *            接続情報
 	 * @param property
 	 *            接続情報
 	 * @return TLSコネクション
 	 * @throws NamingException
 	 */
-	protected DirContext getTLSConnection(Properties env,
+	protected DirContext getTLSConnection(Hashtable environment,
 			DirectoryControlProperty property) throws NamingException {
 		SSLSocketFactory sslSocketFactory = null;
 		HostnameVerifier hostnameVerifier = null;
@@ -149,7 +129,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 				(SSLSocketFactory)ClassUtil.newInstance(sslSocketFactoryClassName);
 		}
 		// TLS接続を行う
-		LdapContext context = new InitialLdapContext(env, null);
+		LdapContext context = new InitialLdapContext(environment, null);
 		StartTlsResponse tls =
 			(StartTlsResponse)((LdapContext)context).extendedOperation(new StartTlsRequest());
 		try {
@@ -171,20 +151,20 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
-	 * @param env
+	 * @param environment
 	 *            接続情報
 	 * @param property
 	 *            接続情報
 	 * @return SSLコネクション
 	 * @throws NamingException
 	 */
-	protected DirContext getSSLConnection(Properties env,
+	protected DirContext getSSLConnection(Hashtable environment,
 			DirectoryControlProperty property) throws NamingException {
 		// SSL接続を行う
 		// TLS利用時にこの設定をすると最初からSSLで暗号化通信してしまうため通信に失敗します。
-		env.put(SSL_SOCKET_FACTORY_KEY, property.getSslSocketFactory());
-		env.put(Context.SECURITY_PROTOCOL, "ssl");
-		return getConnection(env);
+		environment.put(SSL_SOCKET_FACTORY_KEY, property.getSslSocketFactory());
+		environment.put(Context.SECURITY_PROTOCOL, "ssl");
+		return getConnection(environment);
 	}
 
 	/**
@@ -199,6 +179,40 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 			throw new UnsupportedSSLAndTLSConnectionRuntimeException();
 		}
 		DirectoryDataSourceUtil.setupDirectoryControlProperty(property);
+	}
+
+	/**
+	 * 接続情報を返します。
+	 * 
+	 * @param property
+	 *            接続情報
+	 * @return 接続情報
+	 */
+	protected Hashtable getEnvironment(DirectoryControlProperty property) {
+		Hashtable environment = property.getDefaultEnvironment();
+		environment.put(
+			Context.INITIAL_CONTEXT_FACTORY,
+			property.getInitialContextFactory());
+		environment.put(Context.PROVIDER_URL, property.getUrl());
+		environment.put(
+			Context.SECURITY_AUTHENTICATION,
+			property.getAuthentication());
+		if (DirectoryControlProperty.AUTHENTICATION_NONE.equals(property.getAuthentication()) == false) {
+			// 匿名接続以外の場合のみ認証情報を設定します。
+			environment.put(Context.SECURITY_PRINCIPAL, property.getBindDn());
+			environment.put(
+				Context.SECURITY_CREDENTIALS,
+				property.getPassword());
+		}
+
+		// コネクションプーリング
+		// Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and
+		// later releases.
+		// http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
+		if (property.isEnablePool()) {
+			environment.put(CONNECTION_POOL_KEY, "true");
+		}
+		return environment;
 	}
 
 }

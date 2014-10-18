@@ -15,6 +15,8 @@
  */
 package org.seasar.directory.impl;
 
+import java.util.Hashtable;
+
 import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.DirectoryConnectionPool;
@@ -31,6 +33,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 	/** コネクションプーリング設定のBindingアノテーション */
 	public static final String directoryConnectionPool_BINDING =
 		"bindingType=may";
+
+	/** デフォルトのディレクトリ接続情報 */
+	private Hashtable defaultEnvironment;
 
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
@@ -120,6 +125,23 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty,
 		} catch (CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Hashtable getDefaultEnvironment() {
+		if (defaultEnvironment != null) {
+			return defaultEnvironment;
+		}
+		return new Hashtable();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDefaultEnvironment(Hashtable defaultEnvironment) {
+		this.defaultEnvironment = defaultEnvironment;
 	}
 
 	/**

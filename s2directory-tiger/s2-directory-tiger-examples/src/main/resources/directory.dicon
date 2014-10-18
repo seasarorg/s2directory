@@ -25,11 +25,23 @@
 -->
 
 <!--
+	# Default Environment Properties
+	http://docs.oracle.com/javase/6/docs/technotes/guides/jndi/jndi-ldap.html
+	<component name="directoryDefaultEnvironment" class="java.util.Hashtable">
+		<initMethod>#self.put("com.sun.jndi.ldap.connect.timeout", "500")</initMethod>
+		<initMethod>#self.put("com.sun.jndi.ldap.read.timeout", "5000")</initMethod>
+	</component>
+-->
+
+<!--
 	# Directory Configuration
 -->
 	<component name="directoryControlProperty"
 		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
 			instance="prototype">
+	<!--
+		<property name="defaultEnvironment">directoryDefaultEnvironment</property>
+	-->
 
 		<property name="initialContextFactory">
 			"com.sun.jndi.ldap.LdapCtxFactory"

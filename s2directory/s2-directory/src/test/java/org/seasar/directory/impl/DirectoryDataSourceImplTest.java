@@ -13,15 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.dao.impl;
+package org.seasar.directory.impl;
+
+import java.util.Hashtable;
 
 import javax.naming.NamingException;
 
 import junit.framework.TestCase;
 
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.impl.DirectoryControlPropertyImpl;
-import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
 
@@ -126,6 +126,22 @@ public class DirectoryDataSourceImplTest extends TestCase {
 		property.setUserSuffix("");
 		property.setBaseDn("ou=system");
 		return property;
+	}
+
+	/**
+	 * DirectoryControlPropertyのテストを行います。
+	 */
+	public void testGetEnvironment() {
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlPropertyImpl.class);
+		DirectoryDataSourceImpl directoryDataSource =
+			new DirectoryDataSourceImpl(property);
+		Hashtable environment = directoryDataSource.getEnvironment(property);
+		assertEquals(
+			"500",
+			environment.get("com.sun.jndi.ldap.connect.timeout"));
+		assertEquals("5000", environment.get("com.sun.jndi.ldap.read.timeout"));
+		assertNull(environment.get("dummy.not.found"));
 	}
 
 }
