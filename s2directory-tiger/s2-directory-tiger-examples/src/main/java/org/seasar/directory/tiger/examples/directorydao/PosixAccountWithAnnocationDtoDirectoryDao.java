@@ -21,15 +21,15 @@ import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.dao.annotation.tiger.Arguments;
 import org.seasar.directory.dao.annotation.tiger.Query;
 import org.seasar.directory.dao.annotation.tiger.S2Directory;
-import org.seasar.directory.tiger.examples.entity.PosixAccountWithAnnotation;
+import org.seasar.directory.tiger.examples.dto.PosixAccountWithAnnotationDto;
 
 /**
  * PosixAccountのDaoインタフェースです。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  */
-@S2Directory(bean = PosixAccountWithAnnotation.class)
-public interface PosixAccountWithAnnocationDirectoryDao {
+@S2Directory(bean = PosixAccountWithAnnotationDto.class)
+public interface PosixAccountWithAnnocationDtoDirectoryDao {
 
 	public boolean authenticate();
 
@@ -37,39 +37,40 @@ public interface PosixAccountWithAnnocationDirectoryDao {
 	public boolean authenticateByUserMode(DirectoryControlProperty user);
 
 	@Arguments("uid")
-	public PosixAccountWithAnnotation getUserByUid(String uid);
+	public PosixAccountWithAnnotationDto getUserByUid(String uid);
 
 	@Arguments({ "user", "uid" })
-	public PosixAccountWithAnnotation getUserByUidWithUserMode(
+	public PosixAccountWithAnnotationDto getUserByUidWithUserMode(
 			DirectoryControlProperty user, String uid);
 
 	@Arguments({ "user", "uidNumber" })
-	public PosixAccountWithAnnotation getUserByUidAndUidNumber(String uid,
+	public PosixAccountWithAnnotationDto getUserByUidAndUidNumber(String uid,
 			int uidNumber);
 
 	@Query("uid=user2,ou=Users,dc=seasar,dc=org")
-	public List<PosixAccountWithAnnotation> getUserByFilter();
+	public List<PosixAccountWithAnnotationDto> getUserByFilter();
 
-	public PosixAccountWithAnnotation getUser(PosixAccountWithAnnotation account);
+	public PosixAccountWithAnnotationDto getUser(
+			PosixAccountWithAnnotationDto account);
 
-	public PosixAccountWithAnnotation getUserWithUserMode(
-			DirectoryControlProperty user, PosixAccountWithAnnotation account);
+	public PosixAccountWithAnnotationDto getUserWithUserMode(
+			DirectoryControlProperty user, PosixAccountWithAnnotationDto account);
 
-	public int insert(PosixAccountWithAnnotation account);
+	public int insert(PosixAccountWithAnnotationDto account);
 
 	public int insertWithUserMode(DirectoryControlProperty user,
-			PosixAccountWithAnnotation account);
+			PosixAccountWithAnnotationDto account);
 
-	public int update(PosixAccountWithAnnotation account);
+	public int update(PosixAccountWithAnnotationDto account);
 
 	public int updateWithUserMode(DirectoryControlProperty user,
-			PosixAccountWithAnnotation account);
+			PosixAccountWithAnnotationDto account);
 
-	public List<PosixAccountWithAnnotation> getAllUser();
+	public List<PosixAccountWithAnnotationDto> getAllUser();
 
-	public int delete(PosixAccountWithAnnotation account);
+	public int delete(PosixAccountWithAnnotationDto account);
 
 	public int deleteWithUserMode(DirectoryControlProperty user,
-			PosixAccountWithAnnotation account);
+			PosixAccountWithAnnotationDto account);
 
 }

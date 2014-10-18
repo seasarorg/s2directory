@@ -132,10 +132,10 @@ public class InsertHandler extends BasicDirectoryHandler implements
 						continue;
 					}
 					PropertyDesc pd = pt.getPropertyDesc();
-					String propName = pd.getPropertyName();
+					String attributeName = pt.getColumnName();
 					Attribute addAttribute =
 						createAttribute(
-							propName,
+							attributeName,
 							pd.getValue(argValue),
 							pd.getPropertyType());
 					if (addAttribute != null) {

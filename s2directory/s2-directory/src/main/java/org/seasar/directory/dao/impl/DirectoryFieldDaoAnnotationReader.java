@@ -21,6 +21,8 @@ import java.lang.reflect.Method;
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.directory.dao.util.DaoUtil;
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
 
@@ -109,39 +111,98 @@ public class DirectoryFieldDaoAnnotationReader implements
 	 * {@inheritDoc}
 	 */
 	public String[] getObjectClasses(String[] beanObjectClasses) {
-		String[] tmpObjectClasses, objectClasses;
+		// Dao インタフェースに OBJECTCLASSES フィールドアノテーションがある場合
+		String[] objectClasses = getObjectClassesFromAnnotation();
+		if (objectClasses != null) {
+			return objectClasses;
+		}
+
+		// Dao インタフェースに OBJECTCLASSES フィールドアノテーションがない場合
+		objectClasses = getObjectClassesFromBeanAnnotation();
+		if (objectClasses != null) {
+			return objectClasses;
+		}
+		if (beanObjectClasses != null) {
+			// ビーンクラスにOBJECTCLASSESアノテーションがある場合
+			objectClasses = beanObjectClasses;
+		} else {
+			// ビーンクラスにOBJECTCLASSESアノテーションがない場合
+			objectClasses = new String[1];
+			objectClasses[0] = DaoUtil.getSimpleClassName(this.getBeanClass());
+		}
+		return setupObjectClass(objectClasses);
+	}
+
+	/**
+	 * Dao インタフェースの OBJECTCLASSES フィールドアノテーションから
+	 * オブジェクトクラスアノテーションの値の配列を返します。
+	 * 存在しない場合は、null を返します。
+	 * 
+	 * @return オブジェクトクラスアノテーションの値の配列
+	 */
+	protected String[] getObjectClassesFromAnnotation() {
 		if (daoBeanDesc.hasField(OBJECTCLASSES)) {
 			Field queryField = daoBeanDesc.getField(OBJECTCLASSES);
 			String objectClassNames = (String)FieldUtil.get(queryField, null);
-			tmpObjectClasses = objectClassNames.split(",");
-		} else {
-			if (beanObjectClasses != null) {
-				// ビーンクラスにOBJECTCLASSESアノテーションがある場合
-				tmpObjectClasses = beanObjectClasses;
-			} else {
-				// ビーンクラスにOBJECTCLASSESアノテーションがない場合
-				tmpObjectClasses = new String[1];
-				tmpObjectClasses[0] =
-					DaoUtil.getSimpleClassName(this.getBeanClass());
+			return setupObjectClass(objectClassNames.split(","));
+		}
+		return null;
+	}
+
+	/**
+	 * Dao インタフェースに定義された Bean クラスの OBJECTCLASSES
+	 * フィールドアノテーションからオブジェクトクラスアノテーションの値の配列を返します。
+	 * Bean クラスは親クラスを辿って探します。
+	 * 存在しない場合は、null を返します。
+	 * 
+	 * @return オブジェクトクラスアノテーションの値の配列
+	 */
+	protected String[] getObjectClassesFromBeanAnnotation() {
+		Class beanClass = getBeanClass();
+		for (Class superClass = beanClass; superClass != Object.class; superClass =
+			superClass.getSuperclass()) {
+			BeanDesc daoBeanBeanDesc = BeanDescFactory.getBeanDesc(superClass);
+			if (daoBeanBeanDesc.hasField(OBJECTCLASSES)) {
+				Field queryField = daoBeanBeanDesc.getField(OBJECTCLASSES);
+				String objectClassNames =
+					(String)FieldUtil.get(queryField, null);
+				return setupObjectClass(objectClassNames.split(","));
 			}
 		}
-		// top オブジェクトクラスを持っていない場合、追加します。
-		boolean hasTopObjectClass = false;
-		for (int i = 0; i < tmpObjectClasses.length; i++) {
-			tmpObjectClasses[i] = tmpObjectClasses[i].trim();
-			if (tmpObjectClasses[i].equals(BASE_OBJECTCLASS)) {
-				hasTopObjectClass = true;
-			}
+		return null;
+	}
+
+	/**
+	 * オブジェクトクラスへ top が無い場合に追加して返します。
+	 * 
+	 * @param objectClasses
+	 *            オブジェクトクラスアノテーションの値の配列
+	 * @return セットアップ済みのオブジェクトクラスアノテーションの値の配列
+	 */
+	protected String[] setupObjectClass(String[] objectClasses) {
+		if (objectClasses == null) {
+			return objectClasses;
 		}
-		if (hasTopObjectClass) {
-			objectClasses = tmpObjectClasses;
-		} else {
-			int length = tmpObjectClasses.length;
-			objectClasses = new String[length + 1];
-			System.arraycopy(tmpObjectClasses, 0, objectClasses, 0, length);
-			objectClasses[length] = BASE_OBJECTCLASS;
+		for (int i = 0; i < objectClasses.length; i++) {
+			objectClasses[i] = objectClasses[i].trim();
 		}
-		return objectClasses;
+		return addObjectClass(objectClasses, BASE_OBJECTCLASS);
+	}
+
+	/**
+	 * 指定されたオブジェクトクラス名を持っていない場合、追加します。
+	 * 
+	 * @param objectClasses
+	 *            オブジェクトクラスアノテーションの値の配列
+	 * @param objectClass
+	 *            追加するオブジェクトクラス名
+	 * @return オブジェクトクラスアノテーションの値の配列
+	 */
+	protected String[] addObjectClass(String[] objectClasses, String objectClass) {
+		if (ArrayUtil.contains(objectClasses, objectClass)) {
+			return objectClasses;
+		}
+		return (String[])ArrayUtil.add(objectClasses, objectClass);
 	}
 
 	/**
