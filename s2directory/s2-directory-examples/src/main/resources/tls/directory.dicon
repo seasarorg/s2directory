@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components.dtd">
+<components namespace="directory">
+
+<!--
+	# Connection Pooling Configuration
+		Connection pooling is supported only on the Java 2 SDK, v 1.4.1, and later releases.
+		http://java.sun.com/products/jndi/tutorial/ldap/connect/config.html
+		http://java.sun.com/j2se/1.5.0/ja/docs/ja/guide/jndi/jndi-ldap.html#POOL
+-->
+<!--
+	# TODO: コネクションプール利用時、com.sun.jndi.ldap.pool以下で
+	# 物理コネクションが終了時に完全にcloseされてない様子
+	<component name="connectionPool"
+		class="org.seasar.directory.impl.DirectoryConnectionPoolImpl">
+		<property name="authentication">"none simple DIGEST-MD5"</property>
+		<property name="debug">"fine"</property>
+		<property name="initSize">1</property>
+		<property name="maxSize">10</property>
+		<property name="prefSize">5</property>
+		<property name="protocol">"plain ssl"</property>
+		<property name="timeout">3000</property>
+	</component>
+-->
+
+<!--
+	# Default Environment Properties
+	http://docs.oracle.com/javase/6/docs/technotes/guides/jndi/jndi-ldap.html
+	<component name="directoryDefaultEnvironment" class="java.util.Hashtable"
+		instance="prototype">
+		<initMethod>#self.put("com.sun.jndi.ldap.connect.timeout", "500")</initMethod>
+		<initMethod>#self.put("com.sun.jndi.ldap.read.timeout", "5000")</initMethod>
+	</component>
+-->
+
+<!--
+	# Default SearchControls
+	http://docs.oracle.com/javase/1.5.0/docs/api/javax/naming/directory/SearchControls.html
+	<component name="directoryDefaultSearchControls" class="javax.naming.directory.SearchControls"
+		instance="prototype">
+		<property name="countLimit">1000</property>
+		<property name="searchScope">@javax.naming.directory.SearchControls@SUBTREE_SCOPE</property>
+		<property name="timeLimit">5000</property>
+	</component>
+-->
+
+<!--
+	# Directory Configuration
+-->
+	<component name="directoryControlProperty"
+		class="org.seasar.directory.impl.DirectoryControlPropertyImpl"
+			instance="prototype">
+	<!--
+		<property name="defaultEnvironment">directoryDefaultEnvironment</property>
+		<property name="defaultSearchControls">directoryDefaultSearchControls</property>
+	-->
+
+		<property name="initialContextFactory">
+			"com.sun.jndi.ldap.LdapCtxFactory"
+		</property>
+
+	<!--
+		# PermissiveSSLSocketFactory is not strictly secure.
+		# But, it can connect to the server having the SSL certificate signed by own CA.
+		# default value:
+		<property name="sslSocketFactory">
+			"javax.net.ssl.SSLSocketFactory"
+		</property>
+	-->
+		<property name="sslSocketFactory">
+			"org.seasar.directory.impl.PermissiveSSLSocketFactory"
+		</property>
+		<property name="enableTLS">true</property>
+
+		<property name="url">
+			"ldap://localhost:389"
+		</property>
+		<property name="baseDn">"dc=seasar,dc=org"</property>
+		<property name="bindDn">"cn=Manager,dc=seasar,dc=org"</property>
+		<property name="password">"secret"</property>
+		<property name="passwordAlgorithm">"SHA"</property>
+		<property name="passwordSaltLength">"8"</property>
+		<property name="multipleValueDelimiter">"__"</property>
+
+	<!--
+		# Other options and each default value.
+		<property name="authentication">"simple"</property>
+		<property name="user"></property>
+		<property name="passwordAlgorithm">"SSHA"</property>
+		<property name="passwordSaltLength">"4"</property>
+		<property name="userSuffix">"ou=Users"</property>
+		<property name="userAttributeName">"uid"</property>
+		<property name="groupSuffix">"ou=Groups"</property>
+		<property name="groupAttributeName">"memberUid"</property>
+		<property name="multipleValueDelimiter">"DEFAULT_MULTIPLE_VALUE_DELIMITER"</property>
+	-->
+	</component>
+</components>

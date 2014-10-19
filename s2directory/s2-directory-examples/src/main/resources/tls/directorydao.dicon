@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+<components namespace="directorydao">
+	<include path="tls/directory.dicon"/>
+
+	<!-- attribute handlers -->
+	<component name="defaultHandler" class="org.seasar.directory.attribute.DefaultAttributeHandler"/>
+	<component class="org.seasar.directory.attribute.DistinguishedNameAttributeHandler">
+		<property name="attributeNameList">{"dn"}</property>
+	</component>
+	<component class="org.seasar.directory.attribute.UserPasswordAttributeHandler">
+		<property name="attributeNameList">{"userPassword", "alternativeUserPassword"}</property>
+	</component>
+
+	<!-- factory -->
+	<component class="org.seasar.directory.impl.DirectoryDataSourceFactoryImpl"/>
+	<component class="org.seasar.directory.impl.DirectoryAttributeHandlerFactoryImpl">
+		<property name="ignoreCase">true</property>
+		<property name="defaultAttributeHandler">defaultHandler</property>
+		<property name="attributeHandlers">container.findComponents( @org.seasar.directory.attribute.AttributeHandler@class)</property>
+	</component>
+	<component class="org.seasar.directory.impl.DirectoryValueTypeFactoryImpl"/>	
+	<component class="org.seasar.directory.dao.impl.DirectoryAnnotationReaderFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryDaoMetaDataFactoryImpl"/>
+	<component class="org.seasar.directory.dao.impl.DirectoryDaoNamingConventionImpl"/>
+
+	<!-- interceptor -->
+	<component name="interceptor"
+		class="org.seasar.directory.dao.interceptors.S2DirectoryDaoInterceptor"/>
+</components>

@@ -30,17 +30,18 @@ public class AllTests {
 			new TestSuite("Test for org.seasar.directory.examples.client");
 		// $JUnit-BEGIN$
 		suite.addTestSuite(InetOrgPersonUpdateTest.class);
-		suite.addTestSuite(PosixGroupUpdateTest.class);
-		suite.addTestSuite(PosixGroupInsertTest.class);
+		suite.addTestSuite(PosixAccountConnectionTest.class);
+		suite.addTestSuite(PosixAccountDeleteTest.class);
+		suite.addTestSuite(PosixAccountInsertTest.class);
 		suite.addTestSuite(PosixAccountPasswordUpdateTest.class);
 		suite.addTestSuite(PosixAccountSelectAnonymousTest.class);
 		suite.addTestSuite(PosixAccountSelectTest.class);
-		suite.addTestSuite(PosixAccountInsertTest.class);
+		suite.addTestSuite(PosixAccountTLSTest.class);
+		suite.addTestSuite(PosixAccountUpdateTest.class);
 		suite.addTestSuite(PosixAccountWithAnnocationTest.class);
 		suite.addTestSuite(PosixGroupDtoTest.class);
-		suite.addTestSuite(PosixAccountDeleteTest.class);
-		suite.addTestSuite(PosixAccountConnectionTest.class);
-		suite.addTestSuite(PosixAccountUpdateTest.class);
+		suite.addTestSuite(PosixGroupInsertTest.class);
+		suite.addTestSuite(PosixGroupUpdateTest.class);
 		suite.addTestSuite(PosixGroupWithListInsertTest.class);
 		// $JUnit-END$
 		return suite;
