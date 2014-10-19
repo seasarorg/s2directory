@@ -108,6 +108,8 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
+	 * 指定された接続情報を使用して作成したTLSコネクションを返します。
+	 * 
 	 * @param environment
 	 *            接続情報
 	 * @param property
@@ -128,15 +130,36 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 			sslSocketFactory =
 				(SSLSocketFactory)ClassUtil.newInstance(sslSocketFactoryClassName);
 		}
-		// TLS接続を行う
+
+		// TLS接続の場合、初回のコネクション作成時には認証を行いません。
+		// 認証情報を含んでいると使用してしまうため、一時的に取り除きます。
+		Object principal = environment.get(Context.SECURITY_PRINCIPAL);
+		Object credentials = environment.get(Context.SECURITY_CREDENTIALS);
+		environment.remove(Context.SECURITY_AUTHENTICATION);
+		environment.remove(Context.SECURITY_PRINCIPAL);
+		environment.remove(Context.SECURITY_CREDENTIALS);
+
+		// TLSコネクションを取得します。
 		LdapContext context = new InitialLdapContext(environment, null);
 		StartTlsResponse tls =
-			(StartTlsResponse)((LdapContext)context).extendedOperation(new StartTlsRequest());
+			(StartTlsResponse)(context.extendedOperation(new StartTlsRequest()));
 		try {
 			if (hostnameVerifier != null) {
 				tls.setHostnameVerifier(hostnameVerifier);
 			}
 			tls.negotiate(sslSocketFactory);
+			// TLSセッション確立後に認証情報を設定します。
+			// 実際の認証処理はセッション使用時に行われます。
+			context.addToEnvironment(
+				Context.SECURITY_AUTHENTICATION,
+				property.getAuthentication());
+			if (DirectoryControlProperty.AUTHENTICATION_NONE.equals(property.getAuthentication()) == false) {
+				// 匿名接続以外の場合のみ認証情報を設定します。
+				context.addToEnvironment(Context.SECURITY_PRINCIPAL, principal);
+				context.addToEnvironment(
+					Context.SECURITY_CREDENTIALS,
+					credentials);
+			}
 		} catch (IOException e) {
 			if (tls != null) {
 				try {
@@ -151,6 +174,8 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 	}
 
 	/**
+	 * 指定された接続情報を使用して作成したSSLコネクションを返します。
+	 * 
 	 * @param environment
 	 *            接続情報
 	 * @param property

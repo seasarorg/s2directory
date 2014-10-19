@@ -113,10 +113,18 @@ public class BasicDirectoryHandler {
 		DirContext context = null;
 		try {
 			context = dataSource.getConnection();
-			if (context != null) {
+			if (property.isEnableTLS() == true) {
+				// TLS接続の時は、コネクション作成後の通信時に認証を行うため、
+				// 何らかの通信を実行する必要があります。
+				// 認証情報が正しくない場合は、AuthenticationException が発生します。
+				context.getAttributes("");
 				return true;
 			} else {
-				return false;
+				if (context != null) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		} catch (AuthenticationException ae) {
 			return false;
@@ -166,6 +174,8 @@ public class BasicDirectoryHandler {
 		try {
 			context = getConnection();
 			return context.search(baseDn, filter, controls);
+		} catch (AuthenticationException e) {
+			throw new AuthenticationRuntimeException(property);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
@@ -181,16 +191,11 @@ public class BasicDirectoryHandler {
 	 * @return 検索結果
 	 */
 	public NamingEnumeration searchOneLevel(String dn) {
-		DirContext context = null;
-		try {
-			String firstDn = DirectoryUtil.getFirstDn(dn);
-			String baseDn = DirectoryUtil.getBaseDn(dn);
-			SearchControls controls = property.getDefaultSearchControls();
-			controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
-			return search(baseDn, firstDn, controls);
-		} finally {
-			DirectoryDataSourceUtil.close(context);
-		}
+		String firstDn = DirectoryUtil.getFirstDn(dn);
+		String baseDn = DirectoryUtil.getBaseDn(dn);
+		SearchControls controls = property.getDefaultSearchControls();
+		controls.setSearchScope(SearchControls.ONELEVEL_SCOPE);
+		return search(baseDn, firstDn, controls);
 	}
 
 	/**
@@ -209,6 +214,8 @@ public class BasicDirectoryHandler {
 			context = getConnection();
 			createdContext = context.createSubcontext(dn, attrs);
 			return new Integer(1);
+		} catch (AuthenticationException e) {
+			throw new AuthenticationRuntimeException(property);
 		} catch (NameAlreadyBoundException e) {
 			throw new NameAlreadyBoundRuntimeException(e);
 		} catch (NamingException e) {
@@ -240,6 +247,8 @@ public class BasicDirectoryHandler {
 				context = getConnection();
 				context.modifyAttributes(dn, items);
 				return new Integer(1);
+			} catch (AuthenticationException e) {
+				throw new AuthenticationRuntimeException(property);
 			} catch (NamingException e) {
 				throw new DirectoryRuntimeException(e);
 			} finally {
@@ -265,6 +274,8 @@ public class BasicDirectoryHandler {
 				context.destroySubcontext(dn);
 				return new Integer(1);
 			}
+		} catch (AuthenticationException e) {
+			throw new AuthenticationRuntimeException(property);
 		} catch (NamingException e) {
 			throw new DirectoryRuntimeException(e);
 		} finally {
@@ -280,7 +291,6 @@ public class BasicDirectoryHandler {
 	 * @return エントリが存在しているかどうか
 	 */
 	public boolean isExistEntry(String dn) {
-		DirContext context = null;
 		NamingEnumeration results = null;
 		try {
 			results = searchOneLevel(dn);
@@ -290,10 +300,7 @@ public class BasicDirectoryHandler {
 			} else {
 				return false;
 			}
-		} catch (NamingException e) {
-			throw new DirectoryRuntimeException(e);
 		} finally {
-			DirectoryDataSourceUtil.close(context);
 			DirectoryDataSourceUtil.close(results);
 		}
 	}
@@ -306,11 +313,15 @@ public class BasicDirectoryHandler {
 	 * @return 検索結果の数
 	 * @throws NamingException
 	 */
-	public int count(NamingEnumeration results) throws NamingException {
+	public int count(NamingEnumeration results) {
 		int count = 0;
-		while (results.hasMore()) {
-			results.next();
-			count++;
+		try {
+			while (results.hasMore()) {
+				results.next();
+				count++;
+			}
+		} catch (NamingException e) {
+			throw new DirectoryRuntimeException(e);
 		}
 		return count;
 	}
