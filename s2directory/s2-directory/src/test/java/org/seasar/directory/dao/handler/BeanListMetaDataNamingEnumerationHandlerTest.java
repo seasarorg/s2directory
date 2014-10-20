@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.directory.dao;
+package org.seasar.directory.dao.handler;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -23,7 +23,7 @@ import javax.naming.directory.SearchControls;
 import junit.framework.TestCase;
 
 import org.seasar.directory.DirectoryControlProperty;
-import org.seasar.directory.dao.handler.BeanListMetaDataNamingEnumerationHandler;
+import org.seasar.directory.dao.DirectoryBeanMetaData;
 import org.seasar.directory.impl.DirectoryControlPropertyImpl;
 import org.seasar.directory.impl.DirectoryDataSourceImpl;
 import org.seasar.directory.util.DirectoryDataSourceUtil;

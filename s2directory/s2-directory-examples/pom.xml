@@ -15,7 +15,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.seasar.directory</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>s2-directory</artifactId>
       <version>${parent.version}</version>
       <type>jar</type>

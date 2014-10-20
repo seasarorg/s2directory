@@ -22,7 +22,13 @@
     <dependency>
       <groupId>org.seasar.dao</groupId>
       <artifactId>s2-dao-tiger</artifactId>
-      <version>1.0.47</version>
+      <version>1.0.51</version>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 

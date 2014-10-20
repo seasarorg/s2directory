@@ -142,7 +142,7 @@ public class DirectoryDataSourceImpl implements DirectoryDataSource {
 		// TLSコネクションを取得します。
 		LdapContext context = new InitialLdapContext(environment, null);
 		StartTlsResponse tls =
-			(StartTlsResponse)(context.extendedOperation(new StartTlsRequest()));
+			(StartTlsResponse)context.extendedOperation(new StartTlsRequest());
 		try {
 			if (hostnameVerifier != null) {
 				tls.setHostnameVerifier(hostnameVerifier);
