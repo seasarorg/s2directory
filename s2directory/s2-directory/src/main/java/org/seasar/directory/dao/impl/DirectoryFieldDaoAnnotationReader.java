@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
 
@@ -55,9 +54,6 @@ public class DirectoryFieldDaoAnnotationReader implements
 
 	/** Daoクラスのメタ情報 */
 	protected BeanDesc daoBeanDesc;
-
-	/** 基底オブジェクトクラス */
-	private final static String BASE_OBJECTCLASS = "top";
 
 	/**
 	 * 指定されたメタ情報を持つインスタンスを作成します。
@@ -155,23 +151,7 @@ public class DirectoryFieldDaoAnnotationReader implements
 		for (int i = 0; i < objectClasses.length; i++) {
 			objectClasses[i] = objectClasses[i].trim();
 		}
-		return addObjectClass(objectClasses, BASE_OBJECTCLASS);
-	}
-
-	/**
-	 * 指定されたオブジェクトクラス名を持っていない場合、追加します。
-	 * 
-	 * @param objectClasses
-	 *            オブジェクトクラスアノテーションの値の配列
-	 * @param objectClass
-	 *            追加するオブジェクトクラス名
-	 * @return オブジェクトクラスアノテーションの値の配列
-	 */
-	protected String[] addObjectClass(String[] objectClasses, String objectClass) {
-		if (ArrayUtil.contains(objectClasses, objectClass)) {
-			return objectClasses;
-		}
-		return (String[])ArrayUtil.add(objectClasses, objectClass);
+		return objectClasses;
 	}
 
 	/**

@@ -149,4 +149,26 @@ public class DirectoryControlPropertyImplTest extends TestCase {
 		}
 	}
 
+	/**
+	 * defaultObjectClassesのテストを行います。
+	 */
+	public void testDefaultObjectClasses() {
+		String[] objectClasses1 = property1.getAbstractObjectClasses();
+		assertEquals(2, objectClasses1.length);
+
+		// instance=prototype を確認します。
+		property1.setAbstractObjectClasses(new String[] { "aaa", "bbb", "ccc" });
+		assertEquals(3, property1.getAbstractObjectClasses().length);
+
+		assertEquals(2, property2.getAbstractObjectClasses().length);
+
+		try {
+			property1.setAbstractObjectClasses(null);
+			property1.toString();
+			assertTrue(true);
+		} catch (NullPointerException e) {
+			fail();
+		}
+	}
+
 }

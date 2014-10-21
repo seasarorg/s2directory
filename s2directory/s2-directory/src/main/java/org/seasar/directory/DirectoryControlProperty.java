@@ -32,6 +32,9 @@ public interface DirectoryControlProperty {
 	/** 簡単な認証バインドのための認証メカニズム定数です。 */
 	public static final String AUTHENTICATION_SIMPLE = "simple";
 
+	/** デフォルトのオブジェクトクラスの定数です。 */
+	public static final String[] ABSTRACT_OBJECTCLASSES_TOP = { "top" };
+
 	/**
 	 * デフォルトのディレクトリ接続情報を取得します。
 	 * 
@@ -59,6 +62,22 @@ public interface DirectoryControlProperty {
 	 *            デフォルトの {@link SearchControls}
 	 */
 	public void setDefaultSearchControls(SearchControls defaultSearchControls);
+
+	/**
+	 * デフォルトのオブジェクトクラスの配列を取得します。
+	 * 明示的に設定していない場合は、new String[] {"top"} が返ります。
+	 * 
+	 * @return デフォルトのオブジェクトクラスの配列
+	 */
+	public String[] getAbstractObjectClasses();
+
+	/**
+	 * デフォルトのオブジェクトクラスの配列を設定します。
+	 * 
+	 * @param abstractObjectClasses
+	 *            デフォルトのオブジェクトクラスの配列
+	 */
+	public void setAbstractObjectClasses(String[] abstractObjectClasses);
 
 	/**
 	 * 接続に使用するコンテキストファクトリを取得します。
