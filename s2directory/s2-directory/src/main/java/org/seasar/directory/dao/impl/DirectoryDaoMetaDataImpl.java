@@ -302,7 +302,9 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 				handler);
 		// フィルタの準備をします。
 		String filter =
-			createAutoSelectFilter(daoAnnotationReader, beanMetaData);
+			createSelectFilterFromObjectClasses(
+				daoAnnotationReader,
+				beanMetaData);
 		String query = daoAnnotationReader.getQuery(method);
 		if (query != null) {
 			if (StringUtil.isEmpty(filter)) {
@@ -318,14 +320,43 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 		directoryCmmands.put(method.getName(), cmd);
 	}
 
-	protected String createAutoSelectFilter(
+	/**
+	 * オブジェクトクラスからフィルタを作成して返します。
+	 * 
+	 * @param annotationReader
+	 *            {@link DirectoryDaoAnnotationReader}
+	 * @param beanMetaData
+	 *            {@link DirectoryBeanMetaData}
+	 * @return フィルタ
+	 */
+	protected String createSelectFilterFromObjectClasses(
 			final DirectoryDaoAnnotationReader annotationReader,
 			final DirectoryBeanMetaData beanMetaData) {
 		// オブジェクトクラスを設定します。
 		final String[] objectClasses =
 			annotationReader.getObjectClasses(beanMetaData.getObjectClasses());
+		if (objectClasses.length == 0) {
+			return "";
+		}
+		// aaa
+		// objectClass=aaa
+		if (objectClasses.length == 1) {
+			return "objectClass=" + objectClasses[0];
+		}
+		// aaa bbb
+		// (& (objectClass=aaa) (objectClass=bbb) )
+		// aaa bbb ccc
+		// (& (&(objectClass=aaa)(objectClass=bbb)) (objectClass=ccc) )
 		final StringBuffer buffer = new StringBuffer();
-		buffer.append("objectclass=").append(objectClasses[0]);
+		for (int i = 0; i < objectClasses.length; i++) {
+			if (i % 2 == 0) {
+				buffer.insert(0, "(&");
+			}
+			buffer.append("(objectClass=").append(objectClasses[i]).append(")");
+			if (i % 2 == 1) {
+				buffer.append(")");
+			}
+		}
 		return buffer.toString();
 	}
 
