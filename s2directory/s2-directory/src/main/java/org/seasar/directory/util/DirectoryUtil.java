@@ -22,6 +22,7 @@ import javax.naming.directory.SearchControls;
 
 import org.seasar.directory.digest.Digest;
 import org.seasar.directory.digest.DigestFactory;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * ディレクトリに関するユーティリティクラスです。
@@ -120,6 +121,88 @@ public final class DirectoryUtil {
 		} catch (NoSuchAlgorithmException e) {
 			return "";
 		}
+	}
+
+	/**
+	 * フィルターを作成します。
+	 * 
+	 * @param operator
+	 *            オペレーター
+	 * @param name
+	 *            属性名
+	 * @param values
+	 *            値の配列
+	 * @return フィルター
+	 */
+	public static String createFilter(String operator, String name,
+			String[] values) {
+		if (values == null) {
+			return "";
+		}
+		if (values.length == 0) {
+			return "";
+		}
+		// aaa
+		// objectClass=aaa
+		if (values.length == 1) {
+			if (StringUtil.isEmpty(values[0])) {
+				return "";
+			} else {
+				return name + "=" + values[0];
+			}
+		}
+		// aaa bbb
+		// (& (objectClass=aaa) (objectClass=bbb) )
+		// aaa bbb ccc
+		// (& (&(objectClass=aaa)(objectClass=bbb)) (objectClass=ccc) )
+		final StringBuffer buffer = new StringBuffer();
+		buffer.append("(" + name + "=").append(values[0]).append(")");
+		for (int i = 1; i < values.length; i++) {
+			buffer.insert(0, "(" + operator);
+			buffer.append("(" + name + "=").append(values[i]).append(")");
+			buffer.append(")");
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * フィルターを追加します。
+	 * 
+	 * @param operator
+	 *            　オペレーター
+	 * @param baseFilter
+	 *            追加されるフィルター
+	 * @param appendFilter
+	 *            追加するフィルター
+	 * @return 追加されたフィルター
+	 */
+	public static String addFilter(String operator, String baseFilter,
+			String appendFilter) {
+		if (StringUtil.isEmpty(appendFilter)) {
+			if (StringUtil.isEmpty(baseFilter)) {
+				return "";
+			} else {
+				return baseFilter;
+			}
+		}
+		if (StringUtil.isEmpty(baseFilter)) {
+			return appendFilter;
+		}
+
+		final StringBuffer buffer = new StringBuffer();
+		buffer.append("(&");
+		if (baseFilter.charAt(0) == '(') {
+			buffer.append(baseFilter);
+		} else {
+			buffer.append("(").append(baseFilter).append(")");
+		}
+		if (appendFilter.charAt(0) == '(') {
+			buffer.append(appendFilter);
+		} else {
+			buffer.append("(").append(appendFilter).append(")");
+		}
+		buffer.append(")");
+		return buffer.toString();
 	}
 
 	/**
