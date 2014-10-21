@@ -72,6 +72,75 @@ public class DirectoryUtilTest extends TestCase {
 			DirectoryUtil.createPassword("secret", "SHA", -1));
 	}
 
+	public void testCreateFilter() {
+		assertEquals("", DirectoryUtil.createFilter(null, null, null));
+		assertEquals(
+			"",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] {}));
+		assertEquals(
+			"",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] { "" }));
+		assertEquals("objectClass=aaa", DirectoryUtil.createFilter(
+			"+",
+			"objectClass",
+			new String[] { "aaa" }));
+		assertEquals(
+			"(&(objectClass=aaa)(objectClass=bbb))",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] {
+				"aaa",
+				"bbb" }));
+		assertEquals(
+			"(&(&(objectClass=aaa)(objectClass=bbb))(objectClass=ccc))",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] {
+				"aaa",
+				"bbb",
+				"ccc" }));
+		assertEquals(
+			"(&(&(&(objectClass=aaa)(objectClass=bbb))(objectClass=ccc))(objectClass=ddd))",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] {
+				"aaa",
+				"bbb",
+				"ccc",
+				"ddd" }));
+		assertEquals(
+			"(&(&(&(&(objectClass=aaa)(objectClass=bbb))(objectClass=ccc))(objectClass=ddd))(objectClass=eee))",
+			DirectoryUtil.createFilter("&", "objectClass", new String[] {
+				"aaa",
+				"bbb",
+				"ccc",
+				"ddd",
+				"eee" }));
+	}
+
+	public void testAddFilter() {
+		assertEquals("", DirectoryUtil.addFilter(null, null, null));
+		assertEquals("", DirectoryUtil.addFilter(null, "", null));
+		assertEquals("", DirectoryUtil.addFilter(null, null, ""));
+		assertEquals("aaa", DirectoryUtil.addFilter(null, "aaa", null));
+		assertEquals("bbb", DirectoryUtil.addFilter(null, null, "bbb"));
+		assertEquals(
+			"(&(aaa=bbb)(ccc=ddd))",
+			DirectoryUtil.addFilter("&", "aaa=bbb", "ccc=ddd"));
+		assertEquals(
+			"(&(aaa=bbb)(ccc=ddd))",
+			DirectoryUtil.addFilter("&", "(aaa=bbb)", "ccc=ddd"));
+		assertEquals(
+			"(&(aaa=bbb)(ccc=ddd))",
+			DirectoryUtil.addFilter("&", "aaa=bbb", "(ccc=ddd)"));
+		assertEquals(
+			"(&(aaa=bbb)(ccc=ddd))",
+			DirectoryUtil.addFilter("&", "(aaa=bbb)", "(ccc=ddd)"));
+		assertEquals(
+			"(&(&(aaa=bbb)(ccc=ddd))(eee=fff))",
+			DirectoryUtil.addFilter("&", "(&(aaa=bbb)(ccc=ddd))", "(eee=fff)"));
+		assertEquals(
+			"(&(&(&(aaa=bbb)(ccc=ddd))(eee=fff))(ggg=hhh))",
+			DirectoryUtil.addFilter(
+				"&",
+				"(&(&(aaa=bbb)(ccc=ddd))(eee=fff))",
+				"ggg=hhh"));
+	}
+
 	public void testToStringFromSearchControls() {
 		assertEquals("", DirectoryUtil.toStringFromSearchControls(null));
 		assertEquals(

@@ -134,7 +134,7 @@ public class DirectoryFieldBeanAnnotationReader implements
 	}
 
 	/**
-	 * オブジェクトクラスへ top が無い場合に追加して返します。
+	 * オブジェクトクラスを整形して返します。
 	 * 
 	 * @param objectClasses
 	 *            オブジェクトクラスアノテーションの値の配列

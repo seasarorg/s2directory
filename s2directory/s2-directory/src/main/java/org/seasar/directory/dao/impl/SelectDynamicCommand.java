@@ -28,6 +28,7 @@ import org.seasar.directory.impl.ExecuteHandler;
 import org.seasar.directory.impl.SelectHandler;
 import org.seasar.directory.types.PropertyType;
 import org.seasar.directory.types.ValueType;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.StringUtil;
@@ -114,15 +115,7 @@ public class SelectDynamicCommand extends AbstractDynamicDirectoryCommand {
 			return "dummy=dummy";
 		}
 
-		if (StringUtil.isEmpty(daoFilter)) {
-			return argumentFilter;
-		} else {
-			if (!StringUtil.isEmpty(argumentFilter)) {
-				return "(&(" + daoFilter + ")(" + argumentFilter + "))";
-			} else {
-				return daoFilter;
-			}
-		}
+		return DirectoryUtil.addFilter("&", daoFilter, argumentFilter);
 	}
 
 	/**

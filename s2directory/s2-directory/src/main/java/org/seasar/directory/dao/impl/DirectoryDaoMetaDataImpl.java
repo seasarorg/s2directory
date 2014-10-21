@@ -35,11 +35,11 @@ import org.seasar.directory.dao.handler.BeanListMetaDataNamingEnumerationHandler
 import org.seasar.directory.dao.handler.BeanMetaDataNamingEnumerationHandler;
 import org.seasar.directory.dao.handler.ObjectNamingEnumerationHandler;
 import org.seasar.directory.exception.DirectoryDaoNotFoundRuntimeException;
+import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.MethodUtil;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * DirectoryDao用のメタ情報を表わすクラスです。
@@ -306,16 +306,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 				daoAnnotationReader,
 				beanMetaData);
 		String query = daoAnnotationReader.getQuery(method);
-		if (query != null) {
-			if (StringUtil.isEmpty(filter)) {
-				filter = query;
-			} else {
-				if (!(query.startsWith("(") && query.endsWith(")"))) {
-					query = "(" + query + ")";
-				}
-				filter = "(&(" + filter + ")" + query + ")";
-			}
-		}
+		filter = DirectoryUtil.addFilter("&", filter, query);
 		cmd.setFilter(filter);
 		directoryCmmands.put(method.getName(), cmd);
 	}
@@ -335,29 +326,7 @@ public class DirectoryDaoMetaDataImpl implements DirectoryDaoMetaData {
 		// オブジェクトクラスを設定します。
 		final String[] objectClasses =
 			annotationReader.getObjectClasses(beanMetaData.getObjectClasses());
-		if (objectClasses.length == 0) {
-			return "";
-		}
-		// aaa
-		// objectClass=aaa
-		if (objectClasses.length == 1) {
-			return "objectClass=" + objectClasses[0];
-		}
-		// aaa bbb
-		// (& (objectClass=aaa) (objectClass=bbb) )
-		// aaa bbb ccc
-		// (& (&(objectClass=aaa)(objectClass=bbb)) (objectClass=ccc) )
-		final StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < objectClasses.length; i++) {
-			if (i % 2 == 0) {
-				buffer.insert(0, "(&");
-			}
-			buffer.append("(objectClass=").append(objectClasses[i]).append(")");
-			if (i % 2 == 1) {
-				buffer.append(")");
-			}
-		}
-		return buffer.toString();
+		return DirectoryUtil.createFilter("&", "objectClass", objectClasses);
 	}
 
 	/**
