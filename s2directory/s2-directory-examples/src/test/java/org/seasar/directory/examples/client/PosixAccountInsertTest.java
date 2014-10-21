@@ -101,7 +101,21 @@ public class PosixAccountInsertTest extends DefaultDirectoryInformationTreeTest 
 		assertEquals(user1.getUidNumber(), account.getUidNumber());
 	}
 
-	public void testCreate1WithInvalidObjectClass() {
+	public void testCreate1WithEmptyAbstractObjectClass() {
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
+		property.setAbstractObjectClasses(new String[] { "" });
+		posixAccountDtoDao.insertWithUserMode(property, user1);
+	}
+
+	public void testCreate1WithNullAbstractObjectClass() {
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
+		property.setAbstractObjectClasses(null);
+		posixAccountDtoDao.insertWithUserMode(property, user1);
+	}
+
+	public void testCreate1WithInvalidAbstractObjectClass() {
 		assertEquals(1, posixAccountDtoDao.insert(user1));
 
 		DirectoryControlProperty property =

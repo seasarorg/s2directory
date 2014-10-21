@@ -37,6 +37,7 @@ import org.seasar.directory.util.DirectoryUtil;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.exception.NamingRuntimeException;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * 新規追加処理するクラスです。
@@ -175,14 +176,16 @@ public class InsertHandler extends BasicDirectoryHandler implements
 
 		if (abstractObjectClasses != null) {
 			for (int i = 0; i < abstractObjectClasses.length; i++) {
-				if (!objectClassList.contains(abstractObjectClasses[i])) {
+				if (!StringUtil.isEmpty(abstractObjectClasses[i])
+					&& !objectClassList.contains(abstractObjectClasses[i])) {
 					objectClassList.add(abstractObjectClasses[i]);
 				}
 			}
 		}
 
 		for (int i = 0; i < objectClasses.length; i++) {
-			if (!objectClassList.contains(objectClasses[i])) {
+			if (!StringUtil.isEmpty(objectClasses[i])
+				&& !objectClassList.contains(objectClasses[i])) {
 				objectClassList.add(objectClasses[i]);
 			}
 		}
