@@ -162,14 +162,41 @@ public class TigerDirectoryBeanAnnotationReader extends
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * 優先度
+	 * </p>
+	 * <ul>
+	 * <li>ビーンクラスの OBJECTCLASSES アノテーション</li>
+	 * <li>ビーンクラスの OBJECTCLASSES フィールドアノテーション</li>
+	 * <li>ビーンクラスのクラス名</li>
+	 * </ul>
 	 */
 	public String[] getObjectClasses() {
-		ObjectClasses objectClasses =
-			beanClass.getAnnotation(ObjectClasses.class);
-		if (objectClasses == null) {
-			return super.getObjectClasses();
+		String[] objectClasses = getObjectClassesFromAnnotation();
+		if (objectClasses != null) {
+			return objectClasses;
 		}
-		return objectClasses.value();
+		return super.getObjectClasses();
+	}
+
+	/**
+	 * ビーンクラスの OBJECTCLASSES アノテーションから値の配列を返します。
+	 * ビーンクラスは親クラスを辿って探します。
+	 * 存在しない場合は、null を返します。
+	 * 
+	 * @return オブジェクトクラスアノテーションの値の配列
+	 */
+	protected String[] getObjectClassesFromAnnotation() {
+		Class<?> beanClass = getBeanClass();
+		for (Class<?> superClass = beanClass; superClass != Object.class; superClass =
+			superClass.getSuperclass()) {
+			ObjectClasses daoBeanObjectClasses =
+				superClass.getAnnotation(ObjectClasses.class);
+			if (daoBeanObjectClasses != null) {
+				return setupObjectClass(daoBeanObjectClasses.value());
+			}
+		}
+		return null;
 	}
 
 	/**

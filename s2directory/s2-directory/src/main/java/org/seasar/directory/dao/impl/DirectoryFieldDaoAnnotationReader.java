@@ -19,15 +19,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.seasar.directory.dao.DirectoryDaoAnnotationReader;
-import org.seasar.directory.dao.util.DaoUtil;
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**
- * フィールドアノテーションを読み込むクラスです。
+ * Daoクラスに定義されたフィールドアノテーションを読み込みます。
  * 
  * @author Jun Futagawa (Integsystem Corporation)
  */
@@ -109,28 +107,22 @@ public class DirectoryFieldDaoAnnotationReader implements
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * 優先度
+	 * </p>
+	 * <ul>
+	 * <li>Dao インタフェースの OBJECTCLASSES フィールドアノテーション</li>
+	 * <li>ビーンクラスから取得した引数 beanObjectClasses</li>
+	 * </ul>
 	 */
 	public String[] getObjectClasses(String[] beanObjectClasses) {
 		// Dao インタフェースに OBJECTCLASSES フィールドアノテーションがある場合
-		String[] objectClasses = getObjectClassesFromAnnotation();
+		// その値を返します。
+		String[] objectClasses = getObjectClassesFromFieldAnnotation();
 		if (objectClasses != null) {
 			return objectClasses;
 		}
-
-		// Dao インタフェースに OBJECTCLASSES フィールドアノテーションがない場合
-		objectClasses = getObjectClassesFromBeanAnnotation();
-		if (objectClasses != null) {
-			return objectClasses;
-		}
-		if (beanObjectClasses != null) {
-			// ビーンクラスにOBJECTCLASSESアノテーションがある場合
-			objectClasses = beanObjectClasses;
-		} else {
-			// ビーンクラスにOBJECTCLASSESアノテーションがない場合
-			objectClasses = new String[1];
-			objectClasses[0] = DaoUtil.getSimpleClassName(this.getBeanClass());
-		}
-		return setupObjectClass(objectClasses);
+		return setupObjectClass(beanObjectClasses);
 	}
 
 	/**
@@ -140,34 +132,11 @@ public class DirectoryFieldDaoAnnotationReader implements
 	 * 
 	 * @return オブジェクトクラスアノテーションの値の配列
 	 */
-	protected String[] getObjectClassesFromAnnotation() {
+	protected String[] getObjectClassesFromFieldAnnotation() {
 		if (daoBeanDesc.hasField(OBJECTCLASSES)) {
 			Field queryField = daoBeanDesc.getField(OBJECTCLASSES);
 			String objectClassNames = (String)FieldUtil.get(queryField, null);
 			return setupObjectClass(objectClassNames.split(","));
-		}
-		return null;
-	}
-
-	/**
-	 * Dao インタフェースに定義された Bean クラスの OBJECTCLASSES
-	 * フィールドアノテーションからオブジェクトクラスアノテーションの値の配列を返します。
-	 * Bean クラスは親クラスを辿って探します。
-	 * 存在しない場合は、null を返します。
-	 * 
-	 * @return オブジェクトクラスアノテーションの値の配列
-	 */
-	protected String[] getObjectClassesFromBeanAnnotation() {
-		Class beanClass = getBeanClass();
-		for (Class superClass = beanClass; superClass != Object.class; superClass =
-			superClass.getSuperclass()) {
-			BeanDesc daoBeanBeanDesc = BeanDescFactory.getBeanDesc(superClass);
-			if (daoBeanBeanDesc.hasField(OBJECTCLASSES)) {
-				Field queryField = daoBeanBeanDesc.getField(OBJECTCLASSES);
-				String objectClassNames =
-					(String)FieldUtil.get(queryField, null);
-				return setupObjectClass(objectClassNames.split(","));
-			}
 		}
 		return null;
 	}

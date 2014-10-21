@@ -43,7 +43,7 @@ public interface DirectoryBeanAnnotationReader {
 	/**
 	 * オブジェクトクラスアノテーションからオブジェクトクラスの配列を取得します。
 	 * 
-	 * @return オブジェクトクラスアノテーションの値の配列
+	 * @return オブジェクトクラスの配列
 	 */
 	public String[] getObjectClasses();
 
