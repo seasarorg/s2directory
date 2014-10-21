@@ -15,9 +15,11 @@
  */
 package org.seasar.directory.examples.client;
 
+import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.examples.client.common.PosixAccountDtoFactory;
 import org.seasar.directory.examples.directorydao.PosixAccountDtoDirectoryDao;
 import org.seasar.directory.examples.dto.PosixAccountDto;
+import org.seasar.directory.exception.DirectoryRuntimeException;
 import org.seasar.directory.exception.NameAlreadyBoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
@@ -97,6 +99,20 @@ public class PosixAccountInsertTest extends DefaultDirectoryInformationTreeTest 
 		assertEquals(user1.getCn(), account.getCn());
 		assertEquals(user1.getSn(), account.getSn());
 		assertEquals(user1.getUidNumber(), account.getUidNumber());
+	}
+
+	public void testCreate1WithInvalidObjectClass() {
+		assertEquals(1, posixAccountDtoDao.insert(user1));
+
+		DirectoryControlProperty property =
+			(DirectoryControlProperty)container.getComponent(DirectoryControlProperty.class);
+		property.setAbstractObjectClasses(new String[] { "invalidObjectClass" });
+		try {
+			posixAccountDtoDao.insertWithUserMode(property, user1);
+			assertFalse(true);
+		} catch (DirectoryRuntimeException e) {
+			assertTrue(true);
+		}
 	}
 
 	public void testCreateAlreadyBound() {

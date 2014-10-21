@@ -15,7 +15,9 @@
  */
 package org.seasar.directory.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.naming.NamingException;
@@ -75,10 +77,6 @@ public class InsertHandler extends BasicDirectoryHandler implements
 	public Object execute() throws NamingRuntimeException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Insert: " + ctx.getDn());
-			String[] objectClasses = ctx.getObjectClasses();
-			for (int i = 0; i < objectClasses.length; i++) {
-				logger.debug("\tobjectClass: " + objectClasses[i]);
-			}
 		}
 		return insert(ctx.getDn());
 	}
@@ -109,17 +107,23 @@ public class InsertHandler extends BasicDirectoryHandler implements
 		String dnName = DirectoryUtil.getAttributeName(firstDn);
 		String dnValue = DirectoryUtil.getAttributeValue(firstDn);
 		Attributes entry = new BasicAttributes(dnName, dnValue);
+
 		// オブジェクトクラスを設定します。
 		Attribute objectClass = new BasicAttribute("objectClass");
 		entry.put(objectClass);
-		String[] objectClasses = ctx.getObjectClasses();
-		for (int i = 0; i < objectClasses.length; i++) {
-			objectClass.add(objectClasses[i]);
+		List objectClassList = getObjectClassList();
+		for (Iterator iterator = objectClassList.iterator(); iterator.hasNext();) {
+			Object objectClassName = iterator.next();
+			objectClass.add(objectClassName);
+			if (logger.isDebugEnabled()) {
+				logger.debug("\tobjectClass: " + objectClassName);
+			}
 		}
+
 		// 属性を設定します。
 		Set keySet = ctx.getArgKeySet();
-		for (Iterator iter = keySet.iterator(); iter.hasNext();) {
-			String argName = String.valueOf(iter.next());
+		for (Iterator iterator = keySet.iterator(); iterator.hasNext();) {
+			String argName = String.valueOf(iterator.next());
 			Object argValue = ctx.getArg(argName);
 			Class argClass = ctx.getArgType(argName);
 			if (argName.equals("#dto")) {
@@ -154,6 +158,35 @@ public class InsertHandler extends BasicDirectoryHandler implements
 
 		}
 		return entry;
+	}
+
+	/**
+	 * 抽象オブジェクトクラスをマージしたオブジェクトクラスのリストを返します。
+	 * 
+	 * @return オブジェクトクラスのリスト
+	 */
+	protected List getObjectClassList() {
+		String[] abstractObjectClasses = property.getAbstractObjectClasses();
+		String[] objectClasses = ctx.getObjectClasses();
+		int size =
+			(abstractObjectClasses != null ? abstractObjectClasses.length : 0)
+				+ objectClasses.length;
+		List objectClassList = new ArrayList(size);
+
+		if (abstractObjectClasses != null) {
+			for (int i = 0; i < abstractObjectClasses.length; i++) {
+				if (!objectClassList.contains(abstractObjectClasses[i])) {
+					objectClassList.add(abstractObjectClasses[i]);
+				}
+			}
+		}
+
+		for (int i = 0; i < objectClasses.length; i++) {
+			if (!objectClassList.contains(objectClasses[i])) {
+				objectClassList.add(objectClasses[i]);
+			}
+		}
+		return objectClassList;
 	}
 
 	private Attribute createAttribute(String attributeName, Object value,

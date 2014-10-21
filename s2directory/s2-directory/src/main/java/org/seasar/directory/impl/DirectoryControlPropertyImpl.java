@@ -22,6 +22,7 @@ import javax.naming.directory.SearchControls;
 import org.seasar.directory.DirectoryConnectionPool;
 import org.seasar.directory.DirectoryControlProperty;
 import org.seasar.directory.util.DirectoryUtil;
+import org.seasar.framework.util.ArrayUtil;
 
 /**
  * ディレクトリ接続情報を表わす標準的な実装クラスです。
@@ -39,6 +40,9 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty {
 
 	/** デフォルトの {@link SearchControls} */
 	private SearchControls defaultSearchControls;
+
+	/** デフォルトのオブジェクトクラスの配列 */
+	private String[] abstractObjectClasses = ABSTRACT_OBJECTCLASSES_TOP;
 
 	/** 接続に使用するコンテキストファクトリ */
 	private String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
@@ -150,6 +154,20 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty {
 	 */
 	public void setDefaultSearchControls(SearchControls defaultSearchControls) {
 		this.defaultSearchControls = defaultSearchControls;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public String[] getAbstractObjectClasses() {
+		return abstractObjectClasses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setAbstractObjectClasses(String[] abstractObjectClasses) {
+		this.abstractObjectClasses = abstractObjectClasses;
 	}
 
 	/**
@@ -438,6 +456,8 @@ public class DirectoryControlPropertyImpl implements DirectoryControlProperty {
 		buffer.append("defaultSearchControls: ").append(
 			DirectoryUtil.toStringFromSearchControls(defaultSearchControls)).append(
 			", ");
+		buffer.append("defaultObjectClasses: ").append(
+			ArrayUtil.toString(abstractObjectClasses)).append(", ");
 		buffer.append("contextFactory: ").append(initialContextFactory).append(
 			", ");
 		buffer.append("sslSocketFactory: ").append(sslSocketFactory).append(

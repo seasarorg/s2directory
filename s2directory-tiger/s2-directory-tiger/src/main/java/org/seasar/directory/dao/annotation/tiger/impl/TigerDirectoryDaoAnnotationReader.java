@@ -144,6 +144,14 @@ public class TigerDirectoryDaoAnnotationReader extends
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * 優先度
+	 * </p>
+	 * <ul>
+	 * <li>Dao インタフェースの OBJECTCLASSES アノテーション</li>
+	 * <li>Dao インタフェースの OBJECTCLASSES フィールドアノテーション</li>
+	 * <li>ビーンクラスから取得した引数 beanObjectClasses</li>
+	 * </ul>
 	 */
 	public String[] getObjectClasses(String[] beanObjectClasses) {
 		// Dao インタフェースに OBJECTCLASSES アノテーションがある場合
@@ -152,26 +160,6 @@ public class TigerDirectoryDaoAnnotationReader extends
 		if (daoObjectClasses != null) {
 			return setupObjectClass(daoObjectClasses.value());
 		}
-		// Dao インタフェースに OBJECTCLASSES フィールドアノテーションがある場合
-		String[] objectClasses = getObjectClassesFromAnnotation();
-		if (objectClasses != null) {
-			return objectClasses;
-		}
-
-		// Dao インタフェースの Bean クラスに OBJECTCLASSES アノテーションがある場合
-		// 親クラスを辿って探します
-		Class<?> beanClass = getBeanClass();
-		for (Class<?> superClass = beanClass; superClass != Object.class; superClass =
-			superClass.getSuperclass()) {
-			ObjectClasses daoBeanObjectClasses =
-				superClass.getAnnotation(ObjectClasses.class);
-			if (daoBeanObjectClasses != null) {
-				return setupObjectClass(daoBeanObjectClasses.value());
-			}
-		}
-
-		// Dao インタフェースの Bean クラスに OBJECTCLASSES フィールドアノテーションがある場合
-		// 親クラスを辿って探します
 		return super.getObjectClasses(beanObjectClasses);
 	}
 

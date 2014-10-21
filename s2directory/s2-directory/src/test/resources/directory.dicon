@@ -53,6 +53,7 @@
 			instance="prototype">
 		<property name="defaultEnvironment">directoryDefaultEnvironment</property>
 		<property name="defaultSearchControls">directoryDefaultSearchControls</property>
+		<property name="abstractObjectClasses">new String[] {"top", "alias"}</property>
 
 		<property name="initialContextFactory">
 			"com.sun.jndi.ldap.LdapCtxFactory"
