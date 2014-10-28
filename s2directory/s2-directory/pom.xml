@@ -1,33 +1,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.seasar.directory</groupId>
-    <artifactId>s2-directory-project</artifactId>
-    <version>0.7.1-SNAPSHOT</version>
-  </parent>
+    <parent>
+        <groupId>org.seasar.directory</groupId>
+        <artifactId>s2-directory-project</artifactId>
+        <version>0.7.1-SNAPSHOT</version>
+    </parent>
 
-  <artifactId>s2-directory</artifactId>
-  <packaging>jar</packaging>
-  <name>S2Directory</name>
-  <url>http://s2directory.sandbox.seasar.org/</url>
+    <artifactId>s2-directory</artifactId>
+    <packaging>jar</packaging>
+    <name>S2Directory</name>
+    <url>http://s2directory.sandbox.seasar.org/</url>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>test-jar</id>
-            <phase>package</phase>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>test-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
