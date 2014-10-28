@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="s2directory" default="dist" basedir=".">
 
-	<property name="version" value="0.7.1-SNAPSHOT" />
+	<property name="version" value="0.7.1" />
 
 	<!-- ant update-pom -->
     <target name="update-pom">

@@ -19,8 +19,18 @@ C:\Software\Java\apache-maven-2.2.1\bin\mvn -Duser.name="The Seasar Foundation" 
 ## Update pom version
 
 ```
+# Edit ..\s2directory/pom.xml
+# Edit ..\s2directory-tiger/build.xml
+# Edit ..\s2directory-tigerpom.xml
 # Edit version in ..\build.xml (s2-directory-project\build.xml)
 ant update-pom
+```
+
+## Deploy to Maven repository
+
+```
+set JAVA_HOME=C:\Software\Java\jdk-1.5
+C:\Software\Java\apache-maven-2.2.1\bin\mvn -Duser.name="The Seasar Foundation" clean deploy
 ```
 
 ## Release
@@ -29,13 +39,6 @@ ant update-pom
 
 ```
 set JAVA_HOME=C:\Software\Java\jdk-1.5
-C:\Software\Java\apache-maven-2.2.1\bin\mvn -Duser.name="The Seasar Foundation" clean package
+C:\Software\Java\apache-maven-2.2.1\bin\mvn -Duser.name="The Seasar Foundation" package
 ant dist
-```
-
-## Deploy to Maven repository
-
-```
-set JAVA_HOME=C:\Software\Java\jdk-1.5
-C:\Software\Java\apache-maven-2.2.1\bin\mvn -Duser.name="The Seasar Foundation" deploy
 ```
