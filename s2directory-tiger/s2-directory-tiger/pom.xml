@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.seasar.directory</groupId>
         <artifactId>s2-directory-tiger-project</artifactId>
-        <version>0.7.1</version>
+        <version>0.7.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>s2-directory-tiger</artifactId>
